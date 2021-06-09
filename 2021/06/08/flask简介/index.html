@@ -1,0 +1,887 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>flask基本介绍 | 春江花月夜o</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="" />
+    
+    <meta name="description" content="配置文件配置方式 1.单个配置 1flask.config[‘xxx’] &#x3D; xxx  2.可以像django一样文件配置 1234DEBUG &#x3D; TrueTESTING &#x3D; TrueDATABASE_URI&#x3D;&#39;127.0.0.1:XXX&#39;flask.config.from_pyfile(‘某个文件setting’)  3.类配置 生产环境一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="flask基本介绍">
+<meta property="og:url" content="http://example.com/2021/06/08/flask%E7%AE%80%E4%BB%8B/index.html">
+<meta property="og:site_name" content="春江花月夜o">
+<meta property="og:description" content="配置文件配置方式 1.单个配置 1flask.config[‘xxx’] &#x3D; xxx  2.可以像django一样文件配置 1234DEBUG &#x3D; TrueTESTING &#x3D; TrueDATABASE_URI&#x3D;&#39;127.0.0.1:XXX&#39;flask.config.from_pyfile(‘某个文件setting’)  3.类配置 生产环境一">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/css/images/gu.jpg">
+<meta property="article:published_time" content="2021-06-08T03:43:05.090Z">
+<meta property="article:modified_time" content="2021-06-09T03:39:53.086Z">
+<meta property="article:author" content="durian">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/css/images/gu.jpg">
+    
+
+    
+        <link rel="alternate" href="/" title="春江花月夜o" type="application/atom+xml" />
+    
+
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">关于</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">python</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">cpp</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">webframe</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                                <a class="main-nav-list-link" href="/null">flask</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">django</a>
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">algorithm</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">bigdata</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">nosql</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                                <a class="main-nav-list-link" href="/null"> redis</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">mysql</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null"> redis高级篇</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">mysql高级篇</a>
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/webframe/">webframe</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/webframe/flask/">flask</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-flask简介" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        flask基本介绍
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2021/06/08/flask%E7%AE%80%E4%BB%8B/" class="article-date">
+       <time datetime="2021-06-08T03:43:05.090Z" itemprop="datePublished">2021-06-08</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/2021/06/08/flask%E7%AE%80%E4%BB%8B/" class="article-date">
+     <time datetime="2021-06-09T03:39:53.086Z" itemprop="dateModified">2021-06-09</time>
+  </a>
+</div>
+
+
+                
+
+                
+                
+   <div class="article-counter">
+      <i class="fa fa-file-word-o"></i>
+      <span class="post-count-item-text">本文字数: </span>
+      <span class="post-count">4.5k</span>
+      <i class="fa fa-clock-o"></i>
+      <span class="post-time-item-text">阅读时长: </span>
+      <span class="post-count">23 分钟 </span>
+   </div>
+
+
+                <span id="busuanzi_container_page_pv">
+                阅读次数<span id="busuanzi_value_page_pv"></span>次
+                </span>
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><h3 id="配置方式"><a href="#配置方式" class="headerlink" title="配置方式"></a>配置方式</h3><ul>
+<li><p>1.单个配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flask.config[‘xxx’] &#x3D; xxx</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>2.可以像django一样文件配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">DEBUG &#x3D; True</span><br><span class="line">TESTING &#x3D; True</span><br><span class="line">DATABASE_URI&#x3D;&#39;127.0.0.1:XXX&#39;</span><br><span class="line">flask.config.from_pyfile(‘某个文件setting’)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>3.类配置 生产环境一套、debug一套。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">class Config:</span><br><span class="line">    DEBUG &#x3D; False</span><br><span class="line">    TESTING &#x3D; False</span><br><span class="line">    DATABASE_URI &#x3D; &#39;127.0.0.1:XXX&#39;</span><br><span class="line"></span><br><span class="line">class ProductionConfig(Config):</span><br><span class="line">    DATABASE_URI &#x3D; &#39;127.0.0.1:XXX&#39;</span><br><span class="line"></span><br><span class="line">class TestingConfig(Config):</span><br><span class="line">    DEBUG &#x3D; True</span><br><span class="line">    TESTING &#x3D; True</span><br><span class="line">    DATABASE_URI &#x3D; &#39;127.0.0.1:XXX&#39;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="源码解析"><a href="#源码解析" class="headerlink" title="源码解析"></a>源码解析</h3><p>就是一个字典结构，初始化加载了defaults，即Flask中的defaults</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line">class Config(dict):</span><br><span class="line">    def __init__(self, root_path, defaults&#x3D;None):</span><br><span class="line">        dict.__init__(self, defaults or &#123;&#125;)</span><br><span class="line">        self.root_path &#x3D; root_path</span><br><span class="line"></span><br><span class="line">    def from_envvar(self, variable_name, silent&#x3D;False):</span><br><span class="line">        rv &#x3D; os.environ.get(variable_name)</span><br><span class="line">        if not rv:</span><br><span class="line">            if silent:</span><br><span class="line">                return False</span><br><span class="line">            raise RuntimeError(</span><br><span class="line">                &quot;The environment variable %r is not set &quot;</span><br><span class="line">                &quot;and as such configuration could not be &quot;</span><br><span class="line">                &quot;loaded.  Set this variable and make it &quot;</span><br><span class="line">                &quot;point to a configuration file&quot; % variable_name</span><br><span class="line">            )</span><br><span class="line">        return self.from_pyfile(rv, silent&#x3D;silent)</span><br><span class="line"></span><br><span class="line">    def from_pyfile(self, filename, silent&#x3D;False):</span><br><span class="line">        filename &#x3D; os.path.join(self.root_path, filename)</span><br><span class="line">        d &#x3D; types.ModuleType(&quot;config&quot;)</span><br><span class="line">        d.__file__ &#x3D; filename</span><br><span class="line">        try:</span><br><span class="line">            with open(filename, mode&#x3D;&quot;rb&quot;) as config_file:</span><br><span class="line">                exec(compile(config_file.read(), filename, &quot;exec&quot;), d.__dict__)</span><br><span class="line">        except IOError as e:</span><br><span class="line">            if silent and e.errno in (errno.ENOENT, errno.EISDIR, errno.ENOTDIR):</span><br><span class="line">                return False</span><br><span class="line">            e.strerror &#x3D; &quot;Unable to load configuration file (%s)&quot; % e.strerror</span><br><span class="line">            raise</span><br><span class="line">        self.from_object(d)</span><br><span class="line">        return True</span><br><span class="line"></span><br><span class="line">    def from_object(self, obj):</span><br><span class="line">        if isinstance(obj, string_types):</span><br><span class="line">            obj &#x3D; import_string(obj)</span><br><span class="line">        for key in dir(obj):</span><br><span class="line">            if key.isupper():</span><br><span class="line">                self[key] &#x3D; getattr(obj, key)</span><br><span class="line"></span><br><span class="line">    def from_json(self, filename, silent&#x3D;False):</span><br><span class="line">        filename &#x3D; os.path.join(self.root_path, filename)</span><br><span class="line"></span><br><span class="line">        try:</span><br><span class="line">            with open(filename) as json_file:</span><br><span class="line">                obj &#x3D; json.loads(json_file.read())</span><br><span class="line">        except IOError as e:</span><br><span class="line">            if silent and e.errno in (errno.ENOENT, errno.EISDIR):</span><br><span class="line">                return False</span><br><span class="line">            e.strerror &#x3D; &quot;Unable to load configuration file (%s)&quot; % e.strerror</span><br><span class="line">            raise</span><br><span class="line">        return self.from_mapping(obj)</span><br><span class="line"></span><br><span class="line">    def from_mapping(self, *mapping, **kwargs):</span><br><span class="line">        rv &#x3D; &#123;&#125;</span><br><span class="line">        for k, v in iteritems(self):</span><br><span class="line">            if not k.startswith(namespace):</span><br><span class="line">                continue</span><br><span class="line">            if trim_namespace:</span><br><span class="line">                key &#x3D; k[len(namespace) :]</span><br><span class="line">            else:</span><br><span class="line">                key &#x3D; k</span><br><span class="line">            if lowercase:</span><br><span class="line">                key &#x3D; key.lower()</span><br><span class="line">            rv[key] &#x3D; v</span><br><span class="line">        return rv</span><br><span class="line"></span><br><span class="line">    def __repr__(self):</span><br><span class="line">        return &quot;&lt;%s %s&gt;&quot; % (self.__class__.__name__, dict.__repr__(self))</span><br></pre></td></tr></table></figure>
+
+<h2 id="路由route"><a href="#路由route" class="headerlink" title="路由route"></a>路由route</h2><h3 id="详细配置"><a href="#详细配置" class="headerlink" title="详细配置"></a>详细配置</h3><h4 id="普通匹配模式及其传参方法"><a href="#普通匹配模式及其传参方法" class="headerlink" title="普通匹配模式及其传参方法"></a>普通匹配模式及其传参方法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">@app.route(‘&#x2F;&lt;username&gt;’)  字符串</span><br><span class="line">@app.route(‘&#x2F;&lt;int:post_id&gt;’) 整数</span><br><span class="line">@app.route(‘&#x2F;&lt;float:price&gt;’)  </span><br><span class="line">@app.route(‘&#x2F;&lt;path:path&gt;’)  url路径</span><br><span class="line"></span><br><span class="line"># 路径匹配其实使用了正则贪婪匹配，要注意必须在视图函数的参数中输入对应个数的参数</span><br><span class="line">@app.route(&#39;&#x2F;&lt;name&gt;|&lt;int:id&gt;|&lt;path:asf&gt;&#39;, methods&#x3D;[&#39;get&#39;, &#39;post&#39;])</span><br><span class="line">def index(name, id, asf):</span><br><span class="line">    print(name, id, type(id), type(name), asf)</span><br><span class="line">    return &quot;fafafasa&quot;</span><br><span class="line"># 中件用分隔符或者自定义一个隔离符号</span><br></pre></td></tr></table></figure>
+
+<h4 id="通过？匹配"><a href="#通过？匹配" class="headerlink" title="通过？匹配"></a>通过？匹配</h4><p>即最常见的路由匹配方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;127.0.0.1:5000&#x2F;user&#x2F;?a&#x3D;1&amp;b&#x3D;2&amp;c&#x3D;3</span><br><span class="line">参数放进了flask.request中为字典类型</span><br><span class="line">request.args request.data</span><br></pre></td></tr></table></figure>
+
+<h3 id="自定义匹配模式（正则）"><a href="#自定义匹配模式（正则）" class="headerlink" title="自定义匹配模式（正则）"></a>自定义匹配模式（正则）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">from flask import url_for</span><br><span class="line">from werkzeug.routing import BaseConverter</span><br><span class="line"></span><br><span class="line">import re</span><br><span class="line">class RegexConverter(BaseConverter):</span><br><span class="line">    def __init__(self, map, regex):</span><br><span class="line">        super(RegexConverter, self).__init__(map)</span><br><span class="line">        self.re &#x3D; re.compile(regex)</span><br><span class="line"></span><br><span class="line">    # 路由匹配成功，在传入视图之前进行一次校验，改变数据类型为想要的类型</span><br><span class="line">    def to_python(self, value):</span><br><span class="line">        tmp &#x3D; self.re.search(value)</span><br><span class="line">        if tmp:</span><br><span class="line">            return tmp.group()</span><br><span class="line">        return tmp</span><br><span class="line"></span><br><span class="line">    # 使用url反向生成url时传递参数经过该方法处理，返回值用于生成url中的参数</span><br><span class="line">    def to_url(self, value):</span><br><span class="line">        val &#x3D; super(RegexConverter, self).to_url(value)</span><br><span class="line">        return val</span><br><span class="line">app.url_map.converters[&#39;regex&#39;] &#x3D; RegexConverter</span><br><span class="line"></span><br><span class="line">@app.route(&#39;&#x2F;index&#x2F;&lt;regex(&quot;\w+&quot;):nid&gt;&#39;)</span><br><span class="line">def index(nid):</span><br><span class="line">    print(nid)</span><br><span class="line">    url_for(&#39;index&#39;, nid&#x3D;89)</span><br><span class="line">    return &#39;index&#39;</span><br></pre></td></tr></table></figure>
+
+<h3 id="详解各参数作用"><a href="#详解各参数作用" class="headerlink" title="详解各参数作用"></a>详解各参数作用</h3><h3 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h3><p>基于装饰器形式展现本质上还是add_url_route,和django有所区别(本质还是一样)。</p>
+<h4 id="装饰器的route"><a href="#装饰器的route" class="headerlink" title="装饰器的route"></a>装饰器的route</h4><ul>
+<li><p>1.route()调用<br>第一步返回一个装饰器decorator</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">def route(self, rule, **options):</span><br><span class="line">    def decorator(f):</span><br><span class="line">        endpoint &#x3D; options.pop(&quot;endpoint&quot;, None)</span><br><span class="line">        self.add_url_rule(rule, endpoint, f, **options)</span><br><span class="line">        return f</span><br><span class="line">    return decorator</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>2.decorator(func)<br>第二步@decorator 执行decorator函数，关键函数<br>其中执行了self.add_url_rule(rule, endpoint, f, **options)<br>把路由和执行函数和别名加到了一个路由关系对应表</p>
+</li>
+</ul>
+<h4 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h4><ul>
+<li><p>1.添加路由的本质就是执行add_url_rule</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">def login():</span><br><span class="line">    pass</span><br><span class="line">app.add_url_rule(&#39;&#x2F;login&#39;, &#39;n2&#39;,  login, methods&#x3D;[&#39;get&#39;, &#39;post&#39;])</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>2.如果end_point是空的，就把view_func的名字赋给end_point</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@setupmethod</span><br><span class="line">def add_url_rule(</span><br><span class="line">    self,</span><br><span class="line">    rule,</span><br><span class="line">    endpoint&#x3D;None,</span><br><span class="line">    view_func&#x3D;None,</span><br><span class="line">    provide_automatic_options&#x3D;None,</span><br><span class="line">    **options</span><br><span class="line">):</span><br><span class="line">    if endpoint is None:</span><br><span class="line">        endpoint &#x3D; _endpoint_from_view_func(view_func)</span><br><span class="line">    options[&quot;endpoint&quot;] &#x3D; endpoint</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="生成rule"><a href="#生成rule" class="headerlink" title="生成rule"></a>生成rule</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">rule &#x3D; self.url_rule_class(rule, methods&#x3D;methods, **options)</span><br><span class="line">rule.provide_automatic_options &#x3D; provide_automatic_options</span><br><span class="line"></span><br><span class="line"># Rule</span><br><span class="line">@implements_to_string</span><br><span class="line">class Rule(RuleFactory):</span><br><span class="line">    def __init__(</span><br><span class="line">        self,</span><br><span class="line">        string,</span><br><span class="line">        defaults&#x3D;None,</span><br><span class="line">        subdomain&#x3D;None,</span><br><span class="line">        methods&#x3D;None,</span><br><span class="line">        build_only&#x3D;False,</span><br><span class="line">        endpoint&#x3D;None,</span><br><span class="line">        strict_slashes&#x3D;None,</span><br><span class="line">        merge_slashes&#x3D;None,</span><br><span class="line">        redirect_to&#x3D;None,</span><br><span class="line">        alias&#x3D;False,</span><br><span class="line">        host&#x3D;None,</span><br><span class="line">        websocket&#x3D;False,</span><br><span class="line">    ):</span><br><span class="line">        if not string.startswith(&quot;&#x2F;&quot;):</span><br><span class="line">            raise ValueError(&quot;urls must start with a leading slash&quot;)</span><br><span class="line">        self.rule &#x3D; string</span><br><span class="line">        self.is_leaf &#x3D; not string.endswith(&quot;&#x2F;&quot;)</span><br><span class="line"></span><br><span class="line">        self.map &#x3D; None</span><br><span class="line">        self.strict_slashes &#x3D; strict_slashes</span><br><span class="line">        self.merge_slashes &#x3D; merge_slashes</span><br><span class="line">        self.subdomain &#x3D; subdomain</span><br><span class="line">        self.host &#x3D; host</span><br><span class="line">        self.defaults &#x3D; defaults</span><br><span class="line">        self.build_only &#x3D; build_only</span><br><span class="line">        self.alias &#x3D; alias</span><br><span class="line">        self.websocket &#x3D; websocket</span><br><span class="line"></span><br><span class="line">        if methods is not None:</span><br><span class="line">            if isinstance(methods, str):</span><br><span class="line">                raise TypeError(&quot;&#39;methods&#39; should be a list of strings.&quot;)</span><br><span class="line"></span><br><span class="line">            methods &#x3D; &#123;x.upper() for x in methods&#125;</span><br><span class="line"></span><br><span class="line">            if &quot;HEAD&quot; not in methods and &quot;GET&quot; in methods:</span><br><span class="line">                methods.add(&quot;HEAD&quot;)</span><br><span class="line"></span><br><span class="line">            if websocket and methods - &#123;&quot;GET&quot;, &quot;HEAD&quot;, &quot;OPTIONS&quot;&#125;:</span><br><span class="line">                raise ValueError(</span><br><span class="line">                    &quot;WebSocket rules can only use &#39;GET&#39;, &#39;HEAD&#39;, and &#39;OPTIONS&#39; methods.&quot;</span><br><span class="line">                )</span><br><span class="line"></span><br><span class="line">        self.methods &#x3D; methods</span><br><span class="line">        self.endpoint &#x3D; endpoint</span><br><span class="line">        self.redirect_to &#x3D; redirect_to</span><br><span class="line"></span><br><span class="line">        if defaults:</span><br><span class="line">            self.arguments &#x3D; set(map(str, defaults))</span><br><span class="line">        else:</span><br><span class="line">            self.arguments &#x3D; set()</span><br><span class="line">        self._trace &#x3D; self._converters &#x3D; self._regex &#x3D; self._argument_weights &#x3D; None</span><br></pre></td></tr></table></figure>
+
+<h4 id="rule参数解析"><a href="#rule参数解析" class="headerlink" title="rule参数解析"></a>rule参数解析</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">1.defaults&#x3D;None </span><br><span class="line">&#123;‘Start_Time’:’2020-10-01’&#125;默认参数</span><br><span class="line">默认传default</span><br><span class="line"></span><br><span class="line">2.strict_slashes&#x3D;None </span><br><span class="line">False&#x2F;True 严格斜杠</span><br><span class="line">如果为True严格控制,有slash就访问不到或者访问得到</span><br><span class="line"></span><br><span class="line">3.redirect_to&#x3D;None </span><br><span class="line">定义之后直接重定向，重定向指定地址</span><br><span class="line">@app.route(&#39;&#x2F;index2&#39;, methods&#x3D;[&#39;get&#39;, &#39;post&#39;], endpoint&#x3D;&#39;n3&#39;, defaults&#x3D;&#123;&quot;nid&quot;: 888&#125;, redirect_to&#x3D;&#39;&#x2F;index3&#39;)</span><br><span class="line">def index2(nid):</span><br><span class="line">    print(nid)</span><br><span class="line">    return &quot;公司首页&quot;</span><br><span class="line"></span><br><span class="line">@app.route(&#39;&#x2F;index3&#39;, methods&#x3D;[&#39;get&#39;, &#39;post&#39;], endpoint&#x3D;&#39;n4&#39;, defaults&#x3D;&#123;&quot;nid&quot;: 888&#125;)</span><br><span class="line">def index2(nid):</span><br><span class="line">    print(nid)</span><br><span class="line">    return &quot;公司新首页&quot;</span><br><span class="line"></span><br><span class="line">4.subdomain&#x3D;None </span><br><span class="line">子域名访问 需修改hosts</span><br><span class="line">www.oldboyedu.com</span><br><span class="line">car.oldboyedu.com</span><br><span class="line">admin.oldboy.com</span><br><span class="line"></span><br><span class="line"># 子域名模式访问（比如你的域名设置了多个解析）</span><br><span class="line">app.config[&#39;SERVER_NAME&#39;] &#x3D; &#39;axiba.com:5000&#39;</span><br><span class="line">@app.route(&#39;&#x2F;12&#39;, methods&#x3D;[&#39;get&#39;, &#39;post&#39;], endpoint&#x3D;&#39;n5&#39;, subdomain&#x3D;&quot;admin&quot;)</span><br><span class="line">def static_index():</span><br><span class="line">    return &quot;static.your-domain.tid&quot;</span><br><span class="line"></span><br><span class="line">@app.route(&#39;&#x2F;dynamic&#39;, methods&#x3D;[&#39;get&#39;, &#39;post&#39;], endpoint&#x3D;&#39;n6&#39;, subdomain&#x3D;&quot;&lt;username&gt;&quot;)</span><br><span class="line">def static_index(username):</span><br><span class="line">    return username + &quot;.your-domain.tid&quot;</span><br></pre></td></tr></table></figure>
+
+<h4 id="url加入url-map"><a href="#url加入url-map" class="headerlink" title="url加入url_map"></a>url加入url_map</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">self.url_map.add(rule)</span><br><span class="line"># url_map</span><br><span class="line">class Map(object):</span><br><span class="line">    default_converters &#x3D; ImmutableDict(DEFAULT_CONVERTERS)</span><br><span class="line">    lock_class &#x3D; Lock</span><br><span class="line">    def __init__(</span><br><span class="line">        self,</span><br><span class="line">        rules&#x3D;None,</span><br><span class="line">        default_subdomain&#x3D;&quot;&quot;,</span><br><span class="line">        charset&#x3D;&quot;utf-8&quot;,</span><br><span class="line">        strict_slashes&#x3D;True,</span><br><span class="line">        merge_slashes&#x3D;True,</span><br><span class="line">        redirect_defaults&#x3D;True,</span><br><span class="line">        converters&#x3D;None,</span><br><span class="line">        sort_parameters&#x3D;False,</span><br><span class="line">        sort_key&#x3D;None,</span><br><span class="line">        encoding_errors&#x3D;&quot;replace&quot;,</span><br><span class="line">        host_matching&#x3D;False,</span><br><span class="line">    ):</span><br><span class="line">        self._rules &#x3D; []</span><br><span class="line">        self._rules_by_endpoint &#x3D; &#123;&#125;</span><br><span class="line">        self._remap &#x3D; True</span><br><span class="line">        self._remap_lock &#x3D; self.lock_class()</span><br><span class="line"></span><br><span class="line">        self.default_subdomain &#x3D; default_subdomain</span><br><span class="line">        self.charset &#x3D; charset</span><br><span class="line">        self.encoding_errors &#x3D; encoding_errors</span><br><span class="line">        self.strict_slashes &#x3D; strict_slashes</span><br><span class="line">        self.merge_slashes &#x3D; merge_slashes</span><br><span class="line">        self.redirect_defaults &#x3D; redirect_defaults</span><br><span class="line">        self.host_matching &#x3D; host_matching</span><br><span class="line"></span><br><span class="line">        self.converters &#x3D; self.default_converters.copy()</span><br><span class="line">        if converters:</span><br><span class="line">            self.converters.update(converters)</span><br><span class="line"></span><br><span class="line">        self.sort_parameters &#x3D; sort_parameters</span><br><span class="line">        self.sort_key &#x3D; sort_key</span><br><span class="line"></span><br><span class="line">        for rulefactory in rules or ():</span><br><span class="line">            self.add(rulefactory)</span><br></pre></td></tr></table></figure>
+
+<h4 id="访问url的步骤"><a href="#访问url的步骤" class="headerlink" title="访问url的步骤"></a>访问url的步骤</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"># 从上下文获得当前用户的req</span><br><span class="line">req &#x3D; _request_ctx_stack.top.request</span><br><span class="line">if req.routing_exception is not None:</span><br><span class="line">    self.raise_routing_exception(req) </span><br><span class="line">    </span><br><span class="line"># 通过url_map获取当前用户访问的url的rule</span><br><span class="line">rule &#x3D; req.url_rule</span><br><span class="line"></span><br><span class="line"># 确认method不为option</span><br><span class="line"># if we provide automatic options for this URL and the</span><br><span class="line"># request came with the OPTIONS method, reply automatically</span><br><span class="line">if (</span><br><span class="line">    getattr(rule, &quot;provide_automatic_options&quot;, False)</span><br><span class="line">    and req.method &#x3D;&#x3D; &quot;OPTIONS&quot;</span><br><span class="line">):</span><br><span class="line">    return self.make_default_options_response()</span><br><span class="line">    </span><br><span class="line"># otherwise dispatch to the handler for that endpoint</span><br><span class="line"># 根据endpoint在注册的view中找到view并传参调用</span><br><span class="line">return self.view_functions[rule.endpoint](**req.view_args)</span><br></pre></td></tr></table></figure>
+
+<h2 id="template模板"><a href="#template模板" class="headerlink" title="template模板"></a>template模板</h2><h3 id="自带防xss攻击"><a href="#自带防xss攻击" class="headerlink" title="自带防xss攻击"></a>自带防xss攻击</h3><p>比如return给模板<hr>&lt;input  …&gt;</hr>会自动变为字符串不能变成input框<br>可以通过管道符|safe也可以通过from flask import Markup<br>return Markup(<hr>&lt;input  …&gt;</hr>)…</p>
+<h3 id="支持宏定义"><a href="#支持宏定义" class="headerlink" title="支持宏定义"></a>支持宏定义</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;% macro xx(name, type&#x3D;’text’, value&#x3D;’’) %&#125;</span><br><span class="line">	&lt;input type&#x3D;”&#123;&#123;type&#125;&#125;” name&#x3D;”&#123;&#123;name&#125;&#125;1” value&#x3D;”&#123;&#123;value&#125;&#125;”&gt;</span><br><span class="line">&lt;input type&#x3D;”&#123;&#123;type&#125;&#125;” name&#x3D;”&#123;&#123;name&#125;&#125;1” value&#x3D;”&#123;&#123;value&#125;&#125;”&gt;</span><br><span class="line">&lt;input type&#x3D;”&#123;&#123;type&#125;&#125;” name&#x3D;”&#123;&#123;name&#125;&#125;1” value&#x3D;”&#123;&#123;value&#125;&#125;”&gt;</span><br><span class="line">&lt;input type&#x3D;”&#123;&#123;type&#125;&#125;” name&#x3D;”&#123;&#123;name&#125;&#125;1” value&#x3D;”&#123;&#123;value&#125;&#125;”&gt;</span><br><span class="line">&#123;% endmacro %&#125;</span><br><span class="line"># 导入块并传参数</span><br><span class="line">&#123;&#123; xx(‘n’) &#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="request-amp-response"><a href="#request-amp-response" class="headerlink" title="request&amp;response"></a>request&amp;response</h2><h3 id="request"><a href="#request" class="headerlink" title="request"></a><a target="_blank" rel="noopener" href="https://codingdict.com/sources/py/flask.request.html">request</a></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from flask import request</span><br><span class="line">几乎都写到了request里面</span><br><span class="line">request.form.get(&quot;key&quot;, type&#x3D;str, default&#x3D;None) 获取表单数据</span><br><span class="line">request.args.get(&quot;key&quot;) 获取get请求参数</span><br><span class="line">request.values.get(&quot;key&quot;) 获取所有参数</span><br><span class="line">request.get_json()</span><br><span class="line">request.url</span><br><span class="line">request.base_url</span><br><span class="line">request.url_root</span><br><span class="line">request.host_url</span><br></pre></td></tr></table></figure>
+
+<h3 id="response"><a href="#response" class="headerlink" title="response"></a>response</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">1.headers	类似于字典，用来存放headers</span><br><span class="line"></span><br><span class="line">2.status	A string with a response status.</span><br><span class="line"></span><br><span class="line">3.status_code	The response status as integer.</span><br><span class="line"></span><br><span class="line">4.data	A descriptor that calls get_data() and set_data().</span><br><span class="line"></span><br><span class="line">5.get_json(force&#x3D;False, silent&#x3D;False, cache&#x3D;True)	Parse data as JSON.</span><br><span class="line"></span><br><span class="line">6.is_json	Check if the mimetype indicates JSON data, </span><br><span class="line">either application&#x2F;json or application&#x2F;*+json.</span><br><span class="line"></span><br><span class="line">7.max_cookie_size	Read-only view of the MAX_COOKIE_SIZE config key.</span><br><span class="line"></span><br><span class="line">8.mimetype	The mimetype (content type without charset etc.)</span><br><span class="line"></span><br><span class="line">9.set_cookie(key, value&#x3D;’’, max_age&#x3D;None, expires&#x3D;None, path&#x3D;’&#x2F;’, </span><br><span class="line">domain&#x3D;None, secure&#x3D;False, httponly&#x3D;False, samesite&#x3D;None)</span><br><span class="line"></span><br><span class="line"># 如果需要修改response</span><br><span class="line">from flask import make_response</span><br><span class="line">response &#x3D; make_response(‘fsfs’)&#x2F;make_response(render_template(‘index.html))</span><br><span class="line">response.set_cookie(‘key’, ‘value’)</span><br><span class="line">response.delete_cookie(‘key’)</span><br><span class="line">response.headers(‘xxxx’) &#x3D; ‘xxxx’</span><br><span class="line">return response</span><br></pre></td></tr></table></figure>
+
+<h2 id="session-amp-cookie"><a href="#session-amp-cookie" class="headerlink" title="session&amp;cookie"></a>session&amp;cookie</h2><h3 id="session"><a href="#session" class="headerlink" title="session"></a>session</h3><h4 id="基础使用"><a href="#基础使用" class="headerlink" title="基础使用"></a>基础使用</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from flask import session</span><br><span class="line">app.secret_key &#x3D; ‘sfdaac’</span><br><span class="line">session[‘k1’] &#x3D; v1</span><br><span class="line">会有加密签名的字符串k1需要使用secret_key</span><br><span class="line">session.pop(xxx)</span><br><span class="line">del session[‘xxx’]</span><br></pre></td></tr></table></figure>
+<h4 id="源码解析-1"><a href="#源码解析-1" class="headerlink" title="源码解析"></a>源码解析</h4><p>session其实就是一个类字典对象，sessionId一般用cookie存储，<br>session值存储在服务器的缓存redis、mysql、文件缓存等中。</p>
+<ul>
+<li><p>ctx.push()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">if self.session is None:</span><br><span class="line">    session_interface &#x3D; self.app.session_interface</span><br><span class="line">    self.session &#x3D; session_interface.open_session(self.app, self.request)</span><br><span class="line"></span><br><span class="line">    if self.session is None:</span><br><span class="line">        self.session &#x3D; session_interface.make_null_session(self.app)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>session_interface</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"># 默认session_interface</span><br><span class="line">class SecureCookieSessionInterface(SessionInterface):</span><br><span class="line">    serializer &#x3D; session_json_serializer</span><br><span class="line">    session_class &#x3D; SecureCookieSession</span><br><span class="line"></span><br><span class="line">    def get_signing_serializer(self, app):</span><br><span class="line">        if not app.secret_key:</span><br><span class="line">            return None</span><br><span class="line">        signer_kwargs &#x3D; dict(</span><br><span class="line">            key_derivation&#x3D;self.key_derivation, digest_method&#x3D;self.digest_method</span><br><span class="line">        )</span><br><span class="line">        return URLSafeTimedSerializer(</span><br><span class="line">            app.secret_key,</span><br><span class="line">            salt&#x3D;self.salt,</span><br><span class="line">            serializer&#x3D;self.serializer,</span><br><span class="line">            signer_kwargs&#x3D;signer_kwargs,</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    def open_session(self, app, request):</span><br><span class="line">        s &#x3D; self.get_signing_serializer(app)</span><br><span class="line">        if s is None:</span><br><span class="line">            return None</span><br><span class="line">        val &#x3D; request.cookies.get(app.session_cookie_name)</span><br><span class="line">        if not val:</span><br><span class="line">            return self.session_class()</span><br><span class="line">        max_age &#x3D; total_seconds(app.permanent_session_lifetime)</span><br><span class="line">        try:</span><br><span class="line">            data &#x3D; s.loads(val, max_age&#x3D;max_age)</span><br><span class="line">            return self.session_class(data)</span><br><span class="line">        except BadSignature:</span><br><span class="line">            return self.session_class()</span><br><span class="line"></span><br><span class="line">    def save_session(self, app, session, response):</span><br><span class="line">        domain &#x3D; self.get_cookie_domain(app)</span><br><span class="line">        path &#x3D; self.get_cookie_path(app)</span><br><span class="line"></span><br><span class="line">        # If the session is modified to be empty, remove the cookie.</span><br><span class="line">        # If the session is empty, return without setting the cookie.</span><br><span class="line">        if not session:</span><br><span class="line">            if session.modified:</span><br><span class="line">                response.delete_cookie(</span><br><span class="line">                    app.session_cookie_name, domain&#x3D;domain, path&#x3D;path</span><br><span class="line">                )</span><br><span class="line"></span><br><span class="line">            return</span><br><span class="line"></span><br><span class="line">        # Add a &quot;Vary: Cookie&quot; header if the session was accessed at all.</span><br><span class="line">        if session.accessed:</span><br><span class="line">            response.vary.add(&quot;Cookie&quot;)</span><br><span class="line"></span><br><span class="line">        if not self.should_set_cookie(app, session):</span><br><span class="line">            return</span><br><span class="line"></span><br><span class="line">        httponly &#x3D; self.get_cookie_httponly(app)</span><br><span class="line">        secure &#x3D; self.get_cookie_secure(app)</span><br><span class="line">        samesite &#x3D; self.get_cookie_samesite(app)</span><br><span class="line">        expires &#x3D; self.get_expiration_time(app, session)</span><br><span class="line">        val &#x3D; self.get_signing_serializer(app).dumps(dict(session))</span><br><span class="line">        response.set_cookie(</span><br><span class="line">            app.session_cookie_name,</span><br><span class="line">            val,</span><br><span class="line">            expires&#x3D;expires,</span><br><span class="line">            httponly&#x3D;httponly,</span><br><span class="line">            domain&#x3D;domain,</span><br><span class="line">            path&#x3D;path,</span><br><span class="line">            secure&#x3D;secure,</span><br><span class="line">            samesite&#x3D;samesite,</span><br><span class="line">        )</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>make_null_session(self.app)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">def make_null_session(self, app):</span><br><span class="line">    return self.null_session_class()</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">class NullSession(SecureCookieSession):</span><br><span class="line">    def _fail(self, *args, **kwargs):</span><br><span class="line">        raise RuntimeError(</span><br><span class="line">            &quot;The session is unavailable because no secret &quot;</span><br><span class="line">            &quot;key was set.  Set the secret_key on the &quot;</span><br><span class="line">            &quot;application to something unique and secret.&quot;</span><br><span class="line">        )</span><br><span class="line">    __setitem__ &#x3D; __delitem__ &#x3D; clear &#x3D; pop &#x3D; popitem &#x3D; update &#x3D; setdefault &#x3D; _fail</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">class SecureCookieSession(CallbackDict, SessionMixin):</span><br><span class="line">    def __init__(self, initial&#x3D;None):</span><br><span class="line">        def on_update(self):</span><br><span class="line">            self.modified &#x3D; True</span><br><span class="line">            self.accessed &#x3D; True</span><br><span class="line">        super(SecureCookieSession, self).__init__(initial, on_update)</span><br><span class="line"></span><br><span class="line">    def __getitem__(self, key):</span><br><span class="line">        self.accessed &#x3D; True</span><br><span class="line">        return super(SecureCookieSession, self).__getitem__(key)</span><br><span class="line"></span><br><span class="line">    def get(self, key, default&#x3D;None):</span><br><span class="line">        self.accessed &#x3D; True</span><br><span class="line">        return super(SecureCookieSession, self).get(key, default)</span><br><span class="line"></span><br><span class="line">    def setdefault(self, key, default&#x3D;None):</span><br><span class="line">        self.accessed &#x3D; True</span><br><span class="line">        return super(SecureCookieSession, self).setdefault(key, default)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="flask-session"><a href="#flask-session" class="headerlink" title="flask_session"></a>flask_session</h4><ul>
+<li><p>config配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">config &#x3D; app.config.copy()</span><br><span class="line">config.setdefault(&#39;SESSION_TYPE&#39;, &#39;null&#39;)</span><br><span class="line">config.setdefault(&#39;SESSION_PERMANENT&#39;, True)</span><br><span class="line">config.setdefault(&#39;SESSION_USE_SIGNER&#39;, False)</span><br><span class="line">config.setdefault(&#39;SESSION_KEY_PREFIX&#39;, &#39;session:&#39;)</span><br><span class="line">config.setdefault(&#39;SESSION_REDIS&#39;, None)</span><br><span class="line">config.setdefault(&#39;SESSION_MEMCACHED&#39;, None)</span><br><span class="line">config.setdefault(&#39;SESSION_FILE_DIR&#39;,</span><br><span class="line">                  os.path.join(os.getcwd(), &#39;flask_session&#39;))</span><br><span class="line">config.setdefault(&#39;SESSION_FILE_THRESHOLD&#39;, 500)</span><br><span class="line">config.setdefault(&#39;SESSION_FILE_MODE&#39;, 384)</span><br><span class="line">config.setdefault(&#39;SESSION_MONGODB&#39;, None)</span><br><span class="line">config.setdefault(&#39;SESSION_MONGODB_DB&#39;, &#39;flask_session&#39;)</span><br><span class="line">config.setdefault(&#39;SESSION_MONGODB_COLLECT&#39;, &#39;sessions&#39;)</span><br><span class="line">config.setdefault(&#39;SESSION_SQLALCHEMY&#39;, None)</span><br><span class="line">config.setdefault(&#39;SESSION_SQLALCHEMY_TABLE&#39;, &#39;sessions&#39;)</span><br><span class="line"></span><br><span class="line">if config[&#39;SESSION_TYPE&#39;] &#x3D;&#x3D; &#39;redis&#39;:</span><br><span class="line">    session_interface &#x3D; RedisSessionInterface(</span><br><span class="line">        config[&#39;SESSION_REDIS&#39;], config[&#39;SESSION_KEY_PREFIX&#39;],</span><br><span class="line">        config[&#39;SESSION_USE_SIGNER&#39;], config[&#39;SESSION_PERMANENT&#39;])</span><br><span class="line">elif config[&#39;SESSION_TYPE&#39;] &#x3D;&#x3D; &#39;memcached&#39;:</span><br><span class="line">    session_interface &#x3D; MemcachedSessionInterface(</span><br><span class="line">        config[&#39;SESSION_MEMCACHED&#39;], config[&#39;SESSION_KEY_PREFIX&#39;],</span><br><span class="line">        config[&#39;SESSION_USE_SIGNER&#39;], config[&#39;SESSION_PERMANENT&#39;])</span><br><span class="line">elif config[&#39;SESSION_TYPE&#39;] &#x3D;&#x3D; &#39;filesystem&#39;:</span><br><span class="line">    session_interface &#x3D; FileSystemSessionInterface(</span><br><span class="line">        config[&#39;SESSION_FILE_DIR&#39;], config[&#39;SESSION_FILE_THRESHOLD&#39;],</span><br><span class="line">        config[&#39;SESSION_FILE_MODE&#39;], config[&#39;SESSION_KEY_PREFIX&#39;],</span><br><span class="line">        config[&#39;SESSION_USE_SIGNER&#39;], config[&#39;SESSION_PERMANENT&#39;])</span><br><span class="line">elif config[&#39;SESSION_TYPE&#39;] &#x3D;&#x3D; &#39;mongodb&#39;:</span><br><span class="line">    session_interface &#x3D; MongoDBSessionInterface(</span><br><span class="line">        config[&#39;SESSION_MONGODB&#39;], config[&#39;SESSION_MONGODB_DB&#39;],</span><br><span class="line">        config[&#39;SESSION_MONGODB_COLLECT&#39;],</span><br><span class="line">        config[&#39;SESSION_KEY_PREFIX&#39;], config[&#39;SESSION_USE_SIGNER&#39;],</span><br><span class="line">        config[&#39;SESSION_PERMANENT&#39;])</span><br><span class="line">elif config[&#39;SESSION_TYPE&#39;] &#x3D;&#x3D; &#39;sqlalchemy&#39;:</span><br><span class="line">    session_interface &#x3D; SqlAlchemySessionInterface(</span><br><span class="line">        app, config[&#39;SESSION_SQLALCHEMY&#39;],</span><br><span class="line">        config[&#39;SESSION_SQLALCHEMY_TABLE&#39;],</span><br><span class="line">        config[&#39;SESSION_KEY_PREFIX&#39;], config[&#39;SESSION_USE_SIGNER&#39;],</span><br><span class="line">        config[&#39;SESSION_PERMANENT&#39;])</span><br><span class="line">else:</span><br><span class="line">    session_interface &#x3D; NullSessionInterface()</span><br><span class="line"></span><br><span class="line">return session_interface</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">from flask import Flask, session</span><br><span class="line">from flask_redis import FlaskRedis</span><br><span class="line">from flask_session import Session</span><br><span class="line"></span><br><span class="line">app &#x3D; Flask(__name__)</span><br><span class="line"># 必须设置</span><br><span class="line">secret_key &#x3D; &#39;asfasfs&#39;</span><br><span class="line">redis &#x3D; FlaskRedis()</span><br><span class="line">session_store &#x3D; Session()</span><br><span class="line">app.config[&#39;PERMANENT_SESSION_LIFETIME&#39;] &#x3D; timedelta(days&#x3D;7) # 设置session 的时间为7天</span><br><span class="line">class Config():</span><br><span class="line">    # DEBUG调试模式</span><br><span class="line">    DEBUG &#x3D; True</span><br><span class="line">    # json多字节转unicode编码</span><br><span class="line">    JSON_AS_ASCII &#x3D; False</span><br><span class="line">    # 数据库链接配置</span><br><span class="line">    SECRET_KEY &#x3D; &quot;*(%#4sxcz(^(#$#8423&quot;</span><br><span class="line">    # session存储方式为redis</span><br><span class="line">    SESSION_TYPE &#x3D; &quot;redis&quot;</span><br><span class="line">    # session保存数据到redis时启用的链接对象</span><br><span class="line">    SESSION_REDIS &#x3D; redis</span><br><span class="line">    # 如果设置session的生命周期是否是会话期, 为True，则关闭浏览器session就失效</span><br><span class="line">    SESSION_PERMANENT &#x3D; True</span><br><span class="line">    # 是否对发送到浏览器上session的cookie值进行加密</span><br><span class="line">    SESSION_USE_SIGNER &#x3D; True</span><br><span class="line">    # 保存到redis的session数的名称前缀</span><br><span class="line">    SESSION_KEY_PREFIX &#x3D; &quot;session:&quot;</span><br><span class="line">    # redis的链接配置</span><br><span class="line">    REDIS_URL &#x3D; &quot;redis:&#x2F;&#x2F;localhost:6379&#x2F;1&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.config.from_object(Config)</span><br><span class="line"># 初始化redis</span><br><span class="line">redis.init_app(app)</span><br><span class="line"># 初始化session_store</span><br><span class="line">session_store.init_app(app)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="session的应用"><a href="#session的应用" class="headerlink" title="session的应用"></a>session的应用</h4><ul>
+<li>1.登录，做用户标识，存储一些用户的信息在session中。</li>
+<li>2.购物车</li>
+</ul>
+<h4 id="session的缺点"><a href="#session的缺点" class="headerlink" title="session的缺点"></a>session的缺点</h4><ul>
+<li>1.存储在服务器，当同一时间有很多用户登录造成巨大服务器压力</li>
+<li>2.会话结束session过期</li>
+<li>3.不支持跨域</li>
+</ul>
+<h3 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h3><h4 id="修改配置-amp-参数解析"><a href="#修改配置-amp-参数解析" class="headerlink" title="修改配置&amp;参数解析"></a>修改配置&amp;参数解析</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">通过make_response.set_cookie设置</span><br><span class="line">response.set_cookie(</span><br><span class="line">            app.session_cookie_name,</span><br><span class="line">            val,</span><br><span class="line">            expires&#x3D;expires,</span><br><span class="line">            httponly&#x3D;httponly,</span><br><span class="line">            domain&#x3D;domain,</span><br><span class="line">            path&#x3D;path,</span><br><span class="line">            secure&#x3D;secure,</span><br><span class="line">            samesite&#x3D;samesite,</span><br><span class="line">        )</span><br><span class="line">httponly:只能http访问</span><br><span class="line">domain:设置域访问</span><br><span class="line">path:定制访问路径</span><br><span class="line">secure:是否仅通过安全的https,值为0或1，如果值为1，</span><br><span class="line">则cookie只能在https连接上有效，默认值为0，表示cookie</span><br><span class="line">在http和https连接上都有效</span><br><span class="line">samesite:</span><br><span class="line">三种模式Strict&#x2F;Lax&#x2F;None</span><br><span class="line">Strict:第三方的cookie不能合并到一起发送</span><br><span class="line">Lax:第三方部分cookie可以一起发送，图片、script、链接</span><br><span class="line">None:都可以</span><br></pre></td></tr></table></figure>
+<h4 id="cookie的应用"><a href="#cookie的应用" class="headerlink" title="cookie的应用"></a>cookie的应用</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1.一般用来做用户标识的键值对(第一次登录生成token)</span><br><span class="line">2.购物车功能，(比如京东)把购物车商品放在cookie中，序列化商品的属性，键值存放</span><br><span class="line">3.存储用户的一些配置</span><br><span class="line">4.记录用户的浏览数据，以便后续更好的服务（广告）</span><br></pre></td></tr></table></figure>
+
+<h4 id="cookie的缺点"><a href="#cookie的缺点" class="headerlink" title="cookie的缺点"></a>cookie的缺点</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1.大小最大为4KB，不能存很大的数据</span><br><span class="line">2.http中明文传输，存储在本地，容易被获取</span><br><span class="line">3.cookie如果不设置path之类的，会在每个请求中都携带，增大流量消耗</span><br></pre></td></tr></table></figure>
+
+<h2 id="flash"><a href="#flash" class="headerlink" title="flash"></a>flash</h2><p>原理是通过session存取,放到session的一个list里面,session基于用户已经隔离开了.<br>应用于对临时信息的操作<br>从某个地方获取设置过得所有值并清除.类似pop</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">from flask import flash, get_flashed_messages</span><br><span class="line">app.secret_key &#x3D; &#39;sfafa&#39;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@app.route(&#39;&#x2F;get&#39;)</span><br><span class="line">def get():</span><br><span class="line">    data &#x3D; get_flashed_messages()</span><br><span class="line">    print(data)</span><br><span class="line">    return str(data)</span><br><span class="line">@app.route(&#39;&#x2F;set&#39;)</span><br><span class="line">def set():</span><br><span class="line">    flash(&#39;啊手动阀&#39;)</span><br><span class="line">    return &#39;aafafasfa&#39;</span><br><span class="line"></span><br><span class="line">比如:</span><br><span class="line">flash(‘超时错误’, category&#x3D;’x1’)</span><br><span class="line">get_flashed_messages(category_filter&#x3D;[‘x1’])</span><br><span class="line">网页view错误后跳转到另外一个网页需要显示详细错误</span><br><span class="line">通过category分类拿去正确的错误信息</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="请求扩展request-extension"><a href="#请求扩展request-extension" class="headerlink" title="请求扩展request-extension"></a>请求扩展request-extension</h2><p>如果一个装饰器每个视图都需要,其实就可以改为中间件实现,flask叫做请求扩展.如登录验证.</p>
+<h3 id="请求前before-request"><a href="#请求前before-request" class="headerlink" title="请求前before_request"></a>请求前before_request</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@app.before_request</span><br><span class="line">def before_req(*args, **kwargs):</span><br><span class="line">    print(&#39;asdffffffff&#39;)</span><br><span class="line"># 等同于django的process_request</span><br><span class="line"># 需要在其中设置白名单,如果视图在白名单就不执行该扩展</span><br><span class="line">if request.path in 白名单:</span><br><span class="line">	return None</span><br></pre></td></tr></table></figure>
+<ul>
+<li>例子<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from flask import session, redirect</span><br><span class="line">@app.before_request</span><br><span class="line">def process_request(*args, **kwargs):</span><br><span class="line">    if request.path &#x3D;&#x3D; &#39;&#x2F;login&#39;:</span><br><span class="line">        return None</span><br><span class="line">    user &#x3D; session.get(&#39;user_info&#39;)</span><br><span class="line">    if user:</span><br><span class="line">        return None</span><br><span class="line">    return redirect(&quot;&#x2F;login&quot;)</span><br><span class="line">    print(&#39;asdffffffff&#39;)</span><br></pre></td></tr></table></figure>
+<h3 id="请求后after-request"><a href="#请求后after-request" class="headerlink" title="请求后after_request"></a>请求后after_request</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@app.after_request</span><br><span class="line">def process_response(resposne):</span><br><span class="line">    return resposne</span><br><span class="line">如果request拦截,response还是全部执行,但view不执行,与django的老版中间件类似</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="error后errorhandler-404"><a href="#error后errorhandler-404" class="headerlink" title="error后errorhandler(404)"></a>error后errorhandler(404)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@app.errorhandler(404)</span><br><span class="line">def error_response(*args, **kwargs):</span><br><span class="line">    return &quot;404 not found&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="模板中定制方法template-global"><a href="#模板中定制方法template-global" class="headerlink" title="模板中定制方法template_global()"></a>模板中定制方法template_global()</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@app.template_global()</span><br><span class="line">def sc(a1, b1):</span><br><span class="line">    return a1 + b1</span><br><span class="line">这样就可以在模板中直接调用函数</span><br><span class="line">使用&#123;  &#123;sdfafa sc(1, 2) &#125;  &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="第一次请求的时候做的操作before-first-request"><a href="#第一次请求的时候做的操作before-first-request" class="headerlink" title="第一次请求的时候做的操作before_first_request"></a>第一次请求的时候做的操作before_first_request</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@app.before_first_request</span><br><span class="line">def axiba(*args, **kwargs):</span><br><span class="line">    return None</span><br><span class="line">应用场景在于带动异步健康函数启动监视，如果发现异常截断往后所有的请求，停止服务</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="中间件middleware"><a href="#中间件middleware" class="headerlink" title="中间件middleware"></a>中间件middleware</h2><p>请求之前定制一些操作，之后也定制一些，比如打印请求log，多实例<br>当请求到来之后，运行run_simple(host, port, self, **options)<br>执行第三个参数的__call__也就是self()</p>
+<ul>
+<li>app.__call__()<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">def __call__(self, environ, start_response):</span><br><span class="line">    &quot;&quot;&quot;The WSGI server calls the Flask application object as the</span><br><span class="line">    WSGI application. This calls :meth:&#96;wsgi_app&#96; which can be</span><br><span class="line">    wrapped to applying middleware.&quot;&quot;&quot;</span><br><span class="line">    return self.wsgi_app(environ, start_response)</span><br></pre></td></tr></table></figure></li>
+<li>中间件：把wsgi_app做一个封装即可在中间加入自己的一些参数变量<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">class Md:</span><br><span class="line">    def __init__(self, old_wsgi_app):</span><br><span class="line">        self.old_wsgi_app &#x3D; old_wsgi_app</span><br><span class="line">    </span><br><span class="line">    def __call__(self, environ, start_response):</span><br><span class="line">        print(&#39;开始之前&#39;)</span><br><span class="line">        ret &#x3D; self.old_wsgi_app(environ, start_response)</span><br><span class="line">        print(&#39;结束之后&#39;)</span><br><span class="line">        return ret</span><br><span class="line">        </span><br><span class="line">if __name__ &#x3D;&#x3D; &quot;__main__&quot;:</span><br><span class="line">    app.wsgi_app &#x3D; Md(app.wsgi_app)</span><br><span class="line">    app.run()</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="蓝图blueprint"><a href="#蓝图blueprint" class="headerlink" title="蓝图blueprint"></a>蓝图blueprint</h2><p>一个程序不可能就一个py文件，flask如何实现由多个py文件来实现一个项目</p>
+<h3 id="普通架构思路"><a href="#普通架构思路" class="headerlink" title="普通架构思路"></a>普通架构思路</h3><p>通过__init__把文件联系到一起</p>
+<ul>
+<li>架构<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">app.py</span><br><span class="line">views</span><br><span class="line">	__init__.py</span><br><span class="line">	account.py</span><br><span class="line">	user.py</span><br><span class="line">	order.py</span><br></pre></td></tr></table></figure></li>
+<li>init.py<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from flask import Flask</span><br><span class="line">app &#x3D; Flask(__name__)</span><br><span class="line">from . import account, user, order</span><br></pre></td></tr></table></figure></li>
+<li>account.py,user.py,order.py<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">from . import app</span><br><span class="line"></span><br><span class="line">@app.route(&#39;account&#x2F;index&#39;)</span><br><span class="line">def index():</span><br><span class="line">    return &#39;index&#39;</span><br><span class="line"></span><br><span class="line">@app.route(&#39;account&#x2F;login&#39;)</span><br><span class="line">def login():</span><br><span class="line">    return &#39;login&#39;</span><br><span class="line"></span><br><span class="line">@app.route(&#39;account&#x2F;logout&#39;)</span><br><span class="line">def logout():</span><br><span class="line">    return &#39;logout&#39;</span><br></pre></td></tr></table></figure></li>
+<li>app.py<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from views import app</span><br><span class="line"></span><br><span class="line">if __name__ &#x3D;&#x3D; &#39;__main__&#39;:</span><br><span class="line">    app.run()</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="蓝图使用"><a href="#蓝图使用" class="headerlink" title="蓝图使用"></a>蓝图使用</h3><p>蓝图相当于帮我们做好了以上架构工作，并且可以指定static、template、prefix等</p>
+<ul>
+<li><p>架构</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">app.py</span><br><span class="line">pro_flask</span><br><span class="line">__init__.py</span><br><span class="line">	statics</span><br><span class="line">	templates</span><br><span class="line">	views</span><br><span class="line">		account.py</span><br><span class="line">		user.py</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>account.py</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">from flask import Blueprint, render_template</span><br><span class="line">account &#x3D; Blueprint(&#39;account&#39;, __name__, url_prefix&#x3D;&#39;&#x2F;account&#39;, template_folder&#x3D;&#39;templates&#39;)</span><br><span class="line">@account.route(&#39;&#x2F;index1&#39;)</span><br><span class="line">def index1():</span><br><span class="line">    return render_template(&#39;login.html&#39;)</span><br><span class="line"></span><br><span class="line">@account.route(&#39;&#x2F;login1&#39;)</span><br><span class="line">def login1():</span><br><span class="line">    return &#39;login&#39;</span><br><span class="line"></span><br><span class="line">@account.route(&#39;&#x2F;logout1&#39;)</span><br><span class="line">def logout1():</span><br><span class="line">    return &#39;logout&#39;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>init.py</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from flask import Flask</span><br><span class="line">from .views.account import account</span><br><span class="line">from .views.user import user</span><br><span class="line"></span><br><span class="line">app &#x3D; Flask(__name__, template_folder&#x3D;&#39;templates&#39;, static_folder&#x3D;&#39;statics&#39;, static_url_path&#x3D;&#39;&#x2F;static&#39;)</span><br><span class="line"></span><br><span class="line">app.register_blueprint(account)</span><br><span class="line">app.register_blueprint(user)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>app.py</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from pro_flask import app</span><br><span class="line">if __name__ &#x3D;&#x3D; &#39;__main__&#39;:</span><br><span class="line">    app.run()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>flask专用的蓝图</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@account.before_request</span><br><span class="line">def process_request(*args, **kwargs):</span><br><span class="line">    print(&#39;come on&#39;)</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://example.com/2021/06/08/flask%E7%AE%80%E4%BB%8B/" data-id="ckpowa9pe000kfwmzegdde5u4" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "durian"
+        },
+        "headline": "flask基本介绍",
+        "image": "http://example.com/css/images/gu.jpg",
+        "keywords": "",
+        "genre": "webframe flask",
+        "datePublished": "2021-06-08",
+        "dateCreated": "2021-06-08",
+        "dateModified": "2021-06-09",
+        "url": "http://example.com/2021/06/08/flask简介/",
+        "description": "配置文件配置方式
+1.单个配置
+1flask.config[‘xxx’] &#x3D; xxx
+
+2.可以像django一样文件配置
+1234DEBUG &#x3D; TrueTESTING &#x3D; TrueDATABASE_URI&#x3D;&#39;127.0.0.1:XXX&#39;flask.config.from_pyfile(‘某个文件setting’)
+
+3.类配置 生产环境一",
+        "wordCount": 5729
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <!-- Valine -->
+    <div class="vcomments"></div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="stack-overflow" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-stack-overflow"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/ppoffice/hexo-theme-hueman" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2021/06/08/flask%E4%B8%8Edjango%E6%AF%94%E8%BE%83/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            flask和django比较
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2021/06/08/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">分布式锁</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+<div class="widget-wrap widget-list">
+    <h3 class="widget-title">目录</h3>
+    <div class="widget">
+        <div id="toc" class="toc-article">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">1.</span> <span class="toc-text">配置文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%96%B9%E5%BC%8F"><span class="toc-number">1.1.</span> <span class="toc-text">配置方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90"><span class="toc-number">1.2.</span> <span class="toc-text">源码解析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1route"><span class="toc-number">2.</span> <span class="toc-text">路由route</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%A6%E7%BB%86%E9%85%8D%E7%BD%AE"><span class="toc-number">2.1.</span> <span class="toc-text">详细配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%99%AE%E9%80%9A%E5%8C%B9%E9%85%8D%E6%A8%A1%E5%BC%8F%E5%8F%8A%E5%85%B6%E4%BC%A0%E5%8F%82%E6%96%B9%E6%B3%95"><span class="toc-number">2.1.1.</span> <span class="toc-text">普通匹配模式及其传参方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%EF%BC%9F%E5%8C%B9%E9%85%8D"><span class="toc-number">2.1.2.</span> <span class="toc-text">通过？匹配</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8C%B9%E9%85%8D%E6%A8%A1%E5%BC%8F%EF%BC%88%E6%AD%A3%E5%88%99%EF%BC%89"><span class="toc-number">2.2.</span> <span class="toc-text">自定义匹配模式（正则）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%A6%E8%A7%A3%E5%90%84%E5%8F%82%E6%95%B0%E4%BD%9C%E7%94%A8"><span class="toc-number">2.3.</span> <span class="toc-text">详解各参数作用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90"><span class="toc-number">2.4.</span> <span class="toc-text">源码分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A3%85%E9%A5%B0%E5%99%A8%E7%9A%84route"><span class="toc-number">2.4.1.</span> <span class="toc-text">装饰器的route</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F"><span class="toc-number">2.4.2.</span> <span class="toc-text">注意</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%9F%E6%88%90rule"><span class="toc-number">2.4.3.</span> <span class="toc-text">生成rule</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#rule%E5%8F%82%E6%95%B0%E8%A7%A3%E6%9E%90"><span class="toc-number">2.4.4.</span> <span class="toc-text">rule参数解析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#url%E5%8A%A0%E5%85%A5url-map"><span class="toc-number">2.4.5.</span> <span class="toc-text">url加入url_map</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%BF%E9%97%AEurl%E7%9A%84%E6%AD%A5%E9%AA%A4"><span class="toc-number">2.4.6.</span> <span class="toc-text">访问url的步骤</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#template%E6%A8%A1%E6%9D%BF"><span class="toc-number">3.</span> <span class="toc-text">template模板</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%B8%A6%E9%98%B2xss%E6%94%BB%E5%87%BB"><span class="toc-number">3.1.</span> <span class="toc-text">自带防xss攻击</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%94%AF%E6%8C%81%E5%AE%8F%E5%AE%9A%E4%B9%89"><span class="toc-number">3.2.</span> <span class="toc-text">支持宏定义</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#request-amp-response"><span class="toc-number">4.</span> <span class="toc-text">request&amp;response</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#request"><span class="toc-number">4.1.</span> <span class="toc-text">request</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#response"><span class="toc-number">4.2.</span> <span class="toc-text">response</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#session-amp-cookie"><span class="toc-number">5.</span> <span class="toc-text">session&amp;cookie</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#session"><span class="toc-number">5.1.</span> <span class="toc-text">session</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8"><span class="toc-number">5.1.1.</span> <span class="toc-text">基础使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-1"><span class="toc-number">5.1.2.</span> <span class="toc-text">源码解析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#flask-session"><span class="toc-number">5.1.3.</span> <span class="toc-text">flask_session</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#session%E7%9A%84%E5%BA%94%E7%94%A8"><span class="toc-number">5.1.4.</span> <span class="toc-text">session的应用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#session%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="toc-number">5.1.5.</span> <span class="toc-text">session的缺点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cookie"><span class="toc-number">5.2.</span> <span class="toc-text">cookie</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE-amp-%E5%8F%82%E6%95%B0%E8%A7%A3%E6%9E%90"><span class="toc-number">5.2.1.</span> <span class="toc-text">修改配置&amp;参数解析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#cookie%E7%9A%84%E5%BA%94%E7%94%A8"><span class="toc-number">5.2.2.</span> <span class="toc-text">cookie的应用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#cookie%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="toc-number">5.2.3.</span> <span class="toc-text">cookie的缺点</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#flash"><span class="toc-number">6.</span> <span class="toc-text">flash</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E6%89%A9%E5%B1%95request-extension"><span class="toc-number">7.</span> <span class="toc-text">请求扩展request-extension</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E5%89%8Dbefore-request"><span class="toc-number">7.1.</span> <span class="toc-text">请求前before_request</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E5%90%8Eafter-request"><span class="toc-number">7.2.</span> <span class="toc-text">请求后after_request</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#error%E5%90%8Eerrorhandler-404"><span class="toc-number">7.3.</span> <span class="toc-text">error后errorhandler(404)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E6%9D%BF%E4%B8%AD%E5%AE%9A%E5%88%B6%E6%96%B9%E6%B3%95template-global"><span class="toc-number">7.4.</span> <span class="toc-text">模板中定制方法template_global()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AC%A1%E8%AF%B7%E6%B1%82%E7%9A%84%E6%97%B6%E5%80%99%E5%81%9A%E7%9A%84%E6%93%8D%E4%BD%9Cbefore-first-request"><span class="toc-number">7.5.</span> <span class="toc-text">第一次请求的时候做的操作before_first_request</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E9%97%B4%E4%BB%B6middleware"><span class="toc-number">8.</span> <span class="toc-text">中间件middleware</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%93%9D%E5%9B%BEblueprint"><span class="toc-number">9.</span> <span class="toc-text">蓝图blueprint</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%99%AE%E9%80%9A%E6%9E%B6%E6%9E%84%E6%80%9D%E8%B7%AF"><span class="toc-number">9.1.</span> <span class="toc-text">普通架构思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%93%9D%E5%9B%BE%E4%BD%BF%E7%94%A8"><span class="toc-number">9.2.</span> <span class="toc-text">蓝图使用</span></a></li></ol></li></ol>
+        </div>
+    </div>
+</div>
+
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/09/flask%E8%BF%9E%E6%8E%A5redis%E9%9B%86%E7%BE%A4/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2021/06/09/flask%E8%BF%9E%E6%8E%A5redis%E9%9B%86%E7%BE%A4/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-09T02:25:42.189Z" itemprop="datePublished">2021-06-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/09/jwt/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/gu.jpg)" alt="jwt" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/webframe/">webframe</a></p>
+                            <p class="item-title"><a href="/2021/06/09/jwt/" class="title">jwt</a></p>
+                            <p class="item-date"><time datetime="2021-06-09T02:24:41.638Z" itemprop="datePublished">2021-06-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/09/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/gu.jpg)" alt="单点登录" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/webframe/">webframe</a></p>
+                            <p class="item-title"><a href="/2021/06/09/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95/" class="title">单点登录</a></p>
+                            <p class="item-date"><time datetime="2021-06-09T02:24:41.638Z" itemprop="datePublished">2021-06-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/08/flask-sqlaAchemy/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2021/06/08/flask-sqlaAchemy/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-08T03:54:22.148Z" itemprop="datePublished">2021-06-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/08/flask-wtforms/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2021/06/08/flask-wtforms/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-08T03:53:04.318Z" itemprop="datePublished">2021-06-08</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/">nosql</a><span class="category-list-count">14</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis/">redis</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a><span class="category-list-count">7</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/">webframe</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/flask/">flask</a><span class="category-list-count">2</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">28</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+
+            
+                
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2021 durian</p>
+                
+                <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
+                
+            </div>
+                <p><span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span></p>
+                <p><span id="busuanzi_container_site_uv"> 
+                     本站访客数<span id="busuanzi_value_site_uv"></span>人次
+               </span></p>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+    <script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
+</footer>
+
+    </div>
+    
+    
+    <script src="//unpkg.com/valine"></script>
+    <script>
+        var GUEST = ['nick','mail','link'];
+        var meta = '';
+        meta = meta.split(',').filter(function (item) {
+            return GUEST.indexOf(item)>-1;
+        });
+        var avatarcdn = 'gravatar.cat.net' == true;
+        new Valine({
+            el: '.vcomments',
+            notify: "false",
+            verify: "false",
+            appId: "795P9DunI2Jv3Jho36dlueIS-gzGzoHsz",
+            appKey: "pM151YCVhYBYTB9Pt1SRuiKs",
+            placeholder: "Just Do It",
+            avatar:"mm",
+            recordIP:"false",
+            visitor: "true"
+        });
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,829 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>分布式锁 | 春江花月夜o</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="" />
+    
+    <meta name="description" content="分布式锁介绍当多个系统并发操作redis如何处理？主要方法是使用分布式锁，抢到锁的做set操作·。分布式锁实现方式分布式锁 为什么需要分布式锁？ 1.避免不同的节点做相同的工作，比如发送短信通知。 2.避免同时操作一个数据导致数据正确性出现问题。比如多个节点操作同一个订单流程，还没付款已经结账了，或者同时操作一个库存，导致不一致。  2.分布式锁的特点 1.互斥性保证在不同节点不同线程的互斥。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分布式锁">
+<meta property="og:url" content="http://example.com/2021/06/08/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/index.html">
+<meta property="og:site_name" content="春江花月夜o">
+<meta property="og:description" content="分布式锁介绍当多个系统并发操作redis如何处理？主要方法是使用分布式锁，抢到锁的做set操作·。分布式锁实现方式分布式锁 为什么需要分布式锁？ 1.避免不同的节点做相同的工作，比如发送短信通知。 2.避免同时操作一个数据导致数据正确性出现问题。比如多个节点操作同一个订单流程，还没付款已经结账了，或者同时操作一个库存，导致不一致。  2.分布式锁的特点 1.互斥性保证在不同节点不同线程的互斥。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/css/images/hai.png">
+<meta property="article:published_time" content="2021-06-08T03:17:52.074Z">
+<meta property="article:modified_time" content="2021-06-08T03:42:07.435Z">
+<meta property="article:author" content="durian">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/css/images/hai.png">
+    
+
+    
+        <link rel="alternate" href="/" title="春江花月夜o" type="application/atom+xml" />
+    
+
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">关于</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">python</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">cpp</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">webframe</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                                <a class="main-nav-list-link" href="/null">flask</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">django</a>
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">algorithm</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">bigdata</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">nosql</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                                <a class="main-nav-list-link" href="/null"> redis</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">mysql</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null"> redis高级篇</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">mysql高级篇</a>
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-分布式锁" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        分布式锁
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2021/06/08/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" class="article-date">
+       <time datetime="2021-06-08T03:17:52.074Z" itemprop="datePublished">2021-06-08</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/2021/06/08/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" class="article-date">
+     <time datetime="2021-06-08T03:42:07.435Z" itemprop="dateModified">2021-06-08</time>
+  </a>
+</div>
+
+
+                
+
+                
+                
+   <div class="article-counter">
+      <i class="fa fa-file-word-o"></i>
+      <span class="post-count-item-text">本文字数: </span>
+      <span class="post-count">2.4k</span>
+      <i class="fa fa-clock-o"></i>
+      <span class="post-time-item-text">阅读时长: </span>
+      <span class="post-count">9 分钟 </span>
+   </div>
+
+
+                <span id="busuanzi_container_page_pv">
+                阅读次数<span id="busuanzi_value_page_pv"></span>次
+                </span>
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <h2 id="分布式锁介绍"><a href="#分布式锁介绍" class="headerlink" title="分布式锁介绍"></a>分布式锁介绍</h2><p>当多个系统并发操作redis如何处理？<br>主要方法是使用分布式锁，抢到锁的做set操作·。<br><a target="_blank" rel="noopener" href="https://juejin.im/post/6844903830442737671">分布式锁实现方式</a><br><a target="_blank" rel="noopener" href="https://juejin.im/post/6844903688088059912">分布式锁</a></p>
+<h3 id="为什么需要分布式锁？"><a href="#为什么需要分布式锁？" class="headerlink" title="为什么需要分布式锁？"></a>为什么需要分布式锁？</h3><ul>
+<li>1.避免不同的节点做相同的工作，比如发送短信通知。</li>
+<li>2.避免同时操作一个数据导致数据正确性出现问题。比如多个节点操作同一个订单流程，<br>还没付款已经结账了，或者同时操作一个库存，导致不一致。</li>
+</ul>
+<h3 id="2-分布式锁的特点"><a href="#2-分布式锁的特点" class="headerlink" title="2.分布式锁的特点"></a>2.分布式锁的特点</h3><ul>
+<li><p>1.互斥性<br>保证在不同节点不同线程的互斥。</p>
+</li>
+<li><p>2.可重入<br>同一个节点上的同一个线程如果获取过该锁，那么可以再次获取。<br>若一个程序或子程序可以“在任意时刻被中断然后操作系统调度执行另一段代码，<br>且这段代码又掉用了子程序不会出错，则称其为可重入”。即在該子程序在运行时，<br>执行线程可以再次进入并执行它。仍然获得符合符合设计预期的结果。与多线程并<br>发执行的线程安全不同，可重入强调对单个线程执行时重新进入同一个子程序任然<br>是安全的。</p>
+</li>
+<li><p>如果想要实现锁的重入，至少要解决一下两个问题</p>
+<ul>
+<li>线程再次获取锁：锁需要去识别获取锁的线程是否为当前占据锁的线程，如果是，则再次成功获取。</li>
+<li>锁的最终释放：线程重复n次获取了锁，随后在n次释放该锁后，其他线程能够获取该锁。锁的最终释<br>放要求锁对于获取进行计数自增，计数表示当前锁被重复获取的次数，而锁被释放时，计数自减，当计数<br>等于0时表示锁已经释放<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"># python treading.local中的可重入锁，其实就是加一个计数器</span><br><span class="line">def RLock(*args, **kwargs):</span><br><span class="line">    if _CRLock is None:</span><br><span class="line">        return _PyRLock(*args, **kwargs)</span><br><span class="line">    return _CRLock(*args, **kwargs)</span><br><span class="line"></span><br><span class="line">class _RLock:</span><br><span class="line">    def __init__(self):</span><br><span class="line">        self._block &#x3D; _allocate_lock()</span><br><span class="line">        self._owner &#x3D; None</span><br><span class="line">        self._count &#x3D; 0</span><br><span class="line"></span><br><span class="line">    def __repr__(self):</span><br><span class="line">        owner &#x3D; self._owner</span><br><span class="line">        try:</span><br><span class="line">            owner &#x3D; _active[owner].name</span><br><span class="line">        except KeyError:</span><br><span class="line">            pass</span><br><span class="line">        return &quot;&lt;%s %s.%s object owner&#x3D;%r count&#x3D;%d at %s&gt;&quot; % (</span><br><span class="line">            &quot;locked&quot; if self._block.locked() else &quot;unlocked&quot;,</span><br><span class="line">            self.__class__.__module__,</span><br><span class="line">            self.__class__.__qualname__,</span><br><span class="line">            owner,</span><br><span class="line">            self._count,</span><br><span class="line">            hex(id(self))</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    def acquire(self, blocking&#x3D;True, timeout&#x3D;-1):</span><br><span class="line">        me &#x3D; get_ident()</span><br><span class="line">        if self._owner &#x3D;&#x3D; me:</span><br><span class="line">            self._count +&#x3D; 1</span><br><span class="line">            return 1</span><br><span class="line">        rc &#x3D; self._block.acquire(blocking, timeout)</span><br><span class="line">        if rc:</span><br><span class="line">            self._owner &#x3D; me</span><br><span class="line">            self._count &#x3D; 1</span><br><span class="line">        return rc</span><br><span class="line"></span><br><span class="line">    __enter__ &#x3D; acquire</span><br><span class="line"></span><br><span class="line">    def release(self):</span><br><span class="line">        if self._owner !&#x3D; get_ident():</span><br><span class="line">            raise RuntimeError(&quot;cannot release un-acquired lock&quot;)</span><br><span class="line">        self._count &#x3D; count &#x3D; self._count - 1</span><br><span class="line">        if not count:</span><br><span class="line">            self._owner &#x3D; None</span><br><span class="line">            self._block.release()</span><br><span class="line"></span><br><span class="line">    def __exit__(self, t, v, tb):</span><br><span class="line">        self.release()</span><br><span class="line"></span><br><span class="line">    # Internal methods used by condition variables</span><br><span class="line"></span><br><span class="line">    def _acquire_restore(self, state):</span><br><span class="line">        self._block.acquire()</span><br><span class="line">        self._count, self._owner &#x3D; state</span><br><span class="line"></span><br><span class="line">    def _release_save(self):</span><br><span class="line">        if self._count &#x3D;&#x3D; 0:</span><br><span class="line">            raise RuntimeError(&quot;cannot release un-acquired lock&quot;)</span><br><span class="line">        count &#x3D; self._count</span><br><span class="line">        self._count &#x3D; 0</span><br><span class="line">        owner &#x3D; self._owner</span><br><span class="line">        self._owner &#x3D; None</span><br><span class="line">        self._block.release()</span><br><span class="line">        return (count, owner)</span><br><span class="line"></span><br><span class="line">    def _is_owned(self):</span><br><span class="line">        return self._owner &#x3D;&#x3D; get_ident()</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>3.超时设置<br>防止死锁</p>
+</li>
+<li><p>4.高效<br>高可用:加锁和解锁需要高效，同时也需要保证高可用防止分布式锁失效，可以增加降级。</p>
+</li>
+<li><p>5.阻塞和非阻塞<br>阻塞：<br>如果获取不到锁就一直获取。（增加一个监听）<br>非阻塞：<br>如果获取不到锁就直接返回（或者定义个时间多久获取不到就直接返回）。</p>
+</li>
+</ul>
+<h2 id="分布式锁的实现"><a href="#分布式锁的实现" class="headerlink" title="分布式锁的实现"></a>分布式锁的实现</h2><h3 id="redis-setnx"><a href="#redis-setnx" class="headerlink" title="redis setnx"></a>redis setnx</h3><p>使用lua脚本保证操作的原子性，防止操作到某一步机器挂掉。<br>客户端通过setnx+lua获取锁判断逻辑</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import redis</span><br><span class="line">r &#x3D; redis.Redis(&#39;10.167.219.250&#39;, port&#x3D;8001, db&#x3D;5)</span><br><span class="line"></span><br><span class="line">def try_lock_with_lua(key, val, second):</span><br><span class="line">    lua_scripts &#x3D; &quot;if redis.call(&#39;setnx&#39;,KEYS[1],ARGV[1]) &#x3D;&#x3D; 1 then &quot; \</span><br><span class="line">                  &quot;redis.call(&#39;expire&#39;,KEYS[1],ARGV[2]) return 1 else return 0 end&quot;</span><br><span class="line"></span><br><span class="line">    res &#x3D; r.eval(lua_scripts, 1, key, val, second)</span><br><span class="line">    return res &#x3D;&#x3D; 1</span><br><span class="line"></span><br><span class="line">if try_lock_with_lua(&#39;k5555&#39;, &#39;11&#39;, 20):</span><br><span class="line">    print(1)</span><br></pre></td></tr></table></figure>
+
+<h3 id="redis-gt-2-6-12-set"><a href="#redis-gt-2-6-12-set" class="headerlink" title="redis &gt; 2.6.12 set"></a>redis &gt; 2.6.12 set</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">自从redis2.6.12以后，增加了set name value ex nx</span><br><span class="line">以保证操作的原子性。</span><br><span class="line">def try_lock_with_self(key, val, second):</span><br><span class="line">    res &#x3D; r.set(key, val, ex&#x3D;second, nx&#x3D;True)</span><br><span class="line">    return res &#x3D;&#x3D; 1</span><br><span class="line"></span><br><span class="line">if try_lock_with_self(&#39;k5554&#39;, &#39;11&#39;, 20):</span><br><span class="line">    print(1)</span><br></pre></td></tr></table></figure>
+
+<p>注意：</p>
+<ul>
+<li><p>1.value必须要有唯一性<br>随机字符串+redis判断，hash等方法保证。</p>
+<ul>
+<li>1.客户端1获取锁成功 </li>
+<li>2.客户端1在某个操作上阻塞了太长时间 </li>
+<li>3.设置的key过期了，锁自动释放了 </li>
+<li>4.客户端2获取到了对应同一个资源的锁 </li>
+<li>5.客户端1从阻塞中恢复过来，因为value值一样，所以执行释放锁操作时就会释放掉客户端2持有的锁，<br>这样就会造成问题。</li>
+</ul>
+</li>
+<li><p>2.释放锁<br>为了保证释放锁的原子性操作，选择使用lua脚本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">def release_lock_with_lua(key, val):</span><br><span class="line">    lua_script &#x3D; &quot;if redis.call(&#39;get&#39;,KEYS[1]) &#x3D;&#x3D; ARGV[1] then &quot; \</span><br><span class="line">            &quot;return redis.call(&#39;del&#39;,KEYS[1]) else return 0 end&quot;</span><br><span class="line">    res &#x3D; r.eval(lua_script, 1, key, val)</span><br><span class="line">    return res &#x3D;&#x3D; 1</span><br></pre></td></tr></table></figure>
+<p>使用 set key value [EX seconds][PX milliseconds][NX|XX] 命令 看上去很OK，<br>实际上在Redis集群的时候也会出现问题，比如说A客户端在Redis的master节点上拿到了锁，<br>但是这个加锁的key还没有同步到slave节点，master故障，发生故障转移，一个slave节点升<br>级为master节点，B客户端也可以获取同个key的锁，但客户端A也已经拿到锁了，这就导致多个<br>客户端都拿到锁。（简单来说就是同步延时的问题，主机节点的数据还没同步给slave就挂掉了）</p>
+</li>
+</ul>
+<h3 id="redlock-实现分布式锁"><a href="#redlock-实现分布式锁" class="headerlink" title="redlock 实现分布式锁"></a>redlock 实现分布式锁</h3><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/fba7dd6dcef5">redlock算法</a><br><a target="_blank" rel="noopener" href="https://www.cnpython.com/pypi/redlock">redission实现</a></p>
+<p>python 版redlock redlock-py</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install redlock-py</span><br></pre></td></tr></table></figure>
+
+<h4 id="redlock设计理念"><a href="#redlock设计理念" class="headerlink" title="redlock设计理念"></a>redlock设计理念</h4><p>一个Client想要获得一个锁需要以下几个操作：</p>
+<ul>
+<li><p>1    得到本地时间</p>
+</li>
+<li><p>2 Client使用相同的key和随机数,按照顺序在每个Master实例中尝试获得锁。<br>在获得锁的过程中，为每一个锁操作设置一个快速失败时间(如果想要获得一个10秒的锁，<br>那么每一个锁操作的失败时间设为5-50ms)。这样可以避免客户端与一个已经故障的Master<br>通信占用太长时间，通过快速失败的方式尽快的与集群中的其他节点完成锁操作。</p>
+</li>
+<li><p>3 客户端计算出与master获得锁操作过程中消耗的时间，当且仅当Client获得锁消耗的<br>时间小于锁的存活时间，并且在一半以上的master节点中获得锁。才认为client成功的获得了锁。</p>
+</li>
+<li><p>4 如果已经获得了锁，Client执行任务的时间窗口是锁的存活时间减去获得锁消耗的时间。</p>
+</li>
+<li><p>5 如果Client获得锁的数量不足一半以上，或获得锁的时间超时，那么认为获得锁失败。<br>客户端需要尝试在所有的master节点中释放锁， 即使在第二步中没有成功获得该Master节点中的锁，<br>仍要进行释放操作。</p>
+</li>
+</ul>
+<ul>
+<li><p>redlock算法成立条件<br>这个算法成立的一个条件是：即使集群中没有同步时钟，各个进程的时间流逝速度也要大体一致，<br>并且误差与锁存活时间相比是比较小的。实际应用中的计算机也能满足这个条件：各个计算机中间<br>有几毫秒的时钟漂移(clock drift)。</p>
+</li>
+<li><p>失败重试机制</p>
+</li>
+<li><p>如果一个Client无法获得锁，它将在一个随机延时后开始重试。使用随机延时的目的是为了与<br>其他申请同一个锁的Client错开申请时间，减少脑裂(split brain)发生的可能性。</p>
+</li>
+<li><p>脑裂</p>
+<ul>
+<li><p>三个Client同时尝试获得锁，分别获得了2,2,1个实例中的锁，三个锁请求全部失败。</p>
+</li>
+<li><p>一个client在全部Redis实例中完成的申请时间越短，发生脑裂的时间窗口越小。<br>所以比较理想的做法是同时向N个Redis实例发出异步的SET请求。<br>当Client没有在大多数Master中获得锁时，立即释放已经取得的锁时非常必要的。<br>(PS.当极端情况发生时，比如获得了部分锁以后，client发生网络故障，无法再释放<br>锁资源，那么其他client重新获得锁的时间将是锁的过期时间)。</p>
+</li>
+<li><p>无论Client认为在指定的Master中有没有获得锁，都需要执行释放锁操作。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="python简单实操redlock"><a href="#python简单实操redlock" class="headerlink" title="python简单实操redlock"></a>python简单实操redlock</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">from contextlib import contextmanager</span><br><span class="line">from redlock import Redlock</span><br><span class="line"></span><br><span class="line">@contextmanager</span><br><span class="line">def worker_lock_manager(key, ttl, **kwargs):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    分布式锁</span><br><span class="line">    :param key: 分布式锁ID</span><br><span class="line">    :param ttl: 分布式锁生存时间</span><br><span class="line">    :param kwargs: 可选参数字典</span><br><span class="line">    :return: None</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    redis_servers &#x3D; [&#123;</span><br><span class="line">        &#39;host&#39;: &#39;10.167.219.250&#39;,</span><br><span class="line">        &#39;port&#39;: 8001,</span><br><span class="line">        &#39;db&#39;: 5,</span><br><span class="line">    &#125;]</span><br><span class="line"></span><br><span class="line">    rlk &#x3D; Redlock(redis_servers)</span><br><span class="line"></span><br><span class="line">    # 获取锁</span><br><span class="line">    lock &#x3D; rlk.lock(key, ttl)</span><br><span class="line"></span><br><span class="line">    yield lock</span><br><span class="line">    print(1)</span><br><span class="line">    # 释放锁</span><br><span class="line">    rlk.unlock(lock)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">import time</span><br><span class="line">def do_something():</span><br><span class="line">    print(&#39;获取锁成功，开始事务操作&#39;)</span><br><span class="line">    time.sleep(5)</span><br><span class="line">    print(&#39;事务操作成功，锁释放&#39;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ &#x3D;&#x3D; &#39;__main__&#39;:</span><br><span class="line">    with worker_lock_manager(&#39;unique_key&#39;, 1000) as w_lock:</span><br><span class="line">        if w_lock:</span><br><span class="line">            do_something()</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="zookeeper-临时节点-序号实现分布式锁"><a href="#zookeeper-临时节点-序号实现分布式锁" class="headerlink" title="zookeeper 临时节点+序号实现分布式锁"></a>zookeeper 临时节点+序号实现分布式锁</h3><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903729406148622">zookeeper实现分布式锁</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">python调用zookeeper实现分布式锁：</span><br><span class="line">1.给定一台安装好zookeeper的服务器</span><br><span class="line">2.pip install kazoo</span><br><span class="line">python连接kazoo</span><br><span class="line"></span><br><span class="line">zookeeeper实现分布式锁的办法：</span><br><span class="line">使用临节点：</span><br><span class="line">1.用有序节点每次获取序号最小的节点赋予锁</span><br><span class="line">2.用无序节点当一个session释放后才能重新赋值抢锁。</span><br><span class="line">这里我们使用临时有序级节点</span><br></pre></td></tr></table></figure>
+
+
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://example.com/2021/06/08/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" data-id="ckpowa9ov000efwmzdizigp9c" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "durian"
+        },
+        "headline": "分布式锁",
+        "image": "http://example.com/css/images/hai.png",
+        "keywords": "",
+        "genre": "nosql redis高级篇",
+        "datePublished": "2021-06-08",
+        "dateCreated": "2021-06-08",
+        "dateModified": "2021-06-08",
+        "url": "http://example.com/2021/06/08/分布式锁/",
+        "description": "分布式锁介绍当多个系统并发操作redis如何处理？主要方法是使用分布式锁，抢到锁的做set操作·。分布式锁实现方式分布式锁
+为什么需要分布式锁？
+1.避免不同的节点做相同的工作，比如发送短信通知。
+2.避免同时操作一个数据导致数据正确性出现问题。比如多个节点操作同一个订单流程，还没付款已经结账了，或者同时操作一个库存，导致不一致。
+
+2.分布式锁的特点
+1.互斥性保证在不同节点不同线程的互斥。
+
+",
+        "wordCount": 1292
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <!-- Valine -->
+    <div class="vcomments"></div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="stack-overflow" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-stack-overflow"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/ppoffice/hexo-theme-hueman" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2021/06/08/flask%E7%AE%80%E4%BB%8B/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            flask基本介绍
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2021/06/08/%E9%80%BB%E8%BE%91%E6%9E%B6%E6%9E%84/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">mysql逻辑架构</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+<div class="widget-wrap widget-list">
+    <h3 class="widget-title">目录</h3>
+    <div class="widget">
+        <div id="toc" class="toc-article">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">分布式锁介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%EF%BC%9F"><span class="toc-number">1.1.</span> <span class="toc-text">为什么需要分布式锁？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%9A%84%E7%89%B9%E7%82%B9"><span class="toc-number">1.2.</span> <span class="toc-text">2.分布式锁的特点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number">2.</span> <span class="toc-text">分布式锁的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#redis-setnx"><span class="toc-number">2.1.</span> <span class="toc-text">redis setnx</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#redis-gt-2-6-12-set"><span class="toc-number">2.2.</span> <span class="toc-text">redis &gt; 2.6.12 set</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#redlock-%E5%AE%9E%E7%8E%B0%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81"><span class="toc-number">2.3.</span> <span class="toc-text">redlock 实现分布式锁</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#redlock%E8%AE%BE%E8%AE%A1%E7%90%86%E5%BF%B5"><span class="toc-number">2.3.1.</span> <span class="toc-text">redlock设计理念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#python%E7%AE%80%E5%8D%95%E5%AE%9E%E6%93%8Dredlock"><span class="toc-number">2.3.2.</span> <span class="toc-text">python简单实操redlock</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#zookeeper-%E4%B8%B4%E6%97%B6%E8%8A%82%E7%82%B9-%E5%BA%8F%E5%8F%B7%E5%AE%9E%E7%8E%B0%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81"><span class="toc-number">2.4.</span> <span class="toc-text">zookeeper 临时节点+序号实现分布式锁</span></a></li></ol></li></ol>
+        </div>
+    </div>
+</div>
+
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/09/flask%E8%BF%9E%E6%8E%A5redis%E9%9B%86%E7%BE%A4/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2021/06/09/flask%E8%BF%9E%E6%8E%A5redis%E9%9B%86%E7%BE%A4/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-09T02:25:42.189Z" itemprop="datePublished">2021-06-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/09/jwt/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/gu.jpg)" alt="jwt" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/webframe/">webframe</a></p>
+                            <p class="item-title"><a href="/2021/06/09/jwt/" class="title">jwt</a></p>
+                            <p class="item-date"><time datetime="2021-06-09T02:24:41.638Z" itemprop="datePublished">2021-06-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/09/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/gu.jpg)" alt="单点登录" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/webframe/">webframe</a></p>
+                            <p class="item-title"><a href="/2021/06/09/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95/" class="title">单点登录</a></p>
+                            <p class="item-date"><time datetime="2021-06-09T02:24:41.638Z" itemprop="datePublished">2021-06-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/08/flask-sqlaAchemy/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2021/06/08/flask-sqlaAchemy/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-08T03:54:22.148Z" itemprop="datePublished">2021-06-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/08/flask-wtforms/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2021/06/08/flask-wtforms/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-08T03:53:04.318Z" itemprop="datePublished">2021-06-08</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/">nosql</a><span class="category-list-count">14</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis/">redis</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a><span class="category-list-count">7</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/">webframe</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/flask/">flask</a><span class="category-list-count">2</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">28</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+
+            
+                
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2021 durian</p>
+                
+                <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
+                
+            </div>
+                <p><span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span></p>
+                <p><span id="busuanzi_container_site_uv"> 
+                     本站访客数<span id="busuanzi_value_site_uv"></span>人次
+               </span></p>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+    <script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
+</footer>
+
+    </div>
+    
+    
+    <script src="//unpkg.com/valine"></script>
+    <script>
+        var GUEST = ['nick','mail','link'];
+        var meta = '';
+        meta = meta.split(',').filter(function (item) {
+            return GUEST.indexOf(item)>-1;
+        });
+        var avatarcdn = 'gravatar.cat.net' == true;
+        new Valine({
+            el: '.vcomments',
+            notify: "false",
+            verify: "false",
+            appId: "795P9DunI2Jv3Jho36dlueIS-gzGzoHsz",
+            appKey: "pM151YCVhYBYTB9Pt1SRuiKs",
+            placeholder: "Just Do It",
+            avatar:"mm",
+            recordIP:"false",
+            visitor: "true"
+        });
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

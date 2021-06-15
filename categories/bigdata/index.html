@@ -218,17 +218,17 @@
         <article class="article article-summary">
     <div class="article-summary-inner">
         
-        <a href="/2021/06/12/docker-compose/django+uwsgi+nginx+mysql+redis%E9%A1%B9%E7%9B%AE/" class="thumbnail">
+        <a href="/2021/06/15/zookeeper/zookeeper%E5%AE%89%E8%A3%85/" class="thumbnail">
     
     
-        <span style="background-image:url(/css/images/docker-compose.jfif)" alt="docker-compose编排django+uwsgi+nginx+mysql+redis项目" class="thumbnail-image"></span>
+        <span style="background-image:url(/css/images/zookeeper.jfif)" alt="zookeeper安装配置" class="thumbnail-image"></span>
     
     
         
 <span class="comment-counter">
     <i class="fa fa-comments-o"></i>
     
-        <span><a href="http://example.com/2021/06/12/docker-compose/django+uwsgi+nginx+mysql+redis%E9%A1%B9%E7%9B%AE/#isso-thread"></a></span>
+        <span><a href="http://example.com/2021/06/15/zookeeper/zookeeper%E5%AE%89%E8%A3%85/#isso-thread"></a></span>
     
 </span>
 
@@ -239,19 +239,24 @@
         
         <div class="article-meta">
             <div class="category">
-            <a class="article-category-link" href="/categories/bigdata/">bigdata</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/bigdata/docker-compose/">docker-compose</a>
+            <a class="article-category-link" href="/categories/bigdata/">bigdata</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/bigdata/zookeeper/">zookeeper</a>
             </div>
-            <div class="date"><time datetime="2021-06-12T01:10:08.700Z" itemprop="datePublished">2021-06-12</time></div>
+            <div class="date"><time datetime="2021-06-15T01:28:37.716Z" itemprop="datePublished">2021-06-15</time></div>
         </div>
         
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2021/06/12/docker-compose/django+uwsgi+nginx+mysql+redis%E9%A1%B9%E7%9B%AE/">docker-compose编排django+uwsgi+nginx+mysql+redis项目</a>
+        <a href="/2021/06/15/zookeeper/zookeeper%E5%AE%89%E8%A3%85/">zookeeper安装配置</a>
         </h1>
     
 
         <p class="article-excerpt">
-            项目架构1234567891011121314151617181920212223242526272829303132333435mydocker&#x2F;├── compose│      ├── mysql│      │   ├── conf│      │   ├── init│      │   └── mysql-files│      ├── nginx│      │   ├──
+            本地模式安装部署安装12Zookeeper官网下载tar –zxvf table 解压
+配置
+1.将zookeeper/conf/zoo_sample.conf修改为zoo.cfg1mv zoo_sample.conf zoo.cfg
+2.vim zoo.cfg修改dataDir为你想要保存数据的路径（记得先在路径下创建该文件夹）
+3.bin/zkServer.sh start启动
+4.jps查看
         </p>
     </div>
 </article>
@@ -264,17 +269,17 @@
         <article class="article article-summary">
     <div class="article-summary-inner">
         
-        <a href="/2021/06/12/docker-compose/django+nginx%E5%8F%8C%E5%AE%B9%E5%99%A8/" class="thumbnail">
+        <a href="/2021/06/15/zookeeper/zookeeper%E9%80%89%E4%B8%BE%E6%9C%BA%E5%88%B6/" class="thumbnail">
     
     
-        <span style="background-image:url(/css/images/docker-compose.jfif)" alt="django双容器编排" class="thumbnail-image"></span>
+        <span style="background-image:url(/css/images/zookeeper.jfif)" alt="zookeeper选举机制和节点类型" class="thumbnail-image"></span>
     
     
         
 <span class="comment-counter">
     <i class="fa fa-comments-o"></i>
     
-        <span><a href="http://example.com/2021/06/12/docker-compose/django+nginx%E5%8F%8C%E5%AE%B9%E5%99%A8/#isso-thread"></a></span>
+        <span><a href="http://example.com/2021/06/15/zookeeper/zookeeper%E9%80%89%E4%B8%BE%E6%9C%BA%E5%88%B6/#isso-thread"></a></span>
     
 </span>
 
@@ -285,116 +290,22 @@
         
         <div class="article-meta">
             <div class="category">
-            <a class="article-category-link" href="/categories/bigdata/">bigdata</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/bigdata/docker-compose/">docker-compose</a>
+            <a class="article-category-link" href="/categories/bigdata/">bigdata</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/bigdata/zookeeper/">zookeeper</a>
             </div>
-            <div class="date"><time datetime="2021-06-12T01:09:00.628Z" itemprop="datePublished">2021-06-12</time></div>
+            <div class="date"><time datetime="2021-06-15T01:28:37.716Z" itemprop="datePublished">2021-06-15</time></div>
         </div>
         
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2021/06/12/docker-compose/django+nginx%E5%8F%8C%E5%AE%B9%E5%99%A8/">django双容器编排</a>
+        <a href="/2021/06/15/zookeeper/zookeeper%E9%80%89%E4%B8%BE%E6%9C%BA%E5%88%B6/">zookeeper选举机制和节点类型</a>
         </h1>
     
 
         <p class="article-excerpt">
-            项目结构1234567891011121314151617181920212223242526272829303132333435363738394041dockerweb1&#x2F;├── compose│   └── nginx│       ├── Dockerfile│       ├── log│       ├── nginx.conf│       └── ssl└── mypro
-        </p>
-    </div>
-</article>
-    
-        </div>
-    
-
-    
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2021/06/12/docker-compose/docker-compose%E7%BC%96%E6%8E%92django%20web%E5%8D%95%E5%AE%B9%E5%99%A8/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/css/images/docker-compose.jfif)" alt="django单容器编排" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span><a href="http://example.com/2021/06/12/docker-compose/docker-compose%E7%BC%96%E6%8E%92django%20web%E5%8D%95%E5%AE%B9%E5%99%A8/#isso-thread"></a></span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/bigdata/">bigdata</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/bigdata/docker-compose/">docker-compose</a>
-            </div>
-            <div class="date"><time datetime="2021-06-12T01:08:07.443Z" itemprop="datePublished">2021-06-12</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2021/06/12/docker-compose/docker-compose%E7%BC%96%E6%8E%92django%20web%E5%8D%95%E5%AE%B9%E5%99%A8/">django单容器编排</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            文件结构1234567891011121314151617181920dockerweb1&#x2F;└── myproject    ├── apps    ├── db.sqlite3    ├── db_tools    ├── Dockerfile    ├── extra_apps    ├── manage.py    ├── media    ├── mycelery    ├── 
-        </p>
-    </div>
-</article>
-    
-
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2021/06/12/docker-compose/docker-compose%E7%BC%96%E6%8E%92%E9%A1%B9%E7%9B%AE/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/css/images/docker-compose.jfif)" alt="docker-compose基础编排" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span><a href="http://example.com/2021/06/12/docker-compose/docker-compose%E7%BC%96%E6%8E%92%E9%A1%B9%E7%9B%AE/#isso-thread"></a></span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/bigdata/">bigdata</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/bigdata/docker-compose/">docker-compose</a>
-            </div>
-            <div class="date"><time datetime="2021-06-12T01:07:29.337Z" itemprop="datePublished">2021-06-12</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2021/06/12/docker-compose/docker-compose%E7%BC%96%E6%8E%92%E9%A1%B9%E7%9B%AE/">docker-compose基础编排</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            简单docker-compose项目docker-compose up启动服务要求当前路径下有docker-compose.yml
-123456789101112131415# need to def a versionversion: &quot;3.0&quot;# the container of this composeservices:        tomcat:           
+            选举机制 ***重要概念
+1.半数机制，集群中半数以上（一半就不能存活了）的机器存活，集群可用。（高可用）所以zookeeper适合安装奇数台服务器。
+2.zookeeper虽然在配置文件中没有master和slave，但在工作时，是有一个节点为leader，其他则为follower。而leader则是通过内部选举临时产生。
+3.如何选举出leader？如何选举leader（简单的选举机制）每个服
         </p>
     </div>
 </article>
@@ -411,17 +322,17 @@
         <article class="article article-summary">
     <div class="article-summary-inner">
         
-        <a href="/2021/06/12/docker-compose/docker-compose%E7%AE%80%E4%BB%8B%E5%92%8C%E5%AE%89%E8%A3%85/" class="thumbnail">
+        <a href="/2021/06/15/zookeeper/zookeeper%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/" class="thumbnail">
     
     
-        <span style="background-image:url(/css/images/docker-compose.jfif)" alt="docker-compose简介和安装" class="thumbnail-image"></span>
+        <span style="background-image:url(/css/images/zookeeper.jfif)" alt="zookeeper基本操作" class="thumbnail-image"></span>
     
     
         
 <span class="comment-counter">
     <i class="fa fa-comments-o"></i>
     
-        <span><a href="http://example.com/2021/06/12/docker-compose/docker-compose%E7%AE%80%E4%BB%8B%E5%92%8C%E5%AE%89%E8%A3%85/#isso-thread"></a></span>
+        <span><a href="http://example.com/2021/06/15/zookeeper/zookeeper%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/#isso-thread"></a></span>
     
 </span>
 
@@ -432,29 +343,19 @@
         
         <div class="article-meta">
             <div class="category">
-            <a class="article-category-link" href="/categories/bigdata/">bigdata</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/bigdata/docker-compose/">docker-compose</a>
+            <a class="article-category-link" href="/categories/bigdata/">bigdata</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/bigdata/zookeeper/">zookeeper</a>
             </div>
-            <div class="date"><time datetime="2021-06-12T01:07:07.956Z" itemprop="datePublished">2021-06-12</time></div>
+            <div class="date"><time datetime="2021-06-15T01:28:37.715Z" itemprop="datePublished">2021-06-15</time></div>
         </div>
         
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2021/06/12/docker-compose/docker-compose%E7%AE%80%E4%BB%8B%E5%92%8C%E5%AE%89%E8%A3%85/">docker-compose简介和安装</a>
+        <a href="/2021/06/15/zookeeper/zookeeper%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/">zookeeper基本操作</a>
         </h1>
     
 
         <p class="article-excerpt">
-            简介
-是什么?
-
-docker-compose负责实现对docker容器集群的快速编排,（让多个容器顺序执行）并不能实现精确的资源调度（k8s），
-使用docker-compose.yml定义一组相关联的docker容器来作为一个项目服务。
-docker单容器模式需要一一启动每个项目容器，然后再统一连接，而docker compse一次性融合所有容器。
-
-
-核心概念
-
-项目和服务(project、
+            zookeeper操作命令基础命令1234567891011121314151.help查看命令2.ls &#x2F;查看某个节点内容3.ls -s &#x2F;查看某个节点详细数据4.create &#x2F;sanguo + 内容创建短暂节点 临时节点 带序号的节点1.不带序号的临时节点create –e &#x2F;sanguo&#x2F;wuguo “zhouyu”ls &#x2F;san
         </p>
     </div>
 </article>
@@ -467,17 +368,17 @@ docker单容器模式需要一一启动每个项目容器，然后再统一连�
         <article class="article article-summary">
     <div class="article-summary-inner">
         
-        <a href="/2021/06/12/docker/docker%E9%95%9C%E5%83%8F%E6%8E%A8%E9%80%81%E9%98%BF%E9%87%8C%E4%BA%91/" class="thumbnail">
+        <a href="/2021/06/15/zookeeper/zookeeper%E5%85%A5%E9%97%A8/" class="thumbnail">
     
     
-        <span style="background-image:url(/css/images/docker.jfif)" alt="docker镜像部署到阿里云" class="thumbnail-image"></span>
+        <span style="background-image:url(/css/images/zookeeper.jfif)" alt="zookeeper简介" class="thumbnail-image"></span>
     
     
         
 <span class="comment-counter">
     <i class="fa fa-comments-o"></i>
     
-        <span><a href="http://example.com/2021/06/12/docker/docker%E9%95%9C%E5%83%8F%E6%8E%A8%E9%80%81%E9%98%BF%E9%87%8C%E4%BA%91/#isso-thread"></a></span>
+        <span><a href="http://example.com/2021/06/15/zookeeper/zookeeper%E5%85%A5%E9%97%A8/#isso-thread"></a></span>
     
 </span>
 
@@ -488,22 +389,20 @@ docker单容器模式需要一一启动每个项目容器，然后再统一连�
         
         <div class="article-meta">
             <div class="category">
-            <a class="article-category-link" href="/categories/bigdata/">bigdata</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/bigdata/docker/">docker</a>
+            <a class="article-category-link" href="/categories/bigdata/">bigdata</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/bigdata/zookeeper/">zookeeper</a>
             </div>
-            <div class="date"><time datetime="2021-06-12T00:49:52.290Z" itemprop="datePublished">2021-06-12</time></div>
+            <div class="date"><time datetime="2021-06-15T01:28:37.714Z" itemprop="datePublished">2021-06-15</time></div>
         </div>
         
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2021/06/12/docker/docker%E9%95%9C%E5%83%8F%E6%8E%A8%E9%80%81%E9%98%BF%E9%87%8C%E4%BA%91/">docker镜像部署到阿里云</a>
+        <a href="/2021/06/15/zookeeper/zookeeper%E5%85%A5%E9%97%A8/">zookeeper简介</a>
         </h1>
     
 
         <p class="article-excerpt">
-            生成镜像- docker build -f filename -t name:version .
-- docker commit -a=’xxx’（作者） -m=’xxxx’（命名空间） 容器id 名字:版本号
-docker push步骤（可参考阿里云文档）- 1.创建镜像仓库
-- 2.docker login --username= registry.cn-hangzhou.aliyuns.co
+            概述ZooKeeper服务器是用Java创建的，它在JVM上运行。你需要使用JDK 6或更高版本。zookeeper是开源的分布式的，为分布式应用提供协调服务的Apache项目。（管理整个大数据生态中的很多框架，hadoop，kafka，hbase，tire等）
+zookeeper的工作机制从设计模式角度理解，它是一个基于观察者模式设计的分布式服务管理框架。（23种设计模式）它负责存储和管理大家都
         </p>
     </div>
 </article>
@@ -520,17 +419,17 @@ docker push步骤（可参考阿里云文档）- 1.创建镜像仓库
         <article class="article article-summary">
     <div class="article-summary-inner">
         
-        <a href="/2021/06/12/docker/dockerFile%E8%A7%A3%E6%9E%90/" class="thumbnail">
+        <a href="/2021/06/15/zookeeper/python%E5%AE%9E%E6%88%98/" class="thumbnail">
     
     
-        <span style="background-image:url(/css/images/docker.jfif)" alt="dockerFile" class="thumbnail-image"></span>
+        <span style="background-image:url(/css/images/zookeeper.jfif)" alt="python实操" class="thumbnail-image"></span>
     
     
         
 <span class="comment-counter">
     <i class="fa fa-comments-o"></i>
     
-        <span><a href="http://example.com/2021/06/12/docker/dockerFile%E8%A7%A3%E6%9E%90/#isso-thread"></a></span>
+        <span><a href="http://example.com/2021/06/15/zookeeper/python%E5%AE%9E%E6%88%98/#isso-thread"></a></span>
     
 </span>
 
@@ -541,27 +440,20 @@ docker push步骤（可参考阿里云文档）- 1.创建镜像仓库
         
         <div class="article-meta">
             <div class="category">
-            <a class="article-category-link" href="/categories/bigdata/">bigdata</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/bigdata/docker/">docker</a>
+            <a class="article-category-link" href="/categories/bigdata/">bigdata</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/bigdata/zookeeper/">zookeeper</a>
             </div>
-            <div class="date"><time datetime="2021-06-12T00:49:08.228Z" itemprop="datePublished">2021-06-12</time></div>
+            <div class="date"><time datetime="2021-06-15T01:28:37.713Z" itemprop="datePublished">2021-06-15</time></div>
         </div>
         
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2021/06/12/docker/dockerFile%E8%A7%A3%E6%9E%90/">dockerFile</a>
+        <a href="/2021/06/15/zookeeper/python%E5%AE%9E%E6%88%98/">python实操</a>
         </h1>
     
 
         <p class="article-excerpt">
-            保留字指令- FROM 基础镜像
-- MAINTAINER 镜像维护者的名字和邮箱
-- RUN 容器构建时需要运行的命令
-- EXPOSE 当前容器对外暴露的端口号
-- WORKDIR 终端默认进入该容器的工作目录
-- ENV 为容器设置环境变量(网络代理)
-- ENV MY_PATH /usr/mytest
-- WORKDIR MY_PATH
-- ADD 拷贝加解压缩,将宿主机目录下的文件拷贝进
+            基础命令pip isntall kazoo服务器搭建zookeeper集群python实操zookeeper1python实操zookeeper2
+1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253import sysfrom kazoo.client i
         </p>
     </div>
 </article>
@@ -574,17 +466,17 @@ docker push步骤（可参考阿里云文档）- 1.创建镜像仓库
         <article class="article article-summary">
     <div class="article-summary-inner">
         
-        <a href="/2021/06/12/docker/docker%E9%95%9C%E5%83%8F%E8%A7%A3%E6%9E%90/" class="thumbnail">
+        <a href="/2021/06/15/pyqt/pysider2%E5%AE%9E%E7%8E%B0qq/" class="thumbnail">
     
     
-        <span style="background-image:url(/css/images/docker.jfif)" alt="docker镜像解析和数据容器卷" class="thumbnail-image"></span>
+        <span style="background-image:url(/css/images/hai.png)" alt="pysider2实现qq" class="thumbnail-image"></span>
     
     
         
 <span class="comment-counter">
     <i class="fa fa-comments-o"></i>
     
-        <span><a href="http://example.com/2021/06/12/docker/docker%E9%95%9C%E5%83%8F%E8%A7%A3%E6%9E%90/#isso-thread"></a></span>
+        <span><a href="http://example.com/2021/06/15/pyqt/pysider2%E5%AE%9E%E7%8E%B0qq/#isso-thread"></a></span>
     
 </span>
 
@@ -595,22 +487,19 @@ docker push步骤（可参考阿里云文档）- 1.创建镜像仓库
         
         <div class="article-meta">
             <div class="category">
-            <a class="article-category-link" href="/categories/bigdata/">bigdata</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/bigdata/docker/">docker</a>
+            <a class="article-category-link" href="/categories/bigdata/">bigdata</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/bigdata/zookeeper/">zookeeper</a>
             </div>
-            <div class="date"><time datetime="2021-06-12T00:48:53.655Z" itemprop="datePublished">2021-06-12</time></div>
+            <div class="date"><time datetime="2021-06-15T01:28:37.699Z" itemprop="datePublished">2021-06-15</time></div>
         </div>
         
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2021/06/12/docker/docker%E9%95%9C%E5%83%8F%E8%A7%A3%E6%9E%90/">docker镜像解析和数据容器卷</a>
+        <a href="/2021/06/15/pyqt/pysider2%E5%AE%9E%E7%8E%B0qq/">pysider2实现qq</a>
         </h1>
     
 
         <p class="article-excerpt">
-            docker镜像解析概念轻量级、可执行的独立软件包，用来打包软件环境和基于运行环境开发的软件（整体打包）（层层叠加的整体）
-uninonFS镜像分层union File system联合文件系统，支持对文件系统的修改作为一次次的提交来一层层叠加。Docker 镜像由一些松耦合的只读镜像层组成，Docker负责堆叠这些镜像层，并且将它们表示为单个统一的对象。
-
-一个tomcat镜像有600M，它包括
+            login.py123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100
         </p>
     </div>
 </article>
@@ -627,17 +516,17 @@ uninonFS镜像分层union File system联合文件系统，支持对文件系统�
         <article class="article article-summary">
     <div class="article-summary-inner">
         
-        <a href="/2021/06/12/docker/docker%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/" class="thumbnail">
+        <a href="/2021/06/15/hadoop/hdfs%E6%9E%B6%E6%9E%84/" class="thumbnail">
     
     
-        <span style="background-image:url(/css/images/docker.jfif)" alt="docker基础命令" class="thumbnail-image"></span>
+        <span style="background-image:url(/css/images/hadoop.jfif)" alt="hadoop介绍" class="thumbnail-image"></span>
     
     
         
 <span class="comment-counter">
     <i class="fa fa-comments-o"></i>
     
-        <span><a href="http://example.com/2021/06/12/docker/docker%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/#isso-thread"></a></span>
+        <span><a href="http://example.com/2021/06/15/hadoop/hdfs%E6%9E%B6%E6%9E%84/#isso-thread"></a></span>
     
 </span>
 
@@ -648,36 +537,31 @@ uninonFS镜像分层union File system联合文件系统，支持对文件系统�
         
         <div class="article-meta">
             <div class="category">
-            <a class="article-category-link" href="/categories/bigdata/">bigdata</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/bigdata/docker/">docker</a>
+            <a class="article-category-link" href="/categories/bigdata/">bigdata</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/bigdata/hadoop/">hadoop</a>
             </div>
-            <div class="date"><time datetime="2021-06-12T00:48:26.324Z" itemprop="datePublished">2021-06-12</time></div>
+            <div class="date"><time datetime="2021-06-15T01:28:37.692Z" itemprop="datePublished">2021-06-15</time></div>
         </div>
         
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2021/06/12/docker/docker%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/">docker基础命令</a>
+        <a href="/2021/06/15/hadoop/hdfs%E6%9E%B6%E6%9E%84/">hadoop介绍</a>
         </h1>
     
 
         <p class="article-excerpt">
-            帮助命令
-docker version
-docker info
-docker help
+            hadoop三大版本
+Apache
+Cloudera    公司常用
+Hortonworks
 
-镜像命令
-列出镜像
+hadoop优势
+高可靠：hadoop底层维护多个数据副本（很少数据丢失）
+高扩展：在集群分配任务数据，可方便的扩展数以千计的节点
+高效性：在mapreduce思想下，hadoop是并行工作的，以加快任务处理速度。
+高容错性：自动将失败任务重新分配
 
-docker images
-docker images -a（显示所有镜像含中层镜像）
-docker images -q/-qa
-docker images –digests 显示摘要信息
-docker images –no-trunc 显示完整镜像信息
-
-
-查找
-
-docker sea
+hadoop 1.x构成
+mapReduce计算+资
         </p>
     </div>
 </article>
@@ -690,17 +574,17 @@ docker sea
         <article class="article article-summary">
     <div class="article-summary-inner">
         
-        <a href="/2021/06/12/docker/docker%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" class="thumbnail">
+        <a href="/2021/06/15/hadoop/hadoop%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" class="thumbnail">
     
     
-        <span style="background-image:url(/css/images/docker.jfif)" alt="docker安装配置" class="thumbnail-image"></span>
+        <span style="background-image:url(/css/images/hadoop.jfif)" alt="hadoop运行环境搭建" class="thumbnail-image"></span>
     
     
         
 <span class="comment-counter">
     <i class="fa fa-comments-o"></i>
     
-        <span><a href="http://example.com/2021/06/12/docker/docker%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/#isso-thread"></a></span>
+        <span><a href="http://example.com/2021/06/15/hadoop/hadoop%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/#isso-thread"></a></span>
     
 </span>
 
@@ -711,25 +595,137 @@ docker sea
         
         <div class="article-meta">
             <div class="category">
-            <a class="article-category-link" href="/categories/bigdata/">bigdata</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/bigdata/docker/">docker</a>
+            <a class="article-category-link" href="/categories/bigdata/">bigdata</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/bigdata/hadoop/">hadoop</a>
             </div>
-            <div class="date"><time datetime="2021-06-12T00:48:11.587Z" itemprop="datePublished">2021-06-12</time></div>
+            <div class="date"><time datetime="2021-06-15T01:28:37.691Z" itemprop="datePublished">2021-06-15</time></div>
         </div>
         
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2021/06/12/docker/docker%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/">docker安装配置</a>
+        <a href="/2021/06/15/hadoop/hadoop%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">hadoop运行环境搭建</a>
         </h1>
     
 
         <p class="article-excerpt">
-            要求
-docker运行在centos7上要求系统64位、系统内核3.10以上centos6.5-64位 2.632-4.31以上，查看-&gt;（uname -r）/(cat /etc/redhat-realse)
-docker-ce要求centos7以上
-安装链接
+            虚拟机环境准备
+1.克隆虚拟机
+2.修改虚拟机静态ip
+3.修改主机名
+4.关闭防火墙
+5.创建root用户
+6./opt下创建文件夹module和software
 
-配置阿里云加速
-正常从国外的镜像网(hub.docker.com)下载太慢，所以需要加速，网易云同下操作。123456789101
+详细搭建过程
+1.修改ip
+12vim &#x2F;etc&#x2F;udev&#x2F;rules.d&#x2F;70-persistent-net.rulesvim &#x2F;etc&#x2F;sysconfig&#x2F;n
+        </p>
+    </div>
+</article>
+    
+        </div>
+    
+
+    
+    
+    
+    
+        <div class="article-row">
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2021/06/15/hadoop/hadoop%E8%BF%90%E8%A1%8C%E6%A8%A1%E5%BC%8F/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/hadoop.jfif)" alt="hadoop运行模式" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span><a href="http://example.com/2021/06/15/hadoop/hadoop%E8%BF%90%E8%A1%8C%E6%A8%A1%E5%BC%8F/#isso-thread"></a></span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/bigdata/">bigdata</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/bigdata/hadoop/">hadoop</a>
+            </div>
+            <div class="date"><time datetime="2021-06-15T01:28:37.690Z" itemprop="datePublished">2021-06-15</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2021/06/15/hadoop/hadoop%E8%BF%90%E8%A1%8C%E6%A8%A1%E5%BC%8F/">hadoop运行模式</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            hadoop运行模式
+本地模式  
+伪分布式模式  
+完全分布式模式阿里云定制2.7.2版本
+
+本地模式https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleCluster.html
+单机模式案例
+1.案例一
+1234567查找给定文件的正则匹配对象grepBy default, Hadoop i
+        </p>
+    </div>
+</article>
+    
+
+    
+    
+    
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2021/06/15/hadoop/hadoop%E5%AE%8C%E5%85%A8%E5%88%86%E5%B8%83%E5%BC%8F/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/hadoop.jfif)" alt="hadoop完全分布式" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span><a href="http://example.com/2021/06/15/hadoop/hadoop%E5%AE%8C%E5%85%A8%E5%88%86%E5%B8%83%E5%BC%8F/#isso-thread"></a></span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/bigdata/">bigdata</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/bigdata/hadoop/">hadoop</a>
+            </div>
+            <div class="date"><time datetime="2021-06-15T01:28:37.689Z" itemprop="datePublished">2021-06-15</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2021/06/15/hadoop/hadoop%E5%AE%8C%E5%85%A8%E5%88%86%E5%B8%83%E5%BC%8F/">hadoop完全分布式</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            前言1234567891.准备3台服务器2.安装JDK3.配置java环境变量4.安装hadoop5.配置hadoop环境变量6.配置集群7.单点启动8.配置ssh无密码访问9.群起并测试集群
+
+集群分配脚本配置虚拟机/服务器配置ip,hosts,hostname12vim &#x2F;etc&#x2F;hostshostnamectl&#x2F;hostname +name
+
+编写集群分发脚本x
         </p>
     </div>
 </article>
@@ -782,30 +778,10 @@ docker-ce要求centos7以上
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88/" class="thumbnail">
+                            <a href="/2021/06/15/redis%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%BC%93%E5%AD%98%E9%97%AE%E9%A2%98/" class="thumbnail">
     
     
-        <span style="background-image:url(/css/images/xiaohuanren3.jpg)" alt="mysql索引失效" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a></p>
-                            <p class="item-title"><a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88/" class="title">mysql索引失效</a></p>
-                            <p class="item-date"><time datetime="2021-06-13T07:40:54.744Z" itemprop="datePublished">2021-06-13</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/css/images/shan.jpg)" alt="mysql索引优化案例分析" class="thumbnail-image"></span>
+        <span style="background-image:url(/css/images/qinglu.jfif)" alt="缓存问题" class="thumbnail-image"></span>
     
     
 </a>
@@ -813,36 +789,16 @@ docker-ce要求centos7以上
                         </div>
                         
                         <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a></p>
-                            <p class="item-title"><a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/" class="title">mysql索引优化案例分析</a></p>
-                            <p class="item-date"><time datetime="2021-06-13T07:40:39.919Z" itemprop="datePublished">2021-06-13</time></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a></p>
+                            <p class="item-title"><a href="/2021/06/15/redis%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%BC%93%E5%AD%98%E9%97%AE%E9%A2%98/" class="title">缓存问题</a></p>
+                            <p class="item-date"><time datetime="2021-06-15T08:57:18.147Z" itemprop="datePublished">2021-06-15</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2021/06/13/webframe/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/css/images/xiaohuanren2.jpg)" alt="设计模式" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/webframe/">webframe</a></p>
-                            <p class="item-title"><a href="/2021/06/13/webframe/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="title">设计模式</a></p>
-                            <p class="item-date"><time datetime="2021-06-13T07:17:23.394Z" itemprop="datePublished">2021-06-13</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/MHA/" class="thumbnail">
+                            <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/dict%E8%A7%A3%E6%9E%90/" class="thumbnail">
     
     
         <span class="thumbnail-image thumbnail-none"></span>
@@ -854,15 +810,15 @@ docker-ce要求centos7以上
                         
                         <div class="item-inner">
                             <p class="item-category"></p>
-                            <p class="item-title"><a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/MHA/" class="title"></a></p>
-                            <p class="item-date"><time datetime="2021-06-13T04:16:55.764Z" itemprop="datePublished">2021-06-13</time></p>
+                            <p class="item-title"><a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/dict%E8%A7%A3%E6%9E%90/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-15T08:52:31.827Z" itemprop="datePublished">2021-06-15</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/mysql%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/" class="thumbnail">
+                            <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/int%E8%A7%A3%E6%9E%90/" class="thumbnail">
     
     
         <span class="thumbnail-image thumbnail-none"></span>
@@ -874,8 +830,48 @@ docker-ce要求centos7以上
                         
                         <div class="item-inner">
                             <p class="item-category"></p>
-                            <p class="item-title"><a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/mysql%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/" class="title"></a></p>
-                            <p class="item-date"><time datetime="2021-06-13T04:14:41.084Z" itemprop="datePublished">2021-06-13</time></p>
+                            <p class="item-title"><a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/int%E8%A7%A3%E6%9E%90/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-15T08:52:31.827Z" itemprop="datePublished">2021-06-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-15T08:52:31.827Z" itemprop="datePublished">2021-06-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/list%E8%A7%A3%E6%9E%90/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/list%E8%A7%A3%E6%9E%90/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-15T08:52:17.313Z" itemprop="datePublished">2021-06-15</time></p>
                         </div>
                     </li>
                 
@@ -888,7 +884,7 @@ docker-ce要求centos7以上
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/">bigdata</a><span class="category-list-count">22</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker/">docker</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker-compose/">docker-compose</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/hadoop/">hadoop</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/zookeeper/">zookeeper</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/">nosql</a><span class="category-list-count">20</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis/">redis</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/">webframe</a><span class="category-list-count">21</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/django/">django</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/flask/">flask</a><span class="category-list-count">5</span></li></ul></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/">bigdata</a><span class="category-list-count">22</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker/">docker</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker-compose/">docker-compose</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/hadoop/">hadoop</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/zookeeper/">zookeeper</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/">nosql</a><span class="category-list-count">27</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis/">redis</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a><span class="category-list-count">9</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/">webframe</a><span class="category-list-count">21</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/django/">django</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/flask/">flask</a><span class="category-list-count">5</span></li></ul></li></ul>
         </div>
     </div>
 
@@ -898,7 +894,7 @@ docker-ce要求centos7以上
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">69</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">77</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 

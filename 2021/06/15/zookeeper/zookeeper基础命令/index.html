@@ -1,0 +1,711 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>zookeeper基本操作 | 春江花月夜o</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="" />
+    
+    <meta name="description" content="zookeeper操作命令基础命令1234567891011121314151.help查看命令2.ls &#x2F;查看某个节点内容3.ls -s &#x2F;查看某个节点详细数据4.create &#x2F;sanguo + 内容创建短暂节点 临时节点 带序号的节点1.不带序号的临时节点create –e &#x2F;sanguo&#x2F;wuguo “zhouyu”ls &#x2F;san">
+<meta property="og:type" content="article">
+<meta property="og:title" content="zookeeper基本操作">
+<meta property="og:url" content="http://example.com/2021/06/15/zookeeper/zookeeper%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/index.html">
+<meta property="og:site_name" content="春江花月夜o">
+<meta property="og:description" content="zookeeper操作命令基础命令1234567891011121314151.help查看命令2.ls &#x2F;查看某个节点内容3.ls -s &#x2F;查看某个节点详细数据4.create &#x2F;sanguo + 内容创建短暂节点 临时节点 带序号的节点1.不带序号的临时节点create –e &#x2F;sanguo&#x2F;wuguo “zhouyu”ls &#x2F;san">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/css/images/zookeeper.jfif">
+<meta property="article:published_time" content="2021-06-15T01:28:37.715Z">
+<meta property="article:modified_time" content="2021-06-12T02:09:42.734Z">
+<meta property="article:author" content="durian">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/css/images/zookeeper.jfif">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/gouzi.ico" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="春江花月夜o" type="application/atom+xml">
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">关于</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">python</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">cpp</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">webframe</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                                <a class="main-nav-list-link" href="/null">flask</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">django</a>
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">algorithm</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">bigdata</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">nosql</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                                <a class="main-nav-list-link" href="/null"> redis</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">mysql</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null"> redis高级篇</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">mysql高级篇</a>
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/bigdata/">bigdata</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/bigdata/zookeeper/">zookeeper</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-zookeeper/zookeeper基础命令" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        zookeeper基本操作
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2021/06/15/zookeeper/zookeeper%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/" class="article-date">
+       <time datetime="2021-06-15T01:28:37.715Z" itemprop="datePublished">2021-06-15</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/2021/06/15/zookeeper/zookeeper%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/" class="article-date">
+     <time datetime="2021-06-12T02:09:42.734Z" itemprop="dateModified">2021-06-12</time>
+  </a>
+</div>
+
+
+                
+
+                
+                
+   <div class="article-counter">
+      <i class="fa fa-file-word-o"></i>
+      <span class="post-count-item-text">本文字数: </span>
+      <span class="post-count">532</span>
+      <i class="fa fa-clock-o"></i>
+      <span class="post-time-item-text">阅读时长: </span>
+      <span class="post-count">2 分钟 </span>
+   </div>
+
+
+                <span id="busuanzi_container_page_pv">
+                阅读次数<span id="busuanzi_value_page_pv"></span>次
+                </span>
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <h2 id="zookeeper操作命令"><a href="#zookeeper操作命令" class="headerlink" title="zookeeper操作命令"></a>zookeeper操作命令</h2><h3 id="基础命令"><a href="#基础命令" class="headerlink" title="基础命令"></a>基础命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">1.help查看命令</span><br><span class="line">2.ls &#x2F;查看某个节点内容</span><br><span class="line">3.ls -s &#x2F;查看某个节点详细数据</span><br><span class="line">4.create &#x2F;sanguo + 内容</span><br><span class="line"></span><br><span class="line">创建短暂节点 临时节点 带序号的节点</span><br><span class="line">1.不带序号的临时节点</span><br><span class="line">create –e &#x2F;sanguo&#x2F;wuguo “zhouyu”</span><br><span class="line">ls &#x2F;sanguo</span><br><span class="line">quit退出再进来</span><br><span class="line">ls &#x2F;sanguo 短暂节点客户端退出删除</span><br><span class="line">2.带序号的节点</span><br><span class="line">create -s &#x2F;sanguo&#x2F;weiguo &quot;caocao&quot;</span><br><span class="line">ls &#x2F;sanguo</span><br><span class="line">&#x2F;sanguo&#x2F;weiguo0000000002</span><br></pre></td></tr></table></figure>
+
+<h3 id="监听节点"><a href="#监听节点" class="headerlink" title="监听节点"></a>监听节点</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">get –w +node获取值</span><br><span class="line">监听一次有效一次。。。。。</span><br><span class="line">ls –w +node</span><br><span class="line">监听子节点</span><br><span class="line">delete + node删除节点</span><br><span class="line">deleteall + node删除所有节点</span><br></pre></td></tr></table></figure>
+
+<h2 id="Stat-结构体"><a href="#Stat-结构体" class="headerlink" title="Stat 结构体"></a>Stat 结构体</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">cZxid &#x3D; 0x20			创建节点的事务id</span><br><span class="line">ctime &#x3D; Wed Oct 21 17:20:01 CST 2020 创建节点时间</span><br><span class="line">mZxid &#x3D; 0x20			最后更新的事务id</span><br><span class="line">mtime &#x3D; Wed Oct 21 17:20:01 CST 2020最后更新的时间</span><br><span class="line">pZxid &#x3D; 0x20			最后更新的子节点的id</span><br><span class="line">cversion &#x3D; 0			znode子节点变化版本号</span><br><span class="line">dataVersion &#x3D; 0		znode数据变化号</span><br><span class="line">aclVersion &#x3D; 0		 	访问控制列表的变化号</span><br><span class="line">ephemeralOwner &#x3D; 0x0	是临时节点，sessionId否则0</span><br><span class="line">dataLength &#x3D; 0			znode数据长度</span><br><span class="line">numChildren &#x3D; 0		子节点数量</span><br></pre></td></tr></table></figure>
+
+<h2 id="监听的原理-重"><a href="#监听的原理-重" class="headerlink" title="监听的原理 ***重"></a>监听的原理 ***重</h2><ul>
+<li>1.首先要有一个main线程</li>
+<li>2.在main线程中创建zookeeper客户端，这时候创建两个线程，一个负责网络连接通讯connect，一个负责监听listener。</li>
+<li>3.通过connect线程将注册的监听事件发送给zookeeper</li>
+<li>4.在zookeeper的注册监听器列表中将注册的监听事件添加到列表中。</li>
+<li>5.zookeeper监听到有数据或路径的变化，就会将这个消息发送给listener线程</li>
+<li>6.listener线程内部调用了process()方法。</li>
+</ul>
+<p>常见监听：<br>节点数据的变化<br>子节点增减的变化</p>
+<h2 id="写数据的流程"><a href="#写数据的流程" class="headerlink" title="写数据的流程"></a>写数据的流程</h2><p>client客户端向zookeeper服务器发送一个写的请求。<br>如果server1不是leader，会把请求转给leader。leader会把写请求广播给各个server。各个server写完通知leader。<br>当leader收到大多数server数据写成功了，那么数据就写成功了。leader这个时候会告诉server1数据写成功。server<br>在通知客户端。</p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://example.com/2021/06/15/zookeeper/zookeeper%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/" data-id="ckpxu57qp003powmzdl3k8m3q" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "durian"
+        },
+        "headline": "zookeeper基本操作",
+        "image": "http://example.com/css/images/zookeeper.jfif",
+        "keywords": "",
+        "genre": "bigdata zookeeper",
+        "datePublished": "2021-06-15",
+        "dateCreated": "2021-06-15",
+        "dateModified": "2021-06-12",
+        "url": "http://example.com/2021/06/15/zookeeper/zookeeper基础命令/",
+        "description": "zookeeper操作命令基础命令1234567891011121314151.help查看命令2.ls &#x2F;查看某个节点内容3.ls -s &#x2F;查看某个节点详细数据4.create &#x2F;sanguo + 内容创建短暂节点 临时节点 带序号的节点1.不带序号的临时节点create –e &#x2F;sanguo&#x2F;wuguo “zhouyu”ls &#x2F;san",
+        "wordCount": 165
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <!-- Valine -->
+    <div class="vcomments"></div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/chunjianghuayueye2" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2021/06/15/zookeeper/zookeeper%E9%80%89%E4%B8%BE%E6%9C%BA%E5%88%B6/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            zookeeper选举机制和节点类型
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2021/06/15/zookeeper/zookeeper%E5%85%A5%E9%97%A8/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">zookeeper简介</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+<div class="widget-wrap widget-list">
+    <h3 class="widget-title">目录</h3>
+    <div class="widget">
+        <div id="toc" class="toc-article">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#zookeeper%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="toc-number">1.</span> <span class="toc-text">zookeeper操作命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4"><span class="toc-number">1.1.</span> <span class="toc-text">基础命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%91%E5%90%AC%E8%8A%82%E7%82%B9"><span class="toc-number">1.2.</span> <span class="toc-text">监听节点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Stat-%E7%BB%93%E6%9E%84%E4%BD%93"><span class="toc-number">2.</span> <span class="toc-text">Stat 结构体</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%91%E5%90%AC%E7%9A%84%E5%8E%9F%E7%90%86-%E9%87%8D"><span class="toc-number">3.</span> <span class="toc-text">监听的原理 ***重</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E6%95%B0%E6%8D%AE%E7%9A%84%E6%B5%81%E7%A8%8B"><span class="toc-number">4.</span> <span class="toc-text">写数据的流程</span></a></li></ol>
+        </div>
+    </div>
+</div>
+
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/15/redis%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%BC%93%E5%AD%98%E9%97%AE%E9%A2%98/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/qinglu.jfif)" alt="缓存问题" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a></p>
+                            <p class="item-title"><a href="/2021/06/15/redis%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%BC%93%E5%AD%98%E9%97%AE%E9%A2%98/" class="title">缓存问题</a></p>
+                            <p class="item-date"><time datetime="2021-06-15T08:57:18.147Z" itemprop="datePublished">2021-06-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/dict%E8%A7%A3%E6%9E%90/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/dict%E8%A7%A3%E6%9E%90/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-15T08:52:31.827Z" itemprop="datePublished">2021-06-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/int%E8%A7%A3%E6%9E%90/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/int%E8%A7%A3%E6%9E%90/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-15T08:52:31.827Z" itemprop="datePublished">2021-06-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-15T08:52:31.827Z" itemprop="datePublished">2021-06-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/list%E8%A7%A3%E6%9E%90/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/list%E8%A7%A3%E6%9E%90/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-15T08:52:17.313Z" itemprop="datePublished">2021-06-15</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/">bigdata</a><span class="category-list-count">22</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker/">docker</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker-compose/">docker-compose</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/hadoop/">hadoop</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/zookeeper/">zookeeper</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/">nosql</a><span class="category-list-count">27</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis/">redis</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a><span class="category-list-count">9</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/">webframe</a><span class="category-list-count">21</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/django/">django</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/flask/">flask</a><span class="category-list-count">5</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">77</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+
+            
+                
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2021 durian</p>
+                
+                <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
+                
+            </div>
+                <p><span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span></p>
+                <p><span id="busuanzi_container_site_uv"> 
+                     本站访客数<span id="busuanzi_value_site_uv"></span>人次
+               </span></p>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+    <script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
+</footer>
+
+    </div>
+    
+    
+    <script src="//unpkg.com/valine"></script>
+    <script>
+        var GUEST = ['nick','mail','link'];
+        var meta = '';
+        meta = meta.split(',').filter(function (item) {
+            return GUEST.indexOf(item)>-1;
+        });
+        var avatarcdn = 'gravatar.cat.net' == true;
+        new Valine({
+            el: '.vcomments',
+            notify: "false",
+            verify: "false",
+            appId: "795P9DunI2Jv3Jho36dlueIS-gzGzoHsz",
+            appKey: "pM151YCVhYBYTB9Pt1SRuiKs",
+            placeholder: "Just Do It",
+            avatar:"mm",
+            recordIP:"false",
+            visitor: "true"
+        });
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

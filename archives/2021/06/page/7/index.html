@@ -218,17 +218,17 @@
         <article class="article article-summary">
     <div class="article-summary-inner">
         
-        <a href="/2021/06/12/flask/flask%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AE%A1%E7%90%86/" class="thumbnail">
+        <a href="/2021/06/15/django/%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/" class="thumbnail">
     
     
-        <span style="background-image:url(/css/images/flask.jfif)" alt="flask上下文管理" class="thumbnail-image"></span>
+        <span style="background-image:url(/css/images/youcaohua.jpg)" alt="登录认证" class="thumbnail-image"></span>
     
     
         
 <span class="comment-counter">
     <i class="fa fa-comments-o"></i>
     
-        <span><a href="http://example.com/2021/06/12/flask/flask%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AE%A1%E7%90%86/#isso-thread"></a></span>
+        <span><a href="http://example.com/2021/06/15/django/%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/#isso-thread"></a></span>
     
 </span>
 
@@ -239,26 +239,24 @@
         
         <div class="article-meta">
             <div class="category">
-            <a class="article-category-link" href="/categories/webframe/">webframe</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/webframe/flask/">flask</a>
+            <a class="article-category-link" href="/categories/webframe/">webframe</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/webframe/django/">django</a>
             </div>
-            <div class="date"><time datetime="2021-06-12T00:25:22.025Z" itemprop="datePublished">2021-06-12</time></div>
+            <div class="date"><time datetime="2021-06-15T01:28:37.672Z" itemprop="datePublished">2021-06-15</time></div>
         </div>
         
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2021/06/12/flask/flask%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AE%A1%E7%90%86/">flask上下文管理</a>
+        <a href="/2021/06/15/django/%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/">登录认证</a>
         </h1>
     
 
         <p class="article-excerpt">
-            上下文分类
-请求上下文：包括request和session，保存请求相关的信息
-request：封装客户端发送的请求报文数据
-session：用于记住请求之间的数据，通过签名的cookie实现，常用来记住用户登录状态
-
-
-程序上下文：包括current_app和g，为了更好的分离程序的状态，应用起来更加灵活，方便调测等
-current_app：指向处理请求的当前程序实例，比如获取配置，经常会用cu
+            前言
+前后端分离的项目不需要做csrf认证，app和网站服务端已经跨站
+drf有三种验证方式
+BasicAuthentication 通过账号密码进行基本认证，密码经过base64编码和sha256并加盐存入数据库
+TokenAuthentication 通过cookie设置的相关代码键为token或设置值，
+SessionAuthentication sessionId存在cookie，通过se
         </p>
     </div>
 </article>
@@ -271,17 +269,17 @@ current_app：指向处理请求的当前程序实例，比如获取配置，经
         <article class="article article-summary">
     <div class="article-summary-inner">
         
-        <a href="/2021/06/12/flask/flask%E4%B8%8Edjango%E6%AF%94%E8%BE%83/" class="thumbnail">
+        <a href="/2021/06/15/django/%E6%94%AF%E4%BB%98%E5%8A%9F%E8%83%BD/" class="thumbnail">
     
     
-        <span style="background-image:url(/css/images/flask.jfif)" alt="flask和django比较" class="thumbnail-image"></span>
+        <span style="background-image:url(/css/images/siyue.jpg)" alt="支付功能（支付宝）" class="thumbnail-image"></span>
     
     
         
 <span class="comment-counter">
     <i class="fa fa-comments-o"></i>
     
-        <span><a href="http://example.com/2021/06/12/flask/flask%E4%B8%8Edjango%E6%AF%94%E8%BE%83/#isso-thread"></a></span>
+        <span><a href="http://example.com/2021/06/15/django/%E6%94%AF%E4%BB%98%E5%8A%9F%E8%83%BD/#isso-thread"></a></span>
     
 </span>
 
@@ -292,26 +290,20 @@ current_app：指向处理请求的当前程序实例，比如获取配置，经
         
         <div class="article-meta">
             <div class="category">
-            <a class="article-category-link" href="/categories/webframe/">webframe</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/webframe/flask/">flask</a>
+            <a class="article-category-link" href="/categories/webframe/">webframe</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/webframe/django/">django</a>
             </div>
-            <div class="date"><time datetime="2021-06-12T00:25:22.025Z" itemprop="datePublished">2021-06-12</time></div>
+            <div class="date"><time datetime="2021-06-15T01:28:37.671Z" itemprop="datePublished">2021-06-15</time></div>
         </div>
         
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2021/06/12/flask/flask%E4%B8%8Edjango%E6%AF%94%E8%BE%83/">flask和django比较</a>
+        <a href="/2021/06/15/django/%E6%94%AF%E4%BB%98%E5%8A%9F%E8%83%BD/">支付功能（支付宝）</a>
         </h1>
     
 
         <p class="article-excerpt">
-            整体设计架构
-flask只提供核心的一小部分功能，其它的功能由它的插件进行扩充，由bluepoint实现水平扩展flask需要自己去diy，比如整体架构的设计、sql使用哪一种、登录认证怎么写、缓存。
-
-django大而全，从app划分，到session、authenticate、orm、后台管理系统都已经做好了模板，提供的很全面
-
-
-路由系统
-flask路由系统使用装饰器进行路由注册，也可以通过
+            购物车设计
+购物车 由于商品可以增加数量，这里用modelSerializer当购物车添加了某个商品第二次会报错，所以使用serializer继承即可， 一般购物车用cookie比较好123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585
         </p>
     </div>
 </article>
@@ -328,17 +320,17 @@ flask路由系统使用装饰器进行路由注册，也可以通过
         <article class="article article-summary">
     <div class="article-summary-inner">
         
-        <a href="/2021/06/12/flask/flask%E4%BF%A1%E5%8F%B7%E9%87%8F/" class="thumbnail">
+        <a href="/2021/06/15/django/serializers/" class="thumbnail">
     
     
-        <span style="background-image:url(/css/images/flask.jfif)" alt="flask信号量" class="thumbnail-image"></span>
+        <span style="background-image:url(/css/images/xuedi.jpg)" alt="serializers" class="thumbnail-image"></span>
     
     
         
 <span class="comment-counter">
     <i class="fa fa-comments-o"></i>
     
-        <span><a href="http://example.com/2021/06/12/flask/flask%E4%BF%A1%E5%8F%B7%E9%87%8F/#isso-thread"></a></span>
+        <span><a href="http://example.com/2021/06/15/django/serializers/#isso-thread"></a></span>
     
 </span>
 
@@ -349,23 +341,24 @@ flask路由系统使用装饰器进行路由注册，也可以通过
         
         <div class="article-meta">
             <div class="category">
-            <a class="article-category-link" href="/categories/webframe/">webframe</a>
+            <a class="article-category-link" href="/categories/webframe/">webframe</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/webframe/django/">django</a>
             </div>
-            <div class="date"><time datetime="2021-06-12T00:25:22.025Z" itemprop="datePublished">2021-06-12</time></div>
+            <div class="date"><time datetime="2021-06-15T01:28:37.670Z" itemprop="datePublished">2021-06-15</time></div>
         </div>
         
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2021/06/12/flask/flask%E4%BF%A1%E5%8F%B7%E9%87%8F/">flask信号量</a>
+        <a href="/2021/06/15/django/serializers/">serializers</a>
         </h1>
     
 
         <p class="article-excerpt">
-            信号量
-orm mysql增加之前记录一条日志怎么做？用装饰器的话为了保证原子性，无法在接口处装饰，必须在orm.save中去装饰，但这样就会很麻烦，需要调用很多接口自定义1个sql_save的信号，在save成功的源码中加上信号
-
-部分源码flask自己并不支持信号，需要安装插件
-1234567891011121314151617181920212223242526272829303132333
+            初步使用serializer
+使用serializers的好处
+1.图片路径返回时，普通的view需要手动添加补全路径，drf已封装
+2.无论是django.core的serializer还是django.forms.models的model_to_dict都已经被serializer封装替代，使用比较方便
+3.drf的自带文档功能，需要serializer和coreapi的支持
+4.代替了for
         </p>
     </div>
 </article>
@@ -378,17 +371,17 @@ orm mysql增加之前记录一条日志怎么做？用装饰器的话为了保�
         <article class="article article-summary">
     <div class="article-summary-inner">
         
-        <a href="/2021/06/12/flask/flask-wtforms/" class="thumbnail">
+        <a href="/2021/06/15/django/restful%E8%A7%84%E8%8C%83/" class="thumbnail">
     
     
-        <span style="background-image:url(/css/images/flask.jfif)" alt="wtforms" class="thumbnail-image"></span>
+        <span style="background-image:url(/css/images/luobo.jpg)" alt="restful规范" class="thumbnail-image"></span>
     
     
         
 <span class="comment-counter">
     <i class="fa fa-comments-o"></i>
     
-        <span><a href="http://example.com/2021/06/12/flask/flask-wtforms/#isso-thread"></a></span>
+        <span><a href="http://example.com/2021/06/15/django/restful%E8%A7%84%E8%8C%83/#isso-thread"></a></span>
     
 </span>
 
@@ -399,127 +392,29 @@ orm mysql增加之前记录一条日志怎么做？用装饰器的话为了保�
         
         <div class="article-meta">
             <div class="category">
-            <a class="article-category-link" href="/categories/webframe/">webframe</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/webframe/flask/">flask</a>
+            <a class="article-category-link" href="/categories/webframe/">webframe</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/webframe/django/">django</a>
             </div>
-            <div class="date"><time datetime="2021-06-12T00:25:22.025Z" itemprop="datePublished">2021-06-12</time></div>
+            <div class="date"><time datetime="2021-06-15T01:28:37.670Z" itemprop="datePublished">2021-06-15</time></div>
         </div>
         
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2021/06/12/flask/flask-wtforms/">wtforms</a>
+        <a href="/2021/06/15/django/restful%E8%A7%84%E8%8C%83/">restful规范</a>
         </h1>
     
 
         <p class="article-excerpt">
-            使用12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394959697# -*- coding:
-        </p>
-    </div>
-</article>
-    
-        </div>
-    
+            一些重要的restful规范restfulApi规范介绍
 
-    
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2021/06/12/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E4%B8%BA%E4%BB%80%E4%B9%88b+%E6%A0%91/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/css/images/motuo.jpg)" alt="innodb索引为什么使用b+树？" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span><a href="http://example.com/2021/06/12/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E4%B8%BA%E4%BB%80%E4%B9%88b+%E6%A0%91/#isso-thread"></a></span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a>
-            </div>
-            <div class="date"><time datetime="2021-06-12T00:25:14.443Z" itemprop="datePublished">2021-06-12</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2021/06/12/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E4%B8%BA%E4%BB%80%E4%B9%88b+%E6%A0%91/">innodb索引为什么使用b+树？</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            磁盘io与预读考虑到磁盘IO是非常高昂的操作，计算机操作系统做了一些优化，当一次IO时，不光把当前磁盘地址的数据，而是把相邻的数据也都读取到内存缓冲区内，因为局部预读性原理告诉我们，当计算机访问一个地址的数据的时候，与其相邻的数据也会很快被访问到。每一次IO读取的数据我们称之为一页(page)，具体一页有多大数据跟操作系统有关，一般为16k，也就是我们读取一页内的数据时候，实际上才发生了一次IO，
-        </p>
-    </div>
-</article>
-    
-
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2021/06/12/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E5%88%86%E8%A1%A8%E5%AE%9E%E8%B7%B5/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/css/images/siyue2.jpg)" alt="mysql分表实践" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span><a href="http://example.com/2021/06/12/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E5%88%86%E8%A1%A8%E5%AE%9E%E8%B7%B5/#isso-thread"></a></span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a>
-            </div>
-            <div class="date"><time datetime="2021-06-12T00:25:14.443Z" itemprop="datePublished">2021-06-12</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2021/06/12/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E5%88%86%E8%A1%A8%E5%AE%9E%E8%B7%B5/">mysql分表实践</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            停机部署1.挂牌停机通告2.通过写的脚本（直接按游标取出数据进行迁移）按照规定逻辑进行分库分表（也可以使用工具）3.重写中间件按照逻辑访问数据库4.上线
-
-优点
-比较容易，不用考虑这时的用户操作，无脑迁移数据
-
-
-缺点
-系统必须停机，客户体验差
-必须在规定时间完成迁移及数据校验
-
-
-
-不停机部署数据双写迁移法1.老库和新库同时insert/update/delete，然后将老数据批量迁移到新库，最
+restful规范是一种前后台分离开发的标准，是最佳的实践
+url资源定位：GET POST PUT DELETE
+GET 获取资源
+POST 创建资源
+PUT 更新服务器上一个资源，需要提供整个资源
+PATCH 更新服务器上的一个资源，只提供资源中改变的那部分
+DELETE 删除资源
+HEAD 获取请求头判断资源是否存在
+OPTIONS
         </p>
     </div>
 </article>
@@ -536,7 +431,276 @@ orm mysql增加之前记录一条日志怎么做？用装饰器的话为了保�
         <article class="article article-summary">
     <div class="article-summary-inner">
         
-        <a href="/2021/06/12/webframe/%E7%AC%AC%E4%B8%89%E6%96%B9%E6%94%AF%E4%BB%98/" class="thumbnail">
+        <a href="/2021/06/15/django/pooledDB/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/tuzi.jpg)" alt="pooledDB" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span><a href="http://example.com/2021/06/15/django/pooledDB/#isso-thread"></a></span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/webframe/">webframe</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/webframe/django/">django</a>
+            </div>
+            <div class="date"><time datetime="2021-06-15T01:28:37.669Z" itemprop="datePublished">2021-06-15</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2021/06/15/django/pooledDB/">pooledDB</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            引入连接池
+多个人同时调用时，创建一定数量的连接（抽象为一个池子），如果连接池有空闲连接，就给多个人其中一个人，如果没空，就有人需要等待
+连接数设置一般为（核心数*2）+有效磁盘数
+当不使用django自带的orm时，一般使用连接池连接数据库
+
+两种模式（persistentDB和poolDB）
+persistentDB
+
+为每一个进来的现场创建一个连接，线程调用close也不会关闭，只是把连接重
+        </p>
+    </div>
+</article>
+    
+
+    
+    
+    
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2021/06/15/django/model%E8%AE%BE%E8%AE%A1/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/gouzi.jpg)" alt="model设计" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span><a href="http://example.com/2021/06/15/django/model%E8%AE%BE%E8%AE%A1/#isso-thread"></a></span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/webframe/">webframe</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/webframe/django/">django</a>
+            </div>
+            <div class="date"><time datetime="2021-06-15T01:28:37.667Z" itemprop="datePublished">2021-06-15</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2021/06/15/django/model%E8%AE%BE%E8%AE%A1/">model设计</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            归类设计model、app
+通过类型区分model，放置到不同app的model块
+例如如果是商城类型的网站设计：
+商品 goods
+交易 trade
+用户 users
+用户操作 userOperation
+
+
+
+常用基础model知识基础Field
+CharField
+DateField
+DateTimeField 
+关键参数：auto_now_add=True(在新增时创建时间之后不再变)和a
+        </p>
+    </div>
+</article>
+    
+        </div>
+    
+
+    
+    
+    
+    
+        <div class="article-row">
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2021/06/15/django/drf%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/yuhui.jpg)" alt="基本配置" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span><a href="http://example.com/2021/06/15/django/drf%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE/#isso-thread"></a></span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/webframe/">webframe</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/webframe/django/">django</a>
+            </div>
+            <div class="date"><time datetime="2021-06-15T01:28:37.666Z" itemprop="datePublished">2021-06-15</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2021/06/15/django/drf%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE/">基本配置</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            搭建虚拟环境
+pip install virtualenv
+pip install virtualenvwrapper
+mkvirtualenv name 创建虚拟环境
+workon 列出所有虚拟环境
+workon name 进入虚拟环境
+deactivate 退出
+默认安装路径c盘用户下的envs
+修改路径：环境变量设置-&gt;新建系统变量-&gt;WORKON_HOME(Key)：E:env
+        </p>
+    </div>
+</article>
+    
+
+    
+    
+    
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2021/06/15/django/drf%E9%99%90%E9%80%9F%E7%BC%93%E5%AD%98/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/shu.jpg)" alt="限速缓存" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span><a href="http://example.com/2021/06/15/django/drf%E9%99%90%E9%80%9F%E7%BC%93%E5%AD%98/#isso-thread"></a></span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/webframe/">webframe</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/webframe/django/">django</a>
+            </div>
+            <div class="date"><time datetime="2021-06-15T01:28:37.666Z" itemprop="datePublished">2021-06-15</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2021/06/15/django/drf%E9%99%90%E9%80%9F%E7%BC%93%E5%AD%98/">限速缓存</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            django缓存配置
+首先在setting中配置CACHES，默认的是使用django本机内存作为网站1234567&#39;django.core.cache.backends.db.DatabaseCache&#39;&#39;django.core.cache.backends.dummy.DummyCache&#39;&#39;django.core.cache.backends.file
+        </p>
+    </div>
+</article>
+    
+        </div>
+    
+
+    
+    
+    
+    
+        <div class="article-row">
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2021/06/15/django/drf%E6%96%87%E6%A1%A3/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/yintao.jpg)" alt="drf文档" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span><a href="http://example.com/2021/06/15/django/drf%E6%96%87%E6%A1%A3/#isso-thread"></a></span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/webframe/">webframe</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/webframe/django/">django</a>
+            </div>
+            <div class="date"><time datetime="2021-06-15T01:28:37.665Z" itemprop="datePublished">2021-06-15</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2021/06/15/django/drf%E6%96%87%E6%A1%A3/">drf文档</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            swagger1234567891011121314151617# pip install django-rest-swagger# pip install coreapiINSTALLED_APPS &#x3D; [...&#39;rest_framework_swagger&#39;]REST_FRAMEWORK &#x3D; &#123;    # api接口文档配置    &#39;DEF
+        </p>
+    </div>
+</article>
+    
+
+    
+    
+    
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2021/06/15/webframe/%E7%AC%AC%E4%B8%89%E6%96%B9%E6%94%AF%E4%BB%98/" class="thumbnail">
     
     
         <span class="thumbnail-image thumbnail-none"></span>
@@ -546,7 +710,7 @@ orm mysql增加之前记录一条日志怎么做？用装饰器的话为了保�
 <span class="comment-counter">
     <i class="fa fa-comments-o"></i>
     
-        <span><a href="http://example.com/2021/06/12/webframe/%E7%AC%AC%E4%B8%89%E6%96%B9%E6%94%AF%E4%BB%98/#isso-thread"></a></span>
+        <span><a href="http://example.com/2021/06/15/webframe/%E7%AC%AC%E4%B8%89%E6%96%B9%E6%94%AF%E4%BB%98/#isso-thread"></a></span>
     
 </span>
 
@@ -559,91 +723,7 @@ orm mysql增加之前记录一条日志怎么做？用装饰器的话为了保�
             <div class="category">
             
             </div>
-            <div class="date"><time datetime="2021-06-12T00:25:14.443Z" itemprop="datePublished">2021-06-12</time></div>
-        </div>
-        
-        <p class="article-excerpt">
-            
-        </p>
-    </div>
-</article>
-    
-
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2021/06/12/flask/flask%E6%8F%92%E4%BB%B6/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span><a href="http://example.com/2021/06/12/flask/flask%E6%8F%92%E4%BB%B6/#isso-thread"></a></span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            
-            </div>
-            <div class="date"><time datetime="2021-06-12T00:25:14.427Z" itemprop="datePublished">2021-06-12</time></div>
-        </div>
-        
-        <p class="article-excerpt">
-            
-        </p>
-    </div>
-</article>
-    
-        </div>
-    
-
-    
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2021/06/12/flask/flask%E8%B7%AF%E7%94%B1%E7%B3%BB%E7%BB%9F/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span><a href="http://example.com/2021/06/12/flask/flask%E8%B7%AF%E7%94%B1%E7%B3%BB%E7%BB%9F/#isso-thread"></a></span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            
-            </div>
-            <div class="date"><time datetime="2021-06-12T00:25:14.427Z" itemprop="datePublished">2021-06-12</time></div>
+            <div class="date"><time datetime="2021-06-15T01:28:22.151Z" itemprop="datePublished">2021-06-15</time></div>
         </div>
         
         <p class="article-excerpt">
@@ -660,8 +740,8 @@ orm mysql增加之前记录一条日志怎么做？用装饰器的话为了保�
 
 
     <nav id="page-nav">
-        <span class="pages">第 7 页，共 7 页</span>
-        <a class="extend prev" rel="prev" href="/archives/2021/06/page/6/">&laquo;</a><a class="page-number" href="/archives/2021/06/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/2021/06/page/5/">5</a><a class="page-number" href="/archives/2021/06/page/6/">6</a><span class="page-number current">7</span>
+        <span class="pages">第 7 页，共 8 页</span>
+        <a class="extend prev" rel="prev" href="/archives/2021/06/page/6/">&laquo;</a><a class="page-number" href="/archives/2021/06/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/2021/06/page/5/">5</a><a class="page-number" href="/archives/2021/06/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/archives/2021/06/page/8/">8</a><a class="extend next" rel="next" href="/archives/2021/06/page/8/">&raquo;</a>
     </nav>
 
 
@@ -699,30 +779,10 @@ orm mysql增加之前记录一条日志怎么做？用装饰器的话为了保�
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88/" class="thumbnail">
+                            <a href="/2021/06/15/redis%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%BC%93%E5%AD%98%E9%97%AE%E9%A2%98/" class="thumbnail">
     
     
-        <span style="background-image:url(/css/images/xiaohuanren3.jpg)" alt="mysql索引失效" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a></p>
-                            <p class="item-title"><a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88/" class="title">mysql索引失效</a></p>
-                            <p class="item-date"><time datetime="2021-06-13T07:40:54.744Z" itemprop="datePublished">2021-06-13</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/css/images/shan.jpg)" alt="mysql索引优化案例分析" class="thumbnail-image"></span>
+        <span style="background-image:url(/css/images/qinglu.jfif)" alt="缓存问题" class="thumbnail-image"></span>
     
     
 </a>
@@ -730,36 +790,16 @@ orm mysql增加之前记录一条日志怎么做？用装饰器的话为了保�
                         </div>
                         
                         <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a></p>
-                            <p class="item-title"><a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/" class="title">mysql索引优化案例分析</a></p>
-                            <p class="item-date"><time datetime="2021-06-13T07:40:39.919Z" itemprop="datePublished">2021-06-13</time></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a></p>
+                            <p class="item-title"><a href="/2021/06/15/redis%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%BC%93%E5%AD%98%E9%97%AE%E9%A2%98/" class="title">缓存问题</a></p>
+                            <p class="item-date"><time datetime="2021-06-15T08:57:18.147Z" itemprop="datePublished">2021-06-15</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2021/06/13/webframe/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/css/images/xiaohuanren2.jpg)" alt="设计模式" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/webframe/">webframe</a></p>
-                            <p class="item-title"><a href="/2021/06/13/webframe/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="title">设计模式</a></p>
-                            <p class="item-date"><time datetime="2021-06-13T07:17:23.394Z" itemprop="datePublished">2021-06-13</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/MHA/" class="thumbnail">
+                            <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/dict%E8%A7%A3%E6%9E%90/" class="thumbnail">
     
     
         <span class="thumbnail-image thumbnail-none"></span>
@@ -771,15 +811,15 @@ orm mysql增加之前记录一条日志怎么做？用装饰器的话为了保�
                         
                         <div class="item-inner">
                             <p class="item-category"></p>
-                            <p class="item-title"><a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/MHA/" class="title"></a></p>
-                            <p class="item-date"><time datetime="2021-06-13T04:16:55.764Z" itemprop="datePublished">2021-06-13</time></p>
+                            <p class="item-title"><a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/dict%E8%A7%A3%E6%9E%90/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-15T08:52:31.827Z" itemprop="datePublished">2021-06-15</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/mysql%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/" class="thumbnail">
+                            <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/int%E8%A7%A3%E6%9E%90/" class="thumbnail">
     
     
         <span class="thumbnail-image thumbnail-none"></span>
@@ -791,8 +831,48 @@ orm mysql增加之前记录一条日志怎么做？用装饰器的话为了保�
                         
                         <div class="item-inner">
                             <p class="item-category"></p>
-                            <p class="item-title"><a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/mysql%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/" class="title"></a></p>
-                            <p class="item-date"><time datetime="2021-06-13T04:14:41.084Z" itemprop="datePublished">2021-06-13</time></p>
+                            <p class="item-title"><a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/int%E8%A7%A3%E6%9E%90/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-15T08:52:31.827Z" itemprop="datePublished">2021-06-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-15T08:52:31.827Z" itemprop="datePublished">2021-06-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/list%E8%A7%A3%E6%9E%90/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/list%E8%A7%A3%E6%9E%90/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-15T08:52:17.313Z" itemprop="datePublished">2021-06-15</time></p>
                         </div>
                     </li>
                 
@@ -805,7 +885,7 @@ orm mysql增加之前记录一条日志怎么做？用装饰器的话为了保�
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/">bigdata</a><span class="category-list-count">22</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker/">docker</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker-compose/">docker-compose</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/hadoop/">hadoop</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/zookeeper/">zookeeper</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/">nosql</a><span class="category-list-count">20</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis/">redis</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/">webframe</a><span class="category-list-count">21</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/django/">django</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/flask/">flask</a><span class="category-list-count">5</span></li></ul></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/">bigdata</a><span class="category-list-count">22</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker/">docker</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker-compose/">docker-compose</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/hadoop/">hadoop</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/zookeeper/">zookeeper</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/">nosql</a><span class="category-list-count">27</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis/">redis</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a><span class="category-list-count">9</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/">webframe</a><span class="category-list-count">21</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/django/">django</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/flask/">flask</a><span class="category-list-count">5</span></li></ul></li></ul>
         </div>
     </div>
 
@@ -815,7 +895,7 @@ orm mysql增加之前记录一条日志怎么做？用装饰器的话为了保�
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">69</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">77</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 

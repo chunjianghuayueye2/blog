@@ -1,0 +1,775 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>锁机制 | 春江花月夜o</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="" />
+    
+    <meta name="description" content="概述锁是计算机中协调多个进程或线程并发访问某一资源的机制。 锁的分类按数据操作类型分分为读锁和写锁  1.读锁 共享锁-S锁-乐观锁针对同一份数据，多个读操作可以同时进行而不会互相影响  2.写锁 排他锁-X锁-悲观锁当前写操作没有完成前它会阻断其他写锁和读锁   按数据操作粒度分行锁和表锁和页锁 表锁偏向MYISAM存储引擎，开销小，加锁快，无死锁，锁定粒度大，发生锁冲突的概率最高，并发度最低。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="锁机制">
+<meta property="og:url" content="http://example.com/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/mysql%E9%94%81%E6%9C%BA%E5%88%B6/index.html">
+<meta property="og:site_name" content="春江花月夜o">
+<meta property="og:description" content="概述锁是计算机中协调多个进程或线程并发访问某一资源的机制。 锁的分类按数据操作类型分分为读锁和写锁  1.读锁 共享锁-S锁-乐观锁针对同一份数据，多个读操作可以同时进行而不会互相影响  2.写锁 排他锁-X锁-悲观锁当前写操作没有完成前它会阻断其他写锁和读锁   按数据操作粒度分行锁和表锁和页锁 表锁偏向MYISAM存储引擎，开销小，加锁快，无死锁，锁定粒度大，发生锁冲突的概率最高，并发度最低。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/css/images/ningmeng.jpg">
+<meta property="article:published_time" content="2021-06-15T01:28:22.148Z">
+<meta property="article:modified_time" content="2021-06-15T03:24:35.911Z">
+<meta property="article:author" content="durian">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/css/images/ningmeng.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/gouzi.ico" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="春江花月夜o" type="application/atom+xml">
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">关于</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">python</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">cpp</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">webframe</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                                <a class="main-nav-list-link" href="/null">flask</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">django</a>
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">algorithm</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">bigdata</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">nosql</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                                <a class="main-nav-list-link" href="/null"> redis</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">mysql</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null"> redis高级篇</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">mysql高级篇</a>
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-mysql高级篇/mysql锁机制" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        锁机制
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/mysql%E9%94%81%E6%9C%BA%E5%88%B6/" class="article-date">
+       <time datetime="2021-06-15T01:28:22.148Z" itemprop="datePublished">2021-06-15</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/mysql%E9%94%81%E6%9C%BA%E5%88%B6/" class="article-date">
+     <time datetime="2021-06-15T03:24:35.911Z" itemprop="dateModified">2021-06-15</time>
+  </a>
+</div>
+
+
+                
+
+                
+                
+   <div class="article-counter">
+      <i class="fa fa-file-word-o"></i>
+      <span class="post-count-item-text">本文字数: </span>
+      <span class="post-count">1.7k</span>
+      <i class="fa fa-clock-o"></i>
+      <span class="post-time-item-text">阅读时长: </span>
+      <span class="post-count">6 分钟 </span>
+   </div>
+
+
+                <span id="busuanzi_container_page_pv">
+                阅读次数<span id="busuanzi_value_page_pv"></span>次
+                </span>
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>锁是计算机中协调多个进程或线程并发访问某一资源的机制。</p>
+<h2 id="锁的分类"><a href="#锁的分类" class="headerlink" title="锁的分类"></a>锁的分类</h2><h3 id="按数据操作类型分"><a href="#按数据操作类型分" class="headerlink" title="按数据操作类型分"></a>按数据操作类型分</h3><p>分为读锁和写锁</p>
+<ul>
+<li><p>1.读锁 共享锁-S锁-乐观锁<br>针对同一份数据，多个读操作可以同时进行而不会互相影响</p>
+</li>
+<li><p>2.写锁 排他锁-X锁-悲观锁<br>当前写操作没有完成前它会阻断其他写锁和读锁</p>
+</li>
+</ul>
+<h3 id="按数据操作粒度分"><a href="#按数据操作粒度分" class="headerlink" title="按数据操作粒度分"></a>按数据操作粒度分</h3><p>行锁和表锁和页锁</p>
+<h4 id="表锁"><a href="#表锁" class="headerlink" title="表锁"></a>表锁</h4><p>偏向MYISAM存储引擎，开销小，加锁快，无死锁，锁定粒度大，<br>发生锁冲突的概率最高，并发度最低。myisam级的读锁和写锁（偏读的引擎）表锁。</p>
+<h5 id="读锁"><a href="#读锁" class="headerlink" title="读锁"></a>读锁</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 手动增加读写锁</span><br><span class="line">1.lock table 表名 read(write), 表名2 read(write), 其它;</span><br><span class="line">lock table book read, class write;</span><br><span class="line">看看后面有没有加过锁</span><br><span class="line">2.show open tables;</span><br><span class="line">解开所有锁</span><br><span class="line">3.unlock tables;</span><br></pre></td></tr></table></figure>
+<p>增加读锁以后</p>
+<ul>
+<li>1.当前session无法进行update，insert等一系列其他操作</li>
+<li>2.无法读除锁住表以外别的表的数据。</li>
+<li>3.别的session可以读全部表的数据，不能修改锁表。</li>
+<li>4.读阻塞写的。(其它session会一直等待)</li>
+<li>5.别的session无法解除锁</li>
+</ul>
+<h5 id="写锁"><a href="#写锁" class="headerlink" title="写锁"></a>写锁</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lock table mylock write;</span><br></pre></td></tr></table></figure>
+<p>增加写锁之后</p>
+<ul>
+<li>1.加了写锁以后，当前session只能对当前加了锁的表进行读写操作</li>
+<li>2.其它session可以读其它的表，但不能读当前session锁住的。<br>MyISAM会在执行查询语句时（select）前，会自动给涉及的所有表加读锁，<br>在执行增删改操作前，会自动给涉及的表加写锁。简而言之就是，读锁会阻<br>塞写，但是不会阻塞读，而写锁则会把读和写都阻塞。</li>
+</ul>
+<p>如何分析表锁定</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1.show status like ‘table%’;</span><br><span class="line">会出现2个关键信息：</span><br><span class="line">1.table_lock_immediate 129</span><br><span class="line">产生表级锁定的次数，表示可以立即获取锁的查询次数，每立即获取锁值加1</span><br><span class="line">2.table_locks_waited</span><br><span class="line">出现表级锁定争用而发生等待的次数（不能立即获取锁的次数，每等待一次锁值加1 ），此值高则说明存在着较严重的表级锁争用情况。</span><br><span class="line">此外MYISAM的读写锁是写优先，这也是myisam不适合做写为主表的引擎的原因，因为写锁后，其它线程不能做任何操作，大量更新会使得查询很难得到锁，从而造成永久阻塞。</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="行锁"><a href="#行锁" class="headerlink" title="行锁"></a>行锁</h4><p>偏向innodb存储引擎，开销大，加锁慢，会出现在死锁，锁定粒度最小，<br>发生锁冲突的概率最低，并发度也最高。innodb于myisam的最大不同有<br>两点：一是支持事务（transaction）; 二是采用了行级锁。</p>
+<h5 id="行锁概念"><a href="#行锁概念" class="headerlink" title="行锁概念"></a>行锁概念</h5><ul>
+<li>1.建表</li>
+<li>2.打开两个session</li>
+<li>3.关闭两个session的自动提交<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set autocommit &#x3D; 0;</span><br></pre></td></tr></table></figure></li>
+<li>4.左边更新数据，右边更新同一个数据</li>
+<li>5.select 查看对比，commit之后再对比。<br>当左边表更新时，右边更新同样的内容时阻塞，当阻塞过久会超时。右边更新不同行内容互不影响。</li>
+<li>6.无索引或索引不当，引起的行锁升级成表锁<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show index from test_innodb_lock;</span><br></pre></td></tr></table></figure></li>
+<li>7.如何锁定某一行<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">begin</span><br><span class="line">select * from table where a&#x3D;8 for update;</span><br></pre></td></tr></table></figure>
+这样锁定某一行后其它的操作会被阻塞，直到锁定某行的<br>会话提交commit，重要的是加for update。</li>
+</ul>
+<h5 id="索引失效的影响"><a href="#索引失效的影响" class="headerlink" title="索引失效的影响"></a>索引失效的影响</h5><p>索引失效会效率下降，更恐怖的是行锁变表锁（当更新没有用到索引行时），<br>当读时，无索引会造成s锁，影响写入修改。</p>
+<ul>
+<li>如：b本来是varchar类型，用了强制类型转换让索引失效<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">update test_innodb_lock set a&#x3D; 41 where b&#x3D;4000;</span><br></pre></td></tr></table></figure>
+这时候，session2无法同时更新别的数据，造成表锁。<br>InnoDB 行级锁是通过给索引上的索引项加锁来实现的，</li>
+</ul>
+<p><strong>InnoDB行级锁只有通过索引条件检索数据，才使用行级锁<br>否则，InnoDB使用表锁 在不通过索引(主 键)条件查询的、<br>时候，InnoDB是表锁而不是行锁。</strong></p>
+<h5 id="行锁总结"><a href="#行锁总结" class="headerlink" title="行锁总结"></a>行锁总结</h5><ul>
+<li><p>1.做一套监控平台，自动发出调出来，当前你被锁了多少时间。<br>比如top命令里面的数据抓出来展现在平台上。</p>
+</li>
+<li><p>2.innodb由于实现了行级锁定，虽然在锁定机制的实现方面所带<br>来的性能损耗可能比表级锁定会要更高一些，但是在整体并发处理<br>能力方面要远远优于myisam的表级锁定，当系统并发较高时，innodb<br>的整体性能和myisam相比就会有明显的优势了。</p>
+</li>
+<li><p>3.但是innodb的行级锁定同样也有其脆弱的一面，当我们使用不当的时候，<br>可能会让innodb的整体性能表现不仅不能比myisam更高，甚至可能会更差。</p>
+</li>
+<li><p>4.通过show status like ‘innodb_row_lock%’;来看行级锁的争夺。会显示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1.innodb_row_lock_current_waits:当前正在等待锁定的数量</span><br><span class="line">2.innodb_row_lock_time:从系统启动到现在锁定总时间长度</span><br><span class="line">3.innodb_row_lock_time_avg:每次等待平均花的时间</span><br><span class="line">4.innodb_row_lock_time_max</span><br><span class="line">5.innodb_row_lock_waits:系统启动到现在总共等待的次数。</span><br><span class="line">尤其当等待次数很高，而且每次等待时长也不小的时候，我们就需要分析系统中为什么会有如此多的等待，然后根据分析结果着手指定优化计划。</span><br><span class="line">这个时候一定要用show profile分析，为什么会花费那么多等待时长。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>5.小建议优化</p>
+<ul>
+<li>1.尽可能让所有数据检索都通过索引来完成，避免无索引行锁升级为表锁。<br>（varchar类型不加单引号是重罪）</li>
+<li>2.合理设计索引，尽量缩小锁的范围</li>
+<li>3.尽可能较少的检索条件，避免间隙锁</li>
+<li>4.尽量控制事务大小，减少锁定资源量和时间长度</li>
+<li>5.尽可能低级别事务隔离</li>
+</ul>
+</li>
+</ul>
+<h4 id="页锁"><a href="#页锁" class="headerlink" title="页锁"></a>页锁</h4><p>应用于BDB引擎，开销和加锁时间介于表锁和行锁之间，会出<br>现死锁，锁定粒度介于表锁和行锁之间，并发度一般。</p>
+<h2 id="间隙锁及其危害"><a href="#间隙锁及其危害" class="headerlink" title="间隙锁及其危害"></a>间隙锁及其危害</h2><p>当我们用范围条件而不是相等条件，innodb会给已有数据的索引项加锁，<br>对于值在范围内但不存在的记录，叫做间隙gap：innodb也会对这个间隙<br>加锁，这种机制就是所谓的间隙锁（next-key锁）;(宁可错杀不可放过)</p>
+<h3 id="间隙锁"><a href="#间隙锁" class="headerlink" title="间隙锁"></a>间隙锁</h3><p>一般而言，为了做云计算和大数据分析，最好数据是连续的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">session1</span><br><span class="line">update test_innodb_lock set b&#x3D;’9001’ where a&gt;1 and a&lt;6</span><br><span class="line">session2:</span><br><span class="line">insert into test_innodb_lock values(2, ‘9001’);</span><br><span class="line">发现insert不行。</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://example.com/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/mysql%E9%94%81%E6%9C%BA%E5%88%B6/" data-id="ckpxu57pl0023owmzf9tn8x8h" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "durian"
+        },
+        "headline": "锁机制",
+        "image": "http://example.com/css/images/ningmeng.jpg",
+        "keywords": "",
+        "genre": "nosql mysql高级篇",
+        "datePublished": "2021-06-15",
+        "dateCreated": "2021-06-15",
+        "dateModified": "2021-06-15",
+        "url": "http://example.com/2021/06/15/mysql高级篇/mysql锁机制/",
+        "description": "概述锁是计算机中协调多个进程或线程并发访问某一资源的机制。
+锁的分类按数据操作类型分分为读锁和写锁
+
+1.读锁 共享锁-S锁-乐观锁针对同一份数据，多个读操作可以同时进行而不会互相影响
+
+2.写锁 排他锁-X锁-悲观锁当前写操作没有完成前它会阻断其他写锁和读锁
+
+
+按数据操作粒度分行锁和表锁和页锁
+表锁偏向MYISAM存储引擎，开销小，加锁快，无死锁，锁定粒度大，发生锁冲突的概率最高，并发度最低。",
+        "wordCount": 222
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <!-- Valine -->
+    <div class="vcomments"></div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/chunjianghuayueye2" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/mysql%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            主从复制
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2021/06/15/flask/flask%E8%B7%AF%E7%94%B1%E7%B3%BB%E7%BB%9F/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title"></p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+<div class="widget-wrap widget-list">
+    <h3 class="widget-title">目录</h3>
+    <div class="widget">
+        <div id="toc" class="toc-article">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%94%81%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-number">2.</span> <span class="toc-text">锁的分类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%89%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C%E7%B1%BB%E5%9E%8B%E5%88%86"><span class="toc-number">2.1.</span> <span class="toc-text">按数据操作类型分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%89%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C%E7%B2%92%E5%BA%A6%E5%88%86"><span class="toc-number">2.2.</span> <span class="toc-text">按数据操作粒度分</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A1%A8%E9%94%81"><span class="toc-number">2.2.1.</span> <span class="toc-text">表锁</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%AF%BB%E9%94%81"><span class="toc-number">2.2.1.1.</span> <span class="toc-text">读锁</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%86%99%E9%94%81"><span class="toc-number">2.2.1.2.</span> <span class="toc-text">写锁</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A1%8C%E9%94%81"><span class="toc-number">2.2.2.</span> <span class="toc-text">行锁</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%A1%8C%E9%94%81%E6%A6%82%E5%BF%B5"><span class="toc-number">2.2.2.1.</span> <span class="toc-text">行锁概念</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="toc-number">2.2.2.2.</span> <span class="toc-text">索引失效的影响</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%A1%8C%E9%94%81%E6%80%BB%E7%BB%93"><span class="toc-number">2.2.2.3.</span> <span class="toc-text">行锁总结</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E9%94%81"><span class="toc-number">2.2.3.</span> <span class="toc-text">页锁</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%B4%E9%9A%99%E9%94%81%E5%8F%8A%E5%85%B6%E5%8D%B1%E5%AE%B3"><span class="toc-number">3.</span> <span class="toc-text">间隙锁及其危害</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%B4%E9%9A%99%E9%94%81"><span class="toc-number">3.1.</span> <span class="toc-text">间隙锁</span></a></li></ol></li></ol>
+        </div>
+    </div>
+</div>
+
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/15/redis%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%BC%93%E5%AD%98%E9%97%AE%E9%A2%98/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/qinglu.jfif)" alt="缓存问题" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a></p>
+                            <p class="item-title"><a href="/2021/06/15/redis%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%BC%93%E5%AD%98%E9%97%AE%E9%A2%98/" class="title">缓存问题</a></p>
+                            <p class="item-date"><time datetime="2021-06-15T08:57:18.147Z" itemprop="datePublished">2021-06-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/dict%E8%A7%A3%E6%9E%90/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/dict%E8%A7%A3%E6%9E%90/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-15T08:52:31.827Z" itemprop="datePublished">2021-06-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/int%E8%A7%A3%E6%9E%90/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/int%E8%A7%A3%E6%9E%90/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-15T08:52:31.827Z" itemprop="datePublished">2021-06-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-15T08:52:31.827Z" itemprop="datePublished">2021-06-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/list%E8%A7%A3%E6%9E%90/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/list%E8%A7%A3%E6%9E%90/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-15T08:52:17.313Z" itemprop="datePublished">2021-06-15</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/">bigdata</a><span class="category-list-count">22</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker/">docker</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker-compose/">docker-compose</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/hadoop/">hadoop</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/zookeeper/">zookeeper</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/">nosql</a><span class="category-list-count">27</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis/">redis</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a><span class="category-list-count">9</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/">webframe</a><span class="category-list-count">21</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/django/">django</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/flask/">flask</a><span class="category-list-count">5</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">77</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+
+            
+                
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2021 durian</p>
+                
+                <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
+                
+            </div>
+                <p><span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span></p>
+                <p><span id="busuanzi_container_site_uv"> 
+                     本站访客数<span id="busuanzi_value_site_uv"></span>人次
+               </span></p>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+    <script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
+</footer>
+
+    </div>
+    
+    
+    <script src="//unpkg.com/valine"></script>
+    <script>
+        var GUEST = ['nick','mail','link'];
+        var meta = '';
+        meta = meta.split(',').filter(function (item) {
+            return GUEST.indexOf(item)>-1;
+        });
+        var avatarcdn = 'gravatar.cat.net' == true;
+        new Valine({
+            el: '.vcomments',
+            notify: "false",
+            verify: "false",
+            appId: "795P9DunI2Jv3Jho36dlueIS-gzGzoHsz",
+            appKey: "pM151YCVhYBYTB9Pt1SRuiKs",
+            placeholder: "Just Do It",
+            avatar:"mm",
+            recordIP:"false",
+            visitor: "true"
+        });
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

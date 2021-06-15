@@ -1,0 +1,778 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>mysql索引优化 | 春江花月夜o</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="" />
+    
+    <meta name="description" content="索引优化分析性能下降sql慢：（执行时间长，等待时间长）  1.select语句写的烂，各种连接加子查询  2.索引失效，建的索引没用，创建单索引和复合索引 1create index idx_user_name (idx_tablename_indexname) on user(name) 查询用的多的字段建立联合建立复合索引 1create index idx_user_nameEmail o">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql索引优化">
+<meta property="og:url" content="http://example.com/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96/index.html">
+<meta property="og:site_name" content="春江花月夜o">
+<meta property="og:description" content="索引优化分析性能下降sql慢：（执行时间长，等待时间长）  1.select语句写的烂，各种连接加子查询  2.索引失效，建的索引没用，创建单索引和复合索引 1create index idx_user_name (idx_tablename_indexname) on user(name) 查询用的多的字段建立联合建立复合索引 1create index idx_user_nameEmail o">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/css/images/zihua.jpg">
+<meta property="article:published_time" content="2021-06-15T01:28:37.695Z">
+<meta property="article:modified_time" content="2021-06-13T07:57:41.543Z">
+<meta property="article:author" content="durian">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/css/images/zihua.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/gouzi.ico" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="春江花月夜o" type="application/atom+xml">
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">关于</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">python</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">cpp</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">webframe</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                                <a class="main-nav-list-link" href="/null">flask</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">django</a>
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">algorithm</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">bigdata</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">nosql</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                                <a class="main-nav-list-link" href="/null"> redis</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">mysql</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null"> redis高级篇</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">mysql高级篇</a>
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-mysql高级篇/索引优化" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        mysql索引优化
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96/" class="article-date">
+       <time datetime="2021-06-15T01:28:37.695Z" itemprop="datePublished">2021-06-15</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96/" class="article-date">
+     <time datetime="2021-06-13T07:57:41.543Z" itemprop="dateModified">2021-06-13</time>
+  </a>
+</div>
+
+
+                
+
+                
+                
+   <div class="article-counter">
+      <i class="fa fa-file-word-o"></i>
+      <span class="post-count-item-text">本文字数: </span>
+      <span class="post-count">1.6k</span>
+      <i class="fa fa-clock-o"></i>
+      <span class="post-time-item-text">阅读时长: </span>
+      <span class="post-count">5 分钟 </span>
+   </div>
+
+
+                <span id="busuanzi_container_page_pv">
+                阅读次数<span id="busuanzi_value_page_pv"></span>次
+                </span>
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <h2 id="索引优化分析"><a href="#索引优化分析" class="headerlink" title="索引优化分析"></a>索引优化分析</h2><p>性能下降sql慢：（执行时间长，等待时间长）</p>
+<ul>
+<li><p>1.select语句写的烂，各种连接加子查询</p>
+</li>
+<li><p>2.索引失效，建的索引没用，创建单索引和复合索引</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create index idx_user_name (idx_tablename_indexname) on user(name)</span><br></pre></td></tr></table></figure>
+<p>查询用的多的字段建立联合建立复合索引</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create index idx_user_nameEmail on user(name,index)</span><br></pre></td></tr></table></figure></li>
+<li><p>3.关联查询太多join（设计缺陷或不得已的要求）</p>
+</li>
+<li><p>4.服务器调优及各个参数设置（缓冲、线程数等）不恰当</p>
+</li>
+</ul>
+<h2 id="explain"><a href="#explain" class="headerlink" title="explain"></a>explain</h2><p>使用explain可以模拟优化器执行sql查询语句的步骤，从而知道mysql是如何处理你的sql语句的，分析你的查询语句或是表结构的性能瓶颈。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">select * from rms.users;</span><br><span class="line">explain select * from rms.users;</span><br><span class="line">explain + sql横版</span><br><span class="line">explain + sql\G竖版</span><br><span class="line">+----+-------------+-------+------------+------+---------------+------+---------+------+------+----------+-------+</span><br><span class="line">| id | select_type | table | partitions | type | possible_keys | key  | key_len | ref  | rows | filtered | Extra |</span><br><span class="line">+----+-------------+-------+------------+------+---------------+------+---------+------+------+----------+-------+</span><br><span class="line">| 1 | SIMPLE  | users | NULL    | ALL  | NULL       | NULL | NULL  | NULL | 272 | 100.00 | NULL  |</span><br><span class="line">+----+-------------+-------+------------+------+---------------+------+---------+------+------+----------+-------+</span><br><span class="line">1 row in set, 1 warning (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<h3 id="explain相关字段解读"><a href="#explain相关字段解读" class="headerlink" title="explain相关字段解读"></a>explain相关字段解读</h3><h4 id="id"><a href="#id" class="headerlink" title="id"></a>id</h4><ul>
+<li>1.id相同表示执行顺序是由上至下</li>
+<li>2.id不同（如子查询）id的序号会递增，id值越大优先级越高，越先被执行。</li>
+</ul>
+<h4 id="select-type"><a href="#select-type" class="headerlink" title="select type"></a>select type</h4><ul>
+<li>1.simple 普通查询（查询中不包含子查询和union）</li>
+<li>2.primary 查询中包含子部分（最外层叫primary）</li>
+<li>3.subquery 在select或where列表中包含了子查询</li>
+<li>4.derived在from列表中包含的子查询被标记为Derived(衍生)，mysql会递归执行这些子查询，把结果放在临时表里面</li>
+<li>5.union 如果第二个select出现在union之后，则被标记为union;如果union包含在from子句的子查询中，外层select将被标记为：derived</li>
+<li>6.union result 从union表获取结果的select</li>
+</ul>
+<h4 id="type"><a href="#type" class="headerlink" title="type"></a>type</h4><p>显示查询用了何种类型</p>
+<ul>
+<li><p>1.有这几种ALL – index – range – ref – eq_ref – const,system – NULL</p>
+</li>
+<li><p>2.从最好到最差：<br>system – const – eq_ref – ref – range – index – ALL<br>百万数据有all必须优化</p>
+</li>
+<li><p>3.一般来说得保证查询至少达到range级别，最好能达到ref级别</p>
+</li>
+<li><p>4.介绍级别类型</p>
+<ul>
+<li>1.system:表只有一行记录（等于系统表）这是const类型的特例，平时不会出现，这个可以忽略。</li>
+<li>2.const表示通过索引一次就找到了，const用于比较primary key 或者unique索引，因为只匹配一行数据<br>所以很快，如果将主键置于where列表中，mysql就能将该查询转换为一个常量。</li>
+<li>3.eq_ref 唯一索引扫描，对每个索引键，表中只有一条记录与之匹配，常见于主键或唯一索引扫描</li>
+<li>4.ref 非唯一性索引扫描，返回匹配某个单独值的所有行，可能找到多个符合条件的行，所以他应该属于查找和扫描的混合体</li>
+<li>5.range 只检索给定范围的行，使用一个索引来选择行，key列显示使用了哪个索引，一般就是在你的where语句中出现了between、&lt;、&gt;、in等查询，这种范围查询比全表扫描要好。</li>
+<li>6.index  full index scan index与all的区别是index类型只遍历索引树，这通常比all快，因为索引文件比数据文件小。all从硬盘上读取数据。</li>
+<li>7.all 全表扫描</li>
+</ul>
+</li>
+</ul>
+<h4 id="possible-keys-and-key"><a href="#possible-keys-and-key" class="headerlink" title="possible_keys and key"></a>possible_keys and key</h4><ul>
+<li>1.判断是否索引失效，或多个索引到底使用哪一个？<br>分别表示可能使用到的索引和实际用到的索引。</li>
+<li>2.key如果为null，说明没建索引或者索引失效</li>
+<li>3.查询中若使用了覆盖索引，则该索引仅出现在key列表中<br>覆盖索引解决like问题，覆盖索引就是：查询的字段和联合索引顺序字段都一一一致。</li>
+<li>4.key_len表示索引中使用的字节数，可通过该列计算查询中使用索引的长度。key_len显示<br>的值为索引字段的最大可能长度，并非实际使用长度，即key_len是根据表定义计算而得到的。</li>
+</ul>
+<h4 id="ref"><a href="#ref" class="headerlink" title="ref"></a>ref</h4><p>显示索引的哪一列被使用了，如果可能的话，最好是一个常数，哪些列或常量被用于查找索引列上的值。</p>
+<h4 id="rows"><a href="#rows" class="headerlink" title="rows"></a>rows</h4><p>大致需要读取的行数</p>
+<h4 id="extra-其他的额外的（重要的是前三个）"><a href="#extra-其他的额外的（重要的是前三个）" class="headerlink" title="extra 其他的额外的（重要的是前三个）"></a>extra 其他的额外的（重要的是前三个）</h4><p>包含不适合在其余6个列中显示但是十分重要的信息</p>
+<ul>
+<li><p>1.using filesort<br>说明mysql对数据进行了一个外部索引排序而不是按照表内的索引顺序进行读取，mysql中无法利用索引完成的排序称为文件类排序。<br>联合索引可能部分查询能用，（由于使用排序未按照建立联合索引的顺序）但排序不能用，这时候也会出现filesort<br>当出现这个的时候，很危险。建议尽快优化可以通过新建联合索引进行优化。</p>
+</li>
+<li><p>2.using temporary<br>很糟糕的建立了临时表保存中间结果，常见于排序order by和分组查询group by。拖慢sql的元凶。十死无生<br>一定要优化</p>
+</li>
+<li><p>3.using index<br>表明相应的select操作使用了覆盖索引（covering index）避免了表的数据行，效率不错！<br>如果同时出现了using where，表明索引被用来执行索引键值的查找<br>如果没有出现using where，表明索引被用来读取数据而非执行查找动作</p>
+</li>
+<li><p>4.using where<br>表明使用了where进行过滤</p>
+</li>
+<li><p>5.using join buffer<br>表明使用了连接缓存 join特别多了， 配置文件里的缓冲join可以调大一点</p>
+</li>
+<li><p>6.impossible where<br>where子句的值时false不可达到。</p>
+</li>
+<li><p>7.select tables optimized away<br>在没有groupby子句的情况下，基于索引优化MIN/MAX操作或者对于myISAM存储引擎优化count(*)<br>操作，不必等到执行阶段再进行计算，查询执行计划生成的阶段即完成优化。</p>
+</li>
+<li><p>8.distinct<br>优化distinct操作，在找到第一匹配的元组后即停止找同样值的动作</p>
+</li>
+</ul>
+<h2 id="覆盖索引（covering-index）"><a href="#覆盖索引（covering-index）" class="headerlink" title="覆盖索引（covering index）"></a>覆盖索引（covering index）</h2><p>当select时，部分满足联合索引或者满足联合索引，这时mysql可以利用索引文件返回select的列而不必取读取数据文件<br>如果要使用覆盖索引，一定要注意select列表中只取出需要的列，不可select，因为将所有字段一起做索引会导致索引文件过大，查询性能下降。</p>
+<h2 id="重建索引"><a href="#重建索引" class="headerlink" title="重建索引"></a>重建索引</h2>
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://example.com/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96/" data-id="ckpxu57ps002eowmz7f0x30q4" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "durian"
+        },
+        "headline": "mysql索引优化",
+        "image": "http://example.com/css/images/zihua.jpg",
+        "keywords": "",
+        "genre": "nosql mysql高级篇",
+        "datePublished": "2021-06-15",
+        "dateCreated": "2021-06-15",
+        "dateModified": "2021-06-13",
+        "url": "http://example.com/2021/06/15/mysql高级篇/索引优化/",
+        "description": "索引优化分析性能下降sql慢：（执行时间长，等待时间长）
+
+1.select语句写的烂，各种连接加子查询
+
+2.索引失效，建的索引没用，创建单索引和复合索引
+1create index idx_user_name (idx_tablename_indexname) on user(name)
+查询用的多的字段建立联合建立复合索引
+1create index idx_user_nameEmail o",
+        "wordCount": 243
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <!-- Valine -->
+    <div class="vcomments"></div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/chunjianghuayueye2" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            mysql索引优化案例分析
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">mysql索引</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+<div class="widget-wrap widget-list">
+    <h3 class="widget-title">目录</h3>
+    <div class="widget">
+        <div id="toc" class="toc-article">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96%E5%88%86%E6%9E%90"><span class="toc-number">1.</span> <span class="toc-text">索引优化分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#explain"><span class="toc-number">2.</span> <span class="toc-text">explain</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#explain%E7%9B%B8%E5%85%B3%E5%AD%97%E6%AE%B5%E8%A7%A3%E8%AF%BB"><span class="toc-number">2.1.</span> <span class="toc-text">explain相关字段解读</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#id"><span class="toc-number">2.1.1.</span> <span class="toc-text">id</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#select-type"><span class="toc-number">2.1.2.</span> <span class="toc-text">select type</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#type"><span class="toc-number">2.1.3.</span> <span class="toc-text">type</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#possible-keys-and-key"><span class="toc-number">2.1.4.</span> <span class="toc-text">possible_keys and key</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ref"><span class="toc-number">2.1.5.</span> <span class="toc-text">ref</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#rows"><span class="toc-number">2.1.6.</span> <span class="toc-text">rows</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#extra-%E5%85%B6%E4%BB%96%E7%9A%84%E9%A2%9D%E5%A4%96%E7%9A%84%EF%BC%88%E9%87%8D%E8%A6%81%E7%9A%84%E6%98%AF%E5%89%8D%E4%B8%89%E4%B8%AA%EF%BC%89"><span class="toc-number">2.1.7.</span> <span class="toc-text">extra 其他的额外的（重要的是前三个）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A6%86%E7%9B%96%E7%B4%A2%E5%BC%95%EF%BC%88covering-index%EF%BC%89"><span class="toc-number">3.</span> <span class="toc-text">覆盖索引（covering index）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E5%BB%BA%E7%B4%A2%E5%BC%95"><span class="toc-number">4.</span> <span class="toc-text">重建索引</span></a></li></ol>
+        </div>
+    </div>
+</div>
+
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/15/redis%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%BC%93%E5%AD%98%E9%97%AE%E9%A2%98/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/qinglu.jfif)" alt="缓存问题" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a></p>
+                            <p class="item-title"><a href="/2021/06/15/redis%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%BC%93%E5%AD%98%E9%97%AE%E9%A2%98/" class="title">缓存问题</a></p>
+                            <p class="item-date"><time datetime="2021-06-15T08:57:18.147Z" itemprop="datePublished">2021-06-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/dict%E8%A7%A3%E6%9E%90/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/dict%E8%A7%A3%E6%9E%90/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-15T08:52:31.827Z" itemprop="datePublished">2021-06-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/int%E8%A7%A3%E6%9E%90/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/int%E8%A7%A3%E6%9E%90/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-15T08:52:31.827Z" itemprop="datePublished">2021-06-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-15T08:52:31.827Z" itemprop="datePublished">2021-06-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/list%E8%A7%A3%E6%9E%90/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/list%E8%A7%A3%E6%9E%90/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-15T08:52:17.313Z" itemprop="datePublished">2021-06-15</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/">bigdata</a><span class="category-list-count">22</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker/">docker</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker-compose/">docker-compose</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/hadoop/">hadoop</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/zookeeper/">zookeeper</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/">nosql</a><span class="category-list-count">27</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis/">redis</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a><span class="category-list-count">9</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/">webframe</a><span class="category-list-count">21</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/django/">django</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/flask/">flask</a><span class="category-list-count">5</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">77</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+
+            
+                
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2021 durian</p>
+                
+                <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
+                
+            </div>
+                <p><span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span></p>
+                <p><span id="busuanzi_container_site_uv"> 
+                     本站访客数<span id="busuanzi_value_site_uv"></span>人次
+               </span></p>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+    <script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
+</footer>
+
+    </div>
+    
+    
+    <script src="//unpkg.com/valine"></script>
+    <script>
+        var GUEST = ['nick','mail','link'];
+        var meta = '';
+        meta = meta.split(',').filter(function (item) {
+            return GUEST.indexOf(item)>-1;
+        });
+        var avatarcdn = 'gravatar.cat.net' == true;
+        new Valine({
+            el: '.vcomments',
+            notify: "false",
+            verify: "false",
+            appId: "795P9DunI2Jv3Jho36dlueIS-gzGzoHsz",
+            appKey: "pM151YCVhYBYTB9Pt1SRuiKs",
+            placeholder: "Just Do It",
+            avatar:"mm",
+            recordIP:"false",
+            visitor: "true"
+        });
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

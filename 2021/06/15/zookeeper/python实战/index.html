@@ -1,0 +1,705 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>python实操 | 春江花月夜o</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="" />
+    
+    <meta name="description" content="基础命令pip isntall kazoo服务器搭建zookeeper集群python实操zookeeper1python实操zookeeper2 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253import sysfrom kazoo.client i">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python实操">
+<meta property="og:url" content="http://example.com/2021/06/15/zookeeper/python%E5%AE%9E%E6%88%98/index.html">
+<meta property="og:site_name" content="春江花月夜o">
+<meta property="og:description" content="基础命令pip isntall kazoo服务器搭建zookeeper集群python实操zookeeper1python实操zookeeper2 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253import sysfrom kazoo.client i">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/css/images/zookeeper.jfif">
+<meta property="article:published_time" content="2021-06-15T01:28:37.713Z">
+<meta property="article:modified_time" content="2021-06-12T02:09:36.782Z">
+<meta property="article:author" content="durian">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/css/images/zookeeper.jfif">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/gouzi.ico" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="春江花月夜o" type="application/atom+xml">
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">关于</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">python</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">cpp</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">webframe</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                                <a class="main-nav-list-link" href="/null">flask</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">django</a>
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">algorithm</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">bigdata</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">nosql</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                                <a class="main-nav-list-link" href="/null"> redis</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">mysql</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null"> redis高级篇</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">mysql高级篇</a>
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/bigdata/">bigdata</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/bigdata/zookeeper/">zookeeper</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-zookeeper/python实战" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        python实操
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2021/06/15/zookeeper/python%E5%AE%9E%E6%88%98/" class="article-date">
+       <time datetime="2021-06-15T01:28:37.713Z" itemprop="datePublished">2021-06-15</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/2021/06/15/zookeeper/python%E5%AE%9E%E6%88%98/" class="article-date">
+     <time datetime="2021-06-12T02:09:36.782Z" itemprop="dateModified">2021-06-12</time>
+  </a>
+</div>
+
+
+                
+
+                
+                
+   <div class="article-counter">
+      <i class="fa fa-file-word-o"></i>
+      <span class="post-count-item-text">本文字数: </span>
+      <span class="post-count">632</span>
+      <i class="fa fa-clock-o"></i>
+      <span class="post-time-item-text">阅读时长: </span>
+      <span class="post-count">3 分钟 </span>
+   </div>
+
+
+                <span id="busuanzi_container_page_pv">
+                阅读次数<span id="busuanzi_value_page_pv"></span>次
+                </span>
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <h2 id="基础命令"><a href="#基础命令" class="headerlink" title="基础命令"></a>基础命令</h2><p>pip isntall kazoo<br>服务器搭建zookeeper集群<br><a target="_blank" rel="noopener" href="https://juejin.im/post/6844904052124303368#heading-7">python实操zookeeper1</a><br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/34177172">python实操zookeeper2</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">import sys</span><br><span class="line">from kazoo.client import KazooClient, KazooState</span><br><span class="line">import logging</span><br><span class="line"></span><br><span class="line">logging.basicConfig(</span><br><span class="line">    level&#x3D;logging.DEBUG,</span><br><span class="line">    stream&#x3D;sys.stdout,</span><br><span class="line">    format&#x3D;&#39;%(asctime)s %(pathname)s %(funcName)s%(lineno)d %(levelname)s: %(message)s&#39;)</span><br><span class="line"></span><br><span class="line">zk &#x3D; KazooClient(</span><br><span class="line">    hosts&#x3D;&#39;10.167.218.158:2181&#39;,</span><br><span class="line">    timeout&#x3D;10.0,</span><br><span class="line">    logger&#x3D;logging</span><br><span class="line">)</span><br><span class="line"># 开始心跳</span><br><span class="line">zk.start()</span><br><span class="line"></span><br><span class="line"># 获取根节点数据和状态</span><br><span class="line">data, stat &#x3D; zk.get(&#39;&#x2F;&#39;)</span><br><span class="line">print(&quot;data:&quot;, data)</span><br><span class="line">print(&quot;stat:&quot;, stat)</span><br><span class="line"></span><br><span class="line"># 获取子节点</span><br><span class="line">children &#x3D; zk.get_children(&quot;&#x2F;&quot;)</span><br><span class="line">print(children)</span><br><span class="line"></span><br><span class="line"># 创建子节点</span><br><span class="line"># zk.create(&#39;&#x2F;sanguo&#x2F;shuguo&#39;, b&#39;caoChao&#39;, ephemeral&#x3D;False)</span><br><span class="line">if not zk.exists(&#39;&#x2F;sanguo&#x2F;weiguo&#39;):</span><br><span class="line">    zk.create(&#39;&#x2F;sanguo&#x2F;weiguo&#39;, b&#39;caoChao&#39;, ephemeral&#x3D;False)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">children &#x3D; zk.get_children(&quot;&#x2F;sanguo&quot;)</span><br><span class="line">print(children)</span><br><span class="line">data, stat &#x3D; zk.get(&#39;&#x2F;sanguo&#x2F;weiguo&#39;)</span><br><span class="line">print(&quot;data:&quot;, data)</span><br><span class="line">print(&quot;stat:&quot;, stat)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def monitor(event):</span><br><span class="line">    print(type(event))</span><br><span class="line">    print(event)</span><br><span class="line">    print(zk.get_children(&#39;&#x2F;sanguo&#39;))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line">children &#x3D; zk.get_children(&#39;&#x2F;sanguo&#39;, watch&#x3D;monitor)</span><br><span class="line">print(children)</span><br><span class="line"></span><br><span class="line">node &#x3D; zk.create(&#39;&#x2F;b&#39;)</span><br><span class="line">print(node, &#39;aaaaaaaaaaaaaaaaaaaaa&#39;)</span><br><span class="line">print(zk.exists(&#39;&#x2F;sanguo&#39;), &#39;fafafafafaa&#39;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="zookeeper实现分布式锁"><a href="#zookeeper实现分布式锁" class="headerlink" title="zookeeper实现分布式锁"></a>zookeeper实现分布式锁</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">import time</span><br><span class="line">import sys</span><br><span class="line">from kazoo.client import KazooClient</span><br><span class="line">import logging</span><br><span class="line"></span><br><span class="line">class ZkLock:</span><br><span class="line">    def __init__(self, root&#x3D;&#39;&#x2F;Lock&#39;, node&#x3D;None):</span><br><span class="line">        self.lock &#x3D; False</span><br><span class="line">        self.root &#x3D; root</span><br><span class="line">        self.node &#x3D; node</span><br><span class="line">        logging.basicConfig(</span><br><span class="line">            level&#x3D;logging.DEBUG,</span><br><span class="line">            stream&#x3D;sys.stdout,</span><br><span class="line">            format&#x3D;&#39;%(asctime)s %(pathname)s %(funcName)s%(lineno)d %(levelname)s: %(message)s&#39;)</span><br><span class="line">        self.zk &#x3D; KazooClient(</span><br><span class="line">            hosts&#x3D;&#39;10.167.218.158:2181&#39;,</span><br><span class="line">            timeout&#x3D;10.0,</span><br><span class="line">            logger&#x3D;logging</span><br><span class="line">        )</span><br><span class="line">        self.zk.start()</span><br><span class="line"></span><br><span class="line">    def acquire(self):</span><br><span class="line">        if not self.zk.exists(self.root):</span><br><span class="line">            self.zk.create(self.root)</span><br><span class="line">        if not self.node:</span><br><span class="line">            self.node &#x3D; self.zk.create(self.root+&#39;&#x2F;lock&#39;, ephemeral&#x3D;True, sequence&#x3D;True)</span><br><span class="line">        nodes &#x3D; self.zk.get_children(self.root)</span><br><span class="line">        if nodes[0] &#x3D;&#x3D; self.node:</span><br><span class="line">            print(&#39;Acquire lock successfully&#39;)</span><br><span class="line">            self.lock &#x3D; True</span><br><span class="line">        else:</span><br><span class="line">            print(&#39;Acquire lock failed start watching&#39;)</span><br><span class="line"></span><br><span class="line">            @self.zk.ChildrenWatch(self.root)</span><br><span class="line">            def watch_func(data):</span><br><span class="line">                print(&quot;Data is %s and node is %s and root.is %s&quot; % (data, self.node, self.root))</span><br><span class="line">                print(self.node, self.root + &#39;&#x2F;&#39; + data[-1], self.node &#x3D;&#x3D; self.root + &#39;&#x2F;&#39; + data[-1])</span><br><span class="line">                if self.node &#x3D;&#x3D; self.root + &#39;&#x2F;&#39; + data[-1]:</span><br><span class="line">                    self.lock &#x3D; True</span><br><span class="line"></span><br><span class="line">    def release(self):</span><br><span class="line">        self.zk.stop()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ &#x3D;&#x3D; &#39;__main__&#39;:</span><br><span class="line">    t &#x3D; ZkLock()</span><br><span class="line">    while not t.lock:</span><br><span class="line">        t.acquire()</span><br><span class="line">    print(&#39;执行获取锁后的操作&#39;)</span><br><span class="line">    time.sleep(10)</span><br><span class="line">    print(&#39;执行操作结束释放锁&#39;)</span><br><span class="line">    t.release()</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>优点:ZK可以不需要关心锁超时时间，实现起来有现成的第三方包，比较方便，并且支持读写锁，<br>ZK获取锁会按照加锁的顺序，所以其是公平锁。对于高可用利用ZK集群进行保证。 </li>
+<li>缺点:ZK需要额外维护，增加维护成本，性能和Mysql相差不大，依然比较差。并且需要开发人员了解ZK是什么。</li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://example.com/2021/06/15/zookeeper/python%E5%AE%9E%E6%88%98/" data-id="ckpxu57qn003nowmzfniz31sm" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "durian"
+        },
+        "headline": "python实操",
+        "image": "http://example.com/css/images/zookeeper.jfif",
+        "keywords": "",
+        "genre": "bigdata zookeeper",
+        "datePublished": "2021-06-15",
+        "dateCreated": "2021-06-15",
+        "dateModified": "2021-06-12",
+        "url": "http://example.com/2021/06/15/zookeeper/python实战/",
+        "description": "基础命令pip isntall kazoo服务器搭建zookeeper集群python实操zookeeper1python实操zookeeper2
+1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253import sysfrom kazoo.client i",
+        "wordCount": 777
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <!-- Valine -->
+    <div class="vcomments"></div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/chunjianghuayueye2" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2021/06/15/zookeeper/zookeeper%E5%85%A5%E9%97%A8/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            zookeeper简介
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2021/06/15/webframe/%E7%AC%AC%E4%B8%89%E6%96%B9%E7%99%BB%E5%BD%95/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">第三方登录</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+<div class="widget-wrap widget-list">
+    <h3 class="widget-title">目录</h3>
+    <div class="widget">
+        <div id="toc" class="toc-article">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4"><span class="toc-number">1.</span> <span class="toc-text">基础命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#zookeeper%E5%AE%9E%E7%8E%B0%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81"><span class="toc-number">2.</span> <span class="toc-text">zookeeper实现分布式锁</span></a></li></ol>
+        </div>
+    </div>
+</div>
+
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/15/redis%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%BC%93%E5%AD%98%E9%97%AE%E9%A2%98/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/qinglu.jfif)" alt="缓存问题" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a></p>
+                            <p class="item-title"><a href="/2021/06/15/redis%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%BC%93%E5%AD%98%E9%97%AE%E9%A2%98/" class="title">缓存问题</a></p>
+                            <p class="item-date"><time datetime="2021-06-15T08:57:18.147Z" itemprop="datePublished">2021-06-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/dict%E8%A7%A3%E6%9E%90/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/dict%E8%A7%A3%E6%9E%90/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-15T08:52:31.827Z" itemprop="datePublished">2021-06-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/int%E8%A7%A3%E6%9E%90/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/int%E8%A7%A3%E6%9E%90/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-15T08:52:31.827Z" itemprop="datePublished">2021-06-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-15T08:52:31.827Z" itemprop="datePublished">2021-06-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/list%E8%A7%A3%E6%9E%90/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/list%E8%A7%A3%E6%9E%90/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-15T08:52:17.313Z" itemprop="datePublished">2021-06-15</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/">bigdata</a><span class="category-list-count">22</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker/">docker</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker-compose/">docker-compose</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/hadoop/">hadoop</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/zookeeper/">zookeeper</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/">nosql</a><span class="category-list-count">27</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis/">redis</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a><span class="category-list-count">9</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/">webframe</a><span class="category-list-count">21</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/django/">django</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/flask/">flask</a><span class="category-list-count">5</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">77</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+
+            
+                
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2021 durian</p>
+                
+                <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
+                
+            </div>
+                <p><span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span></p>
+                <p><span id="busuanzi_container_site_uv"> 
+                     本站访客数<span id="busuanzi_value_site_uv"></span>人次
+               </span></p>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+    <script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
+</footer>
+
+    </div>
+    
+    
+    <script src="//unpkg.com/valine"></script>
+    <script>
+        var GUEST = ['nick','mail','link'];
+        var meta = '';
+        meta = meta.split(',').filter(function (item) {
+            return GUEST.indexOf(item)>-1;
+        });
+        var avatarcdn = 'gravatar.cat.net' == true;
+        new Valine({
+            el: '.vcomments',
+            notify: "false",
+            verify: "false",
+            appId: "795P9DunI2Jv3Jho36dlueIS-gzGzoHsz",
+            appKey: "pM151YCVhYBYTB9Pt1SRuiKs",
+            placeholder: "Just Do It",
+            avatar:"mm",
+            recordIP:"false",
+            visitor: "true"
+        });
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

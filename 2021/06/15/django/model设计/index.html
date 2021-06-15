@@ -1,0 +1,863 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>model设计 | 春江花月夜o</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="" />
+    
+    <meta name="description" content="归类设计model、app 通过类型区分model，放置到不同app的model块 例如如果是商城类型的网站设计： 商品 goods 交易 trade 用户 users 用户操作 userOperation    常用基础model知识基础Field CharField DateField DateTimeField  关键参数：auto_now_add&#x3D;True(在新增时创建时间之后不再变)和a">
+<meta property="og:type" content="article">
+<meta property="og:title" content="model设计">
+<meta property="og:url" content="http://example.com/2021/06/15/django/model%E8%AE%BE%E8%AE%A1/index.html">
+<meta property="og:site_name" content="春江花月夜o">
+<meta property="og:description" content="归类设计model、app 通过类型区分model，放置到不同app的model块 例如如果是商城类型的网站设计： 商品 goods 交易 trade 用户 users 用户操作 userOperation    常用基础model知识基础Field CharField DateField DateTimeField  关键参数：auto_now_add&#x3D;True(在新增时创建时间之后不再变)和a">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/css/images/gouzi.jpg">
+<meta property="article:published_time" content="2021-06-15T01:28:37.667Z">
+<meta property="article:modified_time" content="2021-06-12T13:17:11.198Z">
+<meta property="article:author" content="durian">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/css/images/gouzi.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/gouzi.ico" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="春江花月夜o" type="application/atom+xml">
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">关于</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">python</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">cpp</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">webframe</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                                <a class="main-nav-list-link" href="/null">flask</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">django</a>
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">algorithm</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">bigdata</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">nosql</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                                <a class="main-nav-list-link" href="/null"> redis</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">mysql</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null"> redis高级篇</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">mysql高级篇</a>
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/webframe/">webframe</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/webframe/django/">django</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-django/model设计" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        model设计
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2021/06/15/django/model%E8%AE%BE%E8%AE%A1/" class="article-date">
+       <time datetime="2021-06-15T01:28:37.667Z" itemprop="datePublished">2021-06-15</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/2021/06/15/django/model%E8%AE%BE%E8%AE%A1/" class="article-date">
+     <time datetime="2021-06-12T13:17:11.198Z" itemprop="dateModified">2021-06-12</time>
+  </a>
+</div>
+
+
+                
+
+                
+                
+   <div class="article-counter">
+      <i class="fa fa-file-word-o"></i>
+      <span class="post-count-item-text">本文字数: </span>
+      <span class="post-count">1.4k</span>
+      <i class="fa fa-clock-o"></i>
+      <span class="post-time-item-text">阅读时长: </span>
+      <span class="post-count">6 分钟 </span>
+   </div>
+
+
+                <span id="busuanzi_container_page_pv">
+                阅读次数<span id="busuanzi_value_page_pv"></span>次
+                </span>
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <h2 id="归类设计model、app"><a href="#归类设计model、app" class="headerlink" title="归类设计model、app"></a>归类设计model、app</h2><ul>
+<li>通过类型区分model，放置到不同app的model块</li>
+<li>例如如果是商城类型的网站设计：<ul>
+<li>商品 goods</li>
+<li>交易 trade</li>
+<li>用户 users</li>
+<li>用户操作 userOperation</li>
+</ul>
+</li>
+</ul>
+<h2 id="常用基础model知识"><a href="#常用基础model知识" class="headerlink" title="常用基础model知识"></a>常用基础model知识</h2><h3 id="基础Field"><a href="#基础Field" class="headerlink" title="基础Field"></a>基础Field</h3><ul>
+<li>CharField</li>
+<li>DateField</li>
+<li>DateTimeField <ul>
+<li>关键参数：auto_now_add=True(在新增时创建时间之后不再变)和auto_now=True即mysql中的CURRENT_TIMESTAMP和ON UPDATE CURRENT_TIMESTAMP</li>
+</ul>
+</li>
+<li>BigIntegerField</li>
+<li>BinaryField</li>
+<li>DecimalField<ul>
+<li>关键参数：max_digits小数总长度/decimal_places(小数位长度)</li>
+</ul>
+</li>
+<li>EmailField Admin和modelForm提供验证email的正则</li>
+<li>FileField<ul>
+<li>关键参数：upload_to=”path”上传文件保存路径，存储时以路径存到数据库</li>
+</ul>
+</li>
+<li>FloatField</li>
+<li>IntegerField</li>
+<li>URLField   Admin和modelForm中提供url验证</li>
+<li>IPAddressField   Admin和modelForm中提供ipv4</li>
+<li>GenericIPAddressField    Admin和modelForm中提供ipv4和ipv6的验证</li>
+<li>ImageField<ul>
+<li>关键参数：upload_to=”path”</li>
+</ul>
+</li>
+<li>常用参数<ul>
+<li>null</li>
+<li>unique</li>
+<li>db_index</li>
+<li>default</li>
+</ul>
+</li>
+</ul>
+<h3 id="关系Field"><a href="#关系Field" class="headerlink" title="关系Field"></a>关系Field</h3><ul>
+<li><p>ForeignKey</p>
+<ul>
+<li>to<ul>
+<li>“self”表示自关联</li>
+</ul>
+</li>
+<li>to_field</li>
+<li>related_name<ul>
+<li>反向操作需要使用的字段名，用于代替默认的反向查询表名_set</li>
+</ul>
+</li>
+<li>on_delete 当主表删除数据时，关联表所做行为<ul>
+<li>CASECADE 串级删除</li>
+<li>DO_NOTHING 报IntegrityError</li>
+<li>PROTECT 报ProtectedError</li>
+<li>SET_NULL</li>
+<li>SET_DEFAULT</li>
+<li>SET(val) </li>
+</ul>
+</li>
+<li>db_constraint</li>
+</ul>
+</li>
+<li><p>ManytoManyField 与ForeinKey类似</p>
+</li>
+</ul>
+<h3 id="model原信息meta"><a href="#model原信息meta" class="headerlink" title="model原信息meta"></a>model原信息meta</h3><ul>
+<li>db_table 名字</li>
+<li>index_together 联合索引</li>
+<li>unique_together 联合唯一索引</li>
+<li>ordering 指定默认按什么字段排序</li>
+</ul>
+<h3 id="第三方Field"><a href="#第三方Field" class="headerlink" title="第三方Field"></a>第三方Field</h3><p>pip install djangoUeditor(或github克隆）</p>
+<ul>
+<li>UEditorField(verbose_name=’’, imagePath=’’, filePath=’’, width=1000, height=300)<ul>
+<li>富文本编辑字段即可发图片、文本、文件。</li>
+</ul>
+</li>
+</ul>
+<h2 id="模型继承"><a href="#模型继承" class="headerlink" title="模型继承"></a><a target="_blank" rel="noopener" href="https://www.liujiangblog.com/course/django/100">模型继承</a></h2><h3 id="抽象基类"><a href="#抽象基类" class="headerlink" title="抽象基类"></a>抽象基类</h3><ul>
+<li>和python类继承类似，将子类的共同数据抽象出来继承充用，不会创建实际的数据表<ul>
+<li>如django.contrib.auth.models中的AbstractUser</li>
+</ul>
+</li>
+</ul>
+<h3 id="多表继承"><a href="#多表继承" class="headerlink" title="多表继承"></a>多表继承</h3><ul>
+<li>父类和子类都是独立自主、功能完整、可正常使用的模型，都有自己的数据表，但内部隐藏一个一对一关系</li>
+</ul>
+<h3 id="代理模型"><a href="#代理模型" class="headerlink" title="代理模型"></a>代理模型</h3><ul>
+<li>在meta中声明proxy=True可以代理继承中的模型</li>
+</ul>
+<h3 id="多重继承"><a href="#多重继承" class="headerlink" title="多重继承"></a>多重继承</h3><h2 id="用户模型"><a href="#用户模型" class="headerlink" title="用户模型"></a>用户模型</h2><h3 id="引用用户模型"><a href="#引用用户模型" class="headerlink" title="引用用户模型"></a>引用用户模型</h3><ul>
+<li>由于app添加了django.contrib.auth默认了自带的user，如果不自定义并在setting中修改，即会使用默认的user作为用户</li>
+<li>自定义user须在setting中添加配置AUTH_USER_MODEL=’APP.XXXMODEL’，并继承AbstractUser</li>
+<li>如果有别的model外键user，需要通过get_user_model()寻找user，即setting.AUTH_USER_MODEL</li>
+<li>在migration时请确保user放在首位，解决Django的动态依赖</li>
+</ul>
+<h3 id="用户模型关键参数"><a href="#用户模型关键参数" class="headerlink" title="用户模型关键参数"></a>用户模型关键参数</h3><h4 id="USERNAME-FIELD"><a href="#USERNAME-FIELD" class="headerlink" title="USERNAME_FIELD"></a>USERNAME_FIELD</h4><ul>
+<li>必须设置，且改field必须含有unique=True即USERNAME_FIELD = ‘字段名’<h4 id="2-4-2-2-REQUIRED-FIELDS"><a href="#2-4-2-2-REQUIRED-FIELDS" class="headerlink" title="2.4.2.2 REQUIRED_FIELDS"></a>2.4.2.2 REQUIRED_FIELDS</h4></li>
+<li>设置list，如果设置，该字段为必填字段（主要用于createsuperuser时使用）,REQUIRED_FIELDS = [‘date_of_birth’, ‘height’]，还有一些方法可以继承原抽象user模型</li>
+</ul>
+<h3 id="自定义user管理器"><a href="#自定义user管理器" class="headerlink" title="自定义user管理器"></a>自定义user管理器</h3><ul>
+<li>大概是重写一下UserManager的几个方法如create_user/create_super_user</li>
+</ul>
+<h3 id="自定义用户和权限"><a href="#自定义用户和权限" class="headerlink" title="自定义用户和权限"></a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/50594581">自定义用户和权限</a></h3><ul>
+<li>用户权限一般包括增删改查某个model，权限名一般有app名(app_label)，权限动作和模型名组成</li>
+</ul>
+<h4 id="分配权限与查看权限"><a href="#分配权限与查看权限" class="headerlink" title="分配权限与查看权限"></a>分配权限与查看权限</h4><ul>
+<li>查看权限<ul>
+<li>user.has_perm(‘appname.operation_modelname’)</li>
+<li>user.get_group_permissions()</li>
+<li>user.get_all_permissions()</li>
+</ul>
+</li>
+<li>分配权限<ul>
+<li>user.user_permissions = [permission1, permission2……]</li>
+<li>user.user_permissions.add(per1, per2)</li>
+<li>user.user_permissions.remove(per1, per2)</li>
+<li>user.uer_permissions.clear()</li>
+</ul>
+</li>
+<li>自定义权限<ul>
+<li>方法一：在model的meta中设置权限permissions=((“read_xxx”, “Can Read xxxx”),())</li>
+<li>方法二：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">from blog.models import Article</span><br><span class="line">from django.contrib.auth.models import Permission</span><br><span class="line">from django.contrib.contenttypes.models import ContentType</span><br><span class="line"></span><br><span class="line">content_type &#x3D; ContentType.objects.get_for_model(article)</span><br><span class="line">permission1 &#x3D; Permission.objects.create(</span><br><span class="line">    codename&#x3D;&#39;publish_article&#39;,</span><br><span class="line">    name&#x3D;&#39;Can publish articles&#39;,</span><br><span class="line">    content_type&#x3D;content_type,</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">permission2 &#x3D; Permission.objects.create(</span><br><span class="line">    codename&#x3D;&#39;comment_article&#39;,</span><br><span class="line">    name&#x3D;&#39;Can comment articles&#39;,</span><br><span class="line">    content_type&#x3D;content_type,</span><br><span class="line">)</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>把用户添加到组<ul>
+<li>获取用户对象和组对象，因为是多对多关系，直接user.groups.add(g)即可<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"># 创建一个分组</span><br><span class="line">Group.objects.create(name&#x3D;&#39;reader&#39;)</span><br><span class="line"></span><br><span class="line"># 获取某用户</span><br><span class="line">u &#x3D; User.objects.get(username&#x3D;&#39;test_user&#39;)</span><br><span class="line"></span><br><span class="line"># 获取某分组</span><br><span class="line">g &#x3D; Group.objects.get(name&#x3D;&#39;reader&#39;)</span><br><span class="line"></span><br><span class="line"># 把用户加入到分组中</span><br><span class="line">u.groups.add(g)</span><br><span class="line"></span><br><span class="line"># 获取某个权限</span><br><span class="line">p&#x3D; Permission.objects.get(codename&#x3D;&#39;read_book&#39;)</span><br><span class="line"></span><br><span class="line"># 把该权限加入到分组</span><br><span class="line">g.permissions.add(p)</span><br><span class="line">Group 还有其他操作：</span><br><span class="line"></span><br><span class="line"># 把用户加入分组，group_list可以是一个或多个分组</span><br><span class="line">u.groups &#x3D; [group_list]</span><br><span class="line"></span><br><span class="line"># 把用户加入某分组</span><br><span class="line">u.groups.add(group, group, ...)</span><br><span class="line"></span><br><span class="line"># 把某用户从某分组删除</span><br><span class="line">u.groups.remove(group, group, ...)</span><br><span class="line"></span><br><span class="line"># 该用户退出所以分组</span><br><span class="line">u.groups.clear()</span><br><span class="line"></span><br><span class="line"># 把权限加入到该分组</span><br><span class="line">g.permissions.add(permission, permissions, ...)</span><br><span class="line">g.permissions.remove(permission, permissions, ...)</span><br><span class="line">g.permissions.clear()</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>视图权限控制<ul>
+<li>1.直接通过user.has_perm(‘’)判断</li>
+<li>2.通过装饰器判断：permission_required(perm, login_url=None, raise_exception=False)<h2 id="2-5-admin注册"><a href="#2-5-admin注册" class="headerlink" title="2.5 admin注册"></a>2.5 admin注册</h2></li>
+</ul>
+</li>
+<li>如果要使用自带的后台管理系统即需要注册各个model的admin，这里可以使用simpleui<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">class GoodsAdmin(ImportExportActionModelAdmin, ImportExportModelAdmin):</span><br><span class="line">    resource_class &#x3D; GoodsResource</span><br><span class="line">    list_filter &#x3D; [&quot;name&quot;, &quot;click_num&quot;, &quot;sold_num&quot;, &quot;fav_num&quot;, &quot;goods_num&quot;, &quot;market_price&quot;,</span><br><span class="line">                   &quot;shop_price&quot;, &quot;is_new&quot;, &quot;is_hot&quot;, &quot;add_time&quot;, &quot;category__name&quot;]</span><br><span class="line">    list_display &#x3D; [&quot;name&quot;, &quot;click_num&quot;, &quot;sold_num&quot;, &quot;fav_num&quot;, &quot;goods_num&quot;, &quot;market_price&quot;,</span><br><span class="line">                    &quot;shop_price&quot;, &quot;goods_brief&quot;, &quot;goods_desc&quot;, &quot;is_new&quot;, &quot;is_hot&quot;, &quot;add_time&quot;]</span><br><span class="line">    search_fields &#x3D; [&#39;name&#39;, ]</span><br><span class="line">    list_editable &#x3D; [&quot;is_hot&quot;, ]</span><br><span class="line">    # fieldsets &#x3D; [</span><br><span class="line">    #     (None, &#123;&#39;fields&#39;: [&#39;name&#39;]&#125;, ),</span><br><span class="line">    #     (None, &#123;&#39;fields&#39;: [&#39;goods_desc&#39;], &#39;classes&#39;: [&#39;collapse&#39;]&#125;),</span><br><span class="line">    # ]</span><br><span class="line">    style_fields &#x3D; &#123;&quot;goods_desc&quot;: &quot;ueditor&quot;&#125;</span><br><span class="line"></span><br><span class="line">    class GoodsImagesInline(admin.StackedInline):</span><br><span class="line">        model &#x3D; GoodsImage</span><br><span class="line">        exclude &#x3D; [&quot;add_time&quot;]</span><br><span class="line">        extra &#x3D; 1</span><br><span class="line">        style &#x3D; &#39;tab&#39;</span><br><span class="line"></span><br><span class="line">    inlines &#x3D; [GoodsImagesInline, ]</span><br><span class="line">admin.site.register(Goods, GoodsAdmin)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="2-6-单独使用model"><a href="#2-6-单独使用model" class="headerlink" title="2.6 单独使用model"></a>2.6 单独使用model</h2><ul>
+<li>使用django的model进行测试，数据添加等操作时，需要：<ul>
+<li>1.获取当前路径，把当前路径加入sys</li>
+<li>2.设置django setting为当前环境变量（os）</li>
+<li>3.导入django并启动</li>
+<li>4.导入app模型使用<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">import sys</span><br><span class="line">import os</span><br><span class="line">import django</span><br><span class="line">pwd &#x3D; os.path.dirname(os.path.realpath(__file__))</span><br><span class="line">sys.path.append(pwd+&quot;..&#x2F;&quot;)</span><br><span class="line">os.environ.setdefault(&quot;DJANGO_SETTINGS_MODULE&quot;, &quot;MxShop.settings&quot;)</span><br><span class="line">django.setup()</span><br><span class="line"></span><br><span class="line">from goods.models import GoodsCategory, Goods</span><br><span class="line">from db_tools.data.category_data import row_data</span><br><span class="line">from django.db.models import Count, Max</span><br><span class="line"></span><br><span class="line">a &#x3D; Goods.objects.all().values(&#39;category&#39;).annotate(a&#x3D;Max(&#39;market_price&#39;))</span><br><span class="line">b &#x3D; Goods.objects.all().aggregate(a&#x3D;Max(&#39;market_price&#39;))</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://example.com/2021/06/15/django/model%E8%AE%BE%E8%AE%A1/" data-id="ckpxu57om000fowmz5lwed7zx" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "durian"
+        },
+        "headline": "model设计",
+        "image": "http://example.com/css/images/gouzi.jpg",
+        "keywords": "",
+        "genre": "webframe django",
+        "datePublished": "2021-06-15",
+        "dateCreated": "2021-06-15",
+        "dateModified": "2021-06-12",
+        "url": "http://example.com/2021/06/15/django/model设计/",
+        "description": "归类设计model、app
+通过类型区分model，放置到不同app的model块
+例如如果是商城类型的网站设计：
+商品 goods
+交易 trade
+用户 users
+用户操作 userOperation
+
+
+
+常用基础model知识基础Field
+CharField
+DateField
+DateTimeField 
+关键参数：auto_now_add=True(在新增时创建时间之后不再变)和a",
+        "wordCount": 615
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <!-- Valine -->
+    <div class="vcomments"></div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/chunjianghuayueye2" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2021/06/15/django/pooledDB/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            pooledDB
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2021/06/15/django/drf%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">基本配置</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+<div class="widget-wrap widget-list">
+    <h3 class="widget-title">目录</h3>
+    <div class="widget">
+        <div id="toc" class="toc-article">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BD%92%E7%B1%BB%E8%AE%BE%E8%AE%A1model%E3%80%81app"><span class="toc-number">1.</span> <span class="toc-text">归类设计model、app</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%9F%BA%E7%A1%80model%E7%9F%A5%E8%AF%86"><span class="toc-number">2.</span> <span class="toc-text">常用基础model知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80Field"><span class="toc-number">2.1.</span> <span class="toc-text">基础Field</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E7%B3%BBField"><span class="toc-number">2.2.</span> <span class="toc-text">关系Field</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#model%E5%8E%9F%E4%BF%A1%E6%81%AFmeta"><span class="toc-number">2.3.</span> <span class="toc-text">model原信息meta</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%96%B9Field"><span class="toc-number">2.4.</span> <span class="toc-text">第三方Field</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E7%BB%A7%E6%89%BF"><span class="toc-number">3.</span> <span class="toc-text">模型继承</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%BD%E8%B1%A1%E5%9F%BA%E7%B1%BB"><span class="toc-number">3.1.</span> <span class="toc-text">抽象基类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E8%A1%A8%E7%BB%A7%E6%89%BF"><span class="toc-number">3.2.</span> <span class="toc-text">多表继承</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%90%86%E6%A8%A1%E5%9E%8B"><span class="toc-number">3.3.</span> <span class="toc-text">代理模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E9%87%8D%E7%BB%A7%E6%89%BF"><span class="toc-number">3.4.</span> <span class="toc-text">多重继承</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E6%A8%A1%E5%9E%8B"><span class="toc-number">4.</span> <span class="toc-text">用户模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E7%94%A8%E6%88%B7%E6%A8%A1%E5%9E%8B"><span class="toc-number">4.1.</span> <span class="toc-text">引用用户模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E6%A8%A1%E5%9E%8B%E5%85%B3%E9%94%AE%E5%8F%82%E6%95%B0"><span class="toc-number">4.2.</span> <span class="toc-text">用户模型关键参数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#USERNAME-FIELD"><span class="toc-number">4.2.1.</span> <span class="toc-text">USERNAME_FIELD</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-2-2-REQUIRED-FIELDS"><span class="toc-number">4.2.2.</span> <span class="toc-text">2.4.2.2 REQUIRED_FIELDS</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89user%E7%AE%A1%E7%90%86%E5%99%A8"><span class="toc-number">4.3.</span> <span class="toc-text">自定义user管理器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%94%A8%E6%88%B7%E5%92%8C%E6%9D%83%E9%99%90"><span class="toc-number">4.4.</span> <span class="toc-text">自定义用户和权限</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E9%85%8D%E6%9D%83%E9%99%90%E4%B8%8E%E6%9F%A5%E7%9C%8B%E6%9D%83%E9%99%90"><span class="toc-number">4.4.1.</span> <span class="toc-text">分配权限与查看权限</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-5-admin%E6%B3%A8%E5%86%8C"><span class="toc-number">5.</span> <span class="toc-text">2.5 admin注册</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-6-%E5%8D%95%E7%8B%AC%E4%BD%BF%E7%94%A8model"><span class="toc-number">6.</span> <span class="toc-text">2.6 单独使用model</span></a></li></ol>
+        </div>
+    </div>
+</div>
+
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/15/redis%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%BC%93%E5%AD%98%E9%97%AE%E9%A2%98/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/qinglu.jfif)" alt="缓存问题" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a></p>
+                            <p class="item-title"><a href="/2021/06/15/redis%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%BC%93%E5%AD%98%E9%97%AE%E9%A2%98/" class="title">缓存问题</a></p>
+                            <p class="item-date"><time datetime="2021-06-15T08:57:18.147Z" itemprop="datePublished">2021-06-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/dict%E8%A7%A3%E6%9E%90/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/dict%E8%A7%A3%E6%9E%90/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-15T08:52:31.827Z" itemprop="datePublished">2021-06-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/int%E8%A7%A3%E6%9E%90/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/int%E8%A7%A3%E6%9E%90/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-15T08:52:31.827Z" itemprop="datePublished">2021-06-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-15T08:52:31.827Z" itemprop="datePublished">2021-06-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/list%E8%A7%A3%E6%9E%90/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/list%E8%A7%A3%E6%9E%90/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-15T08:52:17.313Z" itemprop="datePublished">2021-06-15</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/">bigdata</a><span class="category-list-count">22</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker/">docker</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker-compose/">docker-compose</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/hadoop/">hadoop</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/zookeeper/">zookeeper</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/">nosql</a><span class="category-list-count">27</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis/">redis</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a><span class="category-list-count">9</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/">webframe</a><span class="category-list-count">21</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/django/">django</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/flask/">flask</a><span class="category-list-count">5</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">77</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+
+            
+                
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2021 durian</p>
+                
+                <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
+                
+            </div>
+                <p><span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span></p>
+                <p><span id="busuanzi_container_site_uv"> 
+                     本站访客数<span id="busuanzi_value_site_uv"></span>人次
+               </span></p>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+    <script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
+</footer>
+
+    </div>
+    
+    
+    <script src="//unpkg.com/valine"></script>
+    <script>
+        var GUEST = ['nick','mail','link'];
+        var meta = '';
+        meta = meta.split(',').filter(function (item) {
+            return GUEST.indexOf(item)>-1;
+        });
+        var avatarcdn = 'gravatar.cat.net' == true;
+        new Valine({
+            el: '.vcomments',
+            notify: "false",
+            verify: "false",
+            appId: "795P9DunI2Jv3Jho36dlueIS-gzGzoHsz",
+            appKey: "pM151YCVhYBYTB9Pt1SRuiKs",
+            placeholder: "Just Do It",
+            avatar:"mm",
+            recordIP:"false",
+            visitor: "true"
+        });
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

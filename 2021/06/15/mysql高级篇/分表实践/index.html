@@ -1,0 +1,788 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>mysql分表实践 | 春江花月夜o</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="" />
+    
+    <meta name="description" content="停机部署1.挂牌停机通告2.通过写的脚本（直接按游标取出数据进行迁移）按照规定逻辑进行分库分表（也可以使用工具）3.重写中间件按照逻辑访问数据库4.上线  优点 比较容易，不用考虑这时的用户操作，无脑迁移数据   缺点 系统必须停机，客户体验差 必须在规定时间完成迁移及数据校验    不停机部署数据双写迁移法1.老库和新库同时insert&#x2F;update&#x2F;delete，然后将老数据批量迁移到新库，最">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql分表实践">
+<meta property="og:url" content="http://example.com/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E5%88%86%E8%A1%A8%E5%AE%9E%E8%B7%B5/index.html">
+<meta property="og:site_name" content="春江花月夜o">
+<meta property="og:description" content="停机部署1.挂牌停机通告2.通过写的脚本（直接按游标取出数据进行迁移）按照规定逻辑进行分库分表（也可以使用工具）3.重写中间件按照逻辑访问数据库4.上线  优点 比较容易，不用考虑这时的用户操作，无脑迁移数据   缺点 系统必须停机，客户体验差 必须在规定时间完成迁移及数据校验    不停机部署数据双写迁移法1.老库和新库同时insert&#x2F;update&#x2F;delete，然后将老数据批量迁移到新库，最">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/css/images/siyue2.jpg">
+<meta property="article:published_time" content="2021-06-15T01:28:37.693Z">
+<meta property="article:modified_time" content="2021-06-13T04:48:58.882Z">
+<meta property="article:author" content="durian">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/css/images/siyue2.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/gouzi.ico" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="春江花月夜o" type="application/atom+xml">
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">关于</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">python</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">cpp</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">webframe</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                                <a class="main-nav-list-link" href="/null">flask</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">django</a>
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">algorithm</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">bigdata</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">nosql</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                                <a class="main-nav-list-link" href="/null"> redis</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">mysql</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null"> redis高级篇</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">mysql高级篇</a>
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-mysql高级篇/分表实践" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        mysql分表实践
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E5%88%86%E8%A1%A8%E5%AE%9E%E8%B7%B5/" class="article-date">
+       <time datetime="2021-06-15T01:28:37.693Z" itemprop="datePublished">2021-06-15</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E5%88%86%E8%A1%A8%E5%AE%9E%E8%B7%B5/" class="article-date">
+     <time datetime="2021-06-13T04:48:58.882Z" itemprop="dateModified">2021-06-13</time>
+  </a>
+</div>
+
+
+                
+
+                
+                
+   <div class="article-counter">
+      <i class="fa fa-file-word-o"></i>
+      <span class="post-count-item-text">本文字数: </span>
+      <span class="post-count">3.2k</span>
+      <i class="fa fa-clock-o"></i>
+      <span class="post-time-item-text">阅读时长: </span>
+      <span class="post-count">12 分钟 </span>
+   </div>
+
+
+                <span id="busuanzi_container_page_pv">
+                阅读次数<span id="busuanzi_value_page_pv"></span>次
+                </span>
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <h2 id="停机部署"><a href="#停机部署" class="headerlink" title="停机部署"></a>停机部署</h2><p>1.挂牌停机通告<br>2.通过写的脚本（直接按游标取出数据进行迁移）按照规定逻辑进行分库分表（也可以使用工具）<br>3.重写中间件按照逻辑访问数据库<br>4.上线</p>
+<ul>
+<li>优点<ul>
+<li>比较容易，不用考虑这时的用户操作，无脑迁移数据</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>系统必须停机，客户体验差</li>
+<li>必须在规定时间完成迁移及数据校验</li>
+</ul>
+</li>
+</ul>
+<h2 id="不停机部署"><a href="#不停机部署" class="headerlink" title="不停机部署"></a><a target="_blank" rel="noopener" href="https://www.w3cschool.cn/architectroad/architectroad-data-smooth-migration.html">不停机部署</a></h2><h3 id="数据双写迁移法"><a href="#数据双写迁移法" class="headerlink" title="数据双写迁移法"></a>数据双写迁移法</h3><p>1.老库和新库同时insert/update/delete，然后将老数据批量迁移到新库，最后流量切换到新库并关闭老库读写。<br>2.迁移完成后进行数据校验，将旧库和新库中的数据进行比对，完全一致则符合预期，如果出现步骤二中的极限不一致情况，则以旧库中的数据为准。</p>
+<h4 id="数据不一致分析"><a href="#数据不一致分析" class="headerlink" title="数据不一致分析"></a>数据不一致分析</h4><p>老库删除的时候，新库刚好在插入这条数据，导致新库有这条数据老库没有</p>
+<h4 id="数据迁移"><a href="#数据迁移" class="headerlink" title="数据迁移"></a>数据迁移</h4><ul>
+<li>存量数据迁移<br>直接通过游标加md5取模进行迁移，通过executemany插入入库，迁移2千万的数据大概开销40分钟，写好脚本可以创建test进行测试，test主库插入1百万数据，再分32或64个从库进行迁移测试，可以通过多线程进行并发执行加快速度，也可以慢慢的转移不影响线上服务（也可通过<a target="_blank" rel="noopener" href="https://blog.csdn.net/u014082714/article/details/53173975">load data infile</a>操作，大致思路为按照分表方法把不同数据导入不同的文本中，然后分别通过脚本进行load data infile也很快）<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"># python数据迁移伪代码</span><br><span class="line"># _*_ coding: utf-8 _*_</span><br><span class="line">__author__ &#x3D; &#39;春江花月夜o&#39;</span><br><span class="line"></span><br><span class="line">import time</span><br><span class="line">import pymysql</span><br><span class="line">from hashlib import md5</span><br><span class="line">from pymysql.cursors import DictCursor</span><br><span class="line"></span><br><span class="line"># 这里使用虚拟机测试数据库进行测试</span><br><span class="line">con &#x3D; pymysql.connect(host&#x3D;&#39;10.167.218.136&#39;, port&#x3D;3306, db&#x3D;&#39;db01&#39;, user&#x3D;&#39;root&#39;, password&#x3D;&#39;xxxx&#39;)</span><br><span class="line">cursor &#x3D; con.cursor(DictCursor)</span><br><span class="line"></span><br><span class="line"># 确定游标阈值和executemany的阈值</span><br><span class="line">threshold1 &#x3D; 10000</span><br><span class="line">threshold2 &#x3D; 5000</span><br><span class="line"></span><br><span class="line"># 申请不同的列表存放各个分表数据</span><br><span class="line">for i in range(0, 32):</span><br><span class="line">    exec(&#39;a_&#39; + str(i+1) + &#39;&#x3D;[]&#39;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">fetch_sql &#x3D; &quot;&quot;&quot;select * from test order by id limit &#123;&#125; offset &#123;&#125;&quot;&quot;&quot;</span><br><span class="line">insert_sql &#x3D; &quot;&quot;&quot;insert into &#123;&#125; (name, addTime) values(%s, %s)&quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line"># 获取逻辑分表号（按32个表进行分表，用name作为md5取值）</span><br><span class="line">def get_hash_val(value):</span><br><span class="line">    h &#x3D; md5()</span><br><span class="line">    h.update(value.encode(&#39;utf-8&#39;))</span><br><span class="line">    return int(h.hexdigest(), 16) % 32 + 1</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">current_time &#x3D; time.time()</span><br><span class="line">flag &#x3D; True</span><br><span class="line">skip &#x3D; 0</span><br><span class="line">count &#x3D; 0</span><br><span class="line">while flag:</span><br><span class="line">    count +&#x3D; 1</span><br><span class="line">    sql &#x3D; fetch_sql.format(threshold1, skip)</span><br><span class="line">    cursor.execute(sql)</span><br><span class="line">    vals &#x3D; cursor.fetchall()</span><br><span class="line">    con.commit()</span><br><span class="line"></span><br><span class="line">    for val in vals:</span><br><span class="line">        hash_key &#x3D; str(get_hash_val(val[&#39;name&#39;]))</span><br><span class="line">        exec(&#39;a_&#39; + hash_key + &#39;.append(list(val.values())[1:])&#39;)</span><br><span class="line"></span><br><span class="line">        if len(eval(&#39;a_&#39; + hash_key)) &gt;&#x3D; threshold2:</span><br><span class="line">            cursor.executemany(query&#x3D;insert_sql.format(&#39;test_&#123;&#125;&#39;.format(hash_key)), args&#x3D;eval(&#39;a_&#39; + hash_key))</span><br><span class="line">            con.commit()</span><br><span class="line">            exec(&#39;a_&#39; + hash_key + &#39;&#x3D;[]&#39;)</span><br><span class="line"></span><br><span class="line">    if not count % 10:</span><br><span class="line">        print(&#39;已迁移%d条数据&#39; % (count*threshold1))</span><br><span class="line">    if len(vals) &lt; threshold1:</span><br><span class="line">        flag &#x3D; False</span><br><span class="line">    skip +&#x3D; threshold1</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">for i in range(0, 32):</span><br><span class="line">    if len(eval(&#39;a_&#39; + str(i+1))) !&#x3D; 0:</span><br><span class="line">        cursor.executemany(insert_sql.format(&#39;test_&#123;&#125;&#39;.format(str(i+1))), args&#x3D;eval(&#39;a_&#39; + str(i+1)))</span><br><span class="line">total_time &#x3D; time.time() - current_time</span><br><span class="line">print(total_time)</span><br><span class="line"></span><br><span class="line"># 测试结果</span><br><span class="line">已迁移100000条数据</span><br><span class="line">已迁移200000条数据</span><br><span class="line">已迁移300000条数据</span><br><span class="line">已迁移400000条数据</span><br><span class="line">已迁移500000条数据</span><br><span class="line">已迁移600000条数据</span><br><span class="line">已迁移700000条数据</span><br><span class="line">已迁移800000条数据</span><br><span class="line">已迁移900000条数据</span><br><span class="line">已迁移1000000条数据</span><br><span class="line">126.02490472793579</span><br></pre></td></tr></table></figure></li>
+<li>增量数据迁移<br>先更新旧库数据，然后更新新库数据，注意保持数据唯一性避免数据重复即可，这里即在完成插入更新旧库后加sql更新新库（或者通过异步消息队列更新新建消费者）。</li>
+</ul>
+<h4 id="数据迁移过程中的修改操作分别讨论："><a href="#数据迁移过程中的修改操作分别讨论：" class="headerlink" title="数据迁移过程中的修改操作分别讨论："></a>数据迁移过程中的修改操作分别讨论：</h4><ul>
+<li>1.假设迁移过程中进行了一个双insert操作，旧库新库都插入了数据，数据一致性没有被破坏</li>
+<li>2.假设迁移过程中进行了一个双delete操作，这又分为两种情况<ul>
+<li>2.1假设这delete的数据属于[min,now]范围，即已经完成迁移，则旧库新库都删除了数据，数据一致性没有被破坏</li>
+<li>2.2假设这delete的数据属于[now,max]范围，即未完成迁移，则旧库中删除操作的affect rows为1，新库中删除操作的affect rows为0，但是数据迁移工具在后续数据迁移中，并不会将这条旧库中被删除的数据迁移到新库中，所以数据一致性仍没有被破坏</li>
+</ul>
+</li>
+<li>3.假设迁移过程中进行了一个双update操作，可以认为update操作是一个delete加一个insert操作的复合操作，所以数据仍然是一致的</li>
+</ul>
+<h4 id="数据校验"><a href="#数据校验" class="headerlink" title="数据校验"></a>数据校验</h4><ul>
+<li>如果使用load data infile的思路，当数据导入到每张新表后，<strong>直接再拉取新表数据到文本中</strong>，然后分别校验100个新老文件的MD5值，若都相同，则存量数据一致性没问题。</li>
+<li>如果使用脚本更新，最好的校验还是上面那种文件md5方法，由于我的数据库的sn和时间具有唯一性，而我按照sn区别分表，所以可以通知分表sn和主表sn的个数即可确定数据是否一致。</li>
+</ul>
+<h4 id="如何确保一致性"><a href="#如何确保一致性" class="headerlink" title="如何确保一致性"></a>如何确保一致性</h4><ul>
+<li><p>1、对于数据迁移脚本迁移的数据一致性校验：数据根据uid取模从老表中分别存到100个文本文件中，当数据导入到每张新表后，直接再拉取新表数据到文本中，然后分别校验100个新老文件的MD5值，若都相同，则存量数据一致性没问题。</p>
+</li>
+<li><p>2、对于数据库双写保证数据一致性校验：在老表执行成功后才会旁路发hippo（公司内部的消息队列组件）操作新表，hippo消息队列做消息的可靠性保证，新表操作如果失败通过monitor上报告警、error日志记录来保证一致性，如果没有告警和error日志，则可以认为双写数据的一致性。</p>
+</li>
+<li><p>3、数据校验工具校验一致性：当存量数据导入新库之后，这是就通过数据校验工具比对新老库数据的一致性。为了不影响现网服务，数据校验比对拉的是老表的从库。当所有数据多次都比对一致后，此时新老库的数据就完全一致。</p>
+</li>
+</ul>
+<h4 id="上线切换"><a href="#上线切换" class="headerlink" title="上线切换"></a>上线切换</h4><ul>
+<li>当数据校验完成后，在需要修改的业务逻辑视图中进行逻辑修改，判断当前需要进入使用哪个分表，也可以通过中间件进行判断，如果访问此类接口时，需要先获得分表然后进行下一步逻辑，或者在进入sql时进行判断，最后停用旧表。</li>
+</ul>
+<h2 id="选择思路"><a href="#选择思路" class="headerlink" title="选择思路"></a>选择思路</h2><p>1、引入开源的数据库中间件如mycat、<a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000038225441">sharding-sphere</a>等。但是引入第三方组件，<br>增大开发成本，后续维护成本。</p>
+<p>2、停服迁移数据方案。该方案要停机，这样会影响到用户使用。</p>
+<p>综上，最终选择不引入第三方组件，数据双写不停服的方案。</p>
+<h2 id="思路分析"><a href="#思路分析" class="headerlink" title="思路分析"></a>思路分析</h2><ul>
+<li>1.首先按照流量计算需要分多少个表，可以用多久</li>
+<li>2.分表按照什么方式，有多种方式id、hash、时间、地域等，选择业务最常用的方式进行分表，以达到对业务最好的契合度。</li>
+<li>3.进行分表的方法选择，规划时间跨度</li>
+<li>4.开发相应的脚本插件</li>
+<li>5.进行测试、校验</li>
+<li>6.开始分表</li>
+<li>7.上线切换</li>
+</ul>
+<h2 id="分表带来的问题"><a href="#分表带来的问题" class="headerlink" title="分表带来的问题"></a>分表带来的问题</h2><h3 id="1-事务问题"><a href="#1-事务问题" class="headerlink" title="1 事务问题"></a>1 事务问题</h3><p>解决事务问题目前有两种可行的方案：分布式事务和通过应用程序与数据库共同控制实现事务下面对两套方案进行一个简单的对比。</p>
+<ul>
+<li>方案一：使用分布式事务<br>优点： 交由数据库管理，简单有效<br>缺点：性能代价高，特别是shard越来越多时<br><a target="_blank" rel="noopener" href="https://xiaomi-info.github.io/2020/01/02/distributed-transaction/">分布式事务解决方案</a><br>按照理解概述一个解决思路<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">以支付系统为例：A给B转账（A用户在A系统的数据库，B用户在B系统）</span><br><span class="line">1.从数据库中扣除A的转账</span><br><span class="line">2.A系统中提前建立消息表，往消息表插入这条事务信息A转账到哪个系统的哪个用户转了多少。</span><br><span class="line">3.A系统异步脚本轮询消息表，如果有消息则加入到mq中，然后消息表把该消息置为已处理</span><br><span class="line">4.每个系统都有消费者消费mq中消息，B系统发现mq中的该消息指向自己，取出进行消费</span><br><span class="line">5.要是B系统执行失败了，这里需要做最大努力尝试，给B一个反复调用的次数，</span><br><span class="line">如果调用一致失败就把失败消息发进mq指向A系统，告诉A，xxx事务执行失败请回滚。</span><br><span class="line">A从消息表取出这条事务回滚，并删除消息表的这条消息。</span><br><span class="line">6.如果B成功了也发送mq告诉A，A进行消息表清理，B进行短信、邮件等的实时发送和异步发送业务。（实时发送失败则异步）</span><br><span class="line"></span><br><span class="line">这里我只是进行了分表操作，并没有跨库跨系统，分表后还是在同一个数据库，</span><br><span class="line">并不属于分布式事务</span><br><span class="line"></span><br><span class="line">调用的时候直接</span><br><span class="line">在同一事务里执行两个sql，不对就rollback，pooleddb</span><br><span class="line"> def execute_transaction(self, operations):</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        执行一系列sql语句组成的事务。</span><br><span class="line">        :param operations: list, </span><br><span class="line">        操作列表,如[&#123;&#39;sql&#39;: &#39;UPDATE ...&#39;, &#39;params&#39;:[[s1, s2], [s1, s2]]&#125;]</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        conn &#x3D; None</span><br><span class="line">        cursor &#x3D; None</span><br><span class="line">        index &#x3D; None</span><br><span class="line">        try:</span><br><span class="line">            conn &#x3D; self.pool.connection()</span><br><span class="line">            cursor &#x3D; conn.cursor()</span><br><span class="line">            for index, d in enumerate(operations):</span><br><span class="line">                cursor.executemany(d.get(&#39;sql&#39;), d.get(&#39;params&#39;))</span><br><span class="line">            conn.commit()</span><br><span class="line">            return True</span><br><span class="line">        except Exception as e:</span><br><span class="line">            self.log(&#39;[&#123;&#125;] meet error&#39;.format(</span><br><span class="line">                &#39;,&#39;.join([d.get(&#39;sql&#39;) for d in operations]) if index is None else operations[index].get(&#39;sql&#39;))</span><br><span class="line">            )</span><br><span class="line">            self.log(e)</span><br><span class="line">            conn.rollback()</span><br><span class="line">            return False</span><br><span class="line">        finally:</span><br><span class="line">            if cursor:</span><br><span class="line">                cursor.close()</span><br><span class="line">            if conn:</span><br><span class="line">                conn.commit()</span><br><span class="line">                conn.close()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li>方案二：由应用程序和数据库共同控制<br>原理：将一个跨多个数据库的分布式事务分拆成多个仅处 于单个数据库上面的小事务，并通过应用程序来总控 各个小事务。<br>优点：性能上有优势<br>缺点：需要应用程序在事务控制上做灵活设计。如果使用 了spring的事务管理，改动起来会面临一定的困难。</li>
+</ul>
+<h3 id="2-跨节点Join的问题"><a href="#2-跨节点Join的问题" class="headerlink" title="2 跨节点Join的问题"></a>2 跨节点Join的问题</h3><p>只要是进行切分，跨节点Join的问题是不可避免的。但是良好的设计和切分却可以减少此类情况的发生。解决这一问题的普遍做法是分两次查询实现。在第一次查询的结果集中找出关联数据的id,根据这些id发起第二次请求得到关联数据。</p>
+<h3 id="3-跨节点的count-order-by-group-by以及聚合函数问题"><a href="#3-跨节点的count-order-by-group-by以及聚合函数问题" class="headerlink" title="3 跨节点的count,order by,group by以及聚合函数问题"></a>3 跨节点的count,order by,group by以及聚合函数问题</h3><p>这些是一类问题，因为它们都需要基于全部数据集合进行计算。多数的代理都不会自动处理合并工作。解决方案：与解决跨节点join问题的类似，分别在各个节点上得到结果后在应用程序端进行合并。和join不同的是每个结点的查询可以并行执行，因此很多时候它的速度要比单一大表快很多。但如果结果集很大，对应用程序内存的消耗是一个问题。</p>
+<h3 id="4-数据迁移，容量规划，扩容等问题"><a href="#4-数据迁移，容量规划，扩容等问题" class="headerlink" title="4 数据迁移，容量规划，扩容等问题"></a>4 数据迁移，容量规划，扩容等问题</h3><p>来自淘宝综合业务平台团队，它利用对2的倍数取余具有向前兼容的特性（如对4取余得1的数对2取余也是1）来分配数据，避免了行级别的数据迁移，但是依然需要进行表级别的迁移，同时对扩容规模和分表数量都有限制。总得来说，这些方案都不是十分的理想，多多少少都存在一些缺点，这也从一个侧面反映出了Sharding扩容的难度。</p>
+<h4 id="实际问题"><a href="#实际问题" class="headerlink" title="实际问题"></a>实际问题</h4><p>1.id分表后的显示问题</p>
+<ul>
+<li>把每个库的id加上库前缀显示到页面。</li>
+</ul>
+<p>2.按时间查找问题</p>
+<ul>
+<li>每个分表查询然后联合</li>
+</ul>
+<p>3.join问题</p>
+<ul>
+<li>把join切割成多个查询，然后在业务代码中拼接</li>
+</ul>
+<h2 id="相关引用"><a href="#相关引用" class="headerlink" title="相关引用"></a>相关引用</h2><p><a target="_blank" rel="noopener" href="https://xiaomi-info.github.io/2020/01/02/distributed-transaction/">小米分布式事务解决方案</a><br><a target="_blank" rel="noopener" href="https://www.w3cschool.cn/architectroad/architectroad-data-smooth-migration.html">百亿数据平滑迁移方案</a><br><a target="_blank" rel="noopener" href="https://tech.meituan.com/2017/04/21/mt-leaf.html">美团分布式id生成系统</a></p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://example.com/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E5%88%86%E8%A1%A8%E5%AE%9E%E8%B7%B5/" data-id="ckpxu57pp002aowmz3hx2a0nt" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "durian"
+        },
+        "headline": "mysql分表实践",
+        "image": "http://example.com/css/images/siyue2.jpg",
+        "keywords": "",
+        "genre": "nosql mysql高级篇",
+        "datePublished": "2021-06-15",
+        "dateCreated": "2021-06-15",
+        "dateModified": "2021-06-13",
+        "url": "http://example.com/2021/06/15/mysql高级篇/分表实践/",
+        "description": "停机部署1.挂牌停机通告2.通过写的脚本（直接按游标取出数据进行迁移）按照规定逻辑进行分库分表（也可以使用工具）3.重写中间件按照逻辑访问数据库4.上线
+
+优点
+比较容易，不用考虑这时的用户操作，无脑迁移数据
+
+
+缺点
+系统必须停机，客户体验差
+必须在规定时间完成迁移及数据校验
+
+
+
+不停机部署数据双写迁移法1.老库和新库同时insert/update/delete，然后将老数据批量迁移到新库，最",
+        "wordCount": 989
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <!-- Valine -->
+    <div class="vcomments"></div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/chunjianghuayueye2" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E6%96%87%E4%BB%B6%E6%9E%B6%E6%9E%84/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            innodb文件架构体系(mysql8)
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2021/06/15/hadoop/hdfs%E6%9E%B6%E6%9E%84/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">hadoop介绍</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+<div class="widget-wrap widget-list">
+    <h3 class="widget-title">目录</h3>
+    <div class="widget">
+        <div id="toc" class="toc-article">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9C%E6%9C%BA%E9%83%A8%E7%BD%B2"><span class="toc-number">1.</span> <span class="toc-text">停机部署</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8D%E5%81%9C%E6%9C%BA%E9%83%A8%E7%BD%B2"><span class="toc-number">2.</span> <span class="toc-text">不停机部署</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%8F%8C%E5%86%99%E8%BF%81%E7%A7%BB%E6%B3%95"><span class="toc-number">2.1.</span> <span class="toc-text">数据双写迁移法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E4%B8%8D%E4%B8%80%E8%87%B4%E5%88%86%E6%9E%90"><span class="toc-number">2.1.1.</span> <span class="toc-text">数据不一致分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB"><span class="toc-number">2.1.2.</span> <span class="toc-text">数据迁移</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%84%E4%BF%AE%E6%94%B9%E6%93%8D%E4%BD%9C%E5%88%86%E5%88%AB%E8%AE%A8%E8%AE%BA%EF%BC%9A"><span class="toc-number">2.1.3.</span> <span class="toc-text">数据迁移过程中的修改操作分别讨论：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%A0%A1%E9%AA%8C"><span class="toc-number">2.1.4.</span> <span class="toc-text">数据校验</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E7%A1%AE%E4%BF%9D%E4%B8%80%E8%87%B4%E6%80%A7"><span class="toc-number">2.1.5.</span> <span class="toc-text">如何确保一致性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8A%E7%BA%BF%E5%88%87%E6%8D%A2"><span class="toc-number">2.1.6.</span> <span class="toc-text">上线切换</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E6%80%9D%E8%B7%AF"><span class="toc-number">3.</span> <span class="toc-text">选择思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%9D%E8%B7%AF%E5%88%86%E6%9E%90"><span class="toc-number">4.</span> <span class="toc-text">思路分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E8%A1%A8%E5%B8%A6%E6%9D%A5%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">5.</span> <span class="toc-text">分表带来的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%BA%8B%E5%8A%A1%E9%97%AE%E9%A2%98"><span class="toc-number">5.1.</span> <span class="toc-text">1 事务问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%B7%A8%E8%8A%82%E7%82%B9Join%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">5.2.</span> <span class="toc-text">2 跨节点Join的问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E8%B7%A8%E8%8A%82%E7%82%B9%E7%9A%84count-order-by-group-by%E4%BB%A5%E5%8F%8A%E8%81%9A%E5%90%88%E5%87%BD%E6%95%B0%E9%97%AE%E9%A2%98"><span class="toc-number">5.3.</span> <span class="toc-text">3 跨节点的count,order by,group by以及聚合函数问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB%EF%BC%8C%E5%AE%B9%E9%87%8F%E8%A7%84%E5%88%92%EF%BC%8C%E6%89%A9%E5%AE%B9%E7%AD%89%E9%97%AE%E9%A2%98"><span class="toc-number">5.4.</span> <span class="toc-text">4 数据迁移，容量规划，扩容等问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E9%99%85%E9%97%AE%E9%A2%98"><span class="toc-number">5.4.1.</span> <span class="toc-text">实际问题</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E5%BC%95%E7%94%A8"><span class="toc-number">6.</span> <span class="toc-text">相关引用</span></a></li></ol>
+        </div>
+    </div>
+</div>
+
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/15/redis%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%BC%93%E5%AD%98%E9%97%AE%E9%A2%98/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/qinglu.jfif)" alt="缓存问题" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a></p>
+                            <p class="item-title"><a href="/2021/06/15/redis%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%BC%93%E5%AD%98%E9%97%AE%E9%A2%98/" class="title">缓存问题</a></p>
+                            <p class="item-date"><time datetime="2021-06-15T08:57:18.147Z" itemprop="datePublished">2021-06-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/dict%E8%A7%A3%E6%9E%90/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/dict%E8%A7%A3%E6%9E%90/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-15T08:52:31.827Z" itemprop="datePublished">2021-06-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/int%E8%A7%A3%E6%9E%90/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/int%E8%A7%A3%E6%9E%90/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-15T08:52:31.827Z" itemprop="datePublished">2021-06-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-15T08:52:31.827Z" itemprop="datePublished">2021-06-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/list%E8%A7%A3%E6%9E%90/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/list%E8%A7%A3%E6%9E%90/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-15T08:52:17.313Z" itemprop="datePublished">2021-06-15</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/">bigdata</a><span class="category-list-count">22</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker/">docker</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker-compose/">docker-compose</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/hadoop/">hadoop</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/zookeeper/">zookeeper</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/">nosql</a><span class="category-list-count">27</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis/">redis</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a><span class="category-list-count">9</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/">webframe</a><span class="category-list-count">21</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/django/">django</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/flask/">flask</a><span class="category-list-count">5</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">77</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+
+            
+                
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2021 durian</p>
+                
+                <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
+                
+            </div>
+                <p><span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span></p>
+                <p><span id="busuanzi_container_site_uv"> 
+                     本站访客数<span id="busuanzi_value_site_uv"></span>人次
+               </span></p>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+    <script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
+</footer>
+
+    </div>
+    
+    
+    <script src="//unpkg.com/valine"></script>
+    <script>
+        var GUEST = ['nick','mail','link'];
+        var meta = '';
+        meta = meta.split(',').filter(function (item) {
+            return GUEST.indexOf(item)>-1;
+        });
+        var avatarcdn = 'gravatar.cat.net' == true;
+        new Valine({
+            el: '.vcomments',
+            notify: "false",
+            verify: "false",
+            appId: "795P9DunI2Jv3Jho36dlueIS-gzGzoHsz",
+            appKey: "pM151YCVhYBYTB9Pt1SRuiKs",
+            placeholder: "Just Do It",
+            avatar:"mm",
+            recordIP:"false",
+            visitor: "true"
+        });
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

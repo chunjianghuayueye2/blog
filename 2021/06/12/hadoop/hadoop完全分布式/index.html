@@ -1,0 +1,802 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>hadoop完全分布式 | 春江花月夜o</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="" />
+    
+    <meta name="description" content="前言1234567891.准备3台服务器2.安装JDK3.配置java环境变量4.安装hadoop5.配置hadoop环境变量6.配置集群7.单点启动8.配置ssh无密码访问9.群起并测试集群  集群分配脚本配置虚拟机&#x2F;服务器配置ip,hosts,hostname12vim &#x2F;etc&#x2F;hostshostnamectl&#x2F;hostname +name  编写集群分发脚本x">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hadoop完全分布式">
+<meta property="og:url" content="http://example.com/2021/06/12/hadoop/hadoop%E5%AE%8C%E5%85%A8%E5%88%86%E5%B8%83%E5%BC%8F/index.html">
+<meta property="og:site_name" content="春江花月夜o">
+<meta property="og:description" content="前言1234567891.准备3台服务器2.安装JDK3.配置java环境变量4.安装hadoop5.配置hadoop环境变量6.配置集群7.单点启动8.配置ssh无密码访问9.群起并测试集群  集群分配脚本配置虚拟机&#x2F;服务器配置ip,hosts,hostname12vim &#x2F;etc&#x2F;hostshostnamectl&#x2F;hostname +name  编写集群分发脚本x">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/css/images/hadoop.jfif">
+<meta property="article:published_time" content="2021-06-12T00:25:22.041Z">
+<meta property="article:modified_time" content="2021-06-12T02:18:31.455Z">
+<meta property="article:author" content="durian">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/css/images/hadoop.jfif">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/gouzi.ico" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="春江花月夜o" type="application/atom+xml">
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">关于</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">python</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">cpp</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">webframe</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                                <a class="main-nav-list-link" href="/null">flask</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">django</a>
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">algorithm</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">bigdata</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">nosql</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                                <a class="main-nav-list-link" href="/null"> redis</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">mysql</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null"> redis高级篇</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">mysql高级篇</a>
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/bigdata/">bigdata</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/bigdata/hadoop/">hadoop</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-hadoop/hadoop完全分布式" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        hadoop完全分布式
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2021/06/12/hadoop/hadoop%E5%AE%8C%E5%85%A8%E5%88%86%E5%B8%83%E5%BC%8F/" class="article-date">
+       <time datetime="2021-06-12T00:25:22.041Z" itemprop="datePublished">2021-06-12</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/2021/06/12/hadoop/hadoop%E5%AE%8C%E5%85%A8%E5%88%86%E5%B8%83%E5%BC%8F/" class="article-date">
+     <time datetime="2021-06-12T02:18:31.455Z" itemprop="dateModified">2021-06-12</time>
+  </a>
+</div>
+
+
+                
+
+                
+                
+   <div class="article-counter">
+      <i class="fa fa-file-word-o"></i>
+      <span class="post-count-item-text">本文字数: </span>
+      <span class="post-count">2.7k</span>
+      <i class="fa fa-clock-o"></i>
+      <span class="post-time-item-text">阅读时长: </span>
+      <span class="post-count">12 分钟 </span>
+   </div>
+
+
+                <span id="busuanzi_container_page_pv">
+                阅读次数<span id="busuanzi_value_page_pv"></span>次
+                </span>
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">1.准备3台服务器</span><br><span class="line">2.安装JDK</span><br><span class="line">3.配置java环境变量</span><br><span class="line">4.安装hadoop</span><br><span class="line">5.配置hadoop环境变量</span><br><span class="line">6.配置集群</span><br><span class="line">7.单点启动</span><br><span class="line">8.配置ssh无密码访问</span><br><span class="line">9.群起并测试集群</span><br></pre></td></tr></table></figure>
+
+<h2 id="集群分配脚本配置"><a href="#集群分配脚本配置" class="headerlink" title="集群分配脚本配置"></a>集群分配脚本配置</h2><h3 id="虚拟机-服务器配置ip-hosts-hostname"><a href="#虚拟机-服务器配置ip-hosts-hostname" class="headerlink" title="虚拟机/服务器配置ip,hosts,hostname"></a>虚拟机/服务器配置ip,hosts,hostname</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vim &#x2F;etc&#x2F;hosts</span><br><span class="line">hostnamectl&#x2F;hostname +name</span><br></pre></td></tr></table></figure>
+
+<h3 id="编写集群分发脚本xsync"><a href="#编写集群分发脚本xsync" class="headerlink" title="编写集群分发脚本xsync"></a>编写集群分发脚本xsync</h3><h4 id="scp-secure-copy-安全拷贝"><a href="#scp-secure-copy-安全拷贝" class="headerlink" title="scp(secure copy)安全拷贝"></a>scp(secure copy)安全拷贝</h4><p>实现数据库之间的数据拷贝</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">scp –r(递归) 数据源路径 目的地路径</span><br><span class="line">scp –r route user@ip:route推送</span><br><span class="line">scp –r user@ip:route route拉取</span><br><span class="line">scp –r user@ip:route user@ip:route作为中转站</span><br><span class="line">把配置好的第一台服务器的文件拷贝到其它服务器,并把&#x2F;etc&#x2F;profile拷贝一下.</span><br><span class="line">soruce &#x2F;etc&#x2F;profile</span><br></pre></td></tr></table></figure>
+
+<h4 id="rsync-远程同步工具"><a href="#rsync-远程同步工具" class="headerlink" title="rsync 远程同步工具"></a>rsync 远程同步工具</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rsync主要用于备份和镜像.具有速度快、避免复制相同内容和支持符号链接的优点。</span><br><span class="line">rsync和scp区别：用rsyn做文件复制要比scp快，rsync只对差异文件做更新，scp是无差别拷贝。</span><br><span class="line">语法：</span><br><span class="line">rsync –rvl（递归，v显示过程，l拷贝符号链接）    源数据路径  目的路径</span><br></pre></td></tr></table></figure>
+
+<h4 id="xsync集群分发脚本"><a href="#xsync集群分发脚本" class="headerlink" title="xsync集群分发脚本"></a>xsync集群分发脚本</h4><p>要求：输入xsync +要同步的文件名 即可同步<br>#!/bin/bash  –开头指定文件运行–</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">#1 获取传入参数，如果没有就直接结束脚本</span><br><span class="line">pcount&#x3D;$#</span><br><span class="line">if((pcount&#x3D;&#x3D;0)); then</span><br><span class="line">echo no args;</span><br><span class="line">exit;</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">#2 获取要拷贝的文件名（第1个参数）</span><br><span class="line">p1&#x3D;$1</span><br><span class="line">fname&#x3D;&#96;basename $p1&#96; 确保为相对路径</span><br><span class="line">echo fname&#x3D;$fname</span><br><span class="line"></span><br><span class="line">#3 获取文件路径的上级目录的绝对路径</span><br><span class="line">pdir&#x3D;&#96;cd -P $(dirname $p1); pwd&#96; -P是进入到软连接实际的物理存储位置</span><br><span class="line">echo pdir&#x3D;$pdir</span><br><span class="line"># get the user</span><br><span class="line">user&#x3D;&#96;whoami&#96;</span><br><span class="line"></span><br><span class="line">#4 循环同步所有的节点</span><br><span class="line">for((host&#x3D;101; host&lt;103; host++)); do</span><br><span class="line">        echo ------------------------ hadoop$host --------------------------</span><br><span class="line">        rsync -rvl $pdir&#x2F;$fname $user@h@host:$pdir</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<p>所以之后只需要在100上修改配置分发同步到各个节点即可</p>
+<h2 id="集群的配置"><a href="#集群的配置" class="headerlink" title="集群的配置"></a>集群的配置</h2><h3 id="集群的部署规划"><a href="#集群的部署规划" class="headerlink" title="集群的部署规划"></a>集群的部署规划</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">h100 				h101 				 h102</span><br><span class="line">HDFS		namenode		datanode			secondarynamenode</span><br><span class="line">			datanode								datanode</span><br><span class="line"></span><br><span class="line">YARN 	nodemanager	resourcemanager nodemanager</span><br><span class="line">								nodemanager</span><br></pre></td></tr></table></figure>
+<h4 id="要求"><a href="#要求" class="headerlink" title="要求"></a>要求</h4><ul>
+<li>1.namenode和secondarynamenode内存规划1：1<br>所以两个节点不能部署在一台服务器上，那样相当于内存折半性能降低。</li>
+<li>2.resourceManager是整个集群资源的老大很耗内存，所以需要避开namenode和secondarynamenode节点服务器</li>
+</ul>
+<h3 id="配置集群"><a href="#配置集群" class="headerlink" title="配置集群"></a>配置集群</h3><ul>
+<li><p>1.配置core-site.xml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">vim core-site.xml</span><br><span class="line">1.指定namenode的地址</span><br><span class="line">2.指定hadoop运行产生临时文件存储目录</span><br><span class="line">&lt;property&gt;</span><br><span class="line">&lt;name&gt;hadoop.tmp.dir&lt;&#x2F;name&gt;</span><br><span class="line"> &lt;value&gt;&#x2F;opt&#x2F;hadoop-3.3.0&#x2F;data&lt;&#x2F;value&gt;</span><br><span class="line">&lt;description&gt;Abase for other temporary directories.&lt;&#x2F;description&gt;</span><br><span class="line">&lt;&#x2F;property&gt;</span><br><span class="line">   &lt;property&gt;</span><br><span class="line">        &lt;name&gt;fs.defaultFS&lt;&#x2F;name&gt;</span><br><span class="line">        &lt;value&gt;hdfs:&#x2F;&#x2F;h100:9000&lt;&#x2F;value&gt;</span><br><span class="line">   &lt;&#x2F;property&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>2.HDFS配置文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">1.修改环境变量导入java路径</span><br><span class="line">2.修改节点个数</span><br><span class="line">3.修改secondarynamenode辅助名称节点</span><br><span class="line">vim hadoop-env.sh</span><br><span class="line">EXPORT JAVA_HOME&#x3D;&#x2F;usr&#x2F;lib&#x2F;jvm&#x2F;java-1.8.0-openjdk-1.8.0.272.b10-1.el7_9.x86_64&#x2F;jre&#x2F;</span><br><span class="line"></span><br><span class="line">vim hdfs-site.xml</span><br><span class="line">&lt;property&gt;</span><br><span class="line">	&lt;name&gt;dfs.replication&lt;&#x2F;name&gt;</span><br><span class="line">&lt;value&gt;3&lt;&#x2F;value&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line"></span><br><span class="line">&lt;property&gt;</span><br><span class="line">	&lt;name&gt;dfs.namenode.secondary.http-address&lt;&#x2F;name&gt;</span><br><span class="line">&lt;value&gt;h102:50090&lt;&#x2F;value&gt;</span><br><span class="line">&lt;property&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>3.配置yarn</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1.配置java_home</span><br><span class="line">vim yarn-env.sh</span><br><span class="line">2.配置指定resourcemanager的运行地址 nodemanager</span><br><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;yarn.resourcemanager.hostname&lt;&#x2F;name&gt;</span><br><span class="line">    &lt;value&gt;h101&lt;&#x2F;value&gt;</span><br><span class="line">&lt;&#x2F;property&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>4.配置mapreduce</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">1.配置java_home</span><br><span class="line">vim mapred-env.sh</span><br><span class="line">2.指定mr运行在yarn上</span><br><span class="line">vim mapred-site.xml</span><br><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;mapreduce.framework.name&lt;&#x2F;name&gt;</span><br><span class="line">    &lt;value&gt;yarn&lt;&#x2F;value&gt;</span><br><span class="line">&lt;&#x2F;property&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">&lt;name&gt;mapreduce.framework.name&lt;&#x2F;name&gt;</span><br><span class="line">&lt;value&gt;yarn&lt;&#x2F;value&gt;</span><br><span class="line">&lt;&#x2F;property&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">&lt;name&gt;yarn.app.mapreduce.am.env&lt;&#x2F;name&gt;</span><br><span class="line">&lt;value&gt;HADOOP_MAPRED_HOME&#x3D;&#x2F;opt&#x2F;hadoop-3.3.0&lt;&#x2F;value&gt;</span><br><span class="line">&lt;&#x2F;property&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">&lt;name&gt;mapreduce.map.env&lt;&#x2F;name&gt;</span><br><span class="line">&lt;value&gt;HADOOP_MAPRED_HOME&#x3D;&#x2F;opt&#x2F;hadoop-3.3.0&lt;&#x2F;value&gt;</span><br><span class="line">&lt;&#x2F;property&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">&lt;name&gt;mapreduce.reduce.env&lt;&#x2F;name&gt;</span><br><span class="line">&lt;value&gt;HADOOP_MAPRED_HOME&#x3D;&#x2F;opt&#x2F;hadoop-3.3.0&lt;&#x2F;value&gt;</span><br><span class="line">&lt;&#x2F;property&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">        &lt;name&gt;mapreduce.jobhistory.address&lt;&#x2F;name&gt;</span><br><span class="line">&lt;value&gt;h101:10020&lt;&#x2F;value&gt;</span><br><span class="line">&lt;&#x2F;property&gt;</span><br><span class="line"></span><br><span class="line">&lt;property&gt;</span><br><span class="line">        &lt;name&gt;mapreduce.jobhistory.webapp.address&lt;&#x2F;name&gt;</span><br><span class="line">        &lt;value&gt;h101:19888&lt;&#x2F;value&gt;</span><br><span class="line">&lt;&#x2F;property&gt;</span><br><span class="line"></span><br><span class="line">export JAVA_HOME&#x3D;&#x2F;usr&#x2F;lib&#x2F;jvm&#x2F;java-1.8.0-openjdk-1.8.0.262.b10-0.el7_8.x86_64&#x2F;</span><br><span class="line">export JAVA_HOME&#x3D;&#x2F;usr&#x2F;lib&#x2F;jvm&#x2F;java-1.8.0-openjdk-1.8.0.262.b10-0.el7_8.x86_64&#x2F;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>5.分发配置好的集群文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xsync &#x2F;opt&#x2F;hadoop-3.3.0&#x2F;</span><br></pre></td></tr></table></figure>
+
+
+
+
+</li>
+</ul>
+<h2 id="集群的单点启动"><a href="#集群的单点启动" class="headerlink" title="集群的单点启动"></a>集群的单点启动</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">1.删除每台服务器对应的data logs</span><br><span class="line">rm –rf data logs</span><br><span class="line"></span><br><span class="line">2.单点启动</span><br><span class="line">在h100上单点启动</span><br><span class="line">bin&#x2F;hdfs namenode –format</span><br><span class="line">bin&#x2F;hdfs –daemon start namenode</span><br><span class="line">bin&#x2F;hdfs –daemon start datanode</span><br><span class="line"></span><br><span class="line">注意整个集群只有一个namenode</span><br><span class="line">h101和h102</span><br><span class="line">bin&#x2F;hdfs –daemon start datanode</span><br></pre></td></tr></table></figure>
+
+<h2 id="群起集群"><a href="#群起集群" class="headerlink" title="群起集群"></a>群起集群</h2><h3 id="配置ssh无密码连接"><a href="#配置ssh无密码连接" class="headerlink" title="配置ssh无密码连接"></a>配置ssh无密码连接</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">为什么需要ssh无密登录？</span><br><span class="line">h100有namenode需要向别的datanode节点分发，通讯。</span><br><span class="line">（resourcemanager也需要）</span><br><span class="line">https:&#x2F;&#x2F;blog.csdn.net&#x2F;mmd0308&#x2F;article&#x2F;details&#x2F;73825953</span><br><span class="line">原理：</span><br><span class="line">用公钥解密私钥，服务器A把生成的钥匙对的公钥给服务器B，当服务器A传输ssh信息或发送文件到服务器B时，服务器找寻服务器A的公钥并用来解密信息上加密的私钥。</span><br><span class="line">如果解密成功，服务器B采用服务器A的公钥加密数据返回给A，A再用私钥解密</span><br><span class="line">1.找到当前用户的.ssh</span><br><span class="line">&#x2F;root&#x2F;.ssh</span><br><span class="line">&#x2F;home&#x2F;gugu&#x2F;.ssh</span><br><span class="line">2.生成密钥</span><br><span class="line">ssh-keygen –t rsa 指定使用的加密算法</span><br><span class="line">连续三次回车</span><br><span class="line">id_rsa	</span><br><span class="line">id_rsa.pub</span><br><span class="line">ssh-copy-id h101 </span><br><span class="line">或者手动建立authorized_keys</span><br><span class="line">cat id	_rsa.pub &gt;&gt; authorized_keys</span><br><span class="line">3.把各个服务器的id_rsa.pub都拷贝到authorized_keys</span><br><span class="line"></span><br><span class="line">100的主节点还需要配置root的无密登录</span><br><span class="line">（如果配置的不是root的话）</span><br></pre></td></tr></table></figure>
+<h3 id="配置slaves-3-0以上为workers"><a href="#配置slaves-3-0以上为workers" class="headerlink" title="配置slaves 3.0以上为workers"></a>配置slaves 3.0以上为workers</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vim etc&#x2F;hadoop&#x2F;workers</span><br><span class="line">h100</span><br><span class="line">h101</span><br><span class="line">h102</span><br><span class="line">不允许有空格和回车，不然脚本检测还要检查空格回车</span><br></pre></td></tr></table></figure>
+
+<h3 id="执行群起脚本"><a href="#执行群起脚本" class="headerlink" title="执行群起脚本"></a>执行群起脚本</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbin&#x2F;start-dfs.sh</span><br></pre></td></tr></table></figure>
+
+<h3 id="执行群起yarn脚本"><a href="#执行群起yarn脚本" class="headerlink" title="执行群起yarn脚本"></a>执行群起yarn脚本</h3><p>注意：yarn群起脚本必须在配置了resourcemanager的那台服务器上执行，否则会报错。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">进入h101</span><br><span class="line">&#x2F;opt&#x2F;hadoop-3.3.0&#x2F;sbin&#x2F;start-yarn.sh</span><br></pre></td></tr></table></figure>
+<p>至此集群群起完成</p>
+<h2 id="群起集群测试"><a href="#群起集群测试" class="headerlink" title="群起集群测试"></a>群起集群测试</h2><h3 id="集群的基本测试"><a href="#集群的基本测试" class="headerlink" title="集群的基本测试"></a>集群的基本测试</h3><ul>
+<li>1.上传小文件和大文件<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bin&#x2F;hdfs dfs –put wcinput&#x2F;wc.input &#x2F;</span><br><span class="line">bin&#x2F;hdfs dfs –put &#x2F;opt&#x2F;hadoop-3.3.0.tar.gz &#x2F;</span><br></pre></td></tr></table></figure>
+因为每个块的大小为128M所以大文件会分块储存，n=size/128 – block0 – blockn<br>并且通过replicaiton设置的副本数将数据分别存储到了3台服务器上。</li>
+<li>注意：我们所传输到hdfs /的路径所存放的数据放在服务器的哪里？<ul>
+<li>放在我们指定的core-site.xml中的hadoop.tmp.dir，当然也可以单独指定hdfs.dfs.dir<br>所以数据放在/opt/hadoop-3.3.0/data/tmp/dfs/data/current/BP-63934372-10.167.218.160-1606840182184<br>/current/finalized/subdir0/subdir0</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">touch tmp.txt</span><br><span class="line">cat blk_.... &gt;&gt; tmp.txt</span><br><span class="line">把分块文件组合在一起</span><br><span class="line">tar –zxvf tmp.txt，发现就是我们之前传入的hadoop-3.3.0.tar.gz</span><br></pre></td></tr></table></figure>
+
+<h2 id="集群启动-停止方式总结"><a href="#集群启动-停止方式总结" class="headerlink" title="集群启动/停止方式总结"></a>集群启动/停止方式总结</h2><h3 id="单节点启动"><a href="#单节点启动" class="headerlink" title="单节点启动"></a>单节点启动</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">在每个节点上遍历对应的命令</span><br><span class="line">bin&#x2F;hdfs namenode –format</span><br><span class="line">bin&#x2F;hdfs –daemon start namenode</span><br><span class="line">bin&#x2F;hdfs –daemon start datanode</span><br><span class="line">bin&#x2F;hdfs –daemon start secondarynamenode</span><br><span class="line">(sbin&#x2F;hadoop-daemon.sh start&#x2F;stop)</span><br><span class="line">bin&#x2F;yarn –daemon start resourcemanager 必须在对应的节点上启动resourcemanager</span><br><span class="line">bin&#x2F;yarn –daemon start nodemanager</span><br><span class="line">(sbin&#x2F;yarn-daemon.sh start&#x2F;stop resourcemanager&#x2F;nodemanager</span><br></pre></td></tr></table></figure>
+
+<h3 id="各个按模块整体分开启动"><a href="#各个按模块整体分开启动" class="headerlink" title="各个按模块整体分开启动"></a>各个按模块整体分开启动</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">首要是配置ssh免密登录</span><br><span class="line"></span><br><span class="line">1.整体启动hdfs</span><br><span class="line">sbin&#x2F;start-dfs.sh &#x2F;stop-dfs.sh</span><br><span class="line"></span><br><span class="line">2.整体启动yarn</span><br><span class="line">sbin&#x2F;start-yarn.sh &#x2F;stop-yarn.sh</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="当然还有全部启动（但不建议使用）"><a href="#当然还有全部启动（但不建议使用）" class="headerlink" title="当然还有全部启动（但不建议使用）"></a>当然还有全部启动（但不建议使用）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbin&#x2F;start-all.sh &#x2F;stop-all.sh</span><br></pre></td></tr></table></figure>
+
+<h2 id="集群时间同步"><a href="#集群时间同步" class="headerlink" title="集群时间同步"></a>集群时间同步</h2><p>使用crontab定时任务，到了哪个时间起哪个进程哪个任务</p>
+<h3 id="crond服务管理"><a href="#crond服务管理" class="headerlink" title="crond服务管理"></a>crond服务管理</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">serveice crond restart</span><br><span class="line">systemctcl start crond</span><br><span class="line">设置程序开机自启动:</span><br><span class="line">方法：</span><br><span class="line">1.centos7以下chkconfig</span><br><span class="line">2.centos7以上systemctl enable&#x2F;disable xxxx</span><br><span class="line">查看systemctl list-unit-files (| grep enable)</span><br><span class="line">systemctl enable redis</span><br><span class="line">3.ntsysv图形界面进入确认</span><br></pre></td></tr></table></figure>
+
+<h3 id="crontab定时任务设置"><a href="#crontab定时任务设置" class="headerlink" title="crontab定时任务设置"></a>crontab定时任务设置</h3><h4 id="基础命令"><a href="#基础命令" class="headerlink" title="基础命令"></a>基础命令</h4><ul>
+<li><p>crontab –e        编辑crontab定时任务</p>
+</li>
+<li><p>crontab –l        查询crontab任务</p>
+</li>
+<li><p>crontab –r        删除当前用户所有的crontab任务</p>
+<h4 id="参数说明"><a href="#参数说明" class="headerlink" title="参数说明"></a>参数说明</h4></li>
+<li><p>1.* *    *    *    * 执行任务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">第一个*		表示一小时当中的第几分钟 0-59</span><br><span class="line">第二个*		一天当中的第几个小时</span><br><span class="line">第三个* 	    一个月当中的第几天</span><br><span class="line">第四个*		一年当中的第几个月</span><br><span class="line">第五个* 	    一个星期的星期几</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>2.特殊符号</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">* 代表任何时间，比如第一个“*”就代表一个小时中每分钟都执行一次</span><br><span class="line">，代表不连续的时间，比如“0 8,12,16 * * *”，就代表在每天的8点0分，12点0分，16点0分都执行一次命令</span><br><span class="line">- 代表连续的时间范围，比如“0 5 * * 1-6”代表在周一到周六的凌晨5点0分执行命令</span><br><span class="line">*&#x2F;n 代表每隔多久执行一次，比如“*&#x2F;10 * * * *”代表每隔10分钟就执行一遍该命令</span><br><span class="line"></span><br><span class="line">如果是过于复杂的命令就换用uz框架实现</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>3.添加一个简单命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*&#x2F;1 * * * * &#x2F;bin&#x2F;echo “11” &gt;&gt; &#x2F;root&#x2F;bailongma.txt</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="集群时间同步-1"><a href="#集群时间同步-1" class="headerlink" title="集群时间同步"></a>集群时间同步</h3><p>找一台服务器作为时间服务器，所有机器每隔固定时间进行定时同步。</p>
+<ul>
+<li><p>1.检查时间服务器是否安装ntp</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">net time protocol</span><br><span class="line">rpm –qa|grep ntp</span><br><span class="line">能查到这仨个就ok：</span><br><span class="line">fontpackages-filesystem-1.44-8.el7.noarch</span><br><span class="line">ntp-4.2.6p5-25.el7.centos.x86_64</span><br><span class="line">ntpdate-4.2.6p5-25.el7.centos.x86_64</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>2.修改ntp时间服务器配置文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">vim &#x2F;etc&#x2F;ntp.conf</span><br><span class="line">1.授权网段10.167.218.0-10.167.218.255可以从这台机器上查询和同步时间</span><br><span class="line">找到这个网段限制：</span><br><span class="line">restrict 192.168.1.0 mask 255.255.255.0 nomodify notrap</span><br><span class="line">	</span><br><span class="line">2.（集群在局域网中不使用其他互联网上的时间）</span><br><span class="line">注释掉这个</span><br><span class="line"># server 0.centos.pool.ntp.org iburst</span><br><span class="line"># server 1.centos.pool.ntp.org iburst</span><br><span class="line"># server 2.centos.pool.ntp.org iburst</span><br><span class="line"># server 3.centos.pool.ntp.org iburst</span><br><span class="line"></span><br><span class="line">3.当节点丢失网络连接，依然可以采用本地时间作为时间服务器为集群中的其他节点提供时间同步。</span><br><span class="line">127.127.1.0</span><br><span class="line">fudge 127.127.1.0 stratum 10（时间同步精度）</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>3.修改/etc/sysconfig/ntpd文件<br>让硬件时间与系统时间一起同步</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vim &#x2F;etc&#x2F;sysconfig&#x2F;ntpd</span><br><span class="line">添加</span><br><span class="line">SYNC_HWCLOCK&#x3D;yes</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>4.重启ntp服务设置ntp服务开机启动</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">service ntpd status</span><br><span class="line"></span><br><span class="line">systemctl start ntpd.service</span><br><span class="line">开机启动</span><br><span class="line">systemctl enable ntpd.service(chkconfig ntpd on(centos7以下))</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>5.其他服务器添加crontab –e加上每十分钟同步一次时间<br>先执行nptdate h100 同步一次时间</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*&#x2F;10 * * * * &#x2F;usr&#x2F;sbin&#x2F;ntpdate h100(时间服务器ip&#x2F;域名)</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://example.com/2021/06/12/hadoop/hadoop%E5%AE%8C%E5%85%A8%E5%88%86%E5%B8%83%E5%BC%8F/" data-id="ckpt3vger000yewtx0cob1m3v" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "durian"
+        },
+        "headline": "hadoop完全分布式",
+        "image": "http://example.com/css/images/hadoop.jfif",
+        "keywords": "",
+        "genre": "bigdata hadoop",
+        "datePublished": "2021-06-12",
+        "dateCreated": "2021-06-12",
+        "dateModified": "2021-06-12",
+        "url": "http://example.com/2021/06/12/hadoop/hadoop完全分布式/",
+        "description": "前言1234567891.准备3台服务器2.安装JDK3.配置java环境变量4.安装hadoop5.配置hadoop环境变量6.配置集群7.单点启动8.配置ssh无密码访问9.群起并测试集群
+
+集群分配脚本配置虚拟机/服务器配置ip,hosts,hostname12vim &#x2F;etc&#x2F;hostshostnamectl&#x2F;hostname +name
+
+编写集群分发脚本x",
+        "wordCount": 1069
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <!-- Valine -->
+    <div class="vcomments"></div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/chunjianghuayueye2" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2021/06/12/hadoop/bigdata%E4%BB%8B%E7%BB%8D/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            bigdata介绍
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2021/06/12/hadoop/hadoop%E8%BF%90%E8%A1%8C%E6%A8%A1%E5%BC%8F/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">hadoop运行模式</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+<div class="widget-wrap widget-list">
+    <h3 class="widget-title">目录</h3>
+    <div class="widget">
+        <div id="toc" class="toc-article">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9B%86%E7%BE%A4%E5%88%86%E9%85%8D%E8%84%9A%E6%9C%AC%E9%85%8D%E7%BD%AE"><span class="toc-number">2.</span> <span class="toc-text">集群分配脚本配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E6%9C%BA-%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AEip-hosts-hostname"><span class="toc-number">2.1.</span> <span class="toc-text">虚拟机&#x2F;服务器配置ip,hosts,hostname</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E5%86%99%E9%9B%86%E7%BE%A4%E5%88%86%E5%8F%91%E8%84%9A%E6%9C%ACxsync"><span class="toc-number">2.2.</span> <span class="toc-text">编写集群分发脚本xsync</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#scp-secure-copy-%E5%AE%89%E5%85%A8%E6%8B%B7%E8%B4%9D"><span class="toc-number">2.2.1.</span> <span class="toc-text">scp(secure copy)安全拷贝</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#rsync-%E8%BF%9C%E7%A8%8B%E5%90%8C%E6%AD%A5%E5%B7%A5%E5%85%B7"><span class="toc-number">2.2.2.</span> <span class="toc-text">rsync 远程同步工具</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#xsync%E9%9B%86%E7%BE%A4%E5%88%86%E5%8F%91%E8%84%9A%E6%9C%AC"><span class="toc-number">2.2.3.</span> <span class="toc-text">xsync集群分发脚本</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9B%86%E7%BE%A4%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="toc-number">3.</span> <span class="toc-text">集群的配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%86%E7%BE%A4%E7%9A%84%E9%83%A8%E7%BD%B2%E8%A7%84%E5%88%92"><span class="toc-number">3.1.</span> <span class="toc-text">集群的部署规划</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A6%81%E6%B1%82"><span class="toc-number">3.1.1.</span> <span class="toc-text">要求</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E9%9B%86%E7%BE%A4"><span class="toc-number">3.2.</span> <span class="toc-text">配置集群</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9B%86%E7%BE%A4%E7%9A%84%E5%8D%95%E7%82%B9%E5%90%AF%E5%8A%A8"><span class="toc-number">4.</span> <span class="toc-text">集群的单点启动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BE%A4%E8%B5%B7%E9%9B%86%E7%BE%A4"><span class="toc-number">5.</span> <span class="toc-text">群起集群</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEssh%E6%97%A0%E5%AF%86%E7%A0%81%E8%BF%9E%E6%8E%A5"><span class="toc-number">5.1.</span> <span class="toc-text">配置ssh无密码连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEslaves-3-0%E4%BB%A5%E4%B8%8A%E4%B8%BAworkers"><span class="toc-number">5.2.</span> <span class="toc-text">配置slaves 3.0以上为workers</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E7%BE%A4%E8%B5%B7%E8%84%9A%E6%9C%AC"><span class="toc-number">5.3.</span> <span class="toc-text">执行群起脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E7%BE%A4%E8%B5%B7yarn%E8%84%9A%E6%9C%AC"><span class="toc-number">5.4.</span> <span class="toc-text">执行群起yarn脚本</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BE%A4%E8%B5%B7%E9%9B%86%E7%BE%A4%E6%B5%8B%E8%AF%95"><span class="toc-number">6.</span> <span class="toc-text">群起集群测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%86%E7%BE%A4%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%B5%8B%E8%AF%95"><span class="toc-number">6.1.</span> <span class="toc-text">集群的基本测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9B%86%E7%BE%A4%E5%90%AF%E5%8A%A8-%E5%81%9C%E6%AD%A2%E6%96%B9%E5%BC%8F%E6%80%BB%E7%BB%93"><span class="toc-number">7.</span> <span class="toc-text">集群启动&#x2F;停止方式总结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E8%8A%82%E7%82%B9%E5%90%AF%E5%8A%A8"><span class="toc-number">7.1.</span> <span class="toc-text">单节点启动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%84%E4%B8%AA%E6%8C%89%E6%A8%A1%E5%9D%97%E6%95%B4%E4%BD%93%E5%88%86%E5%BC%80%E5%90%AF%E5%8A%A8"><span class="toc-number">7.2.</span> <span class="toc-text">各个按模块整体分开启动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BD%93%E7%84%B6%E8%BF%98%E6%9C%89%E5%85%A8%E9%83%A8%E5%90%AF%E5%8A%A8%EF%BC%88%E4%BD%86%E4%B8%8D%E5%BB%BA%E8%AE%AE%E4%BD%BF%E7%94%A8%EF%BC%89"><span class="toc-number">7.3.</span> <span class="toc-text">当然还有全部启动（但不建议使用）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9B%86%E7%BE%A4%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5"><span class="toc-number">8.</span> <span class="toc-text">集群时间同步</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#crond%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86"><span class="toc-number">8.1.</span> <span class="toc-text">crond服务管理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#crontab%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1%E8%AE%BE%E7%BD%AE"><span class="toc-number">8.2.</span> <span class="toc-text">crontab定时任务设置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4"><span class="toc-number">8.2.1.</span> <span class="toc-text">基础命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E"><span class="toc-number">8.2.2.</span> <span class="toc-text">参数说明</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%86%E7%BE%A4%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5-1"><span class="toc-number">8.3.</span> <span class="toc-text">集群时间同步</span></a></li></ol></li></ol>
+        </div>
+    </div>
+</div>
+
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/xiaohuanren3.jpg)" alt="mysql索引失效" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a></p>
+                            <p class="item-title"><a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88/" class="title">mysql索引失效</a></p>
+                            <p class="item-date"><time datetime="2021-06-13T07:40:54.744Z" itemprop="datePublished">2021-06-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/shan.jpg)" alt="mysql索引优化案例分析" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a></p>
+                            <p class="item-title"><a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/" class="title">mysql索引优化案例分析</a></p>
+                            <p class="item-date"><time datetime="2021-06-13T07:40:39.919Z" itemprop="datePublished">2021-06-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/13/webframe/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/xiaohuanren2.jpg)" alt="设计模式" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/webframe/">webframe</a></p>
+                            <p class="item-title"><a href="/2021/06/13/webframe/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="title">设计模式</a></p>
+                            <p class="item-date"><time datetime="2021-06-13T07:17:23.394Z" itemprop="datePublished">2021-06-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/MHA/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/MHA/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-13T04:16:55.764Z" itemprop="datePublished">2021-06-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/mysql%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/mysql%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-13T04:14:41.084Z" itemprop="datePublished">2021-06-13</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/">bigdata</a><span class="category-list-count">22</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker/">docker</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker-compose/">docker-compose</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/hadoop/">hadoop</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/zookeeper/">zookeeper</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/">nosql</a><span class="category-list-count">20</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis/">redis</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/">webframe</a><span class="category-list-count">21</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/django/">django</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/flask/">flask</a><span class="category-list-count">5</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">69</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+
+            
+                
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2021 durian</p>
+                
+                <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
+                
+            </div>
+                <p><span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span></p>
+                <p><span id="busuanzi_container_site_uv"> 
+                     本站访客数<span id="busuanzi_value_site_uv"></span>人次
+               </span></p>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+    <script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
+</footer>
+
+    </div>
+    
+    
+    <script src="//unpkg.com/valine"></script>
+    <script>
+        var GUEST = ['nick','mail','link'];
+        var meta = '';
+        meta = meta.split(',').filter(function (item) {
+            return GUEST.indexOf(item)>-1;
+        });
+        var avatarcdn = 'gravatar.cat.net' == true;
+        new Valine({
+            el: '.vcomments',
+            notify: "false",
+            verify: "false",
+            appId: "795P9DunI2Jv3Jho36dlueIS-gzGzoHsz",
+            appKey: "pM151YCVhYBYTB9Pt1SRuiKs",
+            placeholder: "Just Do It",
+            avatar:"mm",
+            recordIP:"false",
+            visitor: "true"
+        });
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

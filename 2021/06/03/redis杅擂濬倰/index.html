@@ -1,0 +1,777 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>五大数据类型 | 春江花月夜o</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="" />
+    
+    <meta name="description" content="string一个key对应一个value（和Memcached一样），字符串是一种最基本的Redis值类型。Redis字符串是二进制安全的，这意味着一个Redis字符串能包含任意类型的数据，例如： 一张JPEG格式的图片或者一个序列化的Ruby对象，一个字符串类型的值最多能存储512M字节的内容。 基础命令1234567891011121314151617181920212223242526272">
+<meta property="og:type" content="article">
+<meta property="og:title" content="五大数据类型">
+<meta property="og:url" content="http://example.com/2021/06/03/redis%E6%9D%85%E6%93%82%E6%BF%AC%E5%80%B0/index.html">
+<meta property="og:site_name" content="春江花月夜o">
+<meta property="og:description" content="string一个key对应一个value（和Memcached一样），字符串是一种最基本的Redis值类型。Redis字符串是二进制安全的，这意味着一个Redis字符串能包含任意类型的数据，例如： 一张JPEG格式的图片或者一个序列化的Ruby对象，一个字符串类型的值最多能存储512M字节的内容。 基础命令1234567891011121314151617181920212223242526272">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-06-03T13:09:25.014Z">
+<meta property="article:modified_time" content="2021-06-05T02:20:50.428Z">
+<meta property="article:author" content="durian">
+<meta name="twitter:card" content="summary">
+    
+
+    
+        <link rel="alternate" href="/" title="春江花月夜o" type="application/atom+xml" />
+    
+
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">关于</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">python</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">cpp</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">webframe</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                                <a class="main-nav-list-link" href="/null">flask</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">django</a>
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">algorithm</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">bigdata</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">nosql</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                                <a class="main-nav-list-link" href="/null"> redis</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">mysql</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null"> redis高级篇</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">mysql高级篇</a>
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/nosql/redis/">redis</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-redis杅擂濬倰" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        五大数据类型
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2021/06/03/redis%E6%9D%85%E6%93%82%E6%BF%AC%E5%80%B0/" class="article-date">
+       <time datetime="2021-06-03T13:09:25.014Z" itemprop="datePublished">2021-06-03</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/2021/06/03/redis%E6%9D%85%E6%93%82%E6%BF%AC%E5%80%B0/" class="article-date">
+     <time datetime="2021-06-05T02:20:50.428Z" itemprop="dateModified">2021-06-05</time>
+  </a>
+</div>
+
+
+                
+
+                
+                
+   <div class="article-counter">
+      <i class="fa fa-file-word-o"></i>
+      <span class="post-count-item-text">本文字数: </span>
+      <span class="post-count">1.7k</span>
+      <i class="fa fa-clock-o"></i>
+      <span class="post-time-item-text">阅读时长: </span>
+      <span class="post-count">6 分钟 </span>
+   </div>
+
+
+                <span id="busuanzi_container_page_pv">
+                阅读次数<span id="busuanzi_value_page_pv"></span>次
+                </span>
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <h2 id="string"><a href="#string" class="headerlink" title="string"></a>string</h2><p>一个key对应一个value（和Memcached一样），字符串是一种最基本的Redis值类型。Redis字符串是二进制安全的，这意味着一个Redis字符串能包含任意类型的数据，例如： 一张JPEG格式的图片或者一个序列化的Ruby对象，一个字符串类型的值最多能存储512M字节的内容。</p>
+<h3 id="基础命令"><a href="#基础命令" class="headerlink" title="基础命令"></a>基础命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"># 常见增删改</span><br><span class="line">1.get set</span><br><span class="line">2.append k1 12345</span><br><span class="line">3.strlen k1 获取长度</span><br><span class="line">4.incr k2 (set k2 2)增加整数的值比如浏览量加放在redis</span><br><span class="line">5.decr k2 减</span><br><span class="line">6.incrby k2 3 加3</span><br><span class="line">7.decrby k2 2 减2（封装原子操作，一个线程加，一个减）</span><br><span class="line"></span><br><span class="line">8.getrange #　获取区间范围的值类似与between and</span><br><span class="line">　getrange k1 0 -1  # 获取0到-1的值</span><br><span class="line">　getrange k1 0 3   # 和切片一样</span><br><span class="line">　</span><br><span class="line">9.setrange修改开始位置的值</span><br><span class="line">　setrange k1 0 xxx 把前三个数设置为xxx</span><br><span class="line">　get k1</span><br><span class="line">　</span><br><span class="line">10.setex(set with expire)键秒值&#x2F;setnx（set if not exists）</span><br><span class="line">　　setex k1 10 v4设置10秒过期</span><br><span class="line">　　setnx k1 v100返回0表示已存在无法设置</span><br><span class="line">　　</span><br><span class="line">11.mset&#x2F;mget&#x2F;msetnx</span><br><span class="line">　d多个设置，获取</span><br><span class="line">　mset k1 v1 k2 v2 k3 v3</span><br><span class="line">　msetnx k1 v1 k5 v5 只要有一个存在就翻车</span><br><span class="line">　</span><br><span class="line">12.getset</span><br><span class="line">　getset k1 v100（获取原来的值，赋予新的值）</span><br></pre></td></tr></table></figure>
+<h3 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h3><ul>
+<li>作为邮件开关，点击开关</li>
+<li>计数器，粉丝数、购买人数、浏览人数、限流（incr,decr)</li>
+<li>使用setbit/getbit实现bloom过滤器</li>
+</ul>
+<p>这里需要注意的是，redis本身是单线程的，所以做计数器不用考虑并发带来的影响，且redis内存存储并支持集群、持久化的特性，使得redis高效快速，适合做高并发系统的计数器。bloom是解决缓存穿透的有效方法（请求进来先用bloom判断是否存在，存在再去那数据不存在直接返回），也是过滤一些特定大数据的解决方案（比如几亿的用户，需要看进来的用户是否是新用户</p>
+<h3 id="内部源码"><a href="#内部源码" class="headerlink" title="内部源码"></a><a target="_blank" rel="noopener" href="https://my.oschina.net/mengyuankan/blog/1926320">内部源码</a></h3><h2 id="list"><a href="#list" class="headerlink" title="list"></a><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000016901154">list</a></h2><p>redis的list底层是双向链表的结构，其底层实现有三种linkdlist、ziplist和quicklist。</p>
+<ul>
+<li>redis 3.2之前<br>默认使用linklist和ziplist<br>linklist作为基础的朴素双向链表。<br>ziplist作为基本存储的压缩双向链表，ziplist所有信息保存在连续的内存中，每次修改都需要realloc或者memmove，所以效率比较低，是为了节省内存设计的。<br>ziplist要求单个节点小于64bytes，总数量小于512个，当数据量超出标准就会使用linkedlist，最大为2**32-1个值 </li>
+<li>redis 3.2 之后<br>使用quicklist作为默认底层</li>
+</ul>
+<h3 id="基础命令-1"><a href="#基础命令-1" class="headerlink" title="基础命令"></a>基础命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">lpush&#x2F;rpush k v</span><br><span class="line">lrange k start end</span><br><span class="line">lpushx&#x2F;rpushx k v（当k不存在不会创建）</span><br><span class="line">lpop&#x2F;rpop k</span><br><span class="line">lrem k count v 移除指定个数的值为v的元素，count&#x3D;0移除所有</span><br><span class="line">ltrim k start end 截取并保留范围值</span><br><span class="line">lindex k idx 索引</span><br><span class="line">llen k</span><br><span class="line">linsert k after|before v value 在固定的某个元素前或者后插入元素</span><br><span class="line">rpoplpush k v</span><br><span class="line">lset k idx v</span><br></pre></td></tr></table></figure>
+<h3 id="应用场景-1"><a href="#应用场景-1" class="headerlink" title="应用场景"></a>应用场景</h3><ul>
+<li>消息队列（celery）安全消息队列复制一份进行操作避免消费者异常</li>
+<li>排行榜（每隔一段时间更新一次）</li>
+<li>最新列表（点赞列表、评论列表）（固定条数左进右出）</li>
+</ul>
+<h3 id="内部源码-1"><a href="#内部源码-1" class="headerlink" title="内部源码"></a><a target="_blank" rel="noopener" href="https://blog.liexing.me/2019/12/28/from-ziplist-linkedlist-to-quicklist/">内部源码</a></h3><h4 id="ziplist源码分析"><a href="#ziplist源码分析" class="headerlink" title="ziplist源码分析"></a>ziplist源码分析</h4><p>ziplist是一种特殊编码的节省内存空间的双链表，能以O(1)的时间复杂度在两端push和pop数据，具有如下结构：<br><zlbytes><zltail><zllen><entry><entry><zlend></p>
+<ul>
+<li>zlbytes是一个unsigned integer，保存ziplist占用的总内存空间，在重新分配内存时，借助这个字段可以不用遍历整个ziplist；</li>
+<li>zltail是指向最后一个entry的偏移量，这样对于尾部的操作不用去遍历所有entry；</li>
+<li>zllen固定两个字节长度，表示entry的数量，最大能表示2^16-2个entry，如果超过了，则其值为2^16-1，需要遍历entry才能知道具体的数量；</li>
+<li>zlend固定一个字节，值固定为255，表示ziplist的结尾。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># ziplist.c</span><br><span class="line">&#x2F;* Create a new empty ziplist. *&#x2F;</span><br><span class="line">unsigned char *ziplistNew(void) &#123;</span><br><span class="line">    unsigned int bytes &#x3D; ZIPLIST_HEADER_SIZE+1;</span><br><span class="line">    unsigned char *zl &#x3D; zmalloc(bytes);</span><br><span class="line">    ZIPLIST_BYTES(zl) &#x3D; intrev32ifbe(bytes);</span><br><span class="line">    ZIPLIST_TAIL_OFFSET(zl) &#x3D; intrev32ifbe(ZIPLIST_HEADER_SIZE);</span><br><span class="line">    ZIPLIST_LENGTH(zl) &#x3D; 0;</span><br><span class="line">    zl[bytes-1] &#x3D; ZIP_END;</span><br><span class="line">    return zl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="hash"><a href="#hash" class="headerlink" title="hash"></a>hash</h2>KV模式不变，但v是一个键值对，理论最大为2^32-1个键值对</li>
+</ul>
+<h3 id="基础命令-2"><a href="#基础命令-2" class="headerlink" title="基础命令"></a>基础命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">1.hset&#x2F;hget&#x2F;hmset&#x2F;hmget&#x2F;hgetall&#x2F;hdel</span><br><span class="line">  hset user id 11</span><br><span class="line">  hget user id</span><br><span class="line">  hmset cutomer name z3 id 2 age 26</span><br><span class="line">  hmget customer id name age</span><br><span class="line">  hgetall customer</span><br><span class="line">  hdel user name</span><br><span class="line">2.hlen user</span><br><span class="line">3.hexists key</span><br><span class="line">  hexists customer id</span><br><span class="line">4.hkeys&#x2F;hvals</span><br><span class="line">  hkeys customer 获取所有的键&#x2F;值</span><br><span class="line">5.hincrby&#x2F;hincrbyfloat</span><br><span class="line">  hincrby customer age 1</span><br><span class="line">  hset customer score 91.5</span><br><span class="line">  hincrby customer score 1.5</span><br><span class="line">6.hsetnx</span><br></pre></td></tr></table></figure>
+<h3 id="应用场景-2"><a href="#应用场景-2" class="headerlink" title="应用场景"></a>应用场景</h3><ul>
+<li><strong>用户信息存储</strong>，如果用string存储用户信息打包，内容修改时需要取出全部信息，使用hash只需要取出该字段即可。</li>
+<li><strong>购物车数据</strong>，未登录用cookie存储购物车数据，登录使用redis的hash存储数据。</li>
+</ul>
+<h3 id="内部源码-2"><a href="#内部源码-2" class="headerlink" title="内部源码"></a>内部源码</h3><h2 id="set"><a href="#set" class="headerlink" title="set"></a>set</h2><h3 id="基础命令-3"><a href="#基础命令-3" class="headerlink" title="基础命令"></a>基础命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">1.sadd&#x2F;smembers&#x2F;sismember</span><br><span class="line">sadd set01 1 1 2 2 3 3会把重复的数去掉并构建set</span><br><span class="line">smembers set01 查看set01的元素</span><br><span class="line">sismember set01 x 是成员返回1不是0</span><br><span class="line">2.scard</span><br><span class="line">scard set01 获取set01元素个数</span><br><span class="line">3.srem key vlaue 删除集合中的元素</span><br><span class="line">srem set01 3</span><br><span class="line">4.srandmember set02 3从集合中随机取出3个</span><br><span class="line">（就像什么抽红包，从100个里面随机抽10个）</span><br><span class="line">5.spop key 随机出栈</span><br><span class="line">spop set01</span><br><span class="line">6.smove key1 key2 val在key1里的某个值 赋给key2</span><br><span class="line">smove set02 set01 7</span><br><span class="line">smembers set01</span><br><span class="line">7.数学集合类</span><br><span class="line">差集：sdiff</span><br><span class="line">	sdiff set01 set02 在第一个里面不在第二个里面的</span><br><span class="line">	sdiff set02 set01</span><br><span class="line">	交集：sinter</span><br><span class="line">	sinter set01 set02相交部分</span><br><span class="line">并集：sunion set01 set02</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="应用场景-3"><a href="#应用场景-3" class="headerlink" title="应用场景"></a>应用场景</h3><ul>
+<li>共同好友、共同关注、相似关注、共同喜好</li>
+<li>可以将一个用户的所有关注存在一个集合，粉丝存在一个集合</li>
+<li>去重</li>
+<li><h3 id="内部源码-3"><a href="#内部源码-3" class="headerlink" title="内部源码"></a>内部源码</h3>zset和set一样也是string类型元素的集合，且不允许重复的成员不同的是(在set的基础上加)每个元素都会关联一个double类型的分数，redis正是通过分数来为集合中的成员来进行大小排序，zset的成员是唯一的，但分数score可以重复。</li>
+</ul>
+<h2 id="zset-sorted-set"><a href="#zset-sorted-set" class="headerlink" title="zset(sorted set)"></a>zset(sorted set)</h2><h3 id="基础命令-4"><a href="#基础命令-4" class="headerlink" title="基础命令"></a>基础命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">1.zadd&#x2F;zrange</span><br><span class="line">zadd zset01 60 v1 70 v2 80 v3 90 v4 100 v5</span><br><span class="line">zrange zset01 0 -1</span><br><span class="line">zadd 60 v9</span><br><span class="line">zrange zset01 0 -1 withscores</span><br><span class="line">2.zrangebyscore key</span><br><span class="line">zrangebyscore zset 60 90 60到90分的</span><br><span class="line">3.zrangebyscore zset01 (60 (90</span><br><span class="line">大于60小于90不包含</span><br><span class="line">4. zrangebyscore key 60 90 limit 2 2</span><br><span class="line">从第二个开始截取两个</span><br><span class="line">5.zrem zseto1 v5</span><br><span class="line">删除v5</span><br><span class="line">6.zcard 统计个数</span><br><span class="line">zcard zset01</span><br><span class="line">7.zcount + key + score区间</span><br><span class="line">zcount zset01 60 80统计60到80的数量</span><br><span class="line">8.zrank zset04 v4获取下标的值（索引值）</span><br><span class="line">9.zscore zset01 v4获取v4的得分</span><br><span class="line">10.zrevrank key values 逆序获得下标</span><br><span class="line">11.zrevrange zset01 0 -1逆序遍历</span><br><span class="line">12.zrevrangebyscore key</span><br></pre></td></tr></table></figure>
+<h3 id="应用场景-4"><a href="#应用场景-4" class="headerlink" title="应用场景"></a>应用场景</h3><ul>
+<li>排行榜</li>
+<li>带权重的消息队列</li>
+</ul>
+<h3 id="内部源码-4"><a href="#内部源码-4" class="headerlink" title="内部源码"></a>内部源码</h3>
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://example.com/2021/06/03/redis%E6%9D%85%E6%93%82%E6%BF%AC%E5%80%B0/" data-id="ckpj3rgfp0002l0mz8vtx0zz6" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "durian"
+        },
+        "headline": "五大数据类型",
+        "image": "http://example.com",
+        "keywords": "",
+        "genre": "nosql redis",
+        "datePublished": "2021-06-03",
+        "dateCreated": "2021-06-03",
+        "dateModified": "2021-06-05",
+        "url": "http://example.com/2021/06/03/redis杅擂濬倰/",
+        "description": "string一个key对应一个value（和Memcached一样），字符串是一种最基本的Redis值类型。Redis字符串是二进制安全的，这意味着一个Redis字符串能包含任意类型的数据，例如： 一张JPEG格式的图片或者一个序列化的Ruby对象，一个字符串类型的值最多能存储512M字节的内容。
+基础命令1234567891011121314151617181920212223242526272",
+        "wordCount": 644
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <!-- Valine -->
+    <div class="vcomments"></div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="stack-overflow" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-stack-overflow"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/ppoffice/hexo-theme-hueman" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2021/06/03/redis%E9%A5%9C%E7%A6%BB%E6%81%85%E7%92%83%E8%B3%A4%E6%98%B4/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            redis.conf解析
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2021/06/03/download/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">redis下载安装</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+<div class="widget-wrap widget-list">
+    <h3 class="widget-title">目录</h3>
+    <div class="widget">
+        <div id="toc" class="toc-article">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#string"><span class="toc-number">1.</span> <span class="toc-text">string</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4"><span class="toc-number">1.1.</span> <span class="toc-text">基础命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">1.2.</span> <span class="toc-text">应用场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E9%83%A8%E6%BA%90%E7%A0%81"><span class="toc-number">1.3.</span> <span class="toc-text">内部源码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#list"><span class="toc-number">2.</span> <span class="toc-text">list</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4-1"><span class="toc-number">2.1.</span> <span class="toc-text">基础命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF-1"><span class="toc-number">2.2.</span> <span class="toc-text">应用场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E9%83%A8%E6%BA%90%E7%A0%81-1"><span class="toc-number">2.3.</span> <span class="toc-text">内部源码</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ziplist%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90"><span class="toc-number">2.3.1.</span> <span class="toc-text">ziplist源码分析</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hash"><span class="toc-number">3.</span> <span class="toc-text">hash</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4-2"><span class="toc-number">3.1.</span> <span class="toc-text">基础命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF-2"><span class="toc-number">3.2.</span> <span class="toc-text">应用场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E9%83%A8%E6%BA%90%E7%A0%81-2"><span class="toc-number">3.3.</span> <span class="toc-text">内部源码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#set"><span class="toc-number">4.</span> <span class="toc-text">set</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4-3"><span class="toc-number">4.1.</span> <span class="toc-text">基础命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF-3"><span class="toc-number">4.2.</span> <span class="toc-text">应用场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E9%83%A8%E6%BA%90%E7%A0%81-3"><span class="toc-number">4.3.</span> <span class="toc-text">内部源码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#zset-sorted-set"><span class="toc-number">5.</span> <span class="toc-text">zset(sorted set)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4-4"><span class="toc-number">5.1.</span> <span class="toc-text">基础命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF-4"><span class="toc-number">5.2.</span> <span class="toc-text">应用场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E9%83%A8%E6%BA%90%E7%A0%81-4"><span class="toc-number">5.3.</span> <span class="toc-text">内部源码</span></a></li></ol></li></ol>
+        </div>
+    </div>
+</div>
+
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/05/redis%E9%9B%86%E7%BE%A4/" class="thumbnail">
+    
+    
+        <span style="background-image:url(url/css/images/thumb-default-small123.png)" alt="redis主从复制" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a></p>
+                            <p class="item-title"><a href="/2021/06/05/redis%E9%9B%86%E7%BE%A4/" class="title">redis主从复制</a></p>
+                            <p class="item-date"><time datetime="2021-06-05T02:53:18.255Z" itemprop="datePublished">2021-06-05</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/05/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a></p>
+                            <p class="item-title"><a href="/2021/06/05/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/" class="title">redis主从复制</a></p>
+                            <p class="item-date"><time datetime="2021-06-05T01:58:14.267Z" itemprop="datePublished">2021-06-05</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/03/redis%E6%A5%B7%E7%A5%A8%E9%9A%86%E5%A0%90/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a></p>
+                            <p class="item-title"><a href="/2021/06/03/redis%E6%A5%B7%E7%A5%A8%E9%9A%86%E5%A0%90/" class="title">redis发布订阅</a></p>
+                            <p class="item-date"><time datetime="2021-06-03T14:16:05.550Z" itemprop="datePublished">2021-06-03</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/03/redis%E5%B2%88%E6%98%A2/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a></p>
+                            <p class="item-title"><a href="/2021/06/03/redis%E5%B2%88%E6%98%A2/" class="title">redis事务</a></p>
+                            <p class="item-date"><time datetime="2021-06-03T13:34:05.965Z" itemprop="datePublished">2021-06-03</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/03/RDB&AOF/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a></p>
+                            <p class="item-title"><a href="/2021/06/03/RDB&AOF/" class="title">RDB&amp;AOF</a></p>
+                            <p class="item-date"><time datetime="2021-06-03T13:30:08.480Z" itemprop="datePublished">2021-06-03</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/">nosql</a><span class="category-list-count">10</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis/">redis</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a><span class="category-list-count">6</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+
+            
+                
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2021 durian</p>
+                
+                <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
+                
+            </div>
+                <p><span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span></p>
+                <p><span id="busuanzi_container_site_uv"> 
+                     本站访客数<span id="busuanzi_value_site_uv"></span>人次
+               </span></p>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+    <script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
+</footer>
+
+    </div>
+    
+    
+    <script src="//unpkg.com/valine"></script>
+    <script>
+        var GUEST = ['nick','mail','link'];
+        var meta = '';
+        meta = meta.split(',').filter(function (item) {
+            return GUEST.indexOf(item)>-1;
+        });
+        var avatarcdn = 'gravatar.cat.net' == true;
+        new Valine({
+            el: '.vcomments',
+            notify: "false",
+            verify: "false",
+            appId: "795P9DunI2Jv3Jho36dlueIS-gzGzoHsz",
+            appKey: "pM151YCVhYBYTB9Pt1SRuiKs",
+            placeholder: "Just Do It",
+            avatar:"mm",
+            recordIP:"false",
+            visitor: "true"
+        });
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

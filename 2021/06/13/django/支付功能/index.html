@@ -1,0 +1,712 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>支付功能（支付宝） | 春江花月夜o</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="" />
+    
+    <meta name="description" content="购物车设计 购物车 由于商品可以增加数量，这里用modelSerializer当购物车添加了某个商品第二次会报错，所以使用serializer继承即可， 一般购物车用cookie比较好123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585">
+<meta property="og:type" content="article">
+<meta property="og:title" content="支付功能（支付宝）">
+<meta property="og:url" content="http://example.com/2021/06/13/django/%E6%94%AF%E4%BB%98%E5%8A%9F%E8%83%BD/index.html">
+<meta property="og:site_name" content="春江花月夜o">
+<meta property="og:description" content="购物车设计 购物车 由于商品可以增加数量，这里用modelSerializer当购物车添加了某个商品第二次会报错，所以使用serializer继承即可， 一般购物车用cookie比较好123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/css/images/siyue.jpg">
+<meta property="article:published_time" content="2021-06-13T04:01:56.238Z">
+<meta property="article:modified_time" content="2021-06-13T04:09:39.390Z">
+<meta property="article:author" content="durian">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/css/images/siyue.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/gouzi.ico" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="春江花月夜o" type="application/atom+xml">
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">关于</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">python</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">cpp</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">webframe</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                                <a class="main-nav-list-link" href="/null">flask</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">django</a>
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">algorithm</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">bigdata</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">nosql</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                                <a class="main-nav-list-link" href="/null"> redis</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">mysql</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null"> redis高级篇</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">mysql高级篇</a>
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/webframe/">webframe</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/webframe/django/">django</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-django/支付功能" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        支付功能（支付宝）
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2021/06/13/django/%E6%94%AF%E4%BB%98%E5%8A%9F%E8%83%BD/" class="article-date">
+       <time datetime="2021-06-13T04:01:56.238Z" itemprop="datePublished">2021-06-13</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/2021/06/13/django/%E6%94%AF%E4%BB%98%E5%8A%9F%E8%83%BD/" class="article-date">
+     <time datetime="2021-06-13T04:09:39.390Z" itemprop="dateModified">2021-06-13</time>
+  </a>
+</div>
+
+
+                
+
+                
+                
+   <div class="article-counter">
+      <i class="fa fa-file-word-o"></i>
+      <span class="post-count-item-text">本文字数: </span>
+      <span class="post-count">2.3k</span>
+      <i class="fa fa-clock-o"></i>
+      <span class="post-time-item-text">阅读时长: </span>
+      <span class="post-count">12 分钟 </span>
+   </div>
+
+
+                <span id="busuanzi_container_page_pv">
+                阅读次数<span id="busuanzi_value_page_pv"></span>次
+                </span>
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <h2 id="购物车设计"><a href="#购物车设计" class="headerlink" title="购物车设计"></a>购物车设计</h2><ul>
+<li>购物车 由于商品可以增加数量，这里用modelSerializer当购物车添加了某个商品第二次会报错，所以使用serializer继承即可， 一般购物车用cookie比较好<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br></pre></td><td class="code"><pre><span class="line">class ShoppingCart(models.Model):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    购物车</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    user &#x3D; models.ForeignKey(User, verbose_name&#x3D;u&quot;用户&quot;, on_delete&#x3D;models.CASCADE)</span><br><span class="line">    goods &#x3D; models.ForeignKey(Goods, verbose_name&#x3D;u&quot;商品&quot;, on_delete&#x3D;models.CASCADE)</span><br><span class="line">    nums &#x3D; models.IntegerField(default&#x3D;0, verbose_name&#x3D;&quot;购买数量&quot;)</span><br><span class="line"></span><br><span class="line">    add_time &#x3D; models.DateTimeField(default&#x3D;datetime.now, verbose_name&#x3D;u&quot;添加时间&quot;)</span><br><span class="line"></span><br><span class="line">    class Meta:</span><br><span class="line">        verbose_name &#x3D; &#39;购物车&#39;</span><br><span class="line">        verbose_name_plural &#x3D; verbose_name</span><br><span class="line">        unique_together &#x3D; (&quot;user&quot;, &quot;goods&quot;)</span><br><span class="line">class ShopCartDetailSerializer(serializers.ModelSerializer):</span><br><span class="line">    # 一个shopcart的记录只对应一个goods</span><br><span class="line">    goods &#x3D; GoodsSerializer(many&#x3D;False)</span><br><span class="line"></span><br><span class="line">    class Meta:</span><br><span class="line">        model &#x3D; ShoppingCart</span><br><span class="line">        fields &#x3D; &quot;__all__&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class ShoppingCartSerializer(serializers.Serializer):</span><br><span class="line">    # Serializer灵活性最高</span><br><span class="line">    user &#x3D; serializers.HiddenField(</span><br><span class="line">        default&#x3D;serializers.CurrentUserDefault()</span><br><span class="line">    )</span><br><span class="line">    add_time &#x3D; serializers.DateTimeField(read_only&#x3D;True, format&#x3D;&#39;%Y-%m-%d %H:%M&#39;)</span><br><span class="line">    nums &#x3D; serializers.IntegerField(required&#x3D;True, label&#x3D;&quot;数量&quot;, min_value&#x3D;1, error_messages&#x3D;&#123;</span><br><span class="line">        &quot;min_value&quot;: &quot;商品数量不能小于1&quot;,</span><br><span class="line">        &quot;required&quot;: &quot;请选择购买数量&quot;</span><br><span class="line">    &#125;)</span><br><span class="line">    # 请查看官网goods外键如何验证</span><br><span class="line">    goods &#x3D; serializers.PrimaryKeyRelatedField(required&#x3D;True, queryset&#x3D;Goods.objects.all())</span><br><span class="line"></span><br><span class="line">    def create(self, validated_data):</span><br><span class="line">        # 在serializer里面request是放在self.context里面</span><br><span class="line">        # 获取当前用户</span><br><span class="line">        user &#x3D; self.context[&#39;request&#39;].user</span><br><span class="line">        # 获取nums</span><br><span class="line">        nums &#x3D; validated_data[&#39;nums&#39;]</span><br><span class="line">        # 是一个goods的对象</span><br><span class="line">        goods &#x3D; validated_data[&#39;goods&#39;]</span><br><span class="line">        existed &#x3D; ShoppingCart.objects.filter(user&#x3D;user, goods&#x3D;goods)</span><br><span class="line">        if existed:</span><br><span class="line">            existed &#x3D; existed[0]</span><br><span class="line">            existed.nums +&#x3D; nums</span><br><span class="line">            existed.save()</span><br><span class="line">        else:</span><br><span class="line">            existed &#x3D; ShoppingCart.objects.create(**validated_data)</span><br><span class="line">        return existed</span><br><span class="line"></span><br><span class="line">    def update(self, instance, validated_data):</span><br><span class="line">        # 修改商品数量</span><br><span class="line">        instance.nums &#x3D; validated_data[&quot;nums&quot;]</span><br><span class="line">        instance.save()</span><br><span class="line">        return instance</span><br><span class="line"></span><br><span class="line">class ShoppingCartViewset(viewsets.ModelViewSet):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    购物车功能</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    permission_classes &#x3D; (IsAuthenticated, IsOwnerOrReadOnly)</span><br><span class="line">    # serializer_class &#x3D; ShoppingCartSerializer</span><br><span class="line">    authentication_classes &#x3D; (JSONWebTokenAuthentication, SessionAuthentication)</span><br><span class="line">    lookup_field &#x3D; &quot;goods_id&quot;</span><br><span class="line"></span><br><span class="line">    # 这里还是需要重载create才行</span><br><span class="line">    def perform_create(self, serializer):</span><br><span class="line">        goods &#x3D; serializer.instance.goods</span><br><span class="line">        tmp &#x3D; goods.goods_num</span><br><span class="line">        if tmp - serializer.instance.nums &lt; 0:</span><br><span class="line">            return Response(</span><br><span class="line">                status&#x3D;status.HTTP_400_BAD_REQUEST,</span><br><span class="line">                data&#x3D;&quot;库存数不足&quot;</span><br><span class="line">            )</span><br><span class="line">        goods.goods_num -&#x3D; serializer.instance.nums</span><br><span class="line">        goods.save()</span><br><span class="line">        serializer.save()</span><br><span class="line"></span><br><span class="line">    def perform_destroy(self, instance):</span><br><span class="line">        goods &#x3D; instance.goods</span><br><span class="line">        goods.goods_num +&#x3D; instance.nums</span><br><span class="line">        goods.save()</span><br><span class="line">        instance.delete()</span><br><span class="line"></span><br><span class="line">    # 这里还是需要重载update</span><br><span class="line">    def perform_update(self, serializer):</span><br><span class="line">        existed_record &#x3D; ShoppingCart.objects.get(id&#x3D;serializer.instance.id)</span><br><span class="line"></span><br><span class="line">        saved_record &#x3D; serializer.instance</span><br><span class="line">        nums &#x3D; serializer.initial_data[&#39;nums&#39;] - existed_record.nums</span><br><span class="line">        goods &#x3D; saved_record.goods</span><br><span class="line">        tmp &#x3D; goods.goods_num</span><br><span class="line">        if tmp - nums &lt; 0:</span><br><span class="line">            # 这里return到上一层是无效的</span><br><span class="line">            return Response(</span><br><span class="line">                status&#x3D;status.HTTP_400_BAD_REQUEST,</span><br><span class="line">                data&#x3D;&quot;库存数不足&quot;</span><br><span class="line">            )</span><br><span class="line">        goods.goods_num -&#x3D; nums</span><br><span class="line">        goods.save()</span><br><span class="line">        serializer.save()</span><br><span class="line"></span><br><span class="line">    def get_serializer_class(self):</span><br><span class="line">        if self.action &#x3D;&#x3D; &#39;list&#39;:</span><br><span class="line">            return ShopCartDetailSerializer</span><br><span class="line">        else:</span><br><span class="line">            return ShoppingCartSerializer</span><br><span class="line"></span><br><span class="line">    def get_queryset(self):</span><br><span class="line">        return ShoppingCart.objects.filter(user&#x3D;self.request.user)</span><br></pre></td></tr></table></figure></li>
+<li>注意电商一般是在提交订单后才减少库存，这里我们是加入购物车即减少库存</li>
+</ul>
+<h2 id="订单设计"><a href="#订单设计" class="headerlink" title="订单设计"></a>订单设计</h2><ul>
+<li>models.py<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">class OrderInfo(models.Model):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    订单</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    ORDER_STATUS &#x3D; (</span><br><span class="line">        (&quot;TRADE_SUCCESS&quot;, &quot;成功&quot;),</span><br><span class="line">        (&quot;TRADE_CLOSED&quot;, &quot;超时关闭&quot;),</span><br><span class="line">        (&quot;WAIT_BUYER_PAY&quot;, &quot;交易创建&quot;),</span><br><span class="line">        (&quot;TRADE_FINISHED&quot;, &quot;交易结束&quot;),</span><br><span class="line">        (&quot;paying&quot;, &quot;待支付&quot;),</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    user &#x3D; models.ForeignKey(User, verbose_name&#x3D;&quot;用户&quot;, on_delete&#x3D;models.CASCADE)</span><br><span class="line">    order_sn &#x3D; models.CharField(max_length&#x3D;30, null&#x3D;True, blank&#x3D;True, unique&#x3D;True, verbose_name&#x3D;&quot;订单号&quot;)</span><br><span class="line">    # 第三方支付需要用的 生成一个订单号返回给我们 我们需要将它和本系统的订单做一个关联</span><br><span class="line">    trade_no &#x3D; models.CharField(max_length&#x3D;100, unique&#x3D;True, null&#x3D;True, blank&#x3D;True, verbose_name&#x3D;u&quot;交易号&quot;)</span><br><span class="line">    pay_status &#x3D; models.CharField(choices&#x3D;ORDER_STATUS, default&#x3D;&quot;paying&quot;, max_length&#x3D;30, verbose_name&#x3D;&quot;订单状态&quot;)</span><br><span class="line">    post_script &#x3D; models.CharField(max_length&#x3D;200, verbose_name&#x3D;&quot;订单留言&quot;)</span><br><span class="line">    order_mount &#x3D; models.FloatField(default&#x3D;0.0, verbose_name&#x3D;&quot;订单金额&quot;)</span><br><span class="line">    pay_time &#x3D; models.DateTimeField(null&#x3D;True, blank&#x3D;True, verbose_name&#x3D;&quot;支付时间&quot;)</span><br><span class="line"></span><br><span class="line">    # 用户信息</span><br><span class="line">    address &#x3D; models.CharField(max_length&#x3D;100, default&#x3D;&quot;&quot;, verbose_name&#x3D;&quot;收货地址&quot;)</span><br><span class="line">    signer_name &#x3D; models.CharField(max_length&#x3D;20, default&#x3D;&quot;&quot;, verbose_name&#x3D;&quot;签收人&quot;)</span><br><span class="line">    singer_mobile &#x3D; models.CharField(max_length&#x3D;11, verbose_name&#x3D;&quot;联系电话&quot;)</span><br><span class="line"></span><br><span class="line">    add_time &#x3D; models.DateTimeField(default&#x3D;datetime.now, verbose_name&#x3D;&quot;添加时间&quot;)</span><br><span class="line"></span><br><span class="line">    class Meta:</span><br><span class="line">        verbose_name &#x3D; u&quot;订单&quot;</span><br><span class="line">        verbose_name_plural &#x3D; verbose_name</span><br><span class="line"></span><br><span class="line">    def __str__(self):</span><br><span class="line">        return str(self.order_sn)</span><br></pre></td></tr></table></figure></li>
+<li>serializer<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">from utils.alipay import AliPay</span><br><span class="line">from MxShop.settings import private_key_path, ali_pub_key_path</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class OrderSerializer(serializers.ModelSerializer):</span><br><span class="line">    user &#x3D; serializers.HiddenField(</span><br><span class="line">        default&#x3D;serializers.CurrentUserDefault()</span><br><span class="line">    )</span><br><span class="line">    add_time &#x3D; serializers.DateTimeField(read_only&#x3D;True, format&#x3D;&#39;%Y-%m-%d %H:%M&#39;)</span><br><span class="line">    pay_status &#x3D; serializers.CharField(read_only&#x3D;True)</span><br><span class="line">    trade_no &#x3D; serializers.CharField(read_only&#x3D;True)</span><br><span class="line">    order_sn &#x3D; serializers.CharField(read_only&#x3D;True)</span><br><span class="line">    pay_time &#x3D; serializers.DateTimeField(read_only&#x3D;True)</span><br><span class="line">    # alipay_url &#x3D; serializers.SerializerMethodField(read_only&#x3D;True)</span><br><span class="line"></span><br><span class="line">    # def get_alipay_url(self, obj):</span><br><span class="line">    #     alipay &#x3D; AliPay(</span><br><span class="line">    #         appid&#x3D;&quot;2021000118645600&quot;,</span><br><span class="line">    #         app_notify_url&#x3D;&quot;http:&#x2F;&#x2F;127.0.0.1:8090&#x2F;alipay&#x2F;return&#x2F;&quot;,</span><br><span class="line">    #         app_private_key_path&#x3D;private_key_path,</span><br><span class="line">    #         alipay_public_key_path&#x3D;ali_pub_key_path,  # 支付宝的公钥，验证支付宝回传消息使用，不是你自己的公钥,</span><br><span class="line">    #         debug&#x3D;True,  # 默认False,</span><br><span class="line">    #         return_url&#x3D;&quot;http:&#x2F;&#x2F;127.0.0.1:8090&#x2F;alipay&#x2F;return&#x2F;&quot;</span><br><span class="line">    #     )</span><br><span class="line">    #     url &#x3D; alipay.direct_pay(</span><br><span class="line">    #         subject&#x3D;obj.order_sn,</span><br><span class="line">    #         out_trade_no&#x3D;obj.order_sn,</span><br><span class="line">    #         total_amount&#x3D;obj.order_mount,</span><br><span class="line">    #     )</span><br><span class="line">    #     re_url &#x3D; &quot;https:&#x2F;&#x2F;openapi.alipaydev.com&#x2F;gateway.do?&#123;data&#125;&quot;.format(data&#x3D;url)</span><br><span class="line">    #     return re_url</span><br><span class="line"></span><br><span class="line">    def generate_order_sn(self):</span><br><span class="line">        &quot;&quot;&quot;当前时间 + userid + 随机数&quot;&quot;&quot;</span><br><span class="line">        import time</span><br><span class="line">        from random import Random</span><br><span class="line">        random_ins &#x3D; Random()</span><br><span class="line">        order_sn &#x3D; &quot;&#123;time_str&#125;&#123;userid&#125;&#123;randstr&#125;&quot;.format(time_str&#x3D;time.strftime(&quot;%Y%m%d%H%M%S&quot;),</span><br><span class="line">                    userid&#x3D;self.context[&#39;request&#39;].user.id, randstr&#x3D;random_ins.randint(10, 99))</span><br><span class="line">        return order_sn</span><br><span class="line"></span><br><span class="line">    def validate(self, attrs):</span><br><span class="line">        attrs[&quot;order_sn&quot;] &#x3D; self.generate_order_sn()</span><br><span class="line">        return attrs</span><br><span class="line"></span><br><span class="line">    class Meta:</span><br><span class="line">        model &#x3D; OrderInfo</span><br><span class="line">        fields &#x3D; &quot;__all__&quot;</span><br></pre></td></tr></table></figure>
+views.py<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">class OrderViewset(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.CreateModelMixin,</span><br><span class="line">                   mixins.RetrieveModelMixin, mixins.DestroyModelMixin):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    订单管理</span><br><span class="line">    list:</span><br><span class="line">        获取个人订单</span><br><span class="line">    delete:</span><br><span class="line">        删除订单</span><br><span class="line">    create:</span><br><span class="line">        新增订单</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    permission_classes &#x3D; (IsAuthenticated, IsOwnerOrReadOnly)</span><br><span class="line">    # serializer_class &#x3D; OrderSerializer</span><br><span class="line">    authentication_classes &#x3D; (JSONWebTokenAuthentication, SessionAuthentication)</span><br><span class="line"></span><br><span class="line">    def get_queryset(self):</span><br><span class="line">        return OrderInfo.objects.filter(user&#x3D;self.request.user)</span><br><span class="line"></span><br><span class="line">    def get_serializer_class(self):</span><br><span class="line">        if self.action &#x3D;&#x3D; &#39;retrieve&#39;:</span><br><span class="line">            return OrderDetailSerializer</span><br><span class="line">        else:</span><br><span class="line">            return OrderSerializer</span><br><span class="line"></span><br><span class="line">    def perform_create(self, serializer):</span><br><span class="line">        order &#x3D; serializer.save()</span><br><span class="line">        # 获取当前所有购物车的商品</span><br><span class="line">        shop_carts &#x3D; ShoppingCart.objects.filter(user&#x3D;self.request.user)</span><br><span class="line">        # 把购物车商品转为订单商品</span><br><span class="line">        for shop_cart in shop_carts:</span><br><span class="line">            order_goods &#x3D; OrderGoods()</span><br><span class="line">            order_goods.goods &#x3D; shop_cart.goods</span><br><span class="line">            order_goods.goods_num &#x3D; shop_cart.nums</span><br><span class="line">            order_goods.order &#x3D; order</span><br><span class="line">            order_goods.save()</span><br><span class="line">            # 从购物车中delete掉</span><br><span class="line">            shop_cart.delete()</span><br><span class="line">        return order</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="支付宝沙箱使用（微信同）"><a href="#支付宝沙箱使用（微信同）" class="headerlink" title="支付宝沙箱使用（微信同）"></a>支付宝沙箱使用（微信同）</h2><ul>
+<li>下载支付宝生成秘钥的工具（<a target="_blank" rel="noopener" href="https://openhome.alipay.com/platform/developerIndex.htm">网址</a>)保存公钥、私钥、支付宝公钥（在项目中创建一个key文件夹保存）</li>
+<li>按照官方文档要求定义alipay类<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br></pre></td><td class="code"><pre><span class="line">from datetime import datetime</span><br><span class="line">from Crypto.PublicKey import RSA</span><br><span class="line">from Crypto.Signature import PKCS1_v1_5</span><br><span class="line">from Crypto.Hash import SHA256</span><br><span class="line">from base64 import b64encode, b64decode</span><br><span class="line">from urllib.parse import quote_plus</span><br><span class="line">from urllib.parse import urlparse, parse_qs</span><br><span class="line">from urllib.request import urlopen</span><br><span class="line">from base64 import decodebytes, encodebytes</span><br><span class="line"></span><br><span class="line">import json</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class AliPay:</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    支付宝支付接口</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    def __init__(self, appid, app_notify_url, app_private_key_path,</span><br><span class="line">                 alipay_public_key_path, return_url, debug&#x3D;False):</span><br><span class="line">        self.appid &#x3D; appid</span><br><span class="line">        self.app_notify_url &#x3D; app_notify_url</span><br><span class="line">        self.app_private_key_path &#x3D; app_private_key_path</span><br><span class="line">        self.app_private_key &#x3D; None</span><br><span class="line">        self.return_url &#x3D; return_url</span><br><span class="line">        with open(self.app_private_key_path) as fp:</span><br><span class="line">            self.app_private_key &#x3D; RSA.importKey(fp.read())</span><br><span class="line"></span><br><span class="line">        self.alipay_public_key_path &#x3D; alipay_public_key_path</span><br><span class="line">        with open(self.alipay_public_key_path) as fp:</span><br><span class="line">            self.alipay_public_key &#x3D; RSA.import_key(fp.read())</span><br><span class="line"></span><br><span class="line">        if debug is True:</span><br><span class="line">            self.__gateway &#x3D; &quot;https:&#x2F;&#x2F;openapi.alipaydev.com&#x2F;gateway.do&quot;</span><br><span class="line">        else:</span><br><span class="line">            self.__gateway &#x3D; &quot;https:&#x2F;&#x2F;openapi.alipay.com&#x2F;gateway.do&quot;</span><br><span class="line"></span><br><span class="line">    def direct_pay(self, subject, out_trade_no, total_amount, return_url&#x3D;None, **kwargs):</span><br><span class="line">        biz_content &#x3D; &#123;</span><br><span class="line">            &quot;subject&quot;: subject,</span><br><span class="line">            &quot;out_trade_no&quot;: out_trade_no,</span><br><span class="line">            &quot;total_amount&quot;: total_amount,</span><br><span class="line">            &quot;product_code&quot;: &quot;FAST_INSTANT_TRADE_PAY&quot;,</span><br><span class="line">            # &quot;qr_pay_mode&quot;:4</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        biz_content.update(kwargs)</span><br><span class="line">        data &#x3D; self.build_body(&quot;alipay.trade.page.pay&quot;, biz_content, self.return_url)</span><br><span class="line">        return self.sign_data(data)</span><br><span class="line"></span><br><span class="line">    def build_body(self, method, biz_content, return_url&#x3D;None):</span><br><span class="line">        data &#x3D; &#123;</span><br><span class="line">            &quot;app_id&quot;: self.appid,</span><br><span class="line">            &quot;method&quot;: method,</span><br><span class="line">            &quot;charset&quot;: &quot;utf-8&quot;,</span><br><span class="line">            &quot;sign_type&quot;: &quot;RSA2&quot;,</span><br><span class="line">            &quot;timestamp&quot;: datetime.now().strftime(&quot;%Y-%m-%d %H:%M:%S&quot;),</span><br><span class="line">            &quot;version&quot;: &quot;1.0&quot;,</span><br><span class="line">            &quot;biz_content&quot;: biz_content</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if return_url is not None:</span><br><span class="line">            data[&quot;notify_url&quot;] &#x3D; self.app_notify_url</span><br><span class="line">            data[&quot;return_url&quot;] &#x3D; self.return_url</span><br><span class="line"></span><br><span class="line">        return data</span><br><span class="line"></span><br><span class="line">    def sign_data(self, data):</span><br><span class="line">        data.pop(&quot;sign&quot;, None)</span><br><span class="line">        # 排序后的字符串</span><br><span class="line">        unsigned_items &#x3D; self.ordered_data(data)</span><br><span class="line">        unsigned_string &#x3D; &quot;&amp;&quot;.join(&quot;&#123;0&#125;&#x3D;&#123;1&#125;&quot;.format(k, v) for k, v in unsigned_items)</span><br><span class="line">        sign &#x3D; self.sign(unsigned_string.encode(&quot;utf-8&quot;))</span><br><span class="line">        ordered_items &#x3D; self.ordered_data(data)</span><br><span class="line">        quoted_string &#x3D; &quot;&amp;&quot;.join(&quot;&#123;0&#125;&#x3D;&#123;1&#125;&quot;.format(k, quote_plus(v)) for k, v in ordered_items)</span><br><span class="line"></span><br><span class="line">        # 获得最终的订单信息字符串</span><br><span class="line">        signed_string &#x3D; quoted_string + &quot;&amp;sign&#x3D;&quot; + quote_plus(sign)</span><br><span class="line">        return signed_string</span><br><span class="line"></span><br><span class="line">    def ordered_data(self, data):</span><br><span class="line">        complex_keys &#x3D; []</span><br><span class="line">        for key, value in data.items():</span><br><span class="line">            if isinstance(value, dict):</span><br><span class="line">                complex_keys.append(key)</span><br><span class="line"></span><br><span class="line">        # 将字典类型的数据dump出来</span><br><span class="line">        for key in complex_keys:</span><br><span class="line">            data[key] &#x3D; json.dumps(data[key], separators&#x3D;(&#39;,&#39;, &#39;:&#39;))</span><br><span class="line"></span><br><span class="line">        return sorted([(k, v) for k, v in data.items()])</span><br><span class="line"></span><br><span class="line">    def sign(self, unsigned_string):</span><br><span class="line">        # 开始计算签名</span><br><span class="line">        key &#x3D; self.app_private_key</span><br><span class="line">        signer &#x3D; PKCS1_v1_5.new(key)</span><br><span class="line">        signature &#x3D; signer.sign(SHA256.new(unsigned_string))</span><br><span class="line">        # base64 编码，转换为unicode表示并移除回车</span><br><span class="line">        sign &#x3D; encodebytes(signature).decode(&quot;utf8&quot;).replace(&quot;\n&quot;, &quot;&quot;)</span><br><span class="line">        return sign</span><br><span class="line"></span><br><span class="line">    def _verify(self, raw_content, signature):</span><br><span class="line">        # 开始计算签名</span><br><span class="line">        key &#x3D; self.alipay_public_key</span><br><span class="line">        signer &#x3D; PKCS1_v1_5.new(key)</span><br><span class="line">        digest &#x3D; SHA256.new()</span><br><span class="line">        digest.update(raw_content.encode(&quot;utf8&quot;))</span><br><span class="line">        if signer.verify(digest, decodebytes(signature.encode(&quot;utf8&quot;))):</span><br><span class="line">            return True</span><br><span class="line">        return True</span><br><span class="line"></span><br><span class="line">    def verify(self, data, signature):</span><br><span class="line">        if &quot;sign_type&quot; in data:</span><br><span class="line">            sign_type &#x3D; data.pop(&quot;sign_type&quot;)</span><br><span class="line">        # 排序后的字符串</span><br><span class="line">        unsigned_items &#x3D; self.ordered_data(data)</span><br><span class="line">        message &#x3D; &quot;&amp;&quot;.join(u&quot;&#123;&#125;&#x3D;&#123;&#125;&quot;.format(k, v) for k, v in unsigned_items)</span><br><span class="line">        return self._verify(message, signature)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ &#x3D;&#x3D; &quot;__main__&quot;:</span><br><span class="line"></span><br><span class="line">    alipay &#x3D; AliPay(</span><br><span class="line">        appid&#x3D;&quot;2021000118645600&quot;,</span><br><span class="line">        app_notify_url&#x3D;&quot;http:&#x2F;&#x2F;127.0.0.1:8090&#x2F;alipay&#x2F;return&#x2F;&quot;,</span><br><span class="line">        app_private_key_path&#x3D;&quot;..&#x2F;trade&#x2F;keys&#x2F;private_2048.txt&quot;,</span><br><span class="line">        alipay_public_key_path&#x3D;&quot;..&#x2F;trade&#x2F;keys&#x2F;public_2048.txt&quot;,  # 支付宝的公钥，验证支付宝回传消息使用，不是你自己的公钥,</span><br><span class="line">        debug&#x3D;True,  # 默认False,</span><br><span class="line">        return_url&#x3D;&quot;http:&#x2F;&#x2F;127.0.0.1:8090&#x2F;alipay&#x2F;return&#x2F;&quot;</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    # o &#x3D; urlparse(return_url)</span><br><span class="line">    # query &#x3D; parse_qs(o.query)</span><br><span class="line">    # processed_query &#x3D; &#123;&#125;</span><br><span class="line">    # ali_sign &#x3D; query.pop(&quot;sign&quot;)[0]</span><br><span class="line">    # for key, value in query.items():</span><br><span class="line">    #     processed_query[key] &#x3D; value[0]</span><br><span class="line">    # print(alipay.verify(processed_query, ali_sign))</span><br><span class="line"></span><br><span class="line">    url &#x3D; alipay.direct_pay(</span><br><span class="line">        subject&#x3D;&quot;测试订单2&quot;,</span><br><span class="line">        out_trade_no&#x3D;&quot;202105141018371481&quot;,</span><br><span class="line">        total_amount&#x3D;100,</span><br><span class="line">        return_url&#x3D;&quot;http:&#x2F;&#x2F;127.0.0.1:8090&#x2F;alipay&#x2F;return&#x2F;&quot;,</span><br><span class="line"></span><br><span class="line">    )</span><br><span class="line">    re_url &#x3D; &quot;https:&#x2F;&#x2F;openapi.alipaydev.com&#x2F;gateway.do?&#123;data&#125;&quot;.format(data&#x3D;url)</span><br><span class="line">    print(re_url)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://example.com/2021/06/13/django/%E6%94%AF%E4%BB%98%E5%8A%9F%E8%83%BD/" data-id="ckpunvkmh0005zotxdd6n08a2" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "durian"
+        },
+        "headline": "支付功能（支付宝）",
+        "image": "http://example.com/css/images/siyue.jpg",
+        "keywords": "",
+        "genre": "webframe django",
+        "datePublished": "2021-06-13",
+        "dateCreated": "2021-06-13",
+        "dateModified": "2021-06-13",
+        "url": "http://example.com/2021/06/13/django/支付功能/",
+        "description": "购物车设计
+购物车 由于商品可以增加数量，这里用modelSerializer当购物车添加了某个商品第二次会报错，所以使用serializer继承即可， 一般购物车用cookie比较好123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585",
+        "wordCount": 3710
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <!-- Valine -->
+    <div class="vcomments"></div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/chunjianghuayueye2" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            mysql索引
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2021/06/13/django/drf%E6%96%87%E6%A1%A3/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">drf文档</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+<div class="widget-wrap widget-list">
+    <h3 class="widget-title">目录</h3>
+    <div class="widget">
+        <div id="toc" class="toc-article">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B4%AD%E7%89%A9%E8%BD%A6%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.</span> <span class="toc-text">购物车设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A2%E5%8D%95%E8%AE%BE%E8%AE%A1"><span class="toc-number">2.</span> <span class="toc-text">订单设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%94%AF%E4%BB%98%E5%AE%9D%E6%B2%99%E7%AE%B1%E4%BD%BF%E7%94%A8%EF%BC%88%E5%BE%AE%E4%BF%A1%E5%90%8C%EF%BC%89"><span class="toc-number">3.</span> <span class="toc-text">支付宝沙箱使用（微信同）</span></a></li></ol>
+        </div>
+    </div>
+</div>
+
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/xiaohuanren3.jpg)" alt="mysql索引失效" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a></p>
+                            <p class="item-title"><a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88/" class="title">mysql索引失效</a></p>
+                            <p class="item-date"><time datetime="2021-06-13T07:40:54.744Z" itemprop="datePublished">2021-06-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/shan.jpg)" alt="mysql索引优化案例分析" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a></p>
+                            <p class="item-title"><a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/" class="title">mysql索引优化案例分析</a></p>
+                            <p class="item-date"><time datetime="2021-06-13T07:40:39.919Z" itemprop="datePublished">2021-06-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/13/webframe/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/xiaohuanren2.jpg)" alt="设计模式" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/webframe/">webframe</a></p>
+                            <p class="item-title"><a href="/2021/06/13/webframe/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="title">设计模式</a></p>
+                            <p class="item-date"><time datetime="2021-06-13T07:17:23.394Z" itemprop="datePublished">2021-06-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/MHA/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/MHA/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-13T04:16:55.764Z" itemprop="datePublished">2021-06-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/mysql%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/mysql%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-13T04:14:41.084Z" itemprop="datePublished">2021-06-13</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/">bigdata</a><span class="category-list-count">22</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker/">docker</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker-compose/">docker-compose</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/hadoop/">hadoop</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/zookeeper/">zookeeper</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/">nosql</a><span class="category-list-count">20</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis/">redis</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/">webframe</a><span class="category-list-count">21</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/django/">django</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/flask/">flask</a><span class="category-list-count">5</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">69</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+
+            
+                
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2021 durian</p>
+                
+                <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
+                
+            </div>
+                <p><span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span></p>
+                <p><span id="busuanzi_container_site_uv"> 
+                     本站访客数<span id="busuanzi_value_site_uv"></span>人次
+               </span></p>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+    <script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
+</footer>
+
+    </div>
+    
+    
+    <script src="//unpkg.com/valine"></script>
+    <script>
+        var GUEST = ['nick','mail','link'];
+        var meta = '';
+        meta = meta.split(',').filter(function (item) {
+            return GUEST.indexOf(item)>-1;
+        });
+        var avatarcdn = 'gravatar.cat.net' == true;
+        new Valine({
+            el: '.vcomments',
+            notify: "false",
+            verify: "false",
+            appId: "795P9DunI2Jv3Jho36dlueIS-gzGzoHsz",
+            appKey: "pM151YCVhYBYTB9Pt1SRuiKs",
+            placeholder: "Just Do It",
+            avatar:"mm",
+            recordIP:"false",
+            visitor: "true"
+        });
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

@@ -21,9 +21,9 @@
     
 
     
-        <link rel="alternate" href="/" title="春江花月夜o" type="application/atom+xml" />
-    
 
+    
+        <link rel="icon" href="/css/images/gouzi.ico" />
     
 
     
@@ -59,7 +59,8 @@
     
 
 
-<meta name="generator" content="Hexo 5.2.0"></head>
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="春江花月夜o" type="application/atom+xml">
+</head>
 
 <body>
     <div id="wrap">
@@ -217,17 +218,17 @@
         <article class="article article-summary">
     <div class="article-summary-inner">
         
-        <a href="/2021/06/08/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" class="thumbnail">
+        <a href="/2021/06/12/redis/RDB&AOF/" class="thumbnail">
     
     
-        <span style="background-image:url(/css/images/hai.png)" alt="分布式锁" class="thumbnail-image"></span>
+        <span style="background-image:url(/css/images/shi.jpg)" alt="RDB&amp;AOF" class="thumbnail-image"></span>
     
     
         
 <span class="comment-counter">
     <i class="fa fa-comments-o"></i>
     
-        <span><a href="http://example.com/2021/06/08/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/#isso-thread"></a></span>
+        <span><a href="http://example.com/2021/06/12/redis/RDB&amp;AOF/#isso-thread"></a></span>
     
 </span>
 
@@ -240,12 +241,315 @@
             <div class="category">
             <a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a>
             </div>
-            <div class="date"><time datetime="2021-06-08T03:17:52.074Z" itemprop="datePublished">2021-06-08</time></div>
+            <div class="date"><time datetime="2021-06-12T00:25:22.041Z" itemprop="datePublished">2021-06-12</time></div>
         </div>
         
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2021/06/08/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/">分布式锁</a>
+        <a href="/2021/06/12/redis/RDB&AOF/">RDB&amp;AOF</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            2 RDB持久化2.1 是什么？在指定的时间间隔内将内存中的数据集快照写入磁盘，也就是行话讲的Snapshot快照，它恢复时是将快照文件直接读到内存里（内存的东西不保存关机就没了，为什么redis开机还有数据？因为内存中的数据集快照被写进了磁盘，开机从磁盘加载回内存。）
+2.2 相关配置12345678redis.conf的SNAPSHOTTINGafter 900 seconds if at l
+        </p>
+    </div>
+</article>
+    
+
+    
+    
+    
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2021/06/12/redis%E9%AB%98%E7%BA%A7%E7%AF%87/redis%E5%B2%88%E6%98%A2/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/yu.jpg)" alt="redis事务" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span><a href="http://example.com/2021/06/12/redis%E9%AB%98%E7%BA%A7%E7%AF%87/redis%E5%B2%88%E6%98%A2/#isso-thread"></a></span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a>
+            </div>
+            <div class="date"><time datetime="2021-06-12T00:25:22.041Z" itemprop="datePublished">2021-06-12</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2021/06/12/redis%E9%AB%98%E7%BA%A7%E7%AF%87/redis%E5%B2%88%E6%98%A2/">redis事务</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            4.1 简介和sql的事务一样,本质是一组命令的集合,一个事务中所有命令都会序列化,按顺序地串行执行而不会被其他命令插入加塞.(要么一起成功,要么一起失败)一个队列中一次性、顺序性、排他性的执行一系列的命令
+4.2 应用场景
+秒杀系统网络上经常谈到的微信抢红包项目为例：1234567891011121.设计数据库字段红包id、发红包人、金额、数量、剩余金额、剩余数量、抢到人的名单、过期时间、添加时
+        </p>
+    </div>
+</article>
+    
+        </div>
+    
+
+    
+    
+    
+    
+        <div class="article-row">
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2021/06/12/redis%E9%AB%98%E7%BA%A7%E7%AF%87/redis%E9%A5%9C%E7%A6%BB%E6%81%85%E7%92%83%E8%B3%A4%E6%98%B4/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/gu.jpg)" alt="redis.conf解析" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span><a href="http://example.com/2021/06/12/redis%E9%AB%98%E7%BA%A7%E7%AF%87/redis%E9%A5%9C%E7%A6%BB%E6%81%85%E7%92%83%E8%B3%A4%E6%98%B4/#isso-thread"></a></span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a>
+            </div>
+            <div class="date"><time datetime="2021-06-12T00:25:22.041Z" itemprop="datePublished">2021-06-12</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2021/06/12/redis%E9%AB%98%E7%BA%A7%E7%AF%87/redis%E9%A5%9C%E7%A6%BB%E6%81%85%E7%92%83%E8%B3%A4%E6%98%B4/">redis.conf解析</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394959697989910010110210
+        </p>
+    </div>
+</article>
+    
+
+    
+    
+    
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2021/06/12/redis%E9%AB%98%E7%BA%A7%E7%AF%87/redis%20epoll/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/xueshan.jpg)" alt="epoll多路复用" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span><a href="http://example.com/2021/06/12/redis%E9%AB%98%E7%BA%A7%E7%AF%87/redis%20epoll/#isso-thread"></a></span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a>
+            </div>
+            <div class="date"><time datetime="2021-06-12T00:25:22.041Z" itemprop="datePublished">2021-06-12</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2021/06/12/redis%E9%AB%98%E7%BA%A7%E7%AF%87/redis%20epoll/">epoll多路复用</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            select概述通过轮询检查在文件描述符上设置的标识位来进行判断，select的轮询相当于在数据库中查找一条记录没有建立索引，对所有的socket 进行全部遍历，这对 CPU 是浪费的。另外 select 还有一个限制，对于单个进程所能打开的文件描述符最大只能是 1024，那么基于 select 的轮询技术最多也只能很好的处理 1000 并发的吞吐量，可以查看 上一个10年，著名的C10K并发连接
+        </p>
+    </div>
+</article>
+    
+        </div>
+    
+
+    
+    
+    
+    
+        <div class="article-row">
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2021/06/12/redis%E9%AB%98%E7%BA%A7%E7%AF%87/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/ren.jpg)" alt="redis主从复制" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span><a href="http://example.com/2021/06/12/redis%E9%AB%98%E7%BA%A7%E7%AF%87/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/#isso-thread"></a></span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a>
+            </div>
+            <div class="date"><time datetime="2021-06-12T00:25:22.041Z" itemprop="datePublished">2021-06-12</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2021/06/12/redis%E9%AB%98%E7%BA%A7%E7%AF%87/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/">redis主从复制</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            主从复制读写分离，info replicaiton查看信息，Master以写为主，slave以读为主，主要是读写分离和容灾恢复，注意一般配从不配主。
+
+1.从库配置slaveof主库IP 主库端口
+2.每次与master断开之后，都需要重新连接，除非你配置进redis.conf文件
+3.一般一主2从
+
+一主二从
+1.拷贝多个redis.conf文件redis6379.confredis6380.c
+        </p>
+    </div>
+</article>
+    
+
+    
+    
+    
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2021/06/12/redis%E9%AB%98%E7%BA%A7%E7%AF%87/redis%E6%A5%B7%E7%A5%A8%E9%9A%86%E5%A0%90/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/xiaohuangren.jpg)" alt="redis发布订阅" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span><a href="http://example.com/2021/06/12/redis%E9%AB%98%E7%BA%A7%E7%AF%87/redis%E6%A5%B7%E7%A5%A8%E9%9A%86%E5%A0%90/#isso-thread"></a></span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a>
+            </div>
+            <div class="date"><time datetime="2021-06-12T00:25:22.041Z" itemprop="datePublished">2021-06-12</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2021/06/12/redis%E9%AB%98%E7%BA%A7%E7%AF%87/redis%E6%A5%B7%E7%A5%A8%E9%9A%86%E5%A0%90/">redis发布订阅</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            5.1 简介进程间的一种消息通信模式：发送者（pub）发送消息，订阅者（sub）接收消息。
+5.2 基本命令12345671.subscribe c1 c2 c3一次订阅三个2.publish c2 hello-world这时订阅的用户就能收到消息3.psubscribe new* 订阅多个new1 2 3….一般不会用redis做消息中间键
+
+5.3 应用场景
+网站综合消息通知
+网站更新消息通知
+        </p>
+    </div>
+</article>
+    
+        </div>
+    
+
+    
+    
+    
+    
+        <div class="article-row">
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2021/06/12/redis%E9%AB%98%E7%BA%A7%E7%AF%87/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/xian.jpg)" alt="分布式锁" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span><a href="http://example.com/2021/06/12/redis%E9%AB%98%E7%BA%A7%E7%AF%87/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/#isso-thread"></a></span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a>
+            </div>
+            <div class="date"><time datetime="2021-06-12T00:25:22.041Z" itemprop="datePublished">2021-06-12</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2021/06/12/redis%E9%AB%98%E7%BA%A7%E7%AF%87/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/">分布式锁</a>
         </h1>
     
 
@@ -271,17 +575,17 @@
         <article class="article article-summary">
     <div class="article-summary-inner">
         
-        <a href="/2021/06/08/redis%E9%9B%86%E7%BE%A4/" class="thumbnail">
+        <a href="/2021/06/12/redis%E9%AB%98%E7%BA%A7%E7%AF%87/redis%E9%9B%86%E7%BE%A4/" class="thumbnail">
     
     
-        <span style="background-image:url(/css/images/hai.png)" alt="redis集群" class="thumbnail-image"></span>
+        <span style="background-image:url(/css/images/jumao.jpg)" alt="redis集群" class="thumbnail-image"></span>
     
     
         
 <span class="comment-counter">
     <i class="fa fa-comments-o"></i>
     
-        <span><a href="http://example.com/2021/06/08/redis%E9%9B%86%E7%BE%A4/#isso-thread"></a></span>
+        <span><a href="http://example.com/2021/06/12/redis%E9%AB%98%E7%BA%A7%E7%AF%87/redis%E9%9B%86%E7%BE%A4/#isso-thread"></a></span>
     
 </span>
 
@@ -294,12 +598,12 @@
             <div class="category">
             <a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a>
             </div>
-            <div class="date"><time datetime="2021-06-08T00:48:13.021Z" itemprop="datePublished">2021-06-08</time></div>
+            <div class="date"><time datetime="2021-06-12T00:25:22.041Z" itemprop="datePublished">2021-06-12</time></div>
         </div>
         
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2021/06/08/redis%E9%9B%86%E7%BE%A4/">redis集群</a>
+        <a href="/2021/06/12/redis%E9%AB%98%E7%BA%A7%E7%AF%87/redis%E9%9B%86%E7%BE%A4/">redis集群</a>
         </h1>
     
 
@@ -312,263 +616,6 @@
 1.redis集群实现了对redis的水平扩容即启动N个redis节点，将整个数据库分布存储在这N个节点中，每个节点存储总数的1/N。（降低内存压力，避免一台服务器写入爆掉内存）
 
 2.redis集群通过分区（partition）来提供一定程度的可用性即集群中有一部分节点失
-        </p>
-    </div>
-</article>
-    
-        </div>
-    
-
-    
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2021/06/07/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/css/images/ren.jpg)" alt="redis主从复制" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span><a href="http://example.com/2021/06/07/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/#isso-thread"></a></span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a>
-            </div>
-            <div class="date"><time datetime="2021-06-07T13:09:49.288Z" itemprop="datePublished">2021-06-07</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2021/06/07/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/">redis主从复制</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            主从复制读写分离，info replicaiton查看信息，Master以写为主，slave以读为主，主要是读写分离和容灾恢复，注意一般配从不配主。
-
-1.从库配置slaveof主库IP 主库端口
-2.每次与master断开之后，都需要重新连接，除非你配置进redis.conf文件
-3.一般一主2从
-
-一主二从
-1.拷贝多个redis.conf文件redis6379.confredis6380.c
-        </p>
-    </div>
-</article>
-    
-
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2021/06/07/redis%E9%A5%9C%E7%A6%BB%E6%81%85%E7%92%83%E8%B3%A4%E6%98%B4/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/css/images/gu.jpg)" alt="redis.conf解析" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span><a href="http://example.com/2021/06/07/redis%E9%A5%9C%E7%A6%BB%E6%81%85%E7%92%83%E8%B3%A4%E6%98%B4/#isso-thread"></a></span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a>
-            </div>
-            <div class="date"><time datetime="2021-06-07T13:09:49.278Z" itemprop="datePublished">2021-06-07</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2021/06/07/redis%E9%A5%9C%E7%A6%BB%E6%81%85%E7%92%83%E8%B3%A4%E6%98%B4/">redis.conf解析</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394959697989910010110210
-        </p>
-    </div>
-</article>
-    
-        </div>
-    
-
-    
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2021/06/07/redis%E6%A5%B7%E7%A5%A8%E9%9A%86%E5%A0%90/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/css/images/xiaohuangren.jpg)" alt="redis发布订阅" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span><a href="http://example.com/2021/06/07/redis%E6%A5%B7%E7%A5%A8%E9%9A%86%E5%A0%90/#isso-thread"></a></span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a>
-            </div>
-            <div class="date"><time datetime="2021-06-07T13:09:49.268Z" itemprop="datePublished">2021-06-07</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2021/06/07/redis%E6%A5%B7%E7%A5%A8%E9%9A%86%E5%A0%90/">redis发布订阅</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            5.1 简介进程间的一种消息通信模式：发送者（pub）发送消息，订阅者（sub）接收消息。
-5.2 基本命令12345671.subscribe c1 c2 c3一次订阅三个2.publish c2 hello-world这时订阅的用户就能收到消息3.psubscribe new* 订阅多个new1 2 3….一般不会用redis做消息中间键
-
-5.3 应用场景
-网站综合消息通知
-网站更新消息通知
-        </p>
-    </div>
-</article>
-    
-
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2021/06/07/RDB&AOF/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/css/images/shi.jpg)" alt="RDB&amp;AOF" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span><a href="http://example.com/2021/06/07/RDB&amp;AOF/#isso-thread"></a></span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a>
-            </div>
-            <div class="date"><time datetime="2021-06-07T13:09:49.248Z" itemprop="datePublished">2021-06-07</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2021/06/07/RDB&AOF/">RDB&amp;AOF</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            2 RDB持久化2.1 是什么？在指定的时间间隔内将内存中的数据集快照写入磁盘，也就是行话讲的Snapshot快照，它恢复时是将快照文件直接读到内存里（内存的东西不保存关机就没了，为什么redis开机还有数据？因为内存中的数据集快照被写进了磁盘，开机从磁盘加载回内存。）
-2.2 相关配置12345678redis.conf的SNAPSHOTTINGafter 900 seconds if at l
-        </p>
-    </div>
-</article>
-    
-        </div>
-    
-
-    
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2021/06/07/redis%E5%B2%88%E6%98%A2/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/css/images/yu.jpg)" alt="redis事务" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span><a href="http://example.com/2021/06/07/redis%E5%B2%88%E6%98%A2/#isso-thread"></a></span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a>
-            </div>
-            <div class="date"><time datetime="2021-06-07T13:09:49.248Z" itemprop="datePublished">2021-06-07</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2021/06/07/redis%E5%B2%88%E6%98%A2/">redis事务</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            4.1 简介和sql的事务一样,本质是一组命令的集合,一个事务中所有命令都会序列化,按顺序地串行执行而不会被其他命令插入加塞.(要么一起成功,要么一起失败)一个队列中一次性、顺序性、排他性的执行一系列的命令
-4.2 应用场景
-秒杀系统网络上经常谈到的微信抢红包项目为例：1234567891011121.设计数据库字段红包id、发红包人、金额、数量、剩余金额、剩余数量、抢到人的名单、过期时间、添加时
         </p>
     </div>
 </article>
@@ -592,48 +639,8 @@
             
                 
                 <li>
-                    <a class="social-tooltip" title="twitter" href="/" target="_blank" rel="noopener">
-                        <i class="icon fa fa-twitter"></i>
-                    </a>
-                </li>
-                
-            
-                
-                <li>
-                    <a class="social-tooltip" title="facebook" href="/" target="_blank" rel="noopener">
-                        <i class="icon fa fa-facebook"></i>
-                    </a>
-                </li>
-                
-            
-                
-                <li>
-                    <a class="social-tooltip" title="stack-overflow" href="/" target="_blank" rel="noopener">
-                        <i class="icon fa fa-stack-overflow"></i>
-                    </a>
-                </li>
-                
-            
-                
-                <li>
-                    <a class="social-tooltip" title="github" href="https://github.com/ppoffice/hexo-theme-hueman" target="_blank" rel="noopener">
+                    <a class="social-tooltip" title="github" href="https://github.com/chunjianghuayueye2" target="_blank" rel="noopener">
                         <i class="icon fa fa-github"></i>
-                    </a>
-                </li>
-                
-            
-                
-                <li>
-                    <a class="social-tooltip" title="weibo" href="/" target="_blank" rel="noopener">
-                        <i class="icon fa fa-weibo"></i>
-                    </a>
-                </li>
-                
-            
-                
-                <li>
-                    <a class="social-tooltip" title="rss" href="/" target="_blank" rel="noopener">
-                        <i class="icon fa fa-rss"></i>
                     </a>
                 </li>
                 
@@ -656,10 +663,10 @@
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2021/06/09/flask%E8%BF%9E%E6%8E%A5redis%E9%9B%86%E7%BE%A4/" class="thumbnail">
+                            <a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(/css/images/xiaohuanren3.jpg)" alt="mysql索引失效" class="thumbnail-image"></span>
     
     
 </a>
@@ -667,19 +674,39 @@
                         </div>
                         
                         <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2021/06/09/flask%E8%BF%9E%E6%8E%A5redis%E9%9B%86%E7%BE%A4/" class="title"></a></p>
-                            <p class="item-date"><time datetime="2021-06-09T02:25:42.189Z" itemprop="datePublished">2021-06-09</time></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a></p>
+                            <p class="item-title"><a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88/" class="title">mysql索引失效</a></p>
+                            <p class="item-date"><time datetime="2021-06-13T07:40:54.744Z" itemprop="datePublished">2021-06-13</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2021/06/09/jwt/" class="thumbnail">
+                            <a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/" class="thumbnail">
     
     
-        <span style="background-image:url(/css/images/gu.jpg)" alt="jwt" class="thumbnail-image"></span>
+        <span style="background-image:url(/css/images/shan.jpg)" alt="mysql索引优化案例分析" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a></p>
+                            <p class="item-title"><a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/" class="title">mysql索引优化案例分析</a></p>
+                            <p class="item-date"><time datetime="2021-06-13T07:40:39.919Z" itemprop="datePublished">2021-06-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/13/webframe/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/xiaohuanren2.jpg)" alt="设计模式" class="thumbnail-image"></span>
     
     
 </a>
@@ -688,35 +715,15 @@
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/webframe/">webframe</a></p>
-                            <p class="item-title"><a href="/2021/06/09/jwt/" class="title">jwt</a></p>
-                            <p class="item-date"><time datetime="2021-06-09T02:24:41.638Z" itemprop="datePublished">2021-06-09</time></p>
+                            <p class="item-title"><a href="/2021/06/13/webframe/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="title">设计模式</a></p>
+                            <p class="item-date"><time datetime="2021-06-13T07:17:23.394Z" itemprop="datePublished">2021-06-13</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2021/06/09/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/css/images/gu.jpg)" alt="单点登录" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/webframe/">webframe</a></p>
-                            <p class="item-title"><a href="/2021/06/09/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95/" class="title">单点登录</a></p>
-                            <p class="item-date"><time datetime="2021-06-09T02:24:41.638Z" itemprop="datePublished">2021-06-09</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2021/06/08/flask-sqlaAchemy/" class="thumbnail">
+                            <a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/MHA/" class="thumbnail">
     
     
         <span class="thumbnail-image thumbnail-none"></span>
@@ -728,15 +735,15 @@
                         
                         <div class="item-inner">
                             <p class="item-category"></p>
-                            <p class="item-title"><a href="/2021/06/08/flask-sqlaAchemy/" class="title"></a></p>
-                            <p class="item-date"><time datetime="2021-06-08T03:54:22.148Z" itemprop="datePublished">2021-06-08</time></p>
+                            <p class="item-title"><a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/MHA/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-13T04:16:55.764Z" itemprop="datePublished">2021-06-13</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2021/06/08/flask-wtforms/" class="thumbnail">
+                            <a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/mysql%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/" class="thumbnail">
     
     
         <span class="thumbnail-image thumbnail-none"></span>
@@ -748,8 +755,8 @@
                         
                         <div class="item-inner">
                             <p class="item-category"></p>
-                            <p class="item-title"><a href="/2021/06/08/flask-wtforms/" class="title"></a></p>
-                            <p class="item-date"><time datetime="2021-06-08T03:53:04.318Z" itemprop="datePublished">2021-06-08</time></p>
+                            <p class="item-title"><a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/mysql%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-13T04:14:41.084Z" itemprop="datePublished">2021-06-13</time></p>
                         </div>
                     </li>
                 
@@ -762,7 +769,7 @@
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/">nosql</a><span class="category-list-count">14</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis/">redis</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a><span class="category-list-count">7</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/">webframe</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/flask/">flask</a><span class="category-list-count">2</span></li></ul></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/">bigdata</a><span class="category-list-count">22</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker/">docker</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker-compose/">docker-compose</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/hadoop/">hadoop</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/zookeeper/">zookeeper</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/">nosql</a><span class="category-list-count">20</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis/">redis</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/">webframe</a><span class="category-list-count">21</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/django/">django</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/flask/">flask</a><span class="category-list-count">5</span></li></ul></li></ul>
         </div>
     </div>
 
@@ -772,7 +779,7 @@
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">28</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">69</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 

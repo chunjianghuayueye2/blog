@@ -1,0 +1,783 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>登录认证 | 春江花月夜o</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="" />
+    
+    <meta name="description" content="前言 前后端分离的项目不需要做csrf认证，app和网站服务端已经跨站 drf有三种验证方式 BasicAuthentication 通过账号密码进行基本认证，密码经过base64编码和sha256并加盐存入数据库 TokenAuthentication 通过cookie设置的相关代码键为token或设置值， SessionAuthentication sessionId存在cookie，通过se">
+<meta property="og:type" content="article">
+<meta property="og:title" content="登录认证">
+<meta property="og:url" content="http://example.com/2021/06/12/django/%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/index.html">
+<meta property="og:site_name" content="春江花月夜o">
+<meta property="og:description" content="前言 前后端分离的项目不需要做csrf认证，app和网站服务端已经跨站 drf有三种验证方式 BasicAuthentication 通过账号密码进行基本认证，密码经过base64编码和sha256并加盐存入数据库 TokenAuthentication 通过cookie设置的相关代码键为token或设置值， SessionAuthentication sessionId存在cookie，通过se">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/css/images/youcaohua.jpg">
+<meta property="article:published_time" content="2021-06-12T03:01:19.750Z">
+<meta property="article:modified_time" content="2021-06-13T04:10:03.227Z">
+<meta property="article:author" content="durian">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/css/images/youcaohua.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/gouzi.ico" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="春江花月夜o" type="application/atom+xml">
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">关于</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">python</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">cpp</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">webframe</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                                <a class="main-nav-list-link" href="/null">flask</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">django</a>
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">algorithm</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">bigdata</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">nosql</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                                <a class="main-nav-list-link" href="/null"> redis</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">mysql</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null"> redis高级篇</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">mysql高级篇</a>
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/webframe/">webframe</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/webframe/django/">django</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-django/登录认证" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        登录认证
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2021/06/12/django/%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/" class="article-date">
+       <time datetime="2021-06-12T03:01:19.750Z" itemprop="datePublished">2021-06-12</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/2021/06/12/django/%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/" class="article-date">
+     <time datetime="2021-06-13T04:10:03.227Z" itemprop="dateModified">2021-06-13</time>
+  </a>
+</div>
+
+
+                
+
+                
+                
+   <div class="article-counter">
+      <i class="fa fa-file-word-o"></i>
+      <span class="post-count-item-text">本文字数: </span>
+      <span class="post-count">2.6k</span>
+      <i class="fa fa-clock-o"></i>
+      <span class="post-time-item-text">阅读时长: </span>
+      <span class="post-count">12 分钟 </span>
+   </div>
+
+
+                <span id="busuanzi_container_page_pv">
+                阅读次数<span id="busuanzi_value_page_pv"></span>次
+                </span>
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
+<li>前后端分离的项目不需要做csrf认证，app和网站服务端已经跨站</li>
+<li>drf有三种验证方式<ul>
+<li>BasicAuthentication 通过账号密码进行基本认证，密码经过base64编码和sha256并加盐存入数据库</li>
+<li>TokenAuthentication 通过cookie设置的相关代码键为token或设置值，</li>
+<li>SessionAuthentication sessionId存在cookie，通过sessionId获取存在缓存或数据库的session值再通过相应算法解析出用户</li>
+</ul>
+</li>
+</ul>
+<h2 id="DRFToken"><a href="#DRFToken" class="headerlink" title="DRFToken"></a>DRFToken</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"># settings</span><br><span class="line">INSTALLED_APPS &#x3D; (</span><br><span class="line">    ...</span><br><span class="line">    &#39;rest_framework.authtoken&#39;  # 新添加 drf自带用户验证</span><br><span class="line">)</span><br><span class="line"># 注意需要makemigrations、migrate，即生成token表</span><br><span class="line"></span><br><span class="line"># urls</span><br><span class="line">from rest_framework.authtoken import views</span><br><span class="line">re_path(r&#39;^api-token-auth&#x2F;&#39;, views.obtain_auth_token),</span><br><span class="line"></span><br><span class="line"># settings</span><br><span class="line">REST_FRAMEWORK &#x3D; &#123;</span><br><span class="line">        ...</span><br><span class="line">        &#39;DEFAULT_AUTHENTICATION_CLASSES&#39;: [</span><br><span class="line">            &#39;rest_framework.authentication.BasicAuthentication&#39;,</span><br><span class="line">            &#39;rest_framework.authentication.SessionAuthentication&#39;,</span><br><span class="line">            # 尽量不要全局配置 在需要使用token的view里面配置</span><br><span class="line">            &#39;rest_framework_jwt.authentication.JSONWebTokenAuthentication&#39;,</span><br><span class="line">            # &#39;rest_framework.authentication.TokenAuthentication&#39;,</span><br><span class="line">        ],</span><br><span class="line">       ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>当用户注册时我们调用接口为用户生成token并存入数据库，前端通过用户登录时调用obtain_auth_token的接口获取token放到header，后端再通过request.auth获取token进行验证。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">def create(self, request, *args, **kwargs):</span><br><span class="line">    serializer &#x3D; self.get_serializer(data&#x3D;request.data)</span><br><span class="line">    serializer.is_valid(raise_exception&#x3D;True)</span><br><span class="line">    user &#x3D; self.perform_create(serializer)</span><br><span class="line">    # token和payload的生成</span><br><span class="line">    re_dict &#x3D; serializer.data</span><br><span class="line">    payload &#x3D; jwt_payload_handler(user)</span><br><span class="line">    print(request.auth)</span><br><span class="line">    re_dict[&#39;token&#39;] &#x3D; jwt_encode_handler(payload)</span><br><span class="line">    re_dict[&#39;name&#39;] &#x3D; user.name if user.name else user.username</span><br><span class="line">    headers &#x3D; self.get_success_headers(serializer.data)</span><br><span class="line">    return Response(re_dict, status&#x3D;status.HTTP_201_CREATED, headers&#x3D;headers)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from rest_framework.authtoken.models import Token</span><br><span class="line">token &#x3D; Token.object.create(user&#x3D;...)</span><br><span class="line">print(token.key)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Authorization: Token xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果想使用不同的关键字如bearer即继承TokenAuthentication为子类设置keyword类变量</li>
+<li>身份验证成功后，request.user为django user的实例，request.auth是一个rest_framework.authtoken.models.Token的实例</li>
+<li>drf token缺陷<ul>
+<li>保存在数据库中，分布式不友好</li>
+<li>token未设置过期时间，用户可以一直使用，如果被盗很糟糕</li>
+</ul>
+</li>
+<li>如果在rest_framework中配置token是全局性的，也可在单一view中配置<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">from rest_framework.authentication import TokenAuthentication  # 导入token验证相关模块</span><br><span class="line"></span><br><span class="line">class GoodsListViewSet(mixins.ListModelMixin,viewsets.GenericViewSet):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    list:</span><br><span class="line">        商品列表页数据</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    …</span><br><span class="line">    authentication_classes &#x3D; (TokenAuthentication,)  # 新增，部分页面token验证</span><br></pre></td></tr></table></figure>
+<h2 id="6-2-JSON-WEB-TOKEN"><a href="#6-2-JSON-WEB-TOKEN" class="headerlink" title="6.2 JSON WEB TOKEN"></a>6.2 JSON WEB TOKEN</h2><h3 id="6-2-1-简介"><a href="#6-2-1-简介" class="headerlink" title="6.2.1 简介"></a>6.2.1 简介</h3></li>
+<li>由于drf tokenauth有局限性所以还是用JWT验证用户登录的方式</li>
+<li>JWT 是一个开放标准(RFC 7519)，它定义了一种用于简洁，自包含的用于通信双方之间以 JSON 对象的形式安全传递信息的方法。JWT 可以使用 HMAC 算法或者是 RSA 的公钥密钥对进行签名。</li>
+<li>两个特点：<ul>
+<li>简洁Compact：可以通过url、post参数或者请求头中发送，因为数据量小，传输速度快</li>
+<li>自包含（self-contained）：负载了用户所有需要的信息，避免多次查询数据库</li>
+</ul>
+</li>
+</ul>
+<h3 id="drf-JWT验证流程"><a href="#drf-JWT验证流程" class="headerlink" title="drf JWT验证流程"></a>drf JWT验证流程</h3><ul>
+<li>在最底层的ApiView中，通过属性和函数搭配封装使得这种解耦设计得以方便实现<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">class APIView(View):</span><br><span class="line">    # The following policies may be set at either globally, or per-view.</span><br><span class="line">    renderer_classes &#x3D; api_settings.DEFAULT_RENDERER_CLASSES</span><br><span class="line">    parser_classes &#x3D; api_settings.DEFAULT_PARSER_CLASSES</span><br><span class="line">    authentication_classes &#x3D; api_settings.DEFAULT_AUTHENTICATION_CLASSES</span><br><span class="line">    throttle_classes &#x3D; api_settings.DEFAULT_THROTTLE_CLASSES</span><br><span class="line">    permission_classes &#x3D; api_settings.DEFAULT_PERMISSION_CLASSES</span><br><span class="line">    content_negotiation_class &#x3D; api_settings.DEFAULT_CONTENT_NEGOTIATION_CLASS</span><br><span class="line">    metadata_class &#x3D; api_settings.DEFAULT_METADATA_CLASS</span><br><span class="line">    versioning_class &#x3D; api_settings.DEFAULT_VERSIONING_CLASS</span><br><span class="line">    # Allow dependency injection of other settings to make testing easier.</span><br><span class="line">    settings &#x3D; api_settings</span><br><span class="line">    schema &#x3D; DefaultSchema()</span><br></pre></td></tr></table></figure></li>
+<li>当调用到apiview的子类时，触发apiview的dispatch，这里先initialize_request把request变为restframework的request，然后执行initial把封装的一系列class全部执行<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"> def dispatch(self, request, *args, **kwargs):</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        &#96;.dispatch()&#96; is pretty much the same as Django&#39;s regular dispatch,</span><br><span class="line">        but with extra hooks for startup, finalize, and exception handling.</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        self.args &#x3D; args</span><br><span class="line">        self.kwargs &#x3D; kwargs</span><br><span class="line">        request &#x3D; self.initialize_request(request, *args, **kwargs)</span><br><span class="line">        self.request &#x3D; request</span><br><span class="line">        self.headers &#x3D; self.default_response_headers  # deprecate?</span><br><span class="line"></span><br><span class="line">        try:</span><br><span class="line">            self.initial(request, *args, **kwargs)</span><br><span class="line"></span><br><span class="line">            # Get the appropriate handler method</span><br><span class="line">            if request.method.lower() in self.http_method_names:</span><br><span class="line">                handler &#x3D; getattr(self, request.method.lower(),</span><br><span class="line">                                  self.http_method_not_allowed)</span><br><span class="line">            else:</span><br><span class="line">                handler &#x3D; self.http_method_not_allowed</span><br><span class="line"></span><br><span class="line">            response &#x3D; handler(request, *args, **kwargs)</span><br><span class="line"></span><br><span class="line">        except Exception as exc:</span><br><span class="line">            response &#x3D; self.handle_exception(exc)</span><br><span class="line"></span><br><span class="line">        self.response &#x3D; self.finalize_response(request, response, *args, **kwargs)</span><br><span class="line">        return self.response</span><br><span class="line">        </span><br><span class="line"># 转变request为restframework的reuqest </span><br><span class="line">def initialize_request(self, request, *args, **kwargs):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    Returns the initial request object.</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    parser_context &#x3D; self.get_parser_context(request)</span><br><span class="line"></span><br><span class="line">    return Request(</span><br><span class="line">        request,</span><br><span class="line">        parsers&#x3D;self.get_parsers(),</span><br><span class="line">        authenticators&#x3D;self.get_authenticators(),</span><br><span class="line">        negotiator&#x3D;self.get_content_negotiator(),</span><br><span class="line">        parser_context&#x3D;parser_context</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def initial(self, request, *args, **kwargs):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    Runs anything that needs to occur prior to calling the method handler.</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    self.format_kwarg &#x3D; self.get_format_suffix(**kwargs)</span><br><span class="line"></span><br><span class="line">    # Perform content negotiation and store the accepted info on the request</span><br><span class="line">    neg &#x3D; self.perform_content_negotiation(request)</span><br><span class="line">    request.accepted_renderer, request.accepted_media_type &#x3D; neg</span><br><span class="line"></span><br><span class="line">    # Determine the API version, if versioning is in use.</span><br><span class="line">    version, scheme &#x3D; self.determine_version(request, *args, **kwargs)</span><br><span class="line">    request.version, request.versioning_scheme &#x3D; version, scheme</span><br><span class="line"></span><br><span class="line">    # Ensure that the incoming request is permitted</span><br><span class="line">    self.perform_authentication(request)</span><br><span class="line">    self.check_permissions(request)</span><br><span class="line">    self.check_throttles(request)</span><br></pre></td></tr></table></figure></li>
+<li>之后调用restframework的request.user-&gt;_authenticate-&gt;authenticatior.authenticate-&gt;jsontoken.authenticatie</li>
+<li>所以其实这种方式在普通view上亦可通过重写dispatch进行实现，也算是一种经典的工厂<a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903795017646094#heading-27">设计模式</a></li>
+</ul>
+<h3 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"># pip install djangorestframework-jwt</span><br><span class="line">REST_FRAMEWORK &#x3D; &#123;</span><br><span class="line">        ...</span><br><span class="line">        &#39;DEFAULT_AUTHENTICATION_CLASSES&#39;: [</span><br><span class="line">            &#39;rest_framework.authentication.BasicAuthentication&#39;,</span><br><span class="line">            &#39;rest_framework.authentication.SessionAuthentication&#39;,</span><br><span class="line">            # 尽量不要全局配置 在需要使用token的view里面配置</span><br><span class="line">            &#39;rest_framework_jwt.authentication.JSONWebTokenAuthentication&#39;,</span><br><span class="line">        ],</span><br><span class="line">       ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">form rest_framework_jwt.views import obtain_jwt_token</span><br><span class="line">path(&#39;login&#x2F;&#39;, obtain_jwt_token)</span><br><span class="line"># JWT验证默认使用用户名+密码验证，如需自定义验证(jwt验证调用的是django自带的authenticate验证方法):这个验证是中间件的基本authentication</span><br><span class="line">settings.py</span><br><span class="line">AUTHENTICATION_BACKENDS &#x3D; (</span><br><span class="line">    &#39;users.views.CustomBackend&#39;,</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">import datetime</span><br><span class="line"># JWT设置</span><br><span class="line">JWT_AUTH &#x3D; &#123;</span><br><span class="line">    &#39;JWT_SECRET_KEY&#39;: SECRET_KEY,</span><br><span class="line">    # 一天后Token过期</span><br><span class="line">    &#39;JWT_EXPIRATION_DELTA&#39;: datetime.timedelta(days&#x3D;7),</span><br><span class="line">&#125;</span><br><span class="line">users.views.py</span><br><span class="line">from django.contrib.auth.backends import ModelBackend</span><br><span class="line">from django.contrib.auth import get_user_model</span><br><span class="line">from django.db.models import Q</span><br><span class="line"></span><br><span class="line">User &#x3D; get_user_model() # 当前用户</span><br><span class="line">class CustomBackend(ModelBackend):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    自定义用户验证</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    def authenticate(self, request, username&#x3D;None, password&#x3D;None, **kwargs):</span><br><span class="line">        try:</span><br><span class="line">            user &#x3D; User.objects.get(Q(username&#x3D;username) | Q(mobile&#x3D;username))</span><br><span class="line">            if user.check_password(password):</span><br><span class="line">                return user</span><br><span class="line">        except Exception as e:</span><br><span class="line">            return None</span><br></pre></td></tr></table></figure>
+<ul>
+<li>可通过restframework_jwt.settings查看配置<h3 id="6-2-4-JWT详细介绍"><a href="#6-2-4-JWT详细介绍" class="headerlink" title="6.2.4 JWT详细介绍"></a>6.2.4 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/158186278">JWT详细介绍</a></h3></li>
+<li>由三部分构成(以.分割）<ul>
+<li>1.header头文件</li>
+<li>2.payload信息主体</li>
+<li>3.signature签名和盐<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxNiwidXNlcm5hbWUiOiJyb290IiwiZXhwIjoxNjIxMzI3MjAwLCJlbWFpbCI6IjUwNTEzMzExNUBxcS5jb20ifQ.se-Y8Dxs-VLBL2jzvHmat2lxcRx7Oz1MF40jFfrlPP</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>header<ul>
+<li>包含{“alg”:”HS256”, “typ”:”JWT”}</li>
+<li>被base64编码为第一部分</li>
+</ul>
+</li>
+<li>payload（三个部分）<ul>
+<li>注册声明 iss（JWT签发者）、exp过期时间、sub主题、audJWT接收者、iat（签发时间等）  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">def jwt_payload_handler(user):</span><br><span class="line">    username_field &#x3D; get_username_field()</span><br><span class="line">    username &#x3D; get_username(user)</span><br><span class="line"></span><br><span class="line">    warnings.warn(</span><br><span class="line">        &#39;The following fields will be removed in the future: &#39;</span><br><span class="line">        &#39;&#96;email&#96; and &#96;user_id&#96;. &#39;,</span><br><span class="line">        DeprecationWarning</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    payload &#x3D; &#123;</span><br><span class="line">        &#39;user_id&#39;: user.pk,</span><br><span class="line">        &#39;username&#39;: username,</span><br><span class="line">        &#39;exp&#39;: datetime.utcnow() + api_settings.JWT_EXPIRATION_DELTA</span><br><span class="line">    &#125;</span><br><span class="line">    if hasattr(user, &#39;email&#39;):</span><br><span class="line">        payload[&#39;email&#39;] &#x3D; user.email</span><br><span class="line">    if isinstance(user.pk, uuid.UUID):</span><br><span class="line">        payload[&#39;user_id&#39;] &#x3D; str(user.pk)</span><br><span class="line"></span><br><span class="line">    payload[username_field] &#x3D; username</span><br><span class="line"></span><br><span class="line">    # Include original issued at time for a brand new token,</span><br><span class="line">    # to allow token refresh</span><br><span class="line">    if api_settings.JWT_ALLOW_REFRESH:</span><br><span class="line">        payload[&#39;orig_iat&#39;] &#x3D; timegm(</span><br><span class="line">            datetime.utcnow().utctimetuple()</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    if api_settings.JWT_AUDIENCE is not None:</span><br><span class="line">        payload[&#39;aud&#39;] &#x3D; api_settings.JWT_AUDIENCE</span><br><span class="line"></span><br><span class="line">    if api_settings.JWT_ISSUER is not None:</span><br><span class="line">        payload[&#39;iss&#39;] &#x3D; api_settings.JWT_ISSUER</span><br><span class="line"></span><br><span class="line">    return payload</span><br></pre></td></tr></table></figure></li>
+<li>公开声明 可以添加任何信息，一般添加用户相关的信息或其他必要信息，不建议添加敏感信息</li>
+<li>私有声明 base64对称加密相当于明文，不存敏感信息</li>
+</ul>
+</li>
+<li>Signature<ul>
+<li>Signature部分的生成需要base64编码之后的Header,base64编码之后的Payload,密钥（secret）,Header需要指定签字的算法。  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HMACSHA256(</span><br><span class="line">  base64UrlEncode(header) + &quot;.&quot; +</span><br><span class="line">  base64UrlEncode(payload),</span><br><span class="line">  secret)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">def encode(self,</span><br><span class="line">       payload,  # type: Union[Dict, bytes]</span><br><span class="line">       key,  # type: str</span><br><span class="line">       algorithm&#x3D;&#39;HS256&#39;,  # type: str</span><br><span class="line">       headers&#x3D;None,  # type: Optional[Dict]</span><br><span class="line">       json_encoder&#x3D;None  # type: Optional[Callable]</span><br><span class="line">       ):</span><br><span class="line">    segments &#x3D; []</span><br><span class="line"></span><br><span class="line">    if algorithm is None:</span><br><span class="line">        algorithm &#x3D; &#39;none&#39;</span><br><span class="line"></span><br><span class="line">    if algorithm not in self._valid_algs:</span><br><span class="line">        pass</span><br><span class="line"></span><br><span class="line">    # Header</span><br><span class="line">    header &#x3D; &#123;&#39;typ&#39;: self.header_typ, &#39;alg&#39;: algorithm&#125;</span><br><span class="line"></span><br><span class="line">    if headers:</span><br><span class="line">        self._validate_headers(headers)</span><br><span class="line">        header.update(headers)</span><br><span class="line"></span><br><span class="line">    json_header &#x3D; force_bytes(</span><br><span class="line">        json.dumps(</span><br><span class="line">            header,</span><br><span class="line">            separators&#x3D;(&#39;,&#39;, &#39;:&#39;),</span><br><span class="line">            cls&#x3D;json_encoder</span><br><span class="line">        )</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    segments.append(base64url_encode(json_header))</span><br><span class="line">    segments.append(base64url_encode(payload))</span><br><span class="line"></span><br><span class="line">    # Segments</span><br><span class="line">    signing_input &#x3D; b&#39;.&#39;.join(segments)</span><br><span class="line">    try:</span><br><span class="line">        alg_obj &#x3D; self._algorithms[algorithm]</span><br><span class="line">        key &#x3D; alg_obj.prepare_key(key)</span><br><span class="line">        signature &#x3D; alg_obj.sign(signing_input, key)</span><br><span class="line"></span><br><span class="line">    except KeyError:</span><br><span class="line">        if not has_crypto and algorithm in requires_cryptography:</span><br><span class="line">            raise NotImplementedError(</span><br><span class="line">                &quot;Algorithm &#39;%s&#39; could not be found. Do you have cryptography &quot;</span><br><span class="line">                &quot;installed?&quot; % algorithm</span><br><span class="line">            )</span><br><span class="line">        else:</span><br><span class="line">            raise NotImplementedError(&#39;Algorithm not supported&#39;)</span><br><span class="line"></span><br><span class="line">    segments.append(base64url_encode(signature))</span><br><span class="line"></span><br><span class="line">    return b&#39;.&#39;.join(segments)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="验证码发送-第三方（这里使用云片）"><a href="#验证码发送-第三方（这里使用云片）" class="headerlink" title="验证码发送 第三方（这里使用云片）"></a>验证码发送 第三方（这里使用云片）</h2><ul>
+<li>1.进入服务网站设置模板签名</li>
+<li>2.查看相应第三方短信商的api文档</li>
+<li>3.写开发接口</li>
+<li>4.设置代理和获取apikey</li>
+<li>5.把服务器ip加入到云片白名单</li>
+<li>6.可以使用redis存储<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"># _*_ coding: utf-8 _*_</span><br><span class="line">__author__ &#x3D; &#39;春江花月夜oo&#39;</span><br><span class="line">import requests</span><br><span class="line">import json</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class YunPian(object):</span><br><span class="line"></span><br><span class="line">    def __init__(self, api_key):</span><br><span class="line">        self.api_key &#x3D; api_key</span><br><span class="line">        self.single_send_url &#x3D; &quot;https:&#x2F;&#x2F;sms.yunpian.com&#x2F;v2&#x2F;sms&#x2F;single_send.json&quot;</span><br><span class="line"></span><br><span class="line">    def send_sms(self, code, mobile):</span><br><span class="line">        params &#x3D; &#123;</span><br><span class="line">            &quot;apikey&quot;: self.api_key,</span><br><span class="line">            &quot;mobile&quot;: mobile,</span><br><span class="line">            &quot;text&quot;: &quot;【春江花月夜】您的验证码是&#123;code&#125;。如非本人操作，请忽略本短信&quot;.format(code&#x3D;code)</span><br><span class="line">        &#125;</span><br><span class="line">        proxies &#x3D; &#123;</span><br><span class="line">            &quot;http&quot;: &quot;http:&#x2F;&#x2F;xxxx:xxxxx@ip:port&quot;,</span><br><span class="line">            &quot;https&quot;: &quot;https:&#x2F;&#x2F;xxxx:xxxxx@ip:port&quot;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        response &#x3D; requests.post(self.single_send_url, proxies&#x3D;proxies, data&#x3D;params)</span><br><span class="line">        re_dict &#x3D; json.loads(response.text)</span><br><span class="line">        print(re_dict)</span><br><span class="line">        return re_dict</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ &#x3D;&#x3D; &quot;__main__&quot;:</span><br><span class="line">    yun_pian &#x3D; YunPian(&quot;43553608181588f4d559a70abdada087&quot;)</span><br><span class="line">    yun_pian.send_sms(&quot;2020&quot;, &quot;18296163425&quot;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="6-4-drf自定义权限校验"><a href="#6-4-drf自定义权限校验" class="headerlink" title="6.4 drf自定义权限校验"></a>6.4 drf自定义权限校验</h2><ul>
+<li>权限和authentication流程基本一致，都是apiView中调用接口时，dispatch中进行处理</li>
+<li>check_permissions和check_object_permissions，check_permissions是在所有接口中统一检查的，而dispatch是当有不安全请求方法时，在get_object()时检查（即增删改时查看此权限）</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"># 1.全局drf权限</span><br><span class="line">REST_FRAMEWORK &#x3D; &#123;</span><br><span class="line">    &#39;DEFAULT_PERMISSION_CLASSES&#39;: (</span><br><span class="line">        &#39;rest_framework.permissions.IsAuthenticated&#39;,</span><br><span class="line">    ),</span><br><span class="line">	  #..............</span><br><span class="line">&#125;</span><br><span class="line"># 2.自定义权限（可以创建utils在其中建permissions.py进行统一管理）</span><br><span class="line">from rest_framework import permissions</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># permission</span><br><span class="line"></span><br><span class="line"># 这里通过不同的场景实时传参进去构建permission_classes</span><br><span class="line">class StudentViewSet(viewsets.ModelViewSet):</span><br><span class="line">  	queryset &#x3D; models.Student.objects.all()</span><br><span class="line">  	# ...........</span><br><span class="line"></span><br><span class="line">    def get_permissions(self):</span><br><span class="line">      	if self.action &#x3D;&#x3D; &#39;list&#39;:		</span><br><span class="line">        # 如果是对根目录进行 GET 则需要列表权限</span><br><span class="line">            self.permission_classes &#x3D; (</span><br><span class="line">                perms.PermsRequired(&#39;student.list_student&#39;),</span><br><span class="line">            )</span><br><span class="line">        if self.action &#x3D;&#x3D; &#39;create&#39;:		</span><br><span class="line">        # 如果对根目录进行 POST 则需要创建权限</span><br><span class="line">            self.permission_classes &#x3D; (</span><br><span class="line">                perms.PermsRequired(&#39;student.create_student&#39;),</span><br><span class="line">            )</span><br><span class="line"></span><br><span class="line">        return super(StudentViewSet, self).get_permissions()</span><br><span class="line">        </span><br><span class="line">class PermsRequired(permissions.BasePermission):</span><br><span class="line">		&quot;&quot;&quot;需要有多个权限之一，也就是说有其中一个权限即可&quot;&quot;&quot;</span><br><span class="line">  </span><br><span class="line">    def __init__(self, *perms):</span><br><span class="line">        self.perms &#x3D; perms	# 接受多个参数，全部都是权限</span><br><span class="line"></span><br><span class="line">    def __call__(self):</span><br><span class="line">        return self  # 被 call（前期可以理解成被当成函数调用） 的时候返回自身</span><br><span class="line"></span><br><span class="line">    def has_permission(self, request, view):</span><br><span class="line">        user &#x3D; request.user		# 既然传进来了 request，那就可以拿到 user 了</span><br><span class="line"></span><br><span class="line">        if user.is_superuser:	# superuser 拥有一切权限</span><br><span class="line">            return True</span><br><span class="line"></span><br><span class="line">        user_perms &#x3D; user.get_all_permissions()	 # 取得用户所拥有的的所有权限</span><br><span class="line">        </span><br><span class="line">        # 取本次需要的权限和用户所有的权限的交集，如果有交集则校验通过（也就是 “或” 校验</span><br><span class="line">        return True if user_perms &amp; set(self.perms) else False</span><br><span class="line">      </span><br><span class="line">      	# 如果想要“与”校验，可以改成下面这种</span><br><span class="line">        # return all([perm in user_perms for perm in set(self.perms)])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># object_permission</span><br><span class="line">class IsOwnerOrReadOnly(permissions.BasePermission):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    对象级权限仅允许对象的所有者对其进行编辑</span><br><span class="line">    假设模型实例具有&#96;owner&#96;属性。</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    def has_object_permission(self, request, view, obj):</span><br><span class="line">        # 任何请求都允许读取权限，</span><br><span class="line">        # 所以我们总是允许GET，HEAD或OPTIONS 请求.</span><br><span class="line">        if request.method in permissions.SAFE_METHODS:</span><br><span class="line">            return True</span><br><span class="line"></span><br><span class="line">        # 示例必须要有一个名为&#96;owner&#96;的属性</span><br><span class="line">        return obj.user &#x3D;&#x3D; request.user</span><br></pre></td></tr></table></figure>
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://example.com/2021/06/12/django/%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/" data-id="ckpt69skc00087ctxcxiofepy" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "durian"
+        },
+        "headline": "登录认证",
+        "image": "http://example.com/css/images/youcaohua.jpg",
+        "keywords": "",
+        "genre": "webframe django",
+        "datePublished": "2021-06-12",
+        "dateCreated": "2021-06-12",
+        "dateModified": "2021-06-13",
+        "url": "http://example.com/2021/06/12/django/登录认证/",
+        "description": "前言
+前后端分离的项目不需要做csrf认证，app和网站服务端已经跨站
+drf有三种验证方式
+BasicAuthentication 通过账号密码进行基本认证，密码经过base64编码和sha256并加盐存入数据库
+TokenAuthentication 通过cookie设置的相关代码键为token或设置值，
+SessionAuthentication sessionId存在cookie，通过se",
+        "wordCount": 3174
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <!-- Valine -->
+    <div class="vcomments"></div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/chunjianghuayueye2" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2021/06/12/django/restful%E8%A7%84%E8%8C%83/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            restful规范
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2021/06/12/django/serializers/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">serializers</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+<div class="widget-wrap widget-list">
+    <h3 class="widget-title">目录</h3>
+    <div class="widget">
+        <div id="toc" class="toc-article">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DRFToken"><span class="toc-number">2.</span> <span class="toc-text">DRFToken</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-2-JSON-WEB-TOKEN"><span class="toc-number">3.</span> <span class="toc-text">6.2 JSON WEB TOKEN</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-1-%E7%AE%80%E4%BB%8B"><span class="toc-number">3.1.</span> <span class="toc-text">6.2.1 简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#drf-JWT%E9%AA%8C%E8%AF%81%E6%B5%81%E7%A8%8B"><span class="toc-number">3.2.</span> <span class="toc-text">drf JWT验证流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="toc-number">3.3.</span> <span class="toc-text">基本使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-4-JWT%E8%AF%A6%E7%BB%86%E4%BB%8B%E7%BB%8D"><span class="toc-number">3.4.</span> <span class="toc-text">6.2.4 JWT详细介绍</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%AA%8C%E8%AF%81%E7%A0%81%E5%8F%91%E9%80%81-%E7%AC%AC%E4%B8%89%E6%96%B9%EF%BC%88%E8%BF%99%E9%87%8C%E4%BD%BF%E7%94%A8%E4%BA%91%E7%89%87%EF%BC%89"><span class="toc-number">4.</span> <span class="toc-text">验证码发送 第三方（这里使用云片）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-4-drf%E8%87%AA%E5%AE%9A%E4%B9%89%E6%9D%83%E9%99%90%E6%A0%A1%E9%AA%8C"><span class="toc-number">5.</span> <span class="toc-text">6.4 drf自定义权限校验</span></a></li></ol>
+        </div>
+    </div>
+</div>
+
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/xiaohuanren3.jpg)" alt="mysql索引失效" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a></p>
+                            <p class="item-title"><a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88/" class="title">mysql索引失效</a></p>
+                            <p class="item-date"><time datetime="2021-06-13T07:40:54.744Z" itemprop="datePublished">2021-06-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/shan.jpg)" alt="mysql索引优化案例分析" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a></p>
+                            <p class="item-title"><a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/" class="title">mysql索引优化案例分析</a></p>
+                            <p class="item-date"><time datetime="2021-06-13T07:40:39.919Z" itemprop="datePublished">2021-06-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/13/webframe/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/xiaohuanren2.jpg)" alt="设计模式" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/webframe/">webframe</a></p>
+                            <p class="item-title"><a href="/2021/06/13/webframe/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="title">设计模式</a></p>
+                            <p class="item-date"><time datetime="2021-06-13T07:17:23.394Z" itemprop="datePublished">2021-06-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/MHA/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/MHA/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-13T04:16:55.764Z" itemprop="datePublished">2021-06-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/mysql%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/mysql%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-13T04:14:41.084Z" itemprop="datePublished">2021-06-13</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/">bigdata</a><span class="category-list-count">22</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker/">docker</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker-compose/">docker-compose</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/hadoop/">hadoop</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/zookeeper/">zookeeper</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/">nosql</a><span class="category-list-count">20</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis/">redis</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/">webframe</a><span class="category-list-count">21</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/django/">django</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/flask/">flask</a><span class="category-list-count">5</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">69</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+
+            
+                
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2021 durian</p>
+                
+                <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
+                
+            </div>
+                <p><span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span></p>
+                <p><span id="busuanzi_container_site_uv"> 
+                     本站访客数<span id="busuanzi_value_site_uv"></span>人次
+               </span></p>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+    <script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
+</footer>
+
+    </div>
+    
+    
+    <script src="//unpkg.com/valine"></script>
+    <script>
+        var GUEST = ['nick','mail','link'];
+        var meta = '';
+        meta = meta.split(',').filter(function (item) {
+            return GUEST.indexOf(item)>-1;
+        });
+        var avatarcdn = 'gravatar.cat.net' == true;
+        new Valine({
+            el: '.vcomments',
+            notify: "false",
+            verify: "false",
+            appId: "795P9DunI2Jv3Jho36dlueIS-gzGzoHsz",
+            appKey: "pM151YCVhYBYTB9Pt1SRuiKs",
+            placeholder: "Just Do It",
+            avatar:"mm",
+            recordIP:"false",
+            visitor: "true"
+        });
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,763 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>redis主从复制 | 春江花月夜o</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="" />
+    
+    <meta name="description" content="为什么要用redis集群？ 1.容量内存不够，redis如何进行扩容？ 2.并发写操作，redis如何分摊？  什么是集群？ 1.redis集群实现了对redis的水平扩容即启动N个redis节点，将整个数据库分布存储在这N个节点中，每个节点存储总数的1&#x2F;N。（降低内存压力，避免一台服务器写入爆掉内存）  2.redis集群通过分区（partition）来提供一定程度的可用性即集群中有一部分节点失">
+<meta property="og:type" content="article">
+<meta property="og:title" content="redis主从复制">
+<meta property="og:url" content="http://example.com/2021/06/05/redis%E9%9B%86%E7%BE%A4/index.html">
+<meta property="og:site_name" content="春江花月夜o">
+<meta property="og:description" content="为什么要用redis集群？ 1.容量内存不够，redis如何进行扩容？ 2.并发写操作，redis如何分摊？  什么是集群？ 1.redis集群实现了对redis的水平扩容即启动N个redis节点，将整个数据库分布存储在这N个节点中，每个节点存储总数的1&#x2F;N。（降低内存压力，避免一台服务器写入爆掉内存）  2.redis集群通过分区（partition）来提供一定程度的可用性即集群中有一部分节点失">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2021/06/05/redis%E9%9B%86%E7%BE%A4/url/css/images/thumb-default-small123.png">
+<meta property="article:published_time" content="2021-06-05T02:53:18.255Z">
+<meta property="article:modified_time" content="2021-06-07T01:31:22.677Z">
+<meta property="article:author" content="durian">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/06/05/redis%E9%9B%86%E7%BE%A4/url/css/images/thumb-default-small123.png">
+    
+
+    
+        <link rel="alternate" href="/" title="春江花月夜o" type="application/atom+xml" />
+    
+
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">关于</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">python</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">cpp</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">webframe</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                                <a class="main-nav-list-link" href="/null">flask</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">django</a>
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">algorithm</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">bigdata</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">nosql</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                                <a class="main-nav-list-link" href="/null"> redis</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">mysql</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null"> redis高级篇</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">mysql高级篇</a>
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-redis集群" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        redis主从复制
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2021/06/05/redis%E9%9B%86%E7%BE%A4/" class="article-date">
+       <time datetime="2021-06-05T02:53:18.255Z" itemprop="datePublished">2021-06-05</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/2021/06/05/redis%E9%9B%86%E7%BE%A4/" class="article-date">
+     <time datetime="2021-06-07T01:31:22.677Z" itemprop="dateModified">2021-06-07</time>
+  </a>
+</div>
+
+
+                
+
+                
+                
+   <div class="article-counter">
+      <i class="fa fa-file-word-o"></i>
+      <span class="post-count-item-text">本文字数: </span>
+      <span class="post-count">860</span>
+      <i class="fa fa-clock-o"></i>
+      <span class="post-time-item-text">阅读时长: </span>
+      <span class="post-count">3 分钟 </span>
+   </div>
+
+
+                <span id="busuanzi_container_page_pv">
+                阅读次数<span id="busuanzi_value_page_pv"></span>次
+                </span>
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <h2 id="为什么要用redis集群？"><a href="#为什么要用redis集群？" class="headerlink" title="为什么要用redis集群？"></a>为什么要用redis集群？</h2><ul>
+<li>1.容量内存不够，redis如何进行扩容？</li>
+<li>2.并发写操作，redis如何分摊？</li>
+</ul>
+<h2 id="什么是集群？"><a href="#什么是集群？" class="headerlink" title="什么是集群？"></a>什么是集群？</h2><ul>
+<li><p>1.redis集群实现了对redis的水平扩容<br>即启动N个redis节点，将整个数据库分布存储在这N个节点中，每个节点存储总数的1/N。（降低内存压力，避免一台服务器写入爆掉内存）</p>
+</li>
+<li><p>2.redis集群通过分区（partition）来提供一定程度的可用性<br>即集群中有一部分节点失效或者无法通讯集群也可以继续处理命令请求。</p>
+</li>
+</ul>
+<h2 id="集群方案"><a href="#集群方案" class="headerlink" title="集群方案"></a>集群方案</h2><h3 id="redis官方集群"><a href="#redis官方集群" class="headerlink" title="redis官方集群"></a>redis官方集群</h3><h4 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">1.yum install ruby</span><br><span class="line">2.vim redis.conf</span><br><span class="line">3.打开集群模式</span><br><span class="line">cluster-enabled yes</span><br><span class="line">4.设置节点配置文件</span><br><span class="line">cluster-config-file nodes-6379.conf</span><br><span class="line">5.设置节点失联时间超过该时间（毫秒），集群自动进行主从切换。（哨兵都不用写）</span><br><span class="line">6.把这些配置到所有要集群的conf（注意修改节点配置文件）</span><br><span class="line">7.启动各个redis确保有nodes-xxxx.conf生成</span><br><span class="line">8.cd &#x2F;某文件夹&#x2F;redis-6…&#x2F;src</span><br><span class="line">9.将多个redis节点合成一个集群</span><br><span class="line">.&#x2F;redis-trib.rb create –replicas 1 127.0.0.0.1:6379(ip)</span><br><span class="line">127.0.0.0.1:6380(ip) 127.0.0.0.1:6381(ip)……..</span><br><span class="line">--replicas 1代表为每一个主服务器设置一个slave</span><br><span class="line">10.以集群的方式进入客户端</span><br><span class="line">redis-cli –c –p 端口号</span><br><span class="line">只需要开一个，redis-cli –c –p 6379</span><br><span class="line">这个时候，添加数据（根据某种算法生成slot），会根据生成插头号slots选择（重定向redirected）redis-server插入。</span><br><span class="line">11.通过cluster nodes命令查看集群信息</span><br><span class="line">一个集群至少有三个主节点</span><br><span class="line">分配尽量保证每个主数据库运行在不同的ip地址</span><br></pre></td></tr></table></figure>
+
+<h4 id="redis-slots简介"><a href="#redis-slots简介" class="headerlink" title="redis slots简介"></a>redis slots简介</h4><ul>
+<li>什么是slots？<br>一个redis集群包含16384个插槽（hash slot），数据库中的每个键都属于这16384个插槽其中一个，集群使用公式CRC16（key）%16384来计算键key属于哪个槽，其中CRC16（key）语句用于计算键key的CRC16校验和。<br>集群中每个主节点负责处理一部分插槽。举个例子，如果一个集群有3主节点，其中：<ul>
+<li>节点A负责处理0号至5500号插槽</li>
+<li>节点B负责处理5501号至11000号插槽</li>
+<li>节点C负责处理11000号至16383号插槽</li>
+</ul>
+</li>
+<li>注意：<ul>
+<li>1.如果登录redis-cli不使用-c（普通客户端）如果当前计算槽点不属于该节点会报错。</li>
+<li>2.不在一个slot下的键值不能使用mget，mset等多键操作。（无法选择重定向目标）</li>
+<li>3.可以通过{}来定义组的概念，从而让set的值在一个slot中（set a{user} v, set b{user} c）</li>
+<li>4.cluster keyslot <key>计算键key应该被放置在哪个槽上。 cluster keyslot k1</li>
+<li>5.cluster countkeysinslot <slot>返回槽slot目前包含的键值对数量。cluster countkeysinslot 5474</li>
+<li>6.cluster getkeysinslot <slot> <count>返回count个slot槽中的键。cluster getkeysinslot 5474 2</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">主节点宕机：</span><br><span class="line">redis-cli –p 6381 shutdown关掉6381</span><br><span class="line">通过cluster nodes查看是否slave变成了主节点</span><br><span class="line">重启原主节点，变成从节点了。。。。。</span><br><span class="line"></span><br><span class="line">如果一段slot的主从都宕机</span><br><span class="line">该集群都会宕机。</span><br><span class="line">redis.conf中的参数 cluster-require-full-coverage</span><br><span class="line">只有当16384个slot都正常时候才能对外提供服务。</span><br><span class="line">vim redis.conf</span><br><span class="line">把cluster-require-full-coverage 改为no</span><br></pre></td></tr></table></figure>
+
+<h3 id="一致性hash集群"><a href="#一致性hash集群" class="headerlink" title="一致性hash集群"></a>一致性hash集群</h3><p>redis集群除了官方CRC槽计算，还可以通过一致性hash进行手工配置redis集群。</p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://example.com/2021/06/05/redis%E9%9B%86%E7%BE%A4/" data-id="ckpj5wk1s000010mzbz2s8hpi" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "durian"
+        },
+        "headline": "redis主从复制",
+        "image": "http://example.comurl/css/images/thumb-default-small123.png",
+        "keywords": "",
+        "genre": "nosql redis高级篇",
+        "datePublished": "2021-06-05",
+        "dateCreated": "2021-06-05",
+        "dateModified": "2021-06-07",
+        "url": "http://example.com/2021/06/05/redis集群/",
+        "description": "为什么要用redis集群？
+1.容量内存不够，redis如何进行扩容？
+2.并发写操作，redis如何分摊？
+
+什么是集群？
+1.redis集群实现了对redis的水平扩容即启动N个redis节点，将整个数据库分布存储在这N个节点中，每个节点存储总数的1/N。（降低内存压力，避免一台服务器写入爆掉内存）
+
+2.redis集群通过分区（partition）来提供一定程度的可用性即集群中有一部分节点失",
+        "wordCount": 150
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <!-- Valine -->
+    <div class="vcomments"></div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="stack-overflow" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-stack-overflow"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/ppoffice/hexo-theme-hueman" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2021/06/05/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">redis主从复制</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+<div class="widget-wrap widget-list">
+    <h3 class="widget-title">目录</h3>
+    <div class="widget">
+        <div id="toc" class="toc-article">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8redis%E9%9B%86%E7%BE%A4%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">为什么要用redis集群？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E9%9B%86%E7%BE%A4%EF%BC%9F"><span class="toc-number">2.</span> <span class="toc-text">什么是集群？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9B%86%E7%BE%A4%E6%96%B9%E6%A1%88"><span class="toc-number">3.</span> <span class="toc-text">集群方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#redis%E5%AE%98%E6%96%B9%E9%9B%86%E7%BE%A4"><span class="toc-number">3.1.</span> <span class="toc-text">redis官方集群</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4"><span class="toc-number">3.1.1.</span> <span class="toc-text">安装步骤</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#redis-slots%E7%AE%80%E4%BB%8B"><span class="toc-number">3.1.2.</span> <span class="toc-text">redis slots简介</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E8%87%B4%E6%80%A7hash%E9%9B%86%E7%BE%A4"><span class="toc-number">3.2.</span> <span class="toc-text">一致性hash集群</span></a></li></ol></li></ol>
+        </div>
+    </div>
+</div>
+
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/05/redis%E9%9B%86%E7%BE%A4/" class="thumbnail">
+    
+    
+        <span style="background-image:url(url/css/images/thumb-default-small123.png)" alt="redis主从复制" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a></p>
+                            <p class="item-title"><a href="/2021/06/05/redis%E9%9B%86%E7%BE%A4/" class="title">redis主从复制</a></p>
+                            <p class="item-date"><time datetime="2021-06-05T02:53:18.255Z" itemprop="datePublished">2021-06-05</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/05/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a></p>
+                            <p class="item-title"><a href="/2021/06/05/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/" class="title">redis主从复制</a></p>
+                            <p class="item-date"><time datetime="2021-06-05T01:58:14.267Z" itemprop="datePublished">2021-06-05</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/03/redis%E6%A5%B7%E7%A5%A8%E9%9A%86%E5%A0%90/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a></p>
+                            <p class="item-title"><a href="/2021/06/03/redis%E6%A5%B7%E7%A5%A8%E9%9A%86%E5%A0%90/" class="title">redis发布订阅</a></p>
+                            <p class="item-date"><time datetime="2021-06-03T14:16:05.550Z" itemprop="datePublished">2021-06-03</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/03/redis%E5%B2%88%E6%98%A2/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a></p>
+                            <p class="item-title"><a href="/2021/06/03/redis%E5%B2%88%E6%98%A2/" class="title">redis事务</a></p>
+                            <p class="item-date"><time datetime="2021-06-03T13:34:05.965Z" itemprop="datePublished">2021-06-03</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/03/RDB&AOF/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a></p>
+                            <p class="item-title"><a href="/2021/06/03/RDB&AOF/" class="title">RDB&amp;AOF</a></p>
+                            <p class="item-date"><time datetime="2021-06-03T13:30:08.480Z" itemprop="datePublished">2021-06-03</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/">nosql</a><span class="category-list-count">10</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis/">redis</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a><span class="category-list-count">6</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+
+            
+                
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2021 durian</p>
+                
+                <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
+                
+            </div>
+                <p><span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span></p>
+                <p><span id="busuanzi_container_site_uv"> 
+                     本站访客数<span id="busuanzi_value_site_uv"></span>人次
+               </span></p>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+    <script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
+</footer>
+
+    </div>
+    
+    
+    <script src="//unpkg.com/valine"></script>
+    <script>
+        var GUEST = ['nick','mail','link'];
+        var meta = '';
+        meta = meta.split(',').filter(function (item) {
+            return GUEST.indexOf(item)>-1;
+        });
+        var avatarcdn = 'gravatar.cat.net' == true;
+        new Valine({
+            el: '.vcomments',
+            notify: "false",
+            verify: "false",
+            appId: "795P9DunI2Jv3Jho36dlueIS-gzGzoHsz",
+            appKey: "pM151YCVhYBYTB9Pt1SRuiKs",
+            placeholder: "Just Do It",
+            avatar:"mm",
+            recordIP:"false",
+            visitor: "true"
+        });
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

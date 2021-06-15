@@ -1,0 +1,727 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>wtforms | 春江花月夜o</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="" />
+    
+    <meta name="description" content="使用12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394959697# -*- coding:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="wtforms">
+<meta property="og:url" content="http://example.com/2021/06/12/flask/flask-wtforms/index.html">
+<meta property="og:site_name" content="春江花月夜o">
+<meta property="og:description" content="使用12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394959697# -*- coding:">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/css/images/flask.jfif">
+<meta property="article:published_time" content="2021-06-12T00:25:22.025Z">
+<meta property="article:modified_time" content="2021-06-12T08:00:56.752Z">
+<meta property="article:author" content="durian">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/css/images/flask.jfif">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/gouzi.ico" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="春江花月夜o" type="application/atom+xml">
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">关于</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">python</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">cpp</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">webframe</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                                <a class="main-nav-list-link" href="/null">flask</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">django</a>
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">algorithm</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">bigdata</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">nosql</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                                <a class="main-nav-list-link" href="/null"> redis</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">mysql</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null"> redis高级篇</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">mysql高级篇</a>
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/webframe/">webframe</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/webframe/flask/">flask</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-flask/flask-wtforms" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        wtforms
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2021/06/12/flask/flask-wtforms/" class="article-date">
+       <time datetime="2021-06-12T00:25:22.025Z" itemprop="datePublished">2021-06-12</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/2021/06/12/flask/flask-wtforms/" class="article-date">
+     <time datetime="2021-06-12T08:00:56.752Z" itemprop="dateModified">2021-06-12</time>
+  </a>
+</div>
+
+
+                
+
+                
+                
+   <div class="article-counter">
+      <i class="fa fa-file-word-o"></i>
+      <span class="post-count-item-text">本文字数: </span>
+      <span class="post-count">3k</span>
+      <i class="fa fa-clock-o"></i>
+      <span class="post-time-item-text">阅读时长: </span>
+      <span class="post-count">16 分钟 </span>
+   </div>
+
+
+                <span id="busuanzi_container_page_pv">
+                阅读次数<span id="busuanzi_value_page_pv"></span>次
+                </span>
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><span class="line"># -*- coding:utf-8 -*-</span><br><span class="line">from flask import Flask, render_template, flash, request, views, jsonify</span><br><span class="line">from flask_wtf import FlaskForm</span><br><span class="line">from wtforms import Form</span><br><span class="line">from wtforms import StringField, PasswordField, SubmitField, widgets</span><br><span class="line">from wtforms.validators import DataRequired, EqualTo, Length, Regexp</span><br><span class="line">from werkzeug.middleware.dispatcher import DispatcherMiddleware</span><br><span class="line">from werkzeug.serving import run_simple</span><br><span class="line">import pymysql</span><br><span class="line">pymysql.install_as_MySQLdb()</span><br><span class="line">from flask_sqlalchemy import SQLAlchemy</span><br><span class="line"></span><br><span class="line"># 需要一个导入名，作用为了确定资源所在路径</span><br><span class="line">app &#x3D; Flask(__name__)</span><br><span class="line">app.secret_key &#x3D; &#39;item&#39;</span><br><span class="line"></span><br><span class="line">app.config[&#39;SQLALCHEMY_DATABASE_URI&#39;] &#x3D; &#39;mysql:&#x2F;&#x2F;root:123456@127.0.0.1&#x2F;flasksql&#39;</span><br><span class="line">app.config[&#39;SQLALCHEMY_TRACK_MODIFICATIONS&#39;] &#x3D; False</span><br><span class="line">db &#x3D; SQLAlchemy(app)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Role(db.Model):</span><br><span class="line">    __tablename__ &#x3D; &#39;roles&#39;</span><br><span class="line">    id &#x3D; db.Column(db.Integer, primary_key&#x3D;True, autoincrement&#x3D;True)</span><br><span class="line">    name &#x3D; db.Column(db.String(16), unique&#x3D;True)</span><br><span class="line">    users &#x3D; db.relationship(&#39;User&#39;)</span><br><span class="line"></span><br><span class="line">    def __repr__(self):</span><br><span class="line">        return &quot;&lt;Role:%s %s&gt;&quot; % (self.name, self.id)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class User(db.Model):</span><br><span class="line">    __tablename__ &#x3D; &#39;users&#39;</span><br><span class="line">    id &#x3D; db.Column(db.Integer, primary_key&#x3D;True, autoincrement&#x3D;True)</span><br><span class="line">    name &#x3D; db.Column(db.String(16))</span><br><span class="line">    email &#x3D; db.Column(db.String(32))</span><br><span class="line">    password &#x3D; db.Column(db.String(32))</span><br><span class="line">    role_id &#x3D; db.Column(db.Integer, db.ForeignKey(&#39;roles.id&#39;))</span><br><span class="line"></span><br><span class="line">    def __repr__(self):</span><br><span class="line">        return &quot;&lt;User: %s %s %s %s&gt;&quot; % (self.name, self.id, self.email, self.password)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># db.create_all()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class LoginForm(FlaskForm):</span><br><span class="line">    username &#x3D; StringField(u&quot;用户名&quot;,</span><br><span class="line">                           # 自定义验证规则</span><br><span class="line">                           validators&#x3D;[</span><br><span class="line">                               DataRequired(message&#x3D;&#39;用户名不能为空&#39;),</span><br><span class="line">                               Length(min&#x3D;6, max&#x3D;18, message&#x3D;&#39;用户名必须大于%(min)d且小于%(max)d&#39;)</span><br><span class="line">                           ],</span><br><span class="line">                           # 制定页面显示插件</span><br><span class="line">                           widget&#x3D;widgets.TextInput(),</span><br><span class="line">                           # 给插件生成属性</span><br><span class="line">                           render_kw&#x3D;&#123;&#39;class&#39;: &#39;form-control&#39;&#125;</span><br><span class="line">                           )</span><br><span class="line"></span><br><span class="line">    # 定制在页面上输入的文本框</span><br><span class="line"></span><br><span class="line">    pwd1 &#x3D; PasswordField(u&quot;密码&quot;, validators&#x3D;[DataRequired(), EqualTo(&#39;pwd2&#39;, &#39;密码填入不一致&#39;)])</span><br><span class="line">    pwd2 &#x3D; PasswordField(u&quot;确认密码&quot;, validators&#x3D;[DataRequired(),</span><br><span class="line">                                              EqualTo(&#39;pwd1&#39;, &#39;密码填入不一致&#39;),</span><br><span class="line">                                              Regexp(regex&#x3D;&quot;^(?&#x3D;.*[a-z])(?&#x3D;.*[A-Z])(?&#x3D;.*\d)[\s\S]&#123;8,16&#125;$&quot;,</span><br><span class="line">                                                     message&#x3D;&quot;密码至少8个字符，需要至于1个大写字母，1个小写字母，&quot;</span><br><span class="line">                                                                       &quot;1个数字和一个特殊符号&quot;)</span><br><span class="line">                                              ])</span><br><span class="line">    submit &#x3D; SubmitField(u&#39;提交&#39;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@app.route(&#39;&#x2F;form&#39;)</span><br><span class="line">def login():</span><br><span class="line">    login_form &#x3D; LoginForm()</span><br><span class="line">    if request.method &#x3D;&#x3D; &#39;POST&#39;:</span><br><span class="line">        username &#x3D; request.form.get(&#39;username&#39;)</span><br><span class="line">        pwd1 &#x3D; request.form.get(&#39;pwd1&#39;)</span><br><span class="line">        pwd2 &#x3D; request.form.get(&#39;pwd2&#39;)</span><br><span class="line"></span><br><span class="line">        form &#x3D; LoginForm(formdata&#x3D;request.form)</span><br><span class="line">        if form.validate():</span><br><span class="line">            print(&#39;通过验证&#39;)</span><br><span class="line">        else:</span><br><span class="line">            print(form.errors)</span><br><span class="line">        if login_form.validate_on_submit():</span><br><span class="line">            print(123)</span><br><span class="line">            return b&quot;success&quot;</span><br><span class="line">        else:</span><br><span class="line">            message1 &#x3D; login_form.pwd2.errors</span><br><span class="line">            message2 &#x3D; login_form.pwd1.errors</span><br><span class="line">            print(message1, message2)</span><br><span class="line">            flash(message1[0])</span><br><span class="line">    return render_template(&#39;index.html&#39;, login_form&#x3D;login_form)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ &#x3D;&#x3D; &quot;__main__&quot;:</span><br><span class="line">    app.run()</span><br></pre></td></tr></table></figure>
+
+<h2 id="form的作用"><a href="#form的作用" class="headerlink" title="form的作用"></a>form的作用</h2><h3 id="生成HTML"><a href="#生成HTML" class="headerlink" title="# 生成HTML"></a># 生成HTML</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">import re</span><br><span class="line">class InputText:</span><br><span class="line">    </span><br><span class="line">    def __str__(self):</span><br><span class="line">        return &#39;&lt;input type&#x3D;&quot;text&quot; &#x2F;&gt;&#39;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class InputEmail:</span><br><span class="line"></span><br><span class="line">    def __str__(self):</span><br><span class="line">        return &#39;&lt;input type&#x3D;&quot;text&quot; &#x2F;&gt;&#39;</span><br></pre></td></tr></table></figure>
+
+<h3 id="校验格式"><a href="#校验格式" class="headerlink" title="校验格式"></a>校验格式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class StringField:</span><br><span class="line">    def __init__(self, wg, reg):</span><br><span class="line">        self.widget &#x3D; wg</span><br><span class="line">        self.reg &#x3D; reg</span><br><span class="line">        </span><br><span class="line">    def __str__(self):</span><br><span class="line">        return self.widget</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="管理字段分发"><a href="#管理字段分发" class="headerlink" title="管理字段分发"></a>管理字段分发</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">class LoginForm:</span><br><span class="line">    xyy &#x3D; StringField(wg&#x3D;InputTest(), reg&#x3D;r&#39;\d+&#39;)</span><br><span class="line">    lw &#x3D; StringField(wg&#x3D;InputEmail(), reg&#x3D;r&#39;\w+&#39;)</span><br><span class="line">    </span><br><span class="line">    def __str__(self):</span><br><span class="line">        self.form &#x3D; &#123;&quot;xyy&quot;: 123213, &quot;lw&quot;:&#39; fasfas12&#39;&#125;</span><br><span class="line">    </span><br><span class="line">    def validate(self):</span><br><span class="line">        fields &#x3D; &#123;&quot;xyy&quot;: self.xyy, &quot;lw&quot;: self.lw&#125;</span><br><span class="line">        for name, field in fields.items():</span><br><span class="line">            if not re.match(field.reg, self.form.get(name)):</span><br><span class="line">                return False</span><br><span class="line">        return True</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="源码流程"><a href="#源码流程" class="headerlink" title="源码流程"></a>源码流程</h2><h3 id="form的创建流程"><a href="#form的创建流程" class="headerlink" title="form的创建流程"></a>form的创建流程</h3><h4 id="类是由ForMata创建的，执行ForMata的-init-方法。"><a href="#类是由ForMata创建的，执行ForMata的-init-方法。" class="headerlink" title="类是由ForMata创建的，执行ForMata的__init__方法。"></a>类是由ForMata创建的，执行ForMata的__init__方法。</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class Form(with_metaclass(FormMeta, BaseForm)):</span><br><span class="line">    Meta &#x3D; DefaultMeta</span><br><span class="line"></span><br><span class="line">def with_metaclass(meta, base&#x3D;object):</span><br><span class="line">    return meta(&quot;NewBase&quot;, (base,), &#123;&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="执行Formata的-init-方法，loginForm类创建"><a href="#执行Formata的-init-方法，loginForm类创建" class="headerlink" title="执行Formata的__init__方法，loginForm类创建"></a>执行Formata的__init__方法，loginForm类创建</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">（这时相当于执行loginForm. _unbound_fields &#x3D; None和loginForm._wtforms_meta &#x3D; None）</span><br><span class="line">class FormMeta(type):</span><br><span class="line">    def __init__(cls, name, bases, attrs):</span><br><span class="line">        type.__init__(cls, name, bases, attrs)</span><br><span class="line">        cls._unbound_fields &#x3D; None</span><br><span class="line">        cls._wtforms_meta &#x3D; None</span><br></pre></td></tr></table></figure>
+
+<h4 id="loginForm创建后，执行其中的Field字段"><a href="#loginForm创建后，执行其中的Field字段" class="headerlink" title="loginForm创建后，执行其中的Field字段"></a>loginForm创建后，执行其中的Field字段</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line">class Field(object):</span><br><span class="line">    errors &#x3D; tuple()</span><br><span class="line">    process_errors &#x3D; tuple()</span><br><span class="line">    raw_data &#x3D; None</span><br><span class="line">    validators &#x3D; tuple()</span><br><span class="line">    widget &#x3D; None</span><br><span class="line">    _formfield &#x3D; True</span><br><span class="line">    _translations &#x3D; DummyTranslations()</span><br><span class="line">    do_not_call_in_templates &#x3D; True  # Allow Django 1.4 traversal</span><br><span class="line"></span><br><span class="line">    def __new__(cls, *args, **kwargs):</span><br><span class="line">        if &#39;_form&#39; in kwargs and &#39;_name&#39; in kwargs:</span><br><span class="line">            return super(Field, cls).__new__(cls)</span><br><span class="line">        else:</span><br><span class="line">            return UnboundField(cls, *args, **kwargs)</span><br><span class="line"></span><br><span class="line">    def __init__(self, label&#x3D;None, validators&#x3D;None, filters&#x3D;tuple(),</span><br><span class="line">                 description&#x3D;&#39;&#39;, id&#x3D;None, default&#x3D;None, widget&#x3D;None,</span><br><span class="line">                 render_kw&#x3D;None, _form&#x3D;None, _name&#x3D;None, _prefix&#x3D;&#39;&#39;,</span><br><span class="line">                 _translations&#x3D;None, _meta&#x3D;None):</span><br><span class="line">这里判断如果没有传_form和_name会生成unboundField</span><br><span class="line">这时loginform中:</span><br><span class="line">&#123;</span><br><span class="line">	‘__module’: ‘__main__’,</span><br><span class="line">‘name’:&lt;UnboundField&gt;(StringField…..),</span><br><span class="line">‘pwd’: &lt;UnboundField&gt;(PasswordField…..),</span><br><span class="line">‘__doc__’: None,</span><br><span class="line">‘unbound_fields’: None,</span><br><span class="line">‘_wtforms_meta’: None</span><br><span class="line">&#125;</span><br><span class="line">class UnboundField(object):</span><br><span class="line">    _formfield &#x3D; True</span><br><span class="line">    creation_counter &#x3D; 0</span><br><span class="line"></span><br><span class="line">    def __init__(self, field_class, *args, **kwargs):</span><br><span class="line">        UnboundField.creation_counter +&#x3D; 1</span><br><span class="line">        self.field_class &#x3D; field_class</span><br><span class="line">        self.args &#x3D; args</span><br><span class="line">        self.kwargs &#x3D; kwargs</span><br><span class="line">        self.creation_counter &#x3D; UnboundField.creation_counter</span><br><span class="line">        validators &#x3D; kwargs.get(&#39;validators&#39;)</span><br><span class="line">        if validators:</span><br><span class="line">            self.field_class.check_validators(validators)</span><br><span class="line"></span><br><span class="line">    def bind(self, form, name, prefix&#x3D;&#39;&#39;, translations&#x3D;None, **kwargs):</span><br><span class="line">        kw &#x3D; dict(</span><br><span class="line">            self.kwargs,</span><br><span class="line">            _form&#x3D;form,</span><br><span class="line">            _prefix&#x3D;prefix,</span><br><span class="line">            _name&#x3D;name,</span><br><span class="line">            _translations&#x3D;translations,</span><br><span class="line">            **kwargs</span><br><span class="line">        )</span><br><span class="line">        return self.field_class(*self.args, **kw)</span><br><span class="line"></span><br><span class="line">    def __repr__(self):</span><br><span class="line">        return &#39;&lt;UnboundField(%s, %r, %r)&gt;&#39; % (self.field_class.__name__, self.args, self.kwargs)</span><br><span class="line">这里unboundfield用计数器给每个实例化类计数，保持python3.6以下的顺序执行。</span><br><span class="line">class Foo:</span><br><span class="line">    creator &#x3D; 0</span><br><span class="line"></span><br><span class="line">    def __init__(self):</span><br><span class="line">        Foo.creator +&#x3D; 1</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">f &#x3D; Foo()</span><br><span class="line">print(f.creator)</span><br><span class="line">g &#x3D; Foo()</span><br><span class="line">print(g.creator)</span><br></pre></td></tr></table></figure>
+
+<h4 id="form-实例化，一个类实例化要哪几步？"><a href="#form-实例化，一个类实例化要哪几步？" class="headerlink" title="form()实例化，一个类实例化要哪几步？"></a>form()实例化，一个类实例化要哪几步？</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br></pre></td><td class="code"><pre><span class="line">@app.route(&#39;&#x2F;form&#39;)</span><br><span class="line">def login():</span><br><span class="line">    login_form &#x3D; LoginForm()</span><br><span class="line">1.先看自己有没有__call__然后一直找到寻源类，metaclass，调用metaclass的__call__方法(这里是FormMeta的__call__)</span><br><span class="line">def __call__(cls, *args, **kwargs):</span><br><span class="line">    if cls._unbound_fields is None:</span><br><span class="line">        fields &#x3D; []</span><br><span class="line">        for name in dir(cls):</span><br><span class="line">            if not name.startswith(&#39;_&#39;):</span><br><span class="line"># 获取unboundfield（1，StringField， 参数）</span><br><span class="line">                unbound_field &#x3D; getattr(cls, name)</span><br><span class="line">                if hasattr(unbound_field, &#39;_formfield&#39;):</span><br><span class="line">                    fields.append((name, unbound_field))</span><br><span class="line"># 按照定义顺序排序</span><br><span class="line">        fields.sort(key&#x3D;lambda x: (x[1].creation_counter, x[0]))</span><br><span class="line">        cls._unbound_fields &#x3D; fields</span><br><span class="line">if cls._wtforms_meta is None:</span><br><span class="line">        bases &#x3D; []</span><br><span class="line">        for mro_class in cls.__mro__:</span><br><span class="line">            if &#39;Meta&#39; in mro_class.__dict__:</span><br><span class="line">                bases.append(mro_class.Meta)</span><br><span class="line">        cls._wtforms_meta &#x3D; type(&#39;Meta&#39;, tuple(bases), &#123;&#125;)</span><br><span class="line">    return type.__call__(cls, *args, **kwargs)</span><br><span class="line">	1.获取定义的Field按照计数器排序绑定进unbound_field</span><br><span class="line">    2.调用mro继承算法，继承顺序，按照mro顺序找寻每个父类对象的Meta加入bases，（拿到所有的功能），然后生成一个继承所有meta的类并把它赋值给form的  _wtforms_meta</span><br><span class="line">    class Form(with_metaclass(FormMeta, BaseForm)):</span><br><span class="line">        Meta &#x3D; DefaultMeta</span><br><span class="line">    3.执行type.__call__( cls, *args, **kwargs)真的call方法</span><br><span class="line">    这时loginform中:</span><br><span class="line">    &#123;</span><br><span class="line">        ‘__module’: ‘__main__’,</span><br><span class="line">    ‘name’:&lt;UnboundField&gt;(StringField…..),</span><br><span class="line">    ‘pwd’: &lt;UnboundField&gt;(PasswordField…..),</span><br><span class="line">    ‘__doc__’: None,</span><br><span class="line">    ‘unbound_fields’: [(‘username’,&lt;UnboundField StringField&gt;), (‘pwd’, …….Field)],</span><br><span class="line">    ‘_wtforms_meta’: class.Meta,</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">2.然后执行自己的__new__方法（或继承父类的）</span><br><span class="line">发现父类并没有写__new__，继承的object的。不用找了</span><br><span class="line"></span><br><span class="line">3.再执行自己的__init__方法（或继承）</span><br><span class="line">class Form(with_metaclass(FormMeta, BaseForm)):</span><br><span class="line">    Meta &#x3D; DefaultMeta</span><br><span class="line"></span><br><span class="line">    def __init__(self, formdata&#x3D;None, obj&#x3D;None, prefix&#x3D;&#39;&#39;, data&#x3D;None, meta&#x3D;None, **kwargs):</span><br><span class="line">        meta_obj &#x3D; self._wtforms_meta()</span><br><span class="line">        if meta is not None and isinstance(meta, dict):</span><br><span class="line">            meta_obj.update_values(meta)</span><br><span class="line">        super(Form, self).__init__(self._unbound_fields, meta&#x3D;meta_obj, prefix&#x3D;prefix)</span><br><span class="line">        for name, field in iteritems(self._fields):</span><br><span class="line">            # Set all the fields to attributes so that they obscure the class</span><br><span class="line">            # attributes with the same names.</span><br><span class="line">            setattr(self, name, field)</span><br><span class="line">        self.process(formdata, obj, data&#x3D;data, **kwargs)</span><br><span class="line">	1.实例化_wtforms_meta meta_obj &#x3D; self._wtforms_meta()</span><br><span class="line">	meta的功能之一csrf验证隐藏标签，django自带csrf但flask没有，wtform可以提供（生成csrf input框）</span><br><span class="line">    meta_obj &#x3D; self._wtforms_meta()</span><br><span class="line">    if meta is not None and isinstance(meta, dict):</span><br><span class="line">        meta_obj.update_values(meta)</span><br><span class="line">	如果设置了meta参数，比如loginForm(meta&#x3D;&#123;&#125;)会帮助更新到wtforms_meta.</span><br><span class="line">    2.传入meta和field列表执行父类的构造方法</span><br><span class="line">    super(Form, self).__init__(self._unbound_fields, meta&#x3D;meta_obj, prefix&#x3D;prefix)</span><br><span class="line">    </span><br><span class="line">    class BaseForm(object):</span><br><span class="line">        def __init__(self, fields, prefix&#x3D;&#39;&#39;, meta&#x3D;DefaultMeta()):</span><br><span class="line">            if prefix and prefix[-1] not in &#39;-_;:&#x2F;.&#39;:</span><br><span class="line">                prefix +&#x3D; &#39;-&#39;</span><br><span class="line">    </span><br><span class="line">            self.meta &#x3D; meta</span><br><span class="line">            self._prefix &#x3D; prefix</span><br><span class="line">            self._fields &#x3D; OrderedDict()</span><br><span class="line">    </span><br><span class="line">            if hasattr(fields, &#39;items&#39;):</span><br><span class="line">                fields &#x3D; fields.items()</span><br><span class="line">    </span><br><span class="line">            translations &#x3D; self._get_translations()</span><br><span class="line">            extra_fields &#x3D; []</span><br><span class="line">            if meta.csrf:</span><br><span class="line">                self._csrf &#x3D; meta.build_csrf(self)</span><br><span class="line">                extra_fields.extend(self._csrf.setup_form(self))</span><br><span class="line">            for name, unbound_field in itertools.chain(fields, extra_fields):</span><br><span class="line">                options &#x3D; dict(name&#x3D;name, prefix&#x3D;prefix, translations&#x3D;translations)</span><br><span class="line">                field &#x3D; meta.bind_field(self, unbound_field, options)</span><br><span class="line">                self._fields[name] &#x3D; field</span><br><span class="line">	1.生成csrf的隐藏field作为extra_field</span><br><span class="line">    2.遍历大的field可迭代对象</span><br><span class="line">	3.把每个field对象实例化（调用field的bind）</span><br><span class="line">	def bind(self, form, name, prefix&#x3D;&#39;&#39;, translations&#x3D;None, **kwargs):</span><br><span class="line">    kw &#x3D; dict(</span><br><span class="line">        self.kwargs,</span><br><span class="line">        _form&#x3D;form,</span><br><span class="line">        _prefix&#x3D;prefix,</span><br><span class="line">        _name&#x3D;name,</span><br><span class="line">        _translations&#x3D;translations,</span><br><span class="line">        **kwargs</span><br><span class="line">    )</span><br><span class="line">    return self.field_class(*self.args, **kw)</span><br><span class="line"></span><br><span class="line">4.这时候对象有了_name和_field，开始走自己真的__new__（之前是走Unbound的）</span><br><span class="line">class Field(object):</span><br><span class="line">    errors &#x3D; tuple()</span><br><span class="line">    process_errors &#x3D; tuple()</span><br><span class="line">    raw_data &#x3D; None</span><br><span class="line">    validators &#x3D; tuple()</span><br><span class="line">    widget &#x3D; None</span><br><span class="line">    _formfield &#x3D; True</span><br><span class="line">    _translations &#x3D; DummyTranslations()</span><br><span class="line">    do_not_call_in_templates &#x3D; True  # Allow Django 1.4 traversal</span><br><span class="line"></span><br><span class="line">    def __new__(cls, *args, **kwargs):</span><br><span class="line">        if &#39;_form&#39; in kwargs and &#39;_name&#39; in kwargs:</span><br><span class="line">            return super(Field, cls).__new__(cls)</span><br><span class="line">        else:</span><br><span class="line">            return UnboundField(cls, *args, **kwargs)</span><br></pre></td></tr></table></figure>
+
+<h4 id="然后执行自己的init"><a href="#然后执行自己的init" class="headerlink" title="然后执行自己的init"></a>然后执行自己的<strong>init</strong></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">def __init__(self, label&#x3D;None, validators&#x3D;None, filters&#x3D;tuple(),</span><br><span class="line">             description&#x3D;&#39;&#39;, id&#x3D;None, default&#x3D;None, widget&#x3D;None,</span><br><span class="line">             render_kw&#x3D;None, _form&#x3D;None, _name&#x3D;None, _prefix&#x3D;&#39;&#39;,</span><br><span class="line">             _translations&#x3D;None, _meta&#x3D;None):</span><br><span class="line">    if _translations is not None:</span><br><span class="line">        self._translations &#x3D; _translations</span><br><span class="line"></span><br><span class="line">    if _meta is not None:</span><br><span class="line">        self.meta &#x3D; _meta</span><br><span class="line">    elif _form is not None:</span><br><span class="line">        self.meta &#x3D; _form.meta</span><br><span class="line">    else:</span><br><span class="line">        raise TypeError(&quot;Must provide one of _form or _meta&quot;)</span><br><span class="line"></span><br><span class="line">    self.default &#x3D; default</span><br><span class="line">    self.description &#x3D; description</span><br><span class="line">    self.render_kw &#x3D; render_kw</span><br><span class="line">    self.filters &#x3D; filters</span><br><span class="line">    self.flags &#x3D; Flags()</span><br><span class="line">    self.name &#x3D; _prefix + _name</span><br><span class="line">    self.short_name &#x3D; _name</span><br><span class="line">    self.type &#x3D; type(self).__name__</span><br><span class="line"></span><br><span class="line">    self.check_validators(validators)</span><br><span class="line">    self.validators &#x3D; validators or self.validators</span><br><span class="line"></span><br><span class="line">    self.id &#x3D; id or self.name</span><br><span class="line">    self.label &#x3D; Label(self.id, label if label is not None else self.gettext(_name.replace(&#39;_&#39;, &#39; &#39;).title()))</span><br><span class="line"></span><br><span class="line">    if widget is not None:</span><br><span class="line">        self.widget &#x3D; widget</span><br><span class="line"></span><br><span class="line">    for v in itertools.chain(self.validators, [self.widget]):</span><br><span class="line">        flags &#x3D; getattr(v, &#39;field_flags&#39;, ())</span><br><span class="line">        for f in flags:</span><br><span class="line">            setattr(self.flags, f, True)</span><br><span class="line"></span><br><span class="line">这个时候loginform中</span><br><span class="line">&#123;</span><br><span class="line">	‘__module’: ‘__main__’,</span><br><span class="line">‘name’:&lt;UnboundField&gt;(StringField…..),</span><br><span class="line">‘pwd’: &lt;UnboundField&gt;(PasswordField…..),</span><br><span class="line">‘__doc__’: None,</span><br><span class="line">‘unbound_fields’: [(‘username’,&lt;UnboundField StringField&gt;), (‘pwd’, …….Field)], # 排序加计数</span><br><span class="line">‘_wtforms_meta’: class.Meta,</span><br><span class="line">‘_fields’:&#123;‘username’:StringField(*args), ‘csrf’:….., ‘pwd’:xxxx&#125;,</span><br><span class="line">‘_prefix’:xxxxx,xxxx</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="再回到form-init-继续往下执行"><a href="#再回到form-init-继续往下执行" class="headerlink" title="再回到form.__init__继续往下执行"></a>再回到form.__init__继续往下执行</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">meta_obj &#x3D; self._wtforms_meta()</span><br><span class="line">if meta is not None and isinstance(meta, dict):</span><br><span class="line">    meta_obj.update_values(meta)</span><br><span class="line">super(Form, self).__init__(self._unbound_fields, meta&#x3D;meta_obj, prefix&#x3D;prefix)</span><br><span class="line"></span><br><span class="line">for name, field in iteritems(self._fields):</span><br><span class="line">    # Set all the fields to attributes so that they obscure the class</span><br><span class="line">    # attributes with the same names.</span><br><span class="line">    setattr(self, name, field)</span><br><span class="line">self.process(formdata, obj, data&#x3D;data, **kwargs)</span><br><span class="line">这里为什么要遍历赋值？因为这个时候要取对象还需要loginForm._fields[‘username’]这样取值，而我们想要LoginForm.username这样就可取值</span><br><span class="line">setattr(self, name, value)</span><br><span class="line"></span><br><span class="line">class Foo:</span><br><span class="line">    creator &#x3D; 0</span><br><span class="line">    value &#x3D; &#123;&#39;a&#39;: 1, &#39;b&#39;: &#39;2&#39;&#125;</span><br><span class="line"></span><br><span class="line">    def __init__(self):</span><br><span class="line">        Foo.creator +&#x3D; 1</span><br><span class="line">        for name, val in self.value.items():</span><br><span class="line">            setattr(self, name, val)</span><br><span class="line"></span><br><span class="line">f &#x3D; Foo()</span><br><span class="line">print(f.creator)</span><br><span class="line">setattr(f, &#39;name&#39;, 100)</span><br><span class="line">print(f.name, f.a, f.b)</span><br><span class="line">g &#x3D; Foo()</span><br><span class="line">print(g.creator)</span><br></pre></td></tr></table></figure>
+
+<h4 id="执行process（为每个字段设置默认值）"><a href="#执行process（为每个字段设置默认值）" class="headerlink" title="执行process（为每个字段设置默认值）"></a>执行process（为每个字段设置默认值）</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">这里要传入了formdata才有用，比如loginForm(formdata&#x3D;request.form)</span><br><span class="line">（每个field里面还有它的widget插件）</span><br><span class="line">form &#x3D; LoginForm(formdata&#x3D;request.form)</span><br><span class="line">print(form.username)</span><br><span class="line">执行field.__str__方法</span><br><span class="line">def __str__(self):</span><br><span class="line">    return self()</span><br><span class="line">执行field.__call__方法</span><br><span class="line">def __call__(self, **kwargs):</span><br><span class="line">    return self.meta.render_field(self, kwargs)</span><br><span class="line">执行meta的render_field</span><br><span class="line">def render_field(self, field, render_kw):</span><br><span class="line">    other_kw &#x3D; getattr(field, &#39;render_kw&#39;, None)</span><br><span class="line">    if other_kw is not None:</span><br><span class="line">        render_kw &#x3D; dict(other_kw, **render_kw)</span><br><span class="line">    return field.widget(field, **render_kw)</span><br><span class="line">执行widget插件的__call__方法</span><br><span class="line">def __call__(self, field, **kwargs):</span><br><span class="line">    kwargs.setdefault(&#39;id&#39;, field.id)</span><br><span class="line">    kwargs.setdefault(&#39;type&#39;, self.input_type)</span><br><span class="line">    if &#39;value&#39; not in kwargs:</span><br><span class="line">        kwargs[&#39;value&#39;] &#x3D; field._value()</span><br><span class="line">    if &#39;required&#39; not in kwargs and &#39;required&#39; in getattr(field, &#39;flags&#39;, []):</span><br><span class="line">        kwargs[&#39;required&#39;] &#x3D; True</span><br><span class="line">    return Markup(&#39;&lt;input %s&gt;&#39; % self.html_params(name&#x3D;field.name, **kwargs))</span><br><span class="line">(字符串拼接)最终返回给print(form.name)的就是这个返回值</span><br><span class="line"></span><br><span class="line">最后关于form对象的__iter__：</span><br><span class="line">def __iter__(self):</span><br><span class="line">    return iter(itervalues(self._fields))</span><br><span class="line">import itertools</span><br><span class="line">from wtforms.compat import with_metaclass, iteritems, itervalues</span><br></pre></td></tr></table></figure>
+
+<h3 id="form的验证流程"><a href="#form的验证流程" class="headerlink" title="form的验证流程"></a>form的验证流程</h3><h4 id="用户请求发的所有数据，-‘name’-123-xxxx"><a href="#用户请求发的所有数据，-‘name’-123-xxxx" class="headerlink" title="用户请求发的所有数据，{‘name’:123,xxxx}"></a>用户请求发的所有数据，{‘name’:123,xxxx}</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">def process(self, formdata&#x3D;None, obj&#x3D;None, data&#x3D;None, **kwargs):</span><br><span class="line">    formdata &#x3D; self.meta.wrap_formdata(self, formdata)</span><br><span class="line"></span><br><span class="line">    if data is not None:</span><br><span class="line">        # XXX we want to eventually process &#39;data&#39; as a new entity.</span><br><span class="line">        #     Temporarily, this can simply be merged with kwargs.</span><br><span class="line">        kwargs &#x3D; dict(data, **kwargs)</span><br><span class="line"></span><br><span class="line">    for name, field, in iteritems(self._fields):</span><br><span class="line">        if obj is not None and hasattr(obj, name):</span><br><span class="line">            field.process(formdata, getattr(obj, name))</span><br><span class="line">        elif name in kwargs:</span><br><span class="line">            field.process(formdata, kwargs[name])</span><br><span class="line">        else:</span><br><span class="line">            field.process(formdata)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">其实传这三个值都一样(传的格式不同)，可以传三种格式</span><br><span class="line">form &#x3D; LoginForm(formdata&#x3D;request.form) # 取val.get_list()</span><br><span class="line">form &#x3D; LoginForm(obj&#x3D;request.form)	# 取val.name&#x2F;val.pwd</span><br><span class="line">form &#x3D; LoginForm(data&#x3D;request.form) # val[‘name’]</span><br></pre></td></tr></table></figure>
+
+<h4 id="执行form-validate表单"><a href="#执行form-validate表单" class="headerlink" title="执行form.validate表单"></a>执行form.validate表单</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">if form.validate():</span><br><span class="line">    print(&#39;通过验证&#39;)</span><br><span class="line">else:</span><br><span class="line">    print(form.errors)</span><br><span class="line"></span><br><span class="line">def validate(self, extra_validators&#x3D;None):</span><br><span class="line">    if extra_validators is not None:</span><br><span class="line">        extra &#x3D; extra_validators.copy()</span><br><span class="line">    else:</span><br><span class="line">        extra &#x3D; &#123;&#125;</span><br><span class="line"></span><br><span class="line">    for name in self._fields:</span><br><span class="line">        inline &#x3D; getattr(self.__class__, &#39;validate_%s&#39; % name, None)</span><br><span class="line"></span><br><span class="line">        if inline is not None:</span><br><span class="line">            extra.setdefault(name, []).append(inline)</span><br><span class="line"></span><br><span class="line">    return super(Form, self).validate(extra)</span><br></pre></td></tr></table></figure>
+
+<h4 id="循环fields对象，找寻对象中的钩子函数，放到extra中"><a href="#循环fields对象，找寻对象中的钩子函数，放到extra中" class="headerlink" title="循环fields对象，找寻对象中的钩子函数，放到extra中"></a>循环fields对象，找寻对象中的钩子函数，放到extra中</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">extra&#x3D; &#123;</span><br><span class="line">name:钩子</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">def validate(self, extra_validators&#x3D;None):</span><br><span class="line">    success &#x3D; True</span><br><span class="line">    for name, field in iteritems(self._fields):</span><br><span class="line">        if extra_validators is not None and name in extra_validators:</span><br><span class="line">            extra &#x3D; extra_validators[name]</span><br><span class="line">        else:</span><br><span class="line">            extra &#x3D; tuple()</span><br><span class="line">        if not field.validate(self, extra):</span><br><span class="line">            success &#x3D; False</span><br><span class="line">    return success</span><br></pre></td></tr></table></figure>
+
+<h4 id="如果有钩子函数则获取，并执行字段的validate-extra"><a href="#如果有钩子函数则获取，并执行字段的validate-extra" class="headerlink" title="如果有钩子函数则获取，并执行字段的validate(extra)"></a>如果有钩子函数则获取，并执行字段的validate(extra)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">def validate(self, form, extra_validators&#x3D;tuple()):</span><br><span class="line">    self.errors &#x3D; list(self.process_errors)</span><br><span class="line">    stop_validation &#x3D; False</span><br><span class="line"></span><br><span class="line">    # Check the type of extra_validators</span><br><span class="line">    self.check_validators(extra_validators)</span><br><span class="line"></span><br><span class="line">    # Call pre_validate</span><br><span class="line">    try:</span><br><span class="line">        self.pre_validate(form)</span><br><span class="line">    except StopValidation as e:</span><br><span class="line">        if e.args and e.args[0]:</span><br><span class="line">            self.errors.append(e.args[0])</span><br><span class="line">        stop_validation &#x3D; True</span><br><span class="line">    except ValueError as e:</span><br><span class="line">        self.errors.append(e.args[0])</span><br><span class="line"></span><br><span class="line">    # Run validators</span><br><span class="line">    if not stop_validation:</span><br><span class="line">        chain &#x3D; itertools.chain(self.validators, extra_validators)</span><br><span class="line">        stop_validation &#x3D; self._run_validation_chain(form, chain)</span><br><span class="line"></span><br><span class="line">    # Call post_validate</span><br><span class="line">    try:</span><br><span class="line">        self.post_validate(form, stop_validation)</span><br><span class="line">    except ValueError as e:</span><br><span class="line">        self.errors.append(e.args[0])</span><br><span class="line"></span><br><span class="line">    return len(self.errors) &#x3D;&#x3D; 0</span><br><span class="line">拼接传入的validators</span><br><span class="line">pwd1 &#x3D; PasswordField(u&quot;密码&quot;, validators&#x3D;[DataRequired(), EqualTo(&#39;pwd2&#39;, &#39;密码填入不一致&#39;)])</span><br><span class="line">和生成的自定义钩子函数extra_validators</span><br></pre></td></tr></table></figure>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://example.com/2021/06/12/flask/flask-wtforms/" data-id="ckpt3vgfq003iewtx7srs0pd5" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "durian"
+        },
+        "headline": "wtforms",
+        "image": "http://example.com/css/images/flask.jfif",
+        "keywords": "",
+        "genre": "webframe flask",
+        "datePublished": "2021-06-12",
+        "dateCreated": "2021-06-12",
+        "dateModified": "2021-06-12",
+        "url": "http://example.com/2021/06/12/flask/flask-wtforms/",
+        "description": "使用12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394959697# -*- coding:",
+        "wordCount": 4842
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <!-- Valine -->
+    <div class="vcomments"></div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/chunjianghuayueye2" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2021/06/12/flask/flask%E4%BF%A1%E5%8F%B7%E9%87%8F/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            flask信号量
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2021/06/12/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E4%B8%BA%E4%BB%80%E4%B9%88b+%E6%A0%91/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">innodb索引为什么使用b+树？</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+<div class="widget-wrap widget-list">
+    <h3 class="widget-title">目录</h3>
+    <div class="widget">
+        <div id="toc" class="toc-article">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#form%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-number">2.</span> <span class="toc-text">form的作用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90HTML"><span class="toc-number">2.1.</span> <span class="toc-text"># 生成HTML</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%A1%E9%AA%8C%E6%A0%BC%E5%BC%8F"><span class="toc-number">2.2.</span> <span class="toc-text">校验格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%A1%E7%90%86%E5%AD%97%E6%AE%B5%E5%88%86%E5%8F%91"><span class="toc-number">2.3.</span> <span class="toc-text">管理字段分发</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BA%90%E7%A0%81%E6%B5%81%E7%A8%8B"><span class="toc-number">3.</span> <span class="toc-text">源码流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#form%E7%9A%84%E5%88%9B%E5%BB%BA%E6%B5%81%E7%A8%8B"><span class="toc-number">3.1.</span> <span class="toc-text">form的创建流程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B1%BB%E6%98%AF%E7%94%B1ForMata%E5%88%9B%E5%BB%BA%E7%9A%84%EF%BC%8C%E6%89%A7%E8%A1%8CForMata%E7%9A%84-init-%E6%96%B9%E6%B3%95%E3%80%82"><span class="toc-number">3.1.1.</span> <span class="toc-text">类是由ForMata创建的，执行ForMata的__init__方法。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%A7%E8%A1%8CFormata%E7%9A%84-init-%E6%96%B9%E6%B3%95%EF%BC%8CloginForm%E7%B1%BB%E5%88%9B%E5%BB%BA"><span class="toc-number">3.1.2.</span> <span class="toc-text">执行Formata的__init__方法，loginForm类创建</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#loginForm%E5%88%9B%E5%BB%BA%E5%90%8E%EF%BC%8C%E6%89%A7%E8%A1%8C%E5%85%B6%E4%B8%AD%E7%9A%84Field%E5%AD%97%E6%AE%B5"><span class="toc-number">3.1.3.</span> <span class="toc-text">loginForm创建后，执行其中的Field字段</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#form-%E5%AE%9E%E4%BE%8B%E5%8C%96%EF%BC%8C%E4%B8%80%E4%B8%AA%E7%B1%BB%E5%AE%9E%E4%BE%8B%E5%8C%96%E8%A6%81%E5%93%AA%E5%87%A0%E6%AD%A5%EF%BC%9F"><span class="toc-number">3.1.4.</span> <span class="toc-text">form()实例化，一个类实例化要哪几步？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%84%B6%E5%90%8E%E6%89%A7%E8%A1%8C%E8%87%AA%E5%B7%B1%E7%9A%84init"><span class="toc-number">3.1.5.</span> <span class="toc-text">然后执行自己的init</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%8D%E5%9B%9E%E5%88%B0form-init-%E7%BB%A7%E7%BB%AD%E5%BE%80%E4%B8%8B%E6%89%A7%E8%A1%8C"><span class="toc-number">3.1.6.</span> <span class="toc-text">再回到form.__init__继续往下执行</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%A7%E8%A1%8Cprocess%EF%BC%88%E4%B8%BA%E6%AF%8F%E4%B8%AA%E5%AD%97%E6%AE%B5%E8%AE%BE%E7%BD%AE%E9%BB%98%E8%AE%A4%E5%80%BC%EF%BC%89"><span class="toc-number">3.1.7.</span> <span class="toc-text">执行process（为每个字段设置默认值）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#form%E7%9A%84%E9%AA%8C%E8%AF%81%E6%B5%81%E7%A8%8B"><span class="toc-number">3.2.</span> <span class="toc-text">form的验证流程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E8%AF%B7%E6%B1%82%E5%8F%91%E7%9A%84%E6%89%80%E6%9C%89%E6%95%B0%E6%8D%AE%EF%BC%8C-%E2%80%98name%E2%80%99-123-xxxx"><span class="toc-number">3.2.1.</span> <span class="toc-text">用户请求发的所有数据，{‘name’:123,xxxx}</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%A7%E8%A1%8Cform-validate%E8%A1%A8%E5%8D%95"><span class="toc-number">3.2.2.</span> <span class="toc-text">执行form.validate表单</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BE%AA%E7%8E%AFfields%E5%AF%B9%E8%B1%A1%EF%BC%8C%E6%89%BE%E5%AF%BB%E5%AF%B9%E8%B1%A1%E4%B8%AD%E7%9A%84%E9%92%A9%E5%AD%90%E5%87%BD%E6%95%B0%EF%BC%8C%E6%94%BE%E5%88%B0extra%E4%B8%AD"><span class="toc-number">3.2.3.</span> <span class="toc-text">循环fields对象，找寻对象中的钩子函数，放到extra中</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A6%82%E6%9E%9C%E6%9C%89%E9%92%A9%E5%AD%90%E5%87%BD%E6%95%B0%E5%88%99%E8%8E%B7%E5%8F%96%EF%BC%8C%E5%B9%B6%E6%89%A7%E8%A1%8C%E5%AD%97%E6%AE%B5%E7%9A%84validate-extra"><span class="toc-number">3.2.4.</span> <span class="toc-text">如果有钩子函数则获取，并执行字段的validate(extra)</span></a></li></ol></li></ol></li></ol>
+        </div>
+    </div>
+</div>
+
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/xiaohuanren3.jpg)" alt="mysql索引失效" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a></p>
+                            <p class="item-title"><a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88/" class="title">mysql索引失效</a></p>
+                            <p class="item-date"><time datetime="2021-06-13T07:40:54.744Z" itemprop="datePublished">2021-06-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/shan.jpg)" alt="mysql索引优化案例分析" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a></p>
+                            <p class="item-title"><a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/" class="title">mysql索引优化案例分析</a></p>
+                            <p class="item-date"><time datetime="2021-06-13T07:40:39.919Z" itemprop="datePublished">2021-06-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/13/webframe/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/xiaohuanren2.jpg)" alt="设计模式" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/webframe/">webframe</a></p>
+                            <p class="item-title"><a href="/2021/06/13/webframe/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="title">设计模式</a></p>
+                            <p class="item-date"><time datetime="2021-06-13T07:17:23.394Z" itemprop="datePublished">2021-06-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/MHA/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/MHA/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-13T04:16:55.764Z" itemprop="datePublished">2021-06-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/mysql%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2021/06/13/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/mysql%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2021-06-13T04:14:41.084Z" itemprop="datePublished">2021-06-13</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/">bigdata</a><span class="category-list-count">22</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker/">docker</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker-compose/">docker-compose</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/hadoop/">hadoop</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/zookeeper/">zookeeper</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/">nosql</a><span class="category-list-count">20</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis/">redis</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/">webframe</a><span class="category-list-count">21</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/django/">django</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/flask/">flask</a><span class="category-list-count">5</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">69</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+
+            
+                
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2021 durian</p>
+                
+                <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
+                
+            </div>
+                <p><span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span></p>
+                <p><span id="busuanzi_container_site_uv"> 
+                     本站访客数<span id="busuanzi_value_site_uv"></span>人次
+               </span></p>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+    <script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
+</footer>
+
+    </div>
+    
+    
+    <script src="//unpkg.com/valine"></script>
+    <script>
+        var GUEST = ['nick','mail','link'];
+        var meta = '';
+        meta = meta.split(',').filter(function (item) {
+            return GUEST.indexOf(item)>-1;
+        });
+        var avatarcdn = 'gravatar.cat.net' == true;
+        new Valine({
+            el: '.vcomments',
+            notify: "false",
+            verify: "false",
+            appId: "795P9DunI2Jv3Jho36dlueIS-gzGzoHsz",
+            appKey: "pM151YCVhYBYTB9Pt1SRuiKs",
+            placeholder: "Just Do It",
+            avatar:"mm",
+            recordIP:"false",
+            visitor: "true"
+        });
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

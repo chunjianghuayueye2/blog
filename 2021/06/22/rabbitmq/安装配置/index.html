@@ -7,21 +7,25 @@
     
 
     
-    <title>春江花月夜o</title>
+    <title>安装配置 | 春江花月夜o</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="keywords" content="" />
     
-    <meta property="og:type" content="article">
-<meta property="og:title" content="春江花月夜o">
-<meta property="og:url" content="http://example.com/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/int%E8%A7%A3%E6%9E%90/index.html">
+    <meta name="description" content="安装12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152yum -y updateyum -y install epel-releaseyum -y install erlang socaterl -versionerlang手动安装# centos内置erla">
+<meta property="og:type" content="article">
+<meta property="og:title" content="安装配置">
+<meta property="og:url" content="http://example.com/2021/06/22/rabbitmq/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/index.html">
 <meta property="og:site_name" content="春江花月夜o">
+<meta property="og:description" content="安装12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152yum -y updateyum -y install epel-releaseyum -y install erlang socaterl -versionerlang手动安装# centos内置erla">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-06-15T08:52:31.827Z">
-<meta property="article:modified_time" content="2021-06-15T08:52:56.003Z">
+<meta property="og:image" content="http://example.com/css/images/chu4.jpg">
+<meta property="article:published_time" content="2021-06-22T06:48:05.782Z">
+<meta property="article:modified_time" content="2021-06-22T08:47:35.234Z">
 <meta property="article:author" content="durian">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/css/images/chu4.jpg">
     
 
     
@@ -198,29 +202,39 @@
                         <div class="main-body-header">
     <h1 class="header">
     
-    未分类
+    <a class="page-title-link" href="/categories/bigdata/">bigdata</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/bigdata/rabbitmq/">rabbitmq</a>
     </h1>
 </div>
 
                         <div class="main-body-content">
-                            <article id="post-python源码解析/int解析" class="article article-single article-type-post" itemscope itemprop="blogPost">
+                            <article id="post-rabbitmq/安装配置" class="article article-single article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        安装配置
+        </h1>
+    
+
+            </header>
         
         
             <div class="article-meta">
                 
   <div class="article-date">
     <i class="fa fa-calendar"></i>
-    <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/int%E8%A7%A3%E6%9E%90/" class="article-date">
-       <time datetime="2021-06-15T08:52:31.827Z" itemprop="datePublished">2021-06-15</time>
+    <a href="/2021/06/22/rabbitmq/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" class="article-date">
+       <time datetime="2021-06-22T06:48:05.782Z" itemprop="datePublished">2021-06-22</time>
     </a>
   </div>
 
 
 <div class="article-date">
   <i class="fa fa-calendar-plus-o"></i>
-  <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/int%E8%A7%A3%E6%9E%90/" class="article-date">
-     <time datetime="2021-06-15T08:52:56.003Z" itemprop="dateModified">2021-06-15</time>
+  <a href="/2021/06/22/rabbitmq/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" class="article-date">
+     <time datetime="2021-06-22T08:47:35.234Z" itemprop="dateModified">2021-06-22</time>
   </a>
 </div>
 
@@ -232,7 +246,7 @@
    <div class="article-counter">
       <i class="fa fa-file-word-o"></i>
       <span class="post-count-item-text">本文字数: </span>
-      <span class="post-count">0</span>
+      <span class="post-count">346</span>
       <i class="fa fa-clock-o"></i>
       <span class="post-time-item-text">阅读时长: </span>
       <span class="post-count">1 分钟 </span>
@@ -252,14 +266,18 @@
 
             
 
-            
+            <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_39669058/article/details/102568451">安装</a></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">yum -y update</span><br><span class="line">yum -y install epel-release</span><br><span class="line">yum -y install erlang socat</span><br><span class="line">erl -version</span><br><span class="line"></span><br><span class="line">erlang手动安装</span><br><span class="line"># centos内置erlang版本过低手动下载</span><br><span class="line">wget http:&#x2F;&#x2F;erlang.org&#x2F;download&#x2F;otp_src_21.3.tar.gz</span><br><span class="line">.&#x2F;configure --prefix&#x3D;&#x2F;usr&#x2F;local&#x2F;erlang --with-ssl --enable-threads --enable-smp-support --enable-kernel-poll --enable-hipe --without-javac</span><br><span class="line"></span><br><span class="line">erlang语言编译配置选项：</span><br><span class="line"></span><br><span class="line">–prefix 指定安装目录 </span><br><span class="line"></span><br><span class="line">–enable-smp-support启用对称多处理支持（Symmetric Multi-Processing对称多处理结构的简称）</span><br><span class="line"></span><br><span class="line">–enable-threads启用异步线程支持</span><br><span class="line"></span><br><span class="line">–enable-sctp启用流控制协议支持（Stream Control Transmission Protocol，流控制传输协议）</span><br><span class="line"></span><br><span class="line">–enable-kernel-poll启用Linux内核poll</span><br><span class="line"></span><br><span class="line">–enable-hipe启用高性能Erlang</span><br><span class="line"></span><br><span class="line">–with-ssl 启用ssl包</span><br><span class="line"></span><br><span class="line">–without-javac 不用java编译</span><br><span class="line"></span><br><span class="line">编译安装</span><br><span class="line">make &amp;&amp; make install</span><br><span class="line">配置Erlang的环境变量</span><br><span class="line">vim &#x2F;etc&#x2F;profile</span><br><span class="line">export PATH&#x3D;$PATH:&#x2F;usr&#x2F;local&#x2F;erlang&#x2F;bin</span><br><span class="line">source &#x2F;etc&#x2F;profile</span><br><span class="line">测试Erlang安装是否成功，输入erl，查看版本信息</span><br><span class="line">测试输入hello.，在控制台上看到输入hello,之后退出输入halt().，Erlang环境安装完毕</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># rabbitmq安装</span><br><span class="line">rpm --import https:&#x2F;&#x2F;packagecloud.io&#x2F;rabbitmq&#x2F;rabbitmq-server&#x2F;gpgkey</span><br><span class="line">rpm --import https:&#x2F;&#x2F;packagecloud.io&#x2F;gpg.key</span><br><span class="line"></span><br><span class="line">curl -s https:&#x2F;&#x2F;packagecloud.io&#x2F;install&#x2F;repositories&#x2F;rabbitmq&#x2F;</span><br><span class="line">rabbitmq-server&#x2F;script.rpm.sh | sudo bash</span><br><span class="line"></span><br><span class="line">wget</span><br><span class="line">centOS7：</span><br><span class="line">https:&#x2F;&#x2F;github.com&#x2F;rabbitmq&#x2F;rabbitmq-server&#x2F;releases&#x2F;download&#x2F;v3.8.5</span><br><span class="line">&#x2F;rabbitmq-server-3.8.5-1.el7.noarch.rpm</span><br><span class="line">CentOS8:</span><br><span class="line">https:&#x2F;&#x2F;github.com&#x2F;rabbitmq&#x2F;rabbitmq-server&#x2F;releases&#x2F;download&#x2F;v3.8.5</span><br><span class="line">&#x2F;rabbitmq-server-3.8.5-1.el8.noarch.rpm</span><br></pre></td></tr></table></figure>
+
+
+
+
         </div>
         <footer class="article-footer">
             
 
 
 
-    <a data-url="http://example.com/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/int%E8%A7%A3%E6%9E%90/" data-id="ckpxu57hn0003owmzb80cf7vo" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://example.com/2021/06/22/rabbitmq/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" data-id="ckq7orvmt000098mz9t8j7zau" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -329,16 +347,16 @@
             "@type": "Person",
             "name": "durian"
         },
-        
-        "image": "http://example.com",
+        "headline": "安装配置",
+        "image": "http://example.com/css/images/chu4.jpg",
         "keywords": "",
-        "genre": "",
-        "datePublished": "2021-06-15",
-        "dateCreated": "2021-06-15",
-        "dateModified": "2021-06-15",
-        "url": "http://example.com/2021/06/15/python源码解析/int解析/",
-        "description": "",
-        "wordCount": 1
+        "genre": "bigdata rabbitmq",
+        "datePublished": "2021-06-22",
+        "dateCreated": "2021-06-22",
+        "dateModified": "2021-06-22",
+        "url": "http://example.com/2021/06/22/rabbitmq/安装配置/",
+        "description": "安装12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152yum -y updateyum -y install epel-releaseyum -y install erlang socaterl -versionerlang手动安装# centos内置erla",
+        "wordCount": 154
     }
 </script>
 
@@ -378,20 +396,10 @@
         
 <nav id="article-nav">
     
-        <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/dict%E8%A7%A3%E6%9E%90/" id="article-nav-newer" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">下一篇</strong>
-        <p class="article-nav-title">
-        
-            (no title)
-        
-        </p>
-        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
-    </a>
     
-    
-        <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2021/06/18/python/socket/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">上一篇</strong>
-        <p class="article-nav-title"></p>
+        <p class="article-nav-title">socket</p>
         <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
         </a>
     
@@ -402,6 +410,15 @@
         
             
                 
+<div class="widget-wrap widget-list">
+    <h3 class="widget-title">目录</h3>
+    <div class="widget">
+        <div id="toc" class="toc-article">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">1.</span> <span class="toc-text">安装</span></a></li></ol>
+        </div>
+    </div>
+</div>
+
 
             
                 
@@ -413,10 +430,10 @@
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2021/06/15/redis%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%BC%93%E5%AD%98%E9%97%AE%E9%A2%98/" class="thumbnail">
+                            <a href="/2021/06/22/rabbitmq/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" class="thumbnail">
     
     
-        <span style="background-image:url(/css/images/qinglu.jfif)" alt="缓存问题" class="thumbnail-image"></span>
+        <span style="background-image:url(/css/images/chu4.jpg)" alt="安装配置" class="thumbnail-image"></span>
     
     
 </a>
@@ -424,19 +441,19 @@
                         </div>
                         
                         <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a></p>
-                            <p class="item-title"><a href="/2021/06/15/redis%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%BC%93%E5%AD%98%E9%97%AE%E9%A2%98/" class="title">缓存问题</a></p>
-                            <p class="item-date"><time datetime="2021-06-15T08:57:18.147Z" itemprop="datePublished">2021-06-15</time></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/bigdata/">bigdata</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/bigdata/rabbitmq/">rabbitmq</a></p>
+                            <p class="item-title"><a href="/2021/06/22/rabbitmq/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" class="title">安装配置</a></p>
+                            <p class="item-date"><time datetime="2021-06-22T06:48:05.782Z" itemprop="datePublished">2021-06-22</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/dict%E8%A7%A3%E6%9E%90/" class="thumbnail">
+                            <a href="/2021/06/18/python/socket/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(/css/images/dangao.jpg)" alt="socket" class="thumbnail-image"></span>
     
     
 </a>
@@ -444,19 +461,19 @@
                         </div>
                         
                         <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/dict%E8%A7%A3%E6%9E%90/" class="title"></a></p>
-                            <p class="item-date"><time datetime="2021-06-15T08:52:31.827Z" itemprop="datePublished">2021-06-15</time></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/python/">python</a></p>
+                            <p class="item-title"><a href="/2021/06/18/python/socket/" class="title">socket</a></p>
+                            <p class="item-date"><time datetime="2021-06-18T01:03:51.525Z" itemprop="datePublished">2021-06-18</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/int%E8%A7%A3%E6%9E%90/" class="thumbnail">
+                            <a href="/2021/06/18/python/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(/css/images/saibo1.jpg)" alt="函数式编程" class="thumbnail-image"></span>
     
     
 </a>
@@ -464,19 +481,19 @@
                         </div>
                         
                         <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/int%E8%A7%A3%E6%9E%90/" class="title"></a></p>
-                            <p class="item-date"><time datetime="2021-06-15T08:52:31.827Z" itemprop="datePublished">2021-06-15</time></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/python/">python</a></p>
+                            <p class="item-title"><a href="/2021/06/18/python/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="title">函数式编程</a></p>
+                            <p class="item-date"><time datetime="2021-06-18T01:03:51.525Z" itemprop="datePublished">2021-06-18</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" class="thumbnail">
+                            <a href="/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(/css/images/bei.jpg)" alt="tuple部分源码解析(cpython)" class="thumbnail-image"></span>
     
     
 </a>
@@ -484,19 +501,19 @@
                         </div>
                         
                         <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" class="title"></a></p>
-                            <p class="item-date"><time datetime="2021-06-15T08:52:31.827Z" itemprop="datePublished">2021-06-15</time></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">python源码解析</a></p>
+                            <p class="item-title"><a href="/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" class="title">tuple部分源码解析(cpython)</a></p>
+                            <p class="item-date"><time datetime="2021-06-18T01:03:51.525Z" itemprop="datePublished">2021-06-18</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/list%E8%A7%A3%E6%9E%90/" class="thumbnail">
+                            <a href="/2021/06/18/python/%E9%A1%B9%E7%9B%AE%E8%A7%A3%E6%9E%90/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(/css/images/chu1.jpg)" alt="项目解析" class="thumbnail-image"></span>
     
     
 </a>
@@ -504,9 +521,9 @@
                         </div>
                         
                         <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/list%E8%A7%A3%E6%9E%90/" class="title"></a></p>
-                            <p class="item-date"><time datetime="2021-06-15T08:52:17.313Z" itemprop="datePublished">2021-06-15</time></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/webframe/">webframe</a></p>
+                            <p class="item-title"><a href="/2021/06/18/python/%E9%A1%B9%E7%9B%AE%E8%A7%A3%E6%9E%90/" class="title">项目解析</a></p>
+                            <p class="item-date"><time datetime="2021-06-18T01:03:51.525Z" itemprop="datePublished">2021-06-18</time></p>
                         </div>
                     </li>
                 
@@ -519,7 +536,7 @@
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/">bigdata</a><span class="category-list-count">22</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker/">docker</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker-compose/">docker-compose</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/hadoop/">hadoop</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/zookeeper/">zookeeper</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/">nosql</a><span class="category-list-count">27</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis/">redis</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a><span class="category-list-count">9</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/">webframe</a><span class="category-list-count">21</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/django/">django</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/flask/">flask</a><span class="category-list-count">5</span></li></ul></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/">bigdata</a><span class="category-list-count">23</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker/">docker</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker-compose/">docker-compose</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/hadoop/">hadoop</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/rabbitmq/">rabbitmq</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/zookeeper/">zookeeper</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/">nosql</a><span class="category-list-count">27</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis/">redis</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a><span class="category-list-count">9</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/python/cpython%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">cpython源码解析</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">python源码解析</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/">webframe</a><span class="category-list-count">22</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/django/">django</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/flask/">flask</a><span class="category-list-count">5</span></li></ul></li></ul>
         </div>
     </div>
 
@@ -529,7 +546,7 @@
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">77</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">86</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -577,11 +594,11 @@
                 
                 <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
                 
-            </div>
-                <p><span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span></p>
+		<p><span id="busuanzi_container_site_pv">本站总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>&nbsp;次</span></p>
                 <p><span id="busuanzi_container_site_uv"> 
-                     本站访客数<span id="busuanzi_value_site_uv"></span>人次
+                     本站访客数&nbsp;<span id="busuanzi_value_site_uv"></span>&nbsp;人次
                </span></p>
+            </div>
             <div class="footer-plugins">
               
     

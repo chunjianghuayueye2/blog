@@ -1,0 +1,724 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>tuple部分源码解析(cpython) | 春江花月夜o</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="" />
+    
+    <meta name="description" content="PyTupleObject1234typedef struct &amp;#123;    PyObject_VAR_HEAD    PyObject *ob_item[1];&amp;#125; PyTupleObject;  1.PyObject_VAR_HEADPyTupleObject在底层是个变长对象(需要存储列表元素个数).虽然, 在python中, tuple是不可变对象 2.PyObject*ob">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tuple部分源码解析(cpython)">
+<meta property="og:url" content="http://example.com/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/index.html">
+<meta property="og:site_name" content="春江花月夜o">
+<meta property="og:description" content="PyTupleObject1234typedef struct &amp;#123;    PyObject_VAR_HEAD    PyObject *ob_item[1];&amp;#125; PyTupleObject;  1.PyObject_VAR_HEADPyTupleObject在底层是个变长对象(需要存储列表元素个数).虽然, 在python中, tuple是不可变对象 2.PyObject*ob">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/css/images/bei.jpg">
+<meta property="article:published_time" content="2021-06-18T01:03:51.525Z">
+<meta property="article:modified_time" content="2021-06-17T13:28:33.457Z">
+<meta property="article:author" content="durian">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/css/images/bei.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/gouzi.ico" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="春江花月夜o" type="application/atom+xml">
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">关于</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">python</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">cpp</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">webframe</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                                <a class="main-nav-list-link" href="/null">flask</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">django</a>
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">algorithm</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">bigdata</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">nosql</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                                <a class="main-nav-list-link" href="/null"> redis</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">mysql</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null"> redis高级篇</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">mysql高级篇</a>
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">python源码解析</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-python/python源码解析/tuple解析" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        tuple部分源码解析(cpython)
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" class="article-date">
+       <time datetime="2021-06-18T01:03:51.525Z" itemprop="datePublished">2021-06-18</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" class="article-date">
+     <time datetime="2021-06-17T13:28:33.457Z" itemprop="dateModified">2021-06-17</time>
+  </a>
+</div>
+
+
+                
+
+                
+                
+   <div class="article-counter">
+      <i class="fa fa-file-word-o"></i>
+      <span class="post-count-item-text">本文字数: </span>
+      <span class="post-count">723</span>
+      <i class="fa fa-clock-o"></i>
+      <span class="post-time-item-text">阅读时长: </span>
+      <span class="post-count">3 分钟 </span>
+   </div>
+
+
+                <span id="busuanzi_container_page_pv">
+                阅读次数<span id="busuanzi_value_page_pv"></span>次
+                </span>
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <h2 id="PyTupleObject"><a href="#PyTupleObject" class="headerlink" title="PyTupleObject"></a>PyTupleObject</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">typedef struct &#123;</span><br><span class="line">    PyObject_VAR_HEAD</span><br><span class="line">    PyObject *ob_item[1];</span><br><span class="line">&#125; PyTupleObject;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>1.PyObject_VAR_HEAD<br>PyTupleObject在底层是个变长对象(需要存储列表元素个数).<br>虽然, 在python中, tuple是不可变对象</li>
+<li>2.PyObject*ob_item[1]指向存储元素的数组</li>
+</ul>
+<h2 id="tuple创建"><a href="#tuple创建" class="headerlink" title="tuple创建"></a>tuple创建</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line">PyObject *</span><br><span class="line">PyTuple_New(register Py_ssize_t size)</span><br><span class="line">&#123;</span><br><span class="line">    register PyTupleObject *op;</span><br><span class="line">    Py_ssize_t i;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 大小为负数, return</span><br><span class="line">    if (size &lt; 0) &#123;</span><br><span class="line">        PyErr_BadInternalCall();</span><br><span class="line">        return NULL;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 如果大小&#x3D;0, 空元组, 直接取free_list第一个返回</span><br><span class="line">#if PyTuple_MAXSAVESIZE &gt; 0</span><br><span class="line">    if (size &#x3D;&#x3D; 0 &amp;&amp; free_list[0]) &#123;</span><br><span class="line">        op &#x3D; free_list[0];</span><br><span class="line">        Py_INCREF(op);</span><br><span class="line"></span><br><span class="line">#ifdef COUNT_ALLOCS</span><br><span class="line">        tuple_zero_allocs++;</span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">        return (PyObject *) op;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 如果free_list可分配, 从free_list取一个</span><br><span class="line">    if (size &lt; PyTuple_MAXSAVESIZE &amp;&amp; (op &#x3D; free_list[size]) !&#x3D; NULL) &#123;</span><br><span class="line">        &#x2F;&#x2F; 上面  op &#x3D; free_list[size] 取得单链表头</span><br><span class="line">        &#x2F;&#x2F; free_list指向单链表下一个元素, 对应位置阈值--</span><br><span class="line">        free_list[size] &#x3D; (PyTupleObject *) op-&gt;ob_item[0];</span><br><span class="line">        numfree[size]--;</span><br><span class="line"></span><br><span class="line">#ifdef COUNT_ALLOCS</span><br><span class="line">        fast_tuple_allocs++;</span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">      &#x2F;&#x2F; 初始化 ob_size和ob_type</span><br><span class="line">      &#x2F;* Inline PyObject_InitVar *&#x2F;</span><br><span class="line">#ifdef Py_TRACE_REFS</span><br><span class="line">        Py_SIZE(op) &#x3D; size;</span><br><span class="line">        Py_TYPE(op) &#x3D; &amp;PyTuple_Type;</span><br><span class="line">#endif</span><br><span class="line">        _Py_NewReference((PyObject *)op);</span><br><span class="line">    &#125;</span><br><span class="line">    else</span><br><span class="line">#endif   &#x2F;&#x2F; free_list不可用</span><br><span class="line">    &#123;</span><br><span class="line">        &#x2F;&#x2F; 计算空间</span><br><span class="line">        Py_ssize_t nbytes &#x3D; size * sizeof(PyObject *);</span><br><span class="line">        &#x2F;* Check for overflow *&#x2F;</span><br><span class="line">        if (nbytes &#x2F; sizeof(PyObject *) !&#x3D; (size_t)size ||</span><br><span class="line">            (nbytes &gt; PY_SSIZE_T_MAX - sizeof(PyTupleObject) - sizeof(PyObject *)))</span><br><span class="line">        &#123;</span><br><span class="line">            return PyErr_NoMemory();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; 分配内存</span><br><span class="line">        op &#x3D; PyObject_GC_NewVar(PyTupleObject, &amp;PyTuple_Type, size);</span><br><span class="line">        if (op &#x3D;&#x3D; NULL)</span><br><span class="line">            return NULL;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 初始化ob_item每个元素</span><br><span class="line">    for (i&#x3D;0; i &lt; size; i++)</span><br><span class="line">        op-&gt;ob_item[i] &#x3D; NULL;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 第一次分配空数组, 将其放入free_list第一个位置</span><br><span class="line">#if PyTuple_MAXSAVESIZE &gt; 0</span><br><span class="line">    if (size &#x3D;&#x3D; 0) &#123;</span><br><span class="line">        free_list[0] &#x3D; op;</span><br><span class="line">        ++numfree[0];</span><br><span class="line">        Py_INCREF(op);          &#x2F;* extra INCREF so that this is never freed *&#x2F;</span><br><span class="line">    &#125;</span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#ifdef SHOW_TRACK_COUNT</span><br><span class="line">    count_tracked++;</span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">    _PyObject_GC_TRACK(op);</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 返回</span><br><span class="line">    return (PyObject *) op;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>1.如果size=0, 从free_list[0]取, 直接返回</li>
+<li>2.否则, 确认free_list[size], 是否可用, 可用获取</li>
+<li>3.否则, 从内存分配新的空间</li>
+<li>4.初始化, 返回</li>
+</ul>
+<h2 id="tuple回收"><a href="#tuple回收" class="headerlink" title="tuple回收"></a>tuple回收</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">static void</span><br><span class="line">tupledealloc(register PyTupleObject *op)</span><br><span class="line">&#123;</span><br><span class="line">    register Py_ssize_t i;</span><br><span class="line">    &#x2F;&#x2F; 获取元素个数</span><br><span class="line">    register Py_ssize_t len &#x3D;  Py_SIZE(op);</span><br><span class="line"></span><br><span class="line">    PyObject_GC_UnTrack(op);</span><br><span class="line">    Py_TRASHCAN_SAFE_BEGIN(op)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    if (len &gt; 0) &#123;</span><br><span class="line">        i &#x3D; len;</span><br><span class="line">        &#x2F;&#x2F; 遍历, 析构每个元素</span><br><span class="line">        while (--i &gt;&#x3D; 0)</span><br><span class="line">            Py_XDECREF(op-&gt;ob_item[i]);</span><br><span class="line"></span><br><span class="line">         &#x2F;&#x2F; 与对象缓冲池相关</span><br><span class="line">#if PyTuple_MAXSAVESIZE &gt; 0</span><br><span class="line">        if (len &lt; PyTuple_MAXSAVESIZE &amp;&amp;</span><br><span class="line">            numfree[len] &lt; PyTuple_MAXFREELIST &amp;&amp;</span><br><span class="line">            Py_TYPE(op) &#x3D;&#x3D; &amp;PyTuple_Type)</span><br><span class="line">        &#123;</span><br><span class="line">            op-&gt;ob_item[0] &#x3D; (PyObject *) free_list[len];</span><br><span class="line">            numfree[len]++;</span><br><span class="line">            free_list[len] &#x3D; op;</span><br><span class="line">            goto done; &#x2F;* return *&#x2F;</span><br><span class="line">        &#125;</span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; 调用回收</span><br><span class="line">    Py_TYPE(op)-&gt;tp_free((PyObject *)op);</span><br><span class="line"></span><br><span class="line">done:</span><br><span class="line">    Py_TRASHCAN_SAFE_END(op)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>回收ob_item每个元素</li>
+<li>如果符合条件, 放入到free_list</li>
+<li>否则, 回收</li>
+</ul>
+<h2 id="tuple缓冲池"><a href="#tuple缓冲池" class="headerlink" title="tuple缓冲池"></a>tuple缓冲池</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* Speed optimization to avoid frequent malloc&#x2F;free of small tuples *&#x2F;</span><br><span class="line">#ifndef PyTuple_MAXSAVESIZE</span><br><span class="line"># 会被缓存的tuple长度阈值, 20, 长度&lt;20的, 才会走对象缓冲池逻辑</span><br><span class="line">#define PyTuple_MAXSAVESIZE     20</span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">#ifndef PyTuple_MAXFREELIST</span><br><span class="line">每种size的tuple最多会被缓存2000个</span><br><span class="line">#define PyTuple_MAXFREELIST  2000</span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">#if PyTuple_MAXSAVESIZE &gt; 0</span><br><span class="line"># free_list, 指针数组, 每个位置, 存储了指向一个单链表头的地址</span><br><span class="line">static PyTupleObject *free_list[PyTuple_MAXSAVESIZE];</span><br><span class="line"># numfree, 一个计数数组, 存储free_list对应位置的单链表长度</span><br><span class="line">static int numfree[PyTuple_MAXSAVESIZE];</span><br><span class="line">#endif</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>作用: 优化小tuple的mall/free</li>
+<li>free_list[0], 指向空数组, 有且仅有一个</li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://example.com/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" data-id="ckpyrj7ef00094wmz4v7a5r2u" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "durian"
+        },
+        "headline": "tuple部分源码解析(cpython)",
+        "image": "http://example.com/css/images/bei.jpg",
+        "keywords": "",
+        "genre": "python源码解析",
+        "datePublished": "2021-06-18",
+        "dateCreated": "2021-06-18",
+        "dateModified": "2021-06-17",
+        "url": "http://example.com/2021/06/18/python/python源码解析/tuple解析/",
+        "description": "PyTupleObject1234typedef struct &#123;    PyObject_VAR_HEAD    PyObject *ob_item[1];&#125; PyTupleObject;
+
+1.PyObject_VAR_HEADPyTupleObject在底层是个变长对象(需要存储列表元素个数).虽然, 在python中, tuple是不可变对象
+2.PyObject*ob",
+        "wordCount": 1117
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <!-- Valine -->
+    <div class="vcomments"></div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/chunjianghuayueye2" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2021/06/18/python/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            函数式编程
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2021/06/18/python/%E9%A1%B9%E7%9B%AE%E8%A7%A3%E6%9E%90/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">项目解析</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+<div class="widget-wrap widget-list">
+    <h3 class="widget-title">目录</h3>
+    <div class="widget">
+        <div id="toc" class="toc-article">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#PyTupleObject"><span class="toc-number">1.</span> <span class="toc-text">PyTupleObject</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tuple%E5%88%9B%E5%BB%BA"><span class="toc-number">2.</span> <span class="toc-text">tuple创建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tuple%E5%9B%9E%E6%94%B6"><span class="toc-number">3.</span> <span class="toc-text">tuple回收</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tuple%E7%BC%93%E5%86%B2%E6%B1%A0"><span class="toc-number">4.</span> <span class="toc-text">tuple缓冲池</span></a></li></ol>
+        </div>
+    </div>
+</div>
+
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/22/rabbitmq/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/chu4.jpg)" alt="安装配置" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/bigdata/">bigdata</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/bigdata/rabbitmq/">rabbitmq</a></p>
+                            <p class="item-title"><a href="/2021/06/22/rabbitmq/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" class="title">安装配置</a></p>
+                            <p class="item-date"><time datetime="2021-06-22T06:48:05.782Z" itemprop="datePublished">2021-06-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/18/python/socket/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/dangao.jpg)" alt="socket" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/python/">python</a></p>
+                            <p class="item-title"><a href="/2021/06/18/python/socket/" class="title">socket</a></p>
+                            <p class="item-date"><time datetime="2021-06-18T01:03:51.525Z" itemprop="datePublished">2021-06-18</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/18/python/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/saibo1.jpg)" alt="函数式编程" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/python/">python</a></p>
+                            <p class="item-title"><a href="/2021/06/18/python/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="title">函数式编程</a></p>
+                            <p class="item-date"><time datetime="2021-06-18T01:03:51.525Z" itemprop="datePublished">2021-06-18</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/bei.jpg)" alt="tuple部分源码解析(cpython)" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">python源码解析</a></p>
+                            <p class="item-title"><a href="/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" class="title">tuple部分源码解析(cpython)</a></p>
+                            <p class="item-date"><time datetime="2021-06-18T01:03:51.525Z" itemprop="datePublished">2021-06-18</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/18/python/%E9%A1%B9%E7%9B%AE%E8%A7%A3%E6%9E%90/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/chu1.jpg)" alt="项目解析" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/webframe/">webframe</a></p>
+                            <p class="item-title"><a href="/2021/06/18/python/%E9%A1%B9%E7%9B%AE%E8%A7%A3%E6%9E%90/" class="title">项目解析</a></p>
+                            <p class="item-date"><time datetime="2021-06-18T01:03:51.525Z" itemprop="datePublished">2021-06-18</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/">bigdata</a><span class="category-list-count">23</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker/">docker</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker-compose/">docker-compose</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/hadoop/">hadoop</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/rabbitmq/">rabbitmq</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/zookeeper/">zookeeper</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/">nosql</a><span class="category-list-count">27</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis/">redis</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a><span class="category-list-count">9</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/python/cpython%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">cpython源码解析</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">python源码解析</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/">webframe</a><span class="category-list-count">22</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/django/">django</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/flask/">flask</a><span class="category-list-count">5</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">86</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+
+            
+                
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2021 durian</p>
+                
+                <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
+                
+		<p><span id="busuanzi_container_site_pv">本站总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>&nbsp;次</span></p>
+                <p><span id="busuanzi_container_site_uv"> 
+                     本站访客数&nbsp;<span id="busuanzi_value_site_uv"></span>&nbsp;人次
+               </span></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+    <script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
+</footer>
+
+    </div>
+    
+    
+    <script src="//unpkg.com/valine"></script>
+    <script>
+        var GUEST = ['nick','mail','link'];
+        var meta = '';
+        meta = meta.split(',').filter(function (item) {
+            return GUEST.indexOf(item)>-1;
+        });
+        var avatarcdn = 'gravatar.cat.net' == true;
+        new Valine({
+            el: '.vcomments',
+            notify: "false",
+            verify: "false",
+            appId: "795P9DunI2Jv3Jho36dlueIS-gzGzoHsz",
+            appKey: "pM151YCVhYBYTB9Pt1SRuiKs",
+            placeholder: "Just Do It",
+            avatar:"mm",
+            recordIP:"false",
+            visitor: "true"
+        });
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

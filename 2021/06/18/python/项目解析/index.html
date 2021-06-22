@@ -1,0 +1,809 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>项目解析 | 春江花月夜o</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="" />
+    
+    <meta name="description" content="rms(Repair Management System)整体架构1234567891011121314151617181920212223242526272829303132333435363738394041424344454647rms├── │   └──materialManage│           ├── views│           ├── forms│">
+<meta property="og:type" content="article">
+<meta property="og:title" content="项目解析">
+<meta property="og:url" content="http://example.com/2021/06/18/python/%E9%A1%B9%E7%9B%AE%E8%A7%A3%E6%9E%90/index.html">
+<meta property="og:site_name" content="春江花月夜o">
+<meta property="og:description" content="rms(Repair Management System)整体架构1234567891011121314151617181920212223242526272829303132333435363738394041424344454647rms├── │   └──materialManage│           ├── views│           ├── forms│">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/css/images/chu1.jpg">
+<meta property="article:published_time" content="2021-06-18T01:03:51.525Z">
+<meta property="article:modified_time" content="2021-06-17T08:25:59.867Z">
+<meta property="article:author" content="durian">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/css/images/chu1.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/gouzi.ico" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="春江花月夜o" type="application/atom+xml">
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">关于</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">python</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">cpp</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">webframe</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                                <a class="main-nav-list-link" href="/null">flask</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">django</a>
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">algorithm</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">bigdata</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">nosql</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                                <a class="main-nav-list-link" href="/null"> redis</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">mysql</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null"> redis高级篇</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">mysql高级篇</a>
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/webframe/">webframe</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-python/项目解析" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        项目解析
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2021/06/18/python/%E9%A1%B9%E7%9B%AE%E8%A7%A3%E6%9E%90/" class="article-date">
+       <time datetime="2021-06-18T01:03:51.525Z" itemprop="datePublished">2021-06-18</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/2021/06/18/python/%E9%A1%B9%E7%9B%AE%E8%A7%A3%E6%9E%90/" class="article-date">
+     <time datetime="2021-06-17T08:25:59.867Z" itemprop="dateModified">2021-06-17</time>
+  </a>
+</div>
+
+
+                
+
+                
+                
+   <div class="article-counter">
+      <i class="fa fa-file-word-o"></i>
+      <span class="post-count-item-text">本文字数: </span>
+      <span class="post-count">1.4k</span>
+      <i class="fa fa-clock-o"></i>
+      <span class="post-time-item-text">阅读时长: </span>
+      <span class="post-count">5 分钟 </span>
+   </div>
+
+
+                <span id="busuanzi_container_page_pv">
+                阅读次数<span id="busuanzi_value_page_pv"></span>次
+                </span>
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <h2 id="rms-Repair-Management-System"><a href="#rms-Repair-Management-System" class="headerlink" title="rms(Repair Management System)"></a>rms(Repair Management System)</h2><h3 id="整体架构"><a href="#整体架构" class="headerlink" title="整体架构"></a>整体架构</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">rms</span><br><span class="line">├── </span><br><span class="line">│   └──materialManage</span><br><span class="line">│           ├── views</span><br><span class="line">│           ├── forms</span><br><span class="line">│           ├── urls.py</span><br><span class="line">│           ├── cron.py</span><br><span class="line">│           ├── testSQL.py</span><br><span class="line">│           ├── tests.py</span><br><span class="line">│           ├── redis.py</span><br><span class="line">│           └── mysql.py</span><br><span class="line">└──</span><br><span class="line">│   └── performance</span><br><span class="line">│           ├── views</span><br><span class="line">│           ├── forms</span><br><span class="line">│           ├── urls.py</span><br><span class="line">│           ├── cron.py</span><br><span class="line">│           ├── testSQL.py</span><br><span class="line">│           ├── tests.py</span><br><span class="line">│           ├── redis.py</span><br><span class="line">│           └── mysql.py</span><br><span class="line">└──</span><br><span class="line">│   └── rework     </span><br><span class="line">│           ├── views</span><br><span class="line">│           ├── forms</span><br><span class="line">│           ├── urls.py</span><br><span class="line">│           ├── cron.py</span><br><span class="line">│           ├── testSQL.py</span><br><span class="line">│           ├── tests.py</span><br><span class="line">│           ├── redis.py</span><br><span class="line">│           └── mysql.py         </span><br><span class="line">└──</span><br><span class="line">│   └── smartDebug</span><br><span class="line">│           ├── views</span><br><span class="line">│           ├── forms</span><br><span class="line">│           ├── urls.py</span><br><span class="line">│           ├── cron.py</span><br><span class="line">│           ├── testSQL.py</span><br><span class="line">│           ├── tests.py</span><br><span class="line">│           ├── redis.py</span><br><span class="line">│           └── mysql.py</span><br><span class="line">│── utils</span><br><span class="line">│── urls.py</span><br><span class="line">│── mysql.py</span><br><span class="line">│── redis.py</span><br><span class="line">│── celery.py</span><br><span class="line">│── config.py</span><br></pre></td></tr></table></figure>
+
+<h3 id="架构介绍"><a href="#架构介绍" class="headerlink" title="架构介绍"></a>架构介绍</h3><h4 id="mysql模块"><a href="#mysql模块" class="headerlink" title="mysql模块"></a>mysql模块</h4><ul>
+<li>1.使用pooledDB连接池</li>
+<li>2.在外部定义一个总的MySQL的大类</li>
+<li>3.在各个模块分别继承MySQL</li>
+<li>4.在views视图中按照模块单例导入</li>
+<li>5.testSQL用户测试某些表</li>
+</ul>
+<h4 id="redis模块"><a href="#redis模块" class="headerlink" title="redis模块"></a>redis模块</h4><p>类似于mysql架构</p>
+<ul>
+<li>1.使用connectionPool定义一个类，并写一些常用方法</li>
+<li>2.在views视图中模块单例导入</li>
+<li>3.用于缓存(str)、排行榜（zset)、开关(str)、计数器(网站访问次数之类的)</li>
+</ul>
+<h4 id="urls模块"><a href="#urls模块" class="headerlink" title="urls模块"></a>urls模块</h4><p>用的普通django路由系统加include外部囊括</p>
+<h4 id="views和forms模块"><a href="#views和forms模块" class="headerlink" title="views和forms模块"></a>views和forms模块</h4><ul>
+<li>1.使用的rest_framework.decorators.api_view FBV </li>
+<li>2.使用django.forms.Form进行校验</li>
+</ul>
+<h4 id="cron-py"><a href="#cron-py" class="headerlink" title="cron.py"></a>cron.py</h4><p>执行一些定时任务</p>
+<ul>
+<li>使用linux的单机crontab执行某些定时任务</li>
+</ul>
+<h4 id="utils"><a href="#utils" class="headerlink" title="utils"></a>utils</h4><p>存放一些小工具比如：</p>
+<ul>
+<li>发送邮件</li>
+<li>转义字符</li>
+<li>获取时间</li>
+<li>数据库插入</li>
+</ul>
+<h4 id="tests-py"><a href="#tests-py" class="headerlink" title="tests.py"></a>tests.py</h4><p>用于自定义一些小的测试接口</p>
+<h4 id="celery-py"><a href="#celery-py" class="headerlink" title="celery.py"></a>celery.py</h4><ul>
+<li>1.使用redis作为消息列表和结果存储工具</li>
+<li>2.某些工具接口异步任务，定时任务加入task</li>
+<li>3.为分布式架构做准备</li>
+</ul>
+<h4 id="config"><a href="#config" class="headerlink" title="config"></a>config</h4><p>一些本项目的相关配置</p>
+<h4 id="权限模块"><a href="#权限模块" class="headerlink" title="权限模块"></a>权限模块</h4><p>按照客户要求做数据本项目自己的权限模块</p>
+<ul>
+<li>用户表</li>
+<li>权限表</li>
+<li>关联表</li>
+<li>前后端限制</li>
+</ul>
+<h3 id="模块介绍"><a href="#模块介绍" class="headerlink" title="模块介绍"></a>模块介绍</h3><h4 id="materialManagement"><a href="#materialManagement" class="headerlink" title="materialManagement"></a>materialManagement</h4><p>物料管理模块主要分为两个部分数据可视化和用户操作部分 </p>
+<h5 id="数据可视化"><a href="#数据可视化" class="headerlink" title="数据可视化"></a>数据可视化</h5><ul>
+<li>1.主要是根据客户需求进行数据的可视化显示一些按周，月显示的柱状图、折线图、列表</li>
+<li>2.按照权限划分不同的可视权限</li>
+<li>3.对接别的系统接口解析一些数据进行可视化</li>
+<li>4.解析某些log文件的相关可视化</li>
+<li>5.显示物料库存、不良物料等</li>
+<li>6.物料差异分析</li>
+</ul>
+<h5 id="用户操作"><a href="#用户操作" class="headerlink" title="用户操作"></a>用户操作</h5><ul>
+<li>1.用户物料申请、入库、退料、领料</li>
+<li>2.老板签核</li>
+<li>3.公告发布、文件上传</li>
+</ul>
+<h4 id="Performance"><a href="#Performance" class="headerlink" title="Performance"></a>Performance</h4><p>绩效模块主要部分绩效可视化和用户操作<br>首先对接产线斯科系统定时获取源数据，对接人资系统获取工时人员信息</p>
+<h5 id="可视化"><a href="#可视化" class="headerlink" title="可视化"></a>可视化</h5><ul>
+<li>1.通过分析源数据按照客户的逻辑对工程师进行周、月、年的绩效数据获取并显示</li>
+<li>2.分析一些按部门的绩效，作为部门绩效评比</li>
+<li>3.按照权限可视化</li>
+</ul>
+<h5 id="用户操作-1"><a href="#用户操作-1" class="headerlink" title="用户操作"></a>用户操作</h5><ul>
+<li>1.工程师对比源数据，某些异常物料进行申请销料</li>
+<li>2.管理者按照职位层级层层签核通过</li>
+<li>3.管理者上传工程师月、年加分信息原因并按层级签核</li>
+<li>4.管理者上传某些公告显示</li>
+</ul>
+<h4 id="Rework"><a href="#Rework" class="headerlink" title="Rework"></a>Rework</h4><p>重工模块主要包括重工系统数据可视、重工系统用户操作</p>
+<h5 id="重工系统数据维护可视化"><a href="#重工系统数据维护可视化" class="headerlink" title="重工系统数据维护可视化"></a>重工系统数据维护可视化</h5><p>由于各个部门开发的重工系统不一致，导致需要申请多个api显示</p>
+<ul>
+<li>整合各个部门开发重工系统数据</li>
+<li>按照相应逻辑按年月日进行显示</li>
+<li>wip分析显示</li>
+</ul>
+<h5 id="用户操作-2"><a href="#用户操作-2" class="headerlink" title="用户操作"></a>用户操作</h5><ul>
+<li>整合用户操作统一到当前系统</li>
+<li>兼容各个系统旧数据</li>
+<li>用户相关checkout、checkin操作</li>
+</ul>
+<h4 id="smartDebug"><a href="#smartDebug" class="headerlink" title="smartDebug"></a>smartDebug</h4><p>主要是一些提前报警功能，比如一块料只能用5次，根据<br>源数据计算得到使用了四次了就报警表示更换报废该料</p>
+<h2 id="sso-单点登录系统"><a href="#sso-单点登录系统" class="headerlink" title="sso(单点登录系统)"></a>sso(单点登录系统)</h2><p>整个测试平台为一个大的项目其中分为多个项目，为整个测试平台实现单点登录</p>
+<h3 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sso</span><br><span class="line">└── views.py</span><br><span class="line">├── mysql.py</span><br><span class="line">├── config.py</span><br><span class="line">├── utils</span><br><span class="line">├── tests.py</span><br><span class="line">├── middlewares.py</span><br></pre></td></tr></table></figure>
+
+<h3 id="架构概述"><a href="#架构概述" class="headerlink" title="架构概述"></a>架构概述</h3><h4 id="通过人资系统的第三方登录对接（和github第三方类似）"><a href="#通过人资系统的第三方登录对接（和github第三方类似）" class="headerlink" title="通过人资系统的第三方登录对接（和github第三方类似）"></a>通过人资系统的第三方登录对接（和github第三方类似）</h4><ul>
+<li>1.申请secretKey、appid放在config中</li>
+<li>2.带必填参数访问xxxxxx/login?response_type=code&amp;client_id=xxxx&amp;redirect_uri=xxxxx&amp;state=xxxxx&amp;continue=oauth2</li>
+<li>3.登录成功后有回调函数，第三方会带着生成的code调用回调函数</li>
+<li>4.回调函数中拿着code和state、appid、secretKey、grant_type去访问xxxxxxx/oauth/access_token拿到access_token</li>
+<li>5.然后带着access_token访问xxxxx/user_info获取一部分返回的用户信息</li>
+<li>6.解析该用户是否在我们的用户组里<ul>
+<li>1.存在可以获取到email、full_name检测更新数据库</li>
+<li>2.使用jwt生成token</li>
+<li>3.不存在，先按照人资的认证信息简单在数据增加此人，并生成jwt</li>
+</ul>
+</li>
+</ul>
+<h4 id="jwt实现单点登录"><a href="#jwt实现单点登录" class="headerlink" title="jwt实现单点登录"></a>jwt实现单点登录</h4><ul>
+<li>jwt放置在sessionStorage</li>
+<li>通过简单中间件实现验证和续签，续签是每次访问完接口process_response时<br>如果该token的创建时间没有超过7.5h就生成一个新的1小时为过期的token（这里其实可以用redis存储黑名单，但使token有了状态）</li>
+</ul>
+<h4 id="权限"><a href="#权限" class="headerlink" title="权限"></a>权限</h4><ul>
+<li>初始化为每个项目客户的管理者申请好权限</li>
+<li>权限申请按照层级签署、驳回生效</li>
+<li>主要用来前端根据权限限制用户访问某些网页</li>
+</ul>
+<h4 id="人员信息可视化"><a href="#人员信息可视化" class="headerlink" title="人员信息可视化"></a>人员信息可视化</h4><p>相关离职人员、出差人员、调动人员、角色人员按时间显示</p>
+<h2 id="一些小的项目、脚本和窗口"><a href="#一些小的项目、脚本和窗口" class="headerlink" title="一些小的项目、脚本和窗口"></a>一些小的项目、脚本和窗口</h2><ul>
+<li>帮各个部门的助理写的一些处理文件、excel之类的和简单的数据显示的网站</li>
+<li>帮同事写的一些pyside2、wxpython的简单gui处理接口</li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://example.com/2021/06/18/python/%E9%A1%B9%E7%9B%AE%E8%A7%A3%E6%9E%90/" data-id="ckq1mqr400002romz8ijb6ojo" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "durian"
+        },
+        "headline": "项目解析",
+        "image": "http://example.com/css/images/chu1.jpg",
+        "keywords": "",
+        "genre": "webframe",
+        "datePublished": "2021-06-18",
+        "dateCreated": "2021-06-18",
+        "dateModified": "2021-06-17",
+        "url": "http://example.com/2021/06/18/python/项目解析/",
+        "description": "rms(Repair Management System)整体架构1234567891011121314151617181920212223242526272829303132333435363738394041424344454647rms├── │   └──materialManage│           ├── views│           ├── forms│           ",
+        "wordCount": 659
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <!-- Valine -->
+    <div class="vcomments"></div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/chunjianghuayueye2" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            tuple部分源码解析(cpython)
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2021/06/18/python/PEP8%E8%A7%84%E8%8C%83/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">部分PEP8规范</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+<div class="widget-wrap widget-list">
+    <h3 class="widget-title">目录</h3>
+    <div class="widget">
+        <div id="toc" class="toc-article">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#rms-Repair-Management-System"><span class="toc-number">1.</span> <span class="toc-text">rms(Repair Management System)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84"><span class="toc-number">1.1.</span> <span class="toc-text">整体架构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%B6%E6%9E%84%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.2.</span> <span class="toc-text">架构介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#mysql%E6%A8%A1%E5%9D%97"><span class="toc-number">1.2.1.</span> <span class="toc-text">mysql模块</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#redis%E6%A8%A1%E5%9D%97"><span class="toc-number">1.2.2.</span> <span class="toc-text">redis模块</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#urls%E6%A8%A1%E5%9D%97"><span class="toc-number">1.2.3.</span> <span class="toc-text">urls模块</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#views%E5%92%8Cforms%E6%A8%A1%E5%9D%97"><span class="toc-number">1.2.4.</span> <span class="toc-text">views和forms模块</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#cron-py"><span class="toc-number">1.2.5.</span> <span class="toc-text">cron.py</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#utils"><span class="toc-number">1.2.6.</span> <span class="toc-text">utils</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#tests-py"><span class="toc-number">1.2.7.</span> <span class="toc-text">tests.py</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#celery-py"><span class="toc-number">1.2.8.</span> <span class="toc-text">celery.py</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#config"><span class="toc-number">1.2.9.</span> <span class="toc-text">config</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9D%83%E9%99%90%E6%A8%A1%E5%9D%97"><span class="toc-number">1.2.10.</span> <span class="toc-text">权限模块</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E5%9D%97%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.3.</span> <span class="toc-text">模块介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#materialManagement"><span class="toc-number">1.3.1.</span> <span class="toc-text">materialManagement</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">数据可视化</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E6%93%8D%E4%BD%9C"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">用户操作</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Performance"><span class="toc-number">1.3.2.</span> <span class="toc-text">Performance</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8F%AF%E8%A7%86%E5%8C%96"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">可视化</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E6%93%8D%E4%BD%9C-1"><span class="toc-number">1.3.2.2.</span> <span class="toc-text">用户操作</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Rework"><span class="toc-number">1.3.3.</span> <span class="toc-text">Rework</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%87%8D%E5%B7%A5%E7%B3%BB%E7%BB%9F%E6%95%B0%E6%8D%AE%E7%BB%B4%E6%8A%A4%E5%8F%AF%E8%A7%86%E5%8C%96"><span class="toc-number">1.3.3.1.</span> <span class="toc-text">重工系统数据维护可视化</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E6%93%8D%E4%BD%9C-2"><span class="toc-number">1.3.3.2.</span> <span class="toc-text">用户操作</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#smartDebug"><span class="toc-number">1.3.4.</span> <span class="toc-text">smartDebug</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sso-%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95%E7%B3%BB%E7%BB%9F"><span class="toc-number">2.</span> <span class="toc-text">sso(单点登录系统)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%B6%E6%9E%84"><span class="toc-number">2.1.</span> <span class="toc-text">架构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%B6%E6%9E%84%E6%A6%82%E8%BF%B0"><span class="toc-number">2.2.</span> <span class="toc-text">架构概述</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E4%BA%BA%E8%B5%84%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%AC%AC%E4%B8%89%E6%96%B9%E7%99%BB%E5%BD%95%E5%AF%B9%E6%8E%A5%EF%BC%88%E5%92%8Cgithub%E7%AC%AC%E4%B8%89%E6%96%B9%E7%B1%BB%E4%BC%BC%EF%BC%89"><span class="toc-number">2.2.1.</span> <span class="toc-text">通过人资系统的第三方登录对接（和github第三方类似）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jwt%E5%AE%9E%E7%8E%B0%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95"><span class="toc-number">2.2.2.</span> <span class="toc-text">jwt实现单点登录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9D%83%E9%99%90"><span class="toc-number">2.2.3.</span> <span class="toc-text">权限</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%BA%E5%91%98%E4%BF%A1%E6%81%AF%E5%8F%AF%E8%A7%86%E5%8C%96"><span class="toc-number">2.2.4.</span> <span class="toc-text">人员信息可视化</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E5%B0%8F%E7%9A%84%E9%A1%B9%E7%9B%AE%E3%80%81%E8%84%9A%E6%9C%AC%E5%92%8C%E7%AA%97%E5%8F%A3"><span class="toc-number">3.</span> <span class="toc-text">一些小的项目、脚本和窗口</span></a></li></ol>
+        </div>
+    </div>
+</div>
+
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/22/rabbitmq/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/chu4.jpg)" alt="安装配置" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/bigdata/">bigdata</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/bigdata/rabbitmq/">rabbitmq</a></p>
+                            <p class="item-title"><a href="/2021/06/22/rabbitmq/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" class="title">安装配置</a></p>
+                            <p class="item-date"><time datetime="2021-06-22T06:48:05.782Z" itemprop="datePublished">2021-06-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/18/python/socket/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/dangao.jpg)" alt="socket" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/python/">python</a></p>
+                            <p class="item-title"><a href="/2021/06/18/python/socket/" class="title">socket</a></p>
+                            <p class="item-date"><time datetime="2021-06-18T01:03:51.525Z" itemprop="datePublished">2021-06-18</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/18/python/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/saibo1.jpg)" alt="函数式编程" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/python/">python</a></p>
+                            <p class="item-title"><a href="/2021/06/18/python/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="title">函数式编程</a></p>
+                            <p class="item-date"><time datetime="2021-06-18T01:03:51.525Z" itemprop="datePublished">2021-06-18</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/bei.jpg)" alt="tuple部分源码解析(cpython)" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">python源码解析</a></p>
+                            <p class="item-title"><a href="/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" class="title">tuple部分源码解析(cpython)</a></p>
+                            <p class="item-date"><time datetime="2021-06-18T01:03:51.525Z" itemprop="datePublished">2021-06-18</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/18/python/%E9%A1%B9%E7%9B%AE%E8%A7%A3%E6%9E%90/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/chu1.jpg)" alt="项目解析" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/webframe/">webframe</a></p>
+                            <p class="item-title"><a href="/2021/06/18/python/%E9%A1%B9%E7%9B%AE%E8%A7%A3%E6%9E%90/" class="title">项目解析</a></p>
+                            <p class="item-date"><time datetime="2021-06-18T01:03:51.525Z" itemprop="datePublished">2021-06-18</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/">bigdata</a><span class="category-list-count">23</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker/">docker</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker-compose/">docker-compose</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/hadoop/">hadoop</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/rabbitmq/">rabbitmq</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/zookeeper/">zookeeper</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/">nosql</a><span class="category-list-count">27</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis/">redis</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a><span class="category-list-count">9</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/python/cpython%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">cpython源码解析</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">python源码解析</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/">webframe</a><span class="category-list-count">22</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/django/">django</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/flask/">flask</a><span class="category-list-count">5</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">86</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+
+            
+                
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2021 durian</p>
+                
+                <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
+                
+		<p><span id="busuanzi_container_site_pv">本站总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>&nbsp;次</span></p>
+                <p><span id="busuanzi_container_site_uv"> 
+                     本站访客数&nbsp;<span id="busuanzi_value_site_uv"></span>&nbsp;人次
+               </span></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+    <script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
+</footer>
+
+    </div>
+    
+    
+    <script src="//unpkg.com/valine"></script>
+    <script>
+        var GUEST = ['nick','mail','link'];
+        var meta = '';
+        meta = meta.split(',').filter(function (item) {
+            return GUEST.indexOf(item)>-1;
+        });
+        var avatarcdn = 'gravatar.cat.net' == true;
+        new Valine({
+            el: '.vcomments',
+            notify: "false",
+            verify: "false",
+            appId: "795P9DunI2Jv3Jho36dlueIS-gzGzoHsz",
+            appKey: "pM151YCVhYBYTB9Pt1SRuiKs",
+            placeholder: "Just Do It",
+            avatar:"mm",
+            recordIP:"false",
+            visitor: "true"
+        });
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,802 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>int部分源码解析(cpython) | 春江花月夜o</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="" />
+    
+    <meta name="description" content="Python中有int对象，但是在cPython中可是没有这个对象的cPython中只有PyLongObject PyLongObject123456struct _longobject &amp;#123;    Py_ssize_t ob_refcnt;    struct _typeobject *ob_type;        Py_ssize_t ob_size; &#x2F;* Number">
+<meta property="og:type" content="article">
+<meta property="og:title" content="int部分源码解析(cpython)">
+<meta property="og:url" content="http://example.com/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/int%E8%A7%A3%E6%9E%90/index.html">
+<meta property="og:site_name" content="春江花月夜o">
+<meta property="og:description" content="Python中有int对象，但是在cPython中可是没有这个对象的cPython中只有PyLongObject PyLongObject123456struct _longobject &amp;#123;    Py_ssize_t ob_refcnt;    struct _typeobject *ob_type;        Py_ssize_t ob_size; &#x2F;* Number">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/css/images/bi.jpg">
+<meta property="article:published_time" content="2021-06-18T01:03:51.510Z">
+<meta property="article:modified_time" content="2021-06-17T08:19:10.042Z">
+<meta property="article:author" content="durian">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/css/images/bi.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/gouzi.ico" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="春江花月夜o" type="application/atom+xml">
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">关于</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">python</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">cpp</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">webframe</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                                <a class="main-nav-list-link" href="/null">flask</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">django</a>
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">algorithm</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">bigdata</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">nosql</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                                <a class="main-nav-list-link" href="/null"> redis</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">mysql</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null"> redis高级篇</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">mysql高级篇</a>
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">python源码解析</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-python/python源码解析/int解析" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        int部分源码解析(cpython)
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/int%E8%A7%A3%E6%9E%90/" class="article-date">
+       <time datetime="2021-06-18T01:03:51.510Z" itemprop="datePublished">2021-06-18</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/int%E8%A7%A3%E6%9E%90/" class="article-date">
+     <time datetime="2021-06-17T08:19:10.042Z" itemprop="dateModified">2021-06-17</time>
+  </a>
+</div>
+
+
+                
+
+                
+                
+   <div class="article-counter">
+      <i class="fa fa-file-word-o"></i>
+      <span class="post-count-item-text">本文字数: </span>
+      <span class="post-count">1.4k</span>
+      <i class="fa fa-clock-o"></i>
+      <span class="post-time-item-text">阅读时长: </span>
+      <span class="post-count">6 分钟 </span>
+   </div>
+
+
+                <span id="busuanzi_container_page_pv">
+                阅读次数<span id="busuanzi_value_page_pv"></span>次
+                </span>
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <p>Python中有int对象，但是在cPython中可是没有这个对象的<br>cPython中只有PyLongObject</p>
+<h2 id="PyLongObject"><a href="#PyLongObject" class="headerlink" title="PyLongObject"></a>PyLongObject</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">struct _longobject &#123;</span><br><span class="line">    Py_ssize_t ob_refcnt;</span><br><span class="line">    struct _typeobject *ob_type;    </span><br><span class="line">    Py_ssize_t ob_size; &#x2F;* Number of items in variable part *&#x2F; </span><br><span class="line">    digit ob_digit[1];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>1.ob_refcnt 为引用计数</li>
+<li>2.ob_type 为一个指针，指向了一个类型</li>
+<li>3.ob_size 为一个整数，表示ob_digit的长度</li>
+<li>4.ob_digit 为一个数组，可以当成一个指针，存储了具体的数值</li>
+</ul>
+<h2 id="整数存储方式"><a href="#整数存储方式" class="headerlink" title="整数存储方式"></a>整数存储方式</h2><p>为什么一个整数要那么复杂的表示方式？Python的整数是不会溢出的，<br>他可以表示任意大的数据，因为使用简单的 c 语言是做不到的，<br>所以定义了一个那么复杂的东西。</p>
+<h3 id="普通进位法"><a href="#普通进位法" class="headerlink" title="普通进位法"></a>普通进位法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">按照digit数组位数</span><br><span class="line">digit[0]*1 + digit[1]*10 + digit[2]*100 .....</span><br><span class="line">这样存储</span><br><span class="line">&#96;&#96;&#96; </span><br><span class="line"></span><br><span class="line">### 负数存储</span><br><span class="line">也是放到ob_size中，如果ob_size为-1那么代表ob_digit长度为1，但是这个数为负数</span><br><span class="line"></span><br><span class="line">### 部分源码</span><br><span class="line">#### 创建int</span><br><span class="line">小于C中long类型大小的数值基于PyLong_FromLong创建，大于用PyLong_FromString</span><br><span class="line">- 步骤</span><br><span class="line">    - 1.检查如果是小整数，则直接返回缓冲池的小整数对象，在python3中缓冲池范围是[-5, 257)</span><br><span class="line">    - 2.将数值和正负数的标识分开</span><br><span class="line">    - 3.对于小于PyLong_SHIFT位的数进入快速通道，PyLong_SHIFT的值基于当前系统中定义指针的大小确定</span><br><span class="line">    （指针在32位中size为4，64位中为8，因此例如32位平台下32768以下的数字都可以进入该通道）</span><br><span class="line">    - 4.对于指针大小为4字节的情况（例如32位系统），申请对象空间</span><br><span class="line">    - 5.对于较大的数值，需要获取位数，然后申请对应大小的long对象</span><br><span class="line">    </span><br><span class="line">- [源码](https:&#x2F;&#x2F;github.com&#x2F;python&#x2F;cpython&#x2F;blob&#x2F;main&#x2F;Objects&#x2F;longobject.c)</span><br></pre></td></tr></table></figure>
+<p>PyObject *<br>PyLong_FromLong(long ival)<br>{<br>    PyLongObject <em>v;<br>    // abs_ival中存放绝对值数值<br>    unsigned long abs_ival;<br>    unsigned long t;  /</em> unsigned so &gt;&gt; doesn’t propagate sign bit */<br>    int ndigits = 0;<br>    // 数值标记：正数(1)，负数(-1)，零(0)<br>    int sign;<br>    // 检查如果是小整数，则直接返回缓冲池的小整数对象，python3缓冲池范围是[-5, 257)<br>    CHECK_SMALL_INT(ival);<br>    // 将数值和正负数的标识分开<br>    if (ival &lt; 0) {<br>        abs_ival = 0U-(unsigned long)ival;<br>        sign = -1;<br>    }<br>    else {<br>        abs_ival = (unsigned long)ival;<br>        sign = ival == 0 ? 0 : 1;<br>    }</p>
+<pre><code>// 对于小于PyLong_SHIFT位的数进入快速通道，PyLong_SHIFT的值基于当前系统中定义指针的大小确定
+// （指针在32位中size为4，64位中为8，因此例如32位平台下32768以下的数字都可以进入该通道）
+if (!(abs_ival &gt;&gt; PyLong_SHIFT)) &#123;
+    // 创建一个数值指向区域size为1*sizeof(digit)的long对象
+    v = _PyLong_New(1);
+    if (v) &#123;
+        // 可以看出ob_size用来标识是正数、负数还是0
+        Py_SIZE(v) = sign;
+        // ob_digit[0]里存入的是无符号的数值
+        v-&gt;ob_digit[0] = Py_SAFE_DOWNCAST(
+            abs_ival, unsigned long, digit);
+    &#125;
+    return (PyObject*)v;
+&#125;</code></pre>
+<p>// 对于指针大小为4字节的情况（例如32位系统），申请对象空间的方式<br>#if PyLong_SHIFT==15<br>    /* 2 digits <em>/<br>    if (!(abs_ival &gt;&gt; 2</em>PyLong_SHIFT)) {<br>        v = _PyLong_New(2);<br>        if (v) {<br>            Py_SIZE(v) = 2<em>sign;<br>            v-&gt;ob_digit[0] = Py_SAFE_DOWNCAST(<br>                abs_ival &amp; PyLong_MASK, unsigned long, digit);<br>            v-&gt;ob_digit[1] = Py_SAFE_DOWNCAST(<br>                  abs_ival &gt;&gt; PyLong_SHIFT, unsigned long, digit);<br>        }<br>        return (PyObject</em>)v;<br>    }<br>#endif</p>
+<pre><code>// 对于较大的数值，需要获取位数，然后申请对应大小的long对象
+t = abs_ival;
+// 获取数值所需的位数
+while (t) &#123;
+    ++ndigits;
+    t &gt;&gt;= PyLong_SHIFT;
+&#125;
+// 后面的逻辑跟之前的创建方式基本一样
+v = _PyLong_New(ndigits);
+if (v != NULL) &#123;
+    digit *p = v-&gt;ob_digit;
+    Py_SIZE(v) = ndigits*sign;
+    t = abs_ival;
+    while (t) &#123;
+        *p++ = Py_SAFE_DOWNCAST(
+            t &amp; PyLong_MASK, unsigned long, digit);
+        t &gt;&gt;= PyLong_SHIFT;
+    &#125;
+&#125;
+return (PyObject *)v;</code></pre>
+<p>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#### 小整数缓冲池</span><br></pre></td></tr></table></figure>
+<p>// #define NSMALLPOSINTS           257<br>// #define NSMALLNEGINTS           5<br>static PyLongObject small_ints[NSMALLNEGINTS + NSMALLPOSINTS];</p>
+<p>// 获取小整数对象<br>static PyObject *<br>get_small_int(sdigit ival)<br>{<br>    PyObject *v;<br>    assert(-NSMALLNEGINTS &lt;= ival &amp;&amp; ival &lt; NSMALLPOSINTS);<br>    // 在符合小整数的范围内，返回直接缓冲池中的对象<br>    v = (PyObject *)&amp;small_ints[ival + NSMALLNEGINTS];<br>    Py_INCREF(v);<br>    …<br>    return v;<br>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">对于小整数使用较多的场景，我们可以通过修改小整数的缓冲池范围来进行优化</span><br><span class="line"></span><br><span class="line">#### long_add</span><br><span class="line">由于python中的int属于不可变类型数据，因此在进行加法运算时，</span><br><span class="line">会创建一个新的int对象来存储计算的结果值，并且由于int中数据的</span><br><span class="line">存储是基于数据，因此在计算时实际上模拟了从低位开始逐位相加</span><br><span class="line">算的方式来进行运算，而通过这种存储和计算方式</span><br><span class="line"></span><br><span class="line">- long_add</span><br></pre></td></tr></table></figure>
+<p>static PyObject *<br>long_add(PyLongObject *a, PyLongObject *b)<br>{<br>    PyLongObject *z;</p>
+<pre><code>CHECK_BINOP(a, b);
+
+if (Py_ABS(Py_SIZE(a)) &lt;= 1 &amp;&amp; Py_ABS(Py_SIZE(b)) &lt;= 1) &#123;
+    return PyLong_FromLong(MEDIUM_VALUE(a) + MEDIUM_VALUE(b));
+&#125;
+if (Py_SIZE(a) &lt; 0) &#123;
+    if (Py_SIZE(b) &lt; 0) &#123;
+        z = x_add(a, b);
+        if (z != NULL) &#123;
+            assert(Py_REFCNT(z) == 1);
+            Py_SIZE(z) = -(Py_SIZE(z));
+        &#125;
+    &#125;
+    else
+        z = x_sub(b, a);
+&#125;
+else &#123;
+    if (Py_SIZE(b) &lt; 0)
+        z = x_sub(a, b);
+    else
+        z = x_add(a, b);
+&#125;
+return (PyObject *)z;</code></pre>
+<p>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- x_add</span><br></pre></td></tr></table></figure>
+<p>static PyLongObject *<br>x_add(PyLongObject *a, PyLongObject *b)<br>{<br>    Py_ssize_t size_a = Py_ABS(Py_SIZE(a)), size_b = Py_ABS(Py_SIZE(b));<br>    PyLongObject *z;<br>    Py_ssize_t i;<br>    digit carry = 0;</p>
+<pre><code>// 如果a比b小，就交换两个数，以保证a是大的那个数
+if (size_a &lt; size_b) &#123;
+    &#123; PyLongObject *temp = a; a = b; b = temp; &#125;
+    &#123; Py_ssize_t size_temp = size_a;
+        size_a = size_b;
+        size_b = size_temp; &#125;
+&#125;
+// 以最大的那个值的size+1为新创建的long对象大小
+z = _PyLong_New(size_a+1);
+if (z == NULL)
+    return NULL;
+// 低位开始逐位相加（两个数中小的那个数的最高位及以下位相加）
+for (i = 0; i &lt; size_b; ++i) &#123;
+    carry += a-&gt;ob_digit[i] + b-&gt;ob_digit[i];
+    z-&gt;ob_digit[i] = carry &amp; PyLong_MASK;
+    carry &gt;&gt;= PyLong_SHIFT;
+&#125;
+// 高位只剩下a的值，直接将a的值填充
+for (; i &lt; size_a; ++i) &#123;
+    carry += a-&gt;ob_digit[i];
+    z-&gt;ob_digit[i] = carry &amp; PyLong_MASK;
+    carry &gt;&gt;= PyLong_SHIFT;
+&#125;
+// 新创建的对象保存对应结果
+z-&gt;ob_digit[i] = carry;
+// long_normalize将数值前面的0删除（并没有真正删除释放，而是改变其允许指向数值的范围大小）
+return long_normalize(z);</code></pre>
+<p>}<br>```</p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://example.com/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/int%E8%A7%A3%E6%9E%90/" data-id="ckpyrj7ed00064wmzefsffylf" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "durian"
+        },
+        "headline": "int部分源码解析(cpython)",
+        "image": "http://example.com/css/images/bi.jpg",
+        "keywords": "",
+        "genre": "python源码解析",
+        "datePublished": "2021-06-18",
+        "dateCreated": "2021-06-18",
+        "dateModified": "2021-06-17",
+        "url": "http://example.com/2021/06/18/python/python源码解析/int解析/",
+        "description": "Python中有int对象，但是在cPython中可是没有这个对象的cPython中只有PyLongObject
+PyLongObject123456struct _longobject &#123;    Py_ssize_t ob_refcnt;    struct _typeobject *ob_type;        Py_ssize_t ob_size; &#x2F;* Number ",
+        "wordCount": 1036
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <!-- Valine -->
+    <div class="vcomments"></div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/chunjianghuayueye2" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/dict%E8%A7%A3%E6%9E%90/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            dict部分源码解析(cpython)
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/list%E8%A7%A3%E6%9E%90/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">list源码解析(Cpython)</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+<div class="widget-wrap widget-list">
+    <h3 class="widget-title">目录</h3>
+    <div class="widget">
+        <div id="toc" class="toc-article">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#PyLongObject"><span class="toc-number">1.</span> <span class="toc-text">PyLongObject</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B4%E6%95%B0%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8F"><span class="toc-number">2.</span> <span class="toc-text">整数存储方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%99%AE%E9%80%9A%E8%BF%9B%E4%BD%8D%E6%B3%95"><span class="toc-number">2.1.</span> <span class="toc-text">普通进位法</span></a></li></ol></li></ol>
+        </div>
+    </div>
+</div>
+
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/22/rabbitmq/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/chu4.jpg)" alt="安装配置" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/bigdata/">bigdata</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/bigdata/rabbitmq/">rabbitmq</a></p>
+                            <p class="item-title"><a href="/2021/06/22/rabbitmq/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" class="title">安装配置</a></p>
+                            <p class="item-date"><time datetime="2021-06-22T06:48:05.782Z" itemprop="datePublished">2021-06-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/18/python/socket/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/dangao.jpg)" alt="socket" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/python/">python</a></p>
+                            <p class="item-title"><a href="/2021/06/18/python/socket/" class="title">socket</a></p>
+                            <p class="item-date"><time datetime="2021-06-18T01:03:51.525Z" itemprop="datePublished">2021-06-18</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/18/python/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/saibo1.jpg)" alt="函数式编程" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/python/">python</a></p>
+                            <p class="item-title"><a href="/2021/06/18/python/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="title">函数式编程</a></p>
+                            <p class="item-date"><time datetime="2021-06-18T01:03:51.525Z" itemprop="datePublished">2021-06-18</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/bei.jpg)" alt="tuple部分源码解析(cpython)" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">python源码解析</a></p>
+                            <p class="item-title"><a href="/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" class="title">tuple部分源码解析(cpython)</a></p>
+                            <p class="item-date"><time datetime="2021-06-18T01:03:51.525Z" itemprop="datePublished">2021-06-18</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/18/python/%E9%A1%B9%E7%9B%AE%E8%A7%A3%E6%9E%90/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/chu1.jpg)" alt="项目解析" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/webframe/">webframe</a></p>
+                            <p class="item-title"><a href="/2021/06/18/python/%E9%A1%B9%E7%9B%AE%E8%A7%A3%E6%9E%90/" class="title">项目解析</a></p>
+                            <p class="item-date"><time datetime="2021-06-18T01:03:51.525Z" itemprop="datePublished">2021-06-18</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/">bigdata</a><span class="category-list-count">23</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker/">docker</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker-compose/">docker-compose</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/hadoop/">hadoop</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/rabbitmq/">rabbitmq</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/zookeeper/">zookeeper</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/">nosql</a><span class="category-list-count">27</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis/">redis</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a><span class="category-list-count">9</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/python/cpython%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">cpython源码解析</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">python源码解析</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/">webframe</a><span class="category-list-count">22</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/django/">django</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/flask/">flask</a><span class="category-list-count">5</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">86</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+
+            
+                
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2021 durian</p>
+                
+                <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
+                
+		<p><span id="busuanzi_container_site_pv">本站总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>&nbsp;次</span></p>
+                <p><span id="busuanzi_container_site_uv"> 
+                     本站访客数&nbsp;<span id="busuanzi_value_site_uv"></span>&nbsp;人次
+               </span></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+    <script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
+</footer>
+
+    </div>
+    
+    
+    <script src="//unpkg.com/valine"></script>
+    <script>
+        var GUEST = ['nick','mail','link'];
+        var meta = '';
+        meta = meta.split(',').filter(function (item) {
+            return GUEST.indexOf(item)>-1;
+        });
+        var avatarcdn = 'gravatar.cat.net' == true;
+        new Valine({
+            el: '.vcomments',
+            notify: "false",
+            verify: "false",
+            appId: "795P9DunI2Jv3Jho36dlueIS-gzGzoHsz",
+            appKey: "pM151YCVhYBYTB9Pt1SRuiKs",
+            placeholder: "Just Do It",
+            avatar:"mm",
+            recordIP:"false",
+            visitor: "true"
+        });
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

@@ -218,6 +218,504 @@
         <article class="article article-summary">
     <div class="article-summary-inner">
         
+        <a href="/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/zihua.jpg)" alt="mysql索引优化" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span><a href="http://example.com/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96/#isso-thread"></a></span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a>
+            </div>
+            <div class="date"><time datetime="2021-06-15T01:28:37.695Z" itemprop="datePublished">2021-06-15</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96/">mysql索引优化</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            索引优化分析性能下降sql慢：（执行时间长，等待时间长）
+
+1.select语句写的烂，各种连接加子查询
+
+2.索引失效，建的索引没用，创建单索引和复合索引
+1create index idx_user_name (idx_tablename_indexname) on user(name)
+查询用的多的字段建立联合建立复合索引
+1create index idx_user_nameEmail o
+        </p>
+    </div>
+</article>
+    
+
+    
+    
+    
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/yuhui.jpg)" alt="mysql索引" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span><a href="http://example.com/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95/#isso-thread"></a></span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a>
+            </div>
+            <div class="date"><time datetime="2021-06-15T01:28:37.695Z" itemprop="datePublished">2021-06-15</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95/">mysql索引</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            索引是什么？是帮助mysql高效获取数据的数据结构，可以得到索引的本质：索引是数据结构。（btree）
+
+1.排好序的快速查找数据结构
+2.在数据之外，数据库系统还维护着满足特定查找算法的数据结构，这些数据结构以某种方式引用（指向）数据，这样就可以在这些数据结构上实现高级查找算法。
+3.当你删除数据后，某些索引指向就会失效。这个时候需要锁表重构索引。
+4.为什么update、insert慢，因为数
+        </p>
+    </div>
+</article>
+    
+        </div>
+    
+
+    
+    
+    
+    
+        <div class="article-row">
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E6%96%87%E4%BB%B6%E6%9E%B6%E6%9E%84/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/yun.jpg)" alt="innodb文件架构体系(mysql8)" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span><a href="http://example.com/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E6%96%87%E4%BB%B6%E6%9E%B6%E6%9E%84/#isso-thread"></a></span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a>
+            </div>
+            <div class="date"><time datetime="2021-06-15T01:28:37.694Z" itemprop="datePublished">2021-06-15</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E6%96%87%E4%BB%B6%E6%9E%B6%E6%9E%84/">innodb文件架构体系(mysql8)</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            文件分类参数文件
+概述告诉MySQL实例启动时在哪里可以找到数据库文件，并且指定某些初始化参数，这些参数定义了某种内存结构的大小等设置，还会介绍各种参数的类型。
+
+
+路径
+1&#x2F;var&#x2F;lib&#x2F;mysql&#x2F; 
+
+相关命令
+
+
+1234show [global] variables like &quot;%xxxxx%&quot;;set key value;s
+        </p>
+    </div>
+</article>
+    
+
+    
+    
+    
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E5%88%86%E8%A1%A8%E5%AE%9E%E8%B7%B5/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/siyue2.jpg)" alt="mysql分表实践" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span><a href="http://example.com/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E5%88%86%E8%A1%A8%E5%AE%9E%E8%B7%B5/#isso-thread"></a></span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a>
+            </div>
+            <div class="date"><time datetime="2021-06-15T01:28:37.693Z" itemprop="datePublished">2021-06-15</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E5%88%86%E8%A1%A8%E5%AE%9E%E8%B7%B5/">mysql分表实践</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            停机部署1.挂牌停机通告2.通过写的脚本（直接按游标取出数据进行迁移）按照规定逻辑进行分库分表（也可以使用工具）3.重写中间件按照逻辑访问数据库4.上线
+
+优点
+比较容易，不用考虑这时的用户操作，无脑迁移数据
+
+
+缺点
+系统必须停机，客户体验差
+必须在规定时间完成迁移及数据校验
+
+
+
+不停机部署数据双写迁移法1.老库和新库同时insert/update/delete，然后将老数据批量迁移到新库，最
+        </p>
+    </div>
+</article>
+    
+        </div>
+    
+
+    
+    
+    
+    
+        <div class="article-row">
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2021/06/15/hadoop/hdfs%E6%9E%B6%E6%9E%84/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/hadoop.jfif)" alt="hadoop介绍" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span><a href="http://example.com/2021/06/15/hadoop/hdfs%E6%9E%B6%E6%9E%84/#isso-thread"></a></span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/bigdata/">bigdata</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/bigdata/hadoop/">hadoop</a>
+            </div>
+            <div class="date"><time datetime="2021-06-15T01:28:37.692Z" itemprop="datePublished">2021-06-15</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2021/06/15/hadoop/hdfs%E6%9E%B6%E6%9E%84/">hadoop介绍</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            hadoop三大版本
+Apache
+Cloudera    公司常用
+Hortonworks
+
+hadoop优势
+高可靠：hadoop底层维护多个数据副本（很少数据丢失）
+高扩展：在集群分配任务数据，可方便的扩展数以千计的节点
+高效性：在mapreduce思想下，hadoop是并行工作的，以加快任务处理速度。
+高容错性：自动将失败任务重新分配
+
+hadoop 1.x构成
+mapReduce计算+资
+        </p>
+    </div>
+</article>
+    
+
+    
+    
+    
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E4%B8%BA%E4%BB%80%E4%B9%88b+%E6%A0%91/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/motuo.jpg)" alt="innodb索引为什么使用b+树？" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span><a href="http://example.com/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E4%B8%BA%E4%BB%80%E4%B9%88b+%E6%A0%91/#isso-thread"></a></span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a>
+            </div>
+            <div class="date"><time datetime="2021-06-15T01:28:37.692Z" itemprop="datePublished">2021-06-15</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E4%B8%BA%E4%BB%80%E4%B9%88b+%E6%A0%91/">innodb索引为什么使用b+树？</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            磁盘io与预读考虑到磁盘IO是非常高昂的操作，计算机操作系统做了一些优化，当一次IO时，不光把当前磁盘地址的数据，而是把相邻的数据也都读取到内存缓冲区内，因为局部预读性原理告诉我们，当计算机访问一个地址的数据的时候，与其相邻的数据也会很快被访问到。每一次IO读取的数据我们称之为一页(page)，具体一页有多大数据跟操作系统有关，一般为16k，也就是我们读取一页内的数据时候，实际上才发生了一次IO，
+        </p>
+    </div>
+</article>
+    
+        </div>
+    
+
+    
+    
+    
+    
+        <div class="article-row">
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2021/06/15/hadoop/hadoop%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/hadoop.jfif)" alt="hadoop运行环境搭建" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span><a href="http://example.com/2021/06/15/hadoop/hadoop%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/#isso-thread"></a></span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/bigdata/">bigdata</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/bigdata/hadoop/">hadoop</a>
+            </div>
+            <div class="date"><time datetime="2021-06-15T01:28:37.691Z" itemprop="datePublished">2021-06-15</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2021/06/15/hadoop/hadoop%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">hadoop运行环境搭建</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            虚拟机环境准备
+1.克隆虚拟机
+2.修改虚拟机静态ip
+3.修改主机名
+4.关闭防火墙
+5.创建root用户
+6./opt下创建文件夹module和software
+
+详细搭建过程
+1.修改ip
+12vim &#x2F;etc&#x2F;udev&#x2F;rules.d&#x2F;70-persistent-net.rulesvim &#x2F;etc&#x2F;sysconfig&#x2F;n
+        </p>
+    </div>
+</article>
+    
+
+    
+    
+    
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2021/06/15/hadoop/hadoop%E8%BF%90%E8%A1%8C%E6%A8%A1%E5%BC%8F/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/hadoop.jfif)" alt="hadoop运行模式" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span><a href="http://example.com/2021/06/15/hadoop/hadoop%E8%BF%90%E8%A1%8C%E6%A8%A1%E5%BC%8F/#isso-thread"></a></span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/bigdata/">bigdata</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/bigdata/hadoop/">hadoop</a>
+            </div>
+            <div class="date"><time datetime="2021-06-15T01:28:37.690Z" itemprop="datePublished">2021-06-15</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2021/06/15/hadoop/hadoop%E8%BF%90%E8%A1%8C%E6%A8%A1%E5%BC%8F/">hadoop运行模式</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            hadoop运行模式
+本地模式  
+伪分布式模式  
+完全分布式模式阿里云定制2.7.2版本
+
+本地模式https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleCluster.html
+单机模式案例
+1.案例一
+1234567查找给定文件的正则匹配对象grepBy default, Hadoop i
+        </p>
+    </div>
+</article>
+    
+        </div>
+    
+
+    
+    
+    
+    
+        <div class="article-row">
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2021/06/15/hadoop/hadoop%E5%AE%8C%E5%85%A8%E5%88%86%E5%B8%83%E5%BC%8F/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/hadoop.jfif)" alt="hadoop完全分布式" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span><a href="http://example.com/2021/06/15/hadoop/hadoop%E5%AE%8C%E5%85%A8%E5%88%86%E5%B8%83%E5%BC%8F/#isso-thread"></a></span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/bigdata/">bigdata</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/bigdata/hadoop/">hadoop</a>
+            </div>
+            <div class="date"><time datetime="2021-06-15T01:28:37.689Z" itemprop="datePublished">2021-06-15</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2021/06/15/hadoop/hadoop%E5%AE%8C%E5%85%A8%E5%88%86%E5%B8%83%E5%BC%8F/">hadoop完全分布式</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            前言1234567891.准备3台服务器2.安装JDK3.配置java环境变量4.安装hadoop5.配置hadoop环境变量6.配置集群7.单点启动8.配置ssh无密码访问9.群起并测试集群
+
+集群分配脚本配置虚拟机/服务器配置ip,hosts,hostname12vim &#x2F;etc&#x2F;hostshostnamectl&#x2F;hostname +name
+
+编写集群分发脚本x
+        </p>
+    </div>
+</article>
+    
+
+    
+    
+    
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
         <a href="/2021/06/15/hadoop/bigdata%E4%BB%8B%E7%BB%8D/" class="thumbnail">
     
     
@@ -259,471 +757,6 @@ bigData特点
     </div>
 </article>
     
-
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2021/06/15/flask/flask%E7%AE%80%E4%BB%8B/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/css/images/flask.jfif)" alt="flask基本介绍" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span><a href="http://example.com/2021/06/15/flask/flask%E7%AE%80%E4%BB%8B/#isso-thread"></a></span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/webframe/">webframe</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/webframe/flask/">flask</a>
-            </div>
-            <div class="date"><time datetime="2021-06-15T01:28:37.688Z" itemprop="datePublished">2021-06-15</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2021/06/15/flask/flask%E7%AE%80%E4%BB%8B/">flask基本介绍</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            配置文件配置方式
-1.单个配置
-1flask.config[‘xxx’] &#x3D; xxx
-
-2.可以像django一样文件配置
-1234DEBUG &#x3D; TrueTESTING &#x3D; TrueDATABASE_URI&#x3D;&#39;127.0.0.1:XXX&#39;flask.config.from_pyfile(‘某个文件setting’)
-
-3.类配置 生产环境一
-        </p>
-    </div>
-</article>
-    
-        </div>
-    
-
-    
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2021/06/15/flask/flask%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/css/images/flask.jfif)" alt="flask的数据库操作" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span><a href="http://example.com/2021/06/15/flask/flask%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93/#isso-thread"></a></span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/webframe/">webframe</a>
-            </div>
-            <div class="date"><time datetime="2021-06-15T01:28:37.687Z" itemprop="datePublished">2021-06-15</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2021/06/15/flask/flask%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93/">flask的数据库操作</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            DButils
-pip install DBUtils
-
-pooledDB提供线程间可共享的数据库连接，并自动管理连接，创建好一批连接池，供所有线程共享使用。总数就那么多个。
-创建方式123456789101112131415161718192021222324252627282930import pymysqlpymysql.install_as_MySQLdb()from dbutils.po
-        </p>
-    </div>
-</article>
-    
-
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2021/06/15/flask/flask%E5%A4%9Aapp/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/css/images/flask.jfif)" alt="多app应用" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span><a href="http://example.com/2021/06/15/flask/flask%E5%A4%9Aapp/#isso-thread"></a></span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/webframe/">webframe</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/webframe/flask/">flask</a>
-            </div>
-            <div class="date"><time datetime="2021-06-15T01:28:37.686Z" itemprop="datePublished">2021-06-15</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2021/06/15/flask/flask%E5%A4%9Aapp/">多app应用</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            12345678910111213141516171819202122232425262728293031323334353637383940414243444546from werkzeug.wsgi import DispatcherMiddlewarefrom werkzeug.serving import run_simplefrom flask import Flaskfrom werk
-        </p>
-    </div>
-</article>
-    
-        </div>
-    
-
-    
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2021/06/15/flask/flask%E4%B8%8Edjango%E6%AF%94%E8%BE%83/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/css/images/flask.jfif)" alt="flask和django比较" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span><a href="http://example.com/2021/06/15/flask/flask%E4%B8%8Edjango%E6%AF%94%E8%BE%83/#isso-thread"></a></span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/webframe/">webframe</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/webframe/flask/">flask</a>
-            </div>
-            <div class="date"><time datetime="2021-06-15T01:28:37.685Z" itemprop="datePublished">2021-06-15</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2021/06/15/flask/flask%E4%B8%8Edjango%E6%AF%94%E8%BE%83/">flask和django比较</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            整体设计架构
-flask只提供核心的一小部分功能，其它的功能由它的插件进行扩充，由bluepoint实现水平扩展flask需要自己去diy，比如整体架构的设计、sql使用哪一种、登录认证怎么写、缓存。
-
-django大而全，从app划分，到session、authenticate、orm、后台管理系统都已经做好了模板，提供的很全面
-
-
-路由系统
-flask路由系统使用装饰器进行路由注册，也可以通过
-        </p>
-    </div>
-</article>
-    
-
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2021/06/15/flask/flask%E4%BF%A1%E5%8F%B7%E9%87%8F/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/css/images/flask.jfif)" alt="flask信号量" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span><a href="http://example.com/2021/06/15/flask/flask%E4%BF%A1%E5%8F%B7%E9%87%8F/#isso-thread"></a></span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/webframe/">webframe</a>
-            </div>
-            <div class="date"><time datetime="2021-06-15T01:28:37.685Z" itemprop="datePublished">2021-06-15</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2021/06/15/flask/flask%E4%BF%A1%E5%8F%B7%E9%87%8F/">flask信号量</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            信号量
-orm mysql增加之前记录一条日志怎么做？用装饰器的话为了保证原子性，无法在接口处装饰，必须在orm.save中去装饰，但这样就会很麻烦，需要调用很多接口自定义1个sql_save的信号，在save成功的源码中加上信号
-
-部分源码flask自己并不支持信号，需要安装插件
-1234567891011121314151617181920212223242526272829303132333
-        </p>
-    </div>
-</article>
-    
-        </div>
-    
-
-    
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2021/06/15/flask/flask%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AE%A1%E7%90%86/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/css/images/flask.jfif)" alt="flask上下文管理" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span><a href="http://example.com/2021/06/15/flask/flask%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AE%A1%E7%90%86/#isso-thread"></a></span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/webframe/">webframe</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/webframe/flask/">flask</a>
-            </div>
-            <div class="date"><time datetime="2021-06-15T01:28:37.684Z" itemprop="datePublished">2021-06-15</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2021/06/15/flask/flask%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AE%A1%E7%90%86/">flask上下文管理</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            上下文分类
-请求上下文：包括request和session，保存请求相关的信息
-request：封装客户端发送的请求报文数据
-session：用于记住请求之间的数据，通过签名的cookie实现，常用来记住用户登录状态
-
-
-程序上下文：包括current_app和g，为了更好的分离程序的状态，应用起来更加灵活，方便调测等
-current_app：指向处理请求的当前程序实例，比如获取配置，经常会用cu
-        </p>
-    </div>
-</article>
-    
-
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2021/06/15/flask/flask-wtforms/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/css/images/flask.jfif)" alt="wtforms" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span><a href="http://example.com/2021/06/15/flask/flask-wtforms/#isso-thread"></a></span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/webframe/">webframe</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/webframe/flask/">flask</a>
-            </div>
-            <div class="date"><time datetime="2021-06-15T01:28:37.683Z" itemprop="datePublished">2021-06-15</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2021/06/15/flask/flask-wtforms/">wtforms</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            使用12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394959697# -*- coding:
-        </p>
-    </div>
-</article>
-    
-        </div>
-    
-
-    
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2021/06/15/docker/docker%E9%95%9C%E5%83%8F%E8%A7%A3%E6%9E%90/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/css/images/docker.jfif)" alt="docker镜像解析和数据容器卷" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span><a href="http://example.com/2021/06/15/docker/docker%E9%95%9C%E5%83%8F%E8%A7%A3%E6%9E%90/#isso-thread"></a></span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/bigdata/">bigdata</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/bigdata/docker/">docker</a>
-            </div>
-            <div class="date"><time datetime="2021-06-15T01:28:37.682Z" itemprop="datePublished">2021-06-15</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2021/06/15/docker/docker%E9%95%9C%E5%83%8F%E8%A7%A3%E6%9E%90/">docker镜像解析和数据容器卷</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            docker镜像解析概念轻量级、可执行的独立软件包，用来打包软件环境和基于运行环境开发的软件（整体打包）（层层叠加的整体）
-uninonFS镜像分层union File system联合文件系统，支持对文件系统的修改作为一次次的提交来一层层叠加。Docker 镜像由一些松耦合的只读镜像层组成，Docker负责堆叠这些镜像层，并且将它们表示为单个统一的对象。
-
-一个tomcat镜像有600M，它包括
-        </p>
-    </div>
-</article>
-    
-
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2021/06/15/docker/docker%E9%95%9C%E5%83%8F%E6%8E%A8%E9%80%81%E9%98%BF%E9%87%8C%E4%BA%91/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/css/images/docker.jfif)" alt="docker镜像部署到阿里云" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span><a href="http://example.com/2021/06/15/docker/docker%E9%95%9C%E5%83%8F%E6%8E%A8%E9%80%81%E9%98%BF%E9%87%8C%E4%BA%91/#isso-thread"></a></span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/bigdata/">bigdata</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/bigdata/docker/">docker</a>
-            </div>
-            <div class="date"><time datetime="2021-06-15T01:28:37.681Z" itemprop="datePublished">2021-06-15</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2021/06/15/docker/docker%E9%95%9C%E5%83%8F%E6%8E%A8%E9%80%81%E9%98%BF%E9%87%8C%E4%BA%91/">docker镜像部署到阿里云</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            生成镜像- docker build -f filename -t name:version .
-- docker commit -a=’xxx’（作者） -m=’xxxx’（命名空间） 容器id 名字:版本号
-docker push步骤（可参考阿里云文档）- 1.创建镜像仓库
-- 2.docker login --username= registry.cn-hangzhou.aliyuns.co
-        </p>
-    </div>
-</article>
-    
         </div>
     
 
@@ -732,8 +765,8 @@ docker push步骤（可参考阿里云文档）- 1.创建镜像仓库
 
 
     <nav id="page-nav">
-        <span class="pages">第 5 页，共 8 页</span>
-        <a class="extend prev" rel="prev" href="/archives/2021/page/4/">&laquo;</a><a class="page-number" href="/archives/2021/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/2021/page/3/">3</a><a class="page-number" href="/archives/2021/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/archives/2021/page/6/">6</a><a class="page-number" href="/archives/2021/page/7/">7</a><a class="page-number" href="/archives/2021/page/8/">8</a><a class="extend next" rel="next" href="/archives/2021/page/6/">&raquo;</a>
+        <span class="pages">第 5 页，共 9 页</span>
+        <a class="extend prev" rel="prev" href="/archives/2021/page/4/">&laquo;</a><a class="page-number" href="/archives/2021/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/2021/page/3/">3</a><a class="page-number" href="/archives/2021/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/archives/2021/page/6/">6</a><a class="page-number" href="/archives/2021/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/archives/2021/page/9/">9</a><a class="extend next" rel="next" href="/archives/2021/page/6/">&raquo;</a>
     </nav>
 
 
@@ -771,10 +804,10 @@ docker push步骤（可参考阿里云文档）- 1.创建镜像仓库
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2021/06/15/redis%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%BC%93%E5%AD%98%E9%97%AE%E9%A2%98/" class="thumbnail">
+                            <a href="/2021/06/22/rabbitmq/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" class="thumbnail">
     
     
-        <span style="background-image:url(/css/images/qinglu.jfif)" alt="缓存问题" class="thumbnail-image"></span>
+        <span style="background-image:url(/css/images/chu4.jpg)" alt="安装配置" class="thumbnail-image"></span>
     
     
 </a>
@@ -782,19 +815,19 @@ docker push步骤（可参考阿里云文档）- 1.创建镜像仓库
                         </div>
                         
                         <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a></p>
-                            <p class="item-title"><a href="/2021/06/15/redis%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%BC%93%E5%AD%98%E9%97%AE%E9%A2%98/" class="title">缓存问题</a></p>
-                            <p class="item-date"><time datetime="2021-06-15T08:57:18.147Z" itemprop="datePublished">2021-06-15</time></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/bigdata/">bigdata</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/bigdata/rabbitmq/">rabbitmq</a></p>
+                            <p class="item-title"><a href="/2021/06/22/rabbitmq/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" class="title">安装配置</a></p>
+                            <p class="item-date"><time datetime="2021-06-22T06:48:05.782Z" itemprop="datePublished">2021-06-22</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/dict%E8%A7%A3%E6%9E%90/" class="thumbnail">
+                            <a href="/2021/06/18/python/socket/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(/css/images/dangao.jpg)" alt="socket" class="thumbnail-image"></span>
     
     
 </a>
@@ -802,19 +835,19 @@ docker push步骤（可参考阿里云文档）- 1.创建镜像仓库
                         </div>
                         
                         <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/dict%E8%A7%A3%E6%9E%90/" class="title"></a></p>
-                            <p class="item-date"><time datetime="2021-06-15T08:52:31.827Z" itemprop="datePublished">2021-06-15</time></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/python/">python</a></p>
+                            <p class="item-title"><a href="/2021/06/18/python/socket/" class="title">socket</a></p>
+                            <p class="item-date"><time datetime="2021-06-18T01:03:51.525Z" itemprop="datePublished">2021-06-18</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/int%E8%A7%A3%E6%9E%90/" class="thumbnail">
+                            <a href="/2021/06/18/python/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(/css/images/saibo1.jpg)" alt="函数式编程" class="thumbnail-image"></span>
     
     
 </a>
@@ -822,19 +855,19 @@ docker push步骤（可参考阿里云文档）- 1.创建镜像仓库
                         </div>
                         
                         <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/int%E8%A7%A3%E6%9E%90/" class="title"></a></p>
-                            <p class="item-date"><time datetime="2021-06-15T08:52:31.827Z" itemprop="datePublished">2021-06-15</time></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/python/">python</a></p>
+                            <p class="item-title"><a href="/2021/06/18/python/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="title">函数式编程</a></p>
+                            <p class="item-date"><time datetime="2021-06-18T01:03:51.525Z" itemprop="datePublished">2021-06-18</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" class="thumbnail">
+                            <a href="/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(/css/images/bei.jpg)" alt="tuple部分源码解析(cpython)" class="thumbnail-image"></span>
     
     
 </a>
@@ -842,19 +875,19 @@ docker push步骤（可参考阿里云文档）- 1.创建镜像仓库
                         </div>
                         
                         <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" class="title"></a></p>
-                            <p class="item-date"><time datetime="2021-06-15T08:52:31.827Z" itemprop="datePublished">2021-06-15</time></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">python源码解析</a></p>
+                            <p class="item-title"><a href="/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" class="title">tuple部分源码解析(cpython)</a></p>
+                            <p class="item-date"><time datetime="2021-06-18T01:03:51.525Z" itemprop="datePublished">2021-06-18</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/list%E8%A7%A3%E6%9E%90/" class="thumbnail">
+                            <a href="/2021/06/18/python/%E9%A1%B9%E7%9B%AE%E8%A7%A3%E6%9E%90/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(/css/images/chu1.jpg)" alt="项目解析" class="thumbnail-image"></span>
     
     
 </a>
@@ -862,9 +895,9 @@ docker push步骤（可参考阿里云文档）- 1.创建镜像仓库
                         </div>
                         
                         <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/list%E8%A7%A3%E6%9E%90/" class="title"></a></p>
-                            <p class="item-date"><time datetime="2021-06-15T08:52:17.313Z" itemprop="datePublished">2021-06-15</time></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/webframe/">webframe</a></p>
+                            <p class="item-title"><a href="/2021/06/18/python/%E9%A1%B9%E7%9B%AE%E8%A7%A3%E6%9E%90/" class="title">项目解析</a></p>
+                            <p class="item-date"><time datetime="2021-06-18T01:03:51.525Z" itemprop="datePublished">2021-06-18</time></p>
                         </div>
                     </li>
                 
@@ -877,7 +910,7 @@ docker push步骤（可参考阿里云文档）- 1.创建镜像仓库
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/">bigdata</a><span class="category-list-count">22</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker/">docker</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker-compose/">docker-compose</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/hadoop/">hadoop</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/zookeeper/">zookeeper</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/">nosql</a><span class="category-list-count">27</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis/">redis</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a><span class="category-list-count">9</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/">webframe</a><span class="category-list-count">21</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/django/">django</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/flask/">flask</a><span class="category-list-count">5</span></li></ul></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/">bigdata</a><span class="category-list-count">23</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker/">docker</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker-compose/">docker-compose</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/hadoop/">hadoop</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/rabbitmq/">rabbitmq</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/zookeeper/">zookeeper</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/">nosql</a><span class="category-list-count">27</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis/">redis</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a><span class="category-list-count">9</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/python/cpython%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">cpython源码解析</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">python源码解析</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/">webframe</a><span class="category-list-count">22</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/django/">django</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/flask/">flask</a><span class="category-list-count">5</span></li></ul></li></ul>
         </div>
     </div>
 
@@ -887,7 +920,7 @@ docker push步骤（可参考阿里云文档）- 1.创建镜像仓库
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">77</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">86</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -935,11 +968,11 @@ docker push步骤（可参考阿里云文档）- 1.创建镜像仓库
                 
                 <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
                 
-            </div>
-                <p><span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span></p>
+		<p><span id="busuanzi_container_site_pv">本站总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>&nbsp;次</span></p>
                 <p><span id="busuanzi_container_site_uv"> 
-                     本站访客数<span id="busuanzi_value_site_uv"></span>人次
+                     本站访客数&nbsp;<span id="busuanzi_value_site_uv"></span>&nbsp;人次
                </span></p>
+            </div>
             <div class="footer-plugins">
               
     

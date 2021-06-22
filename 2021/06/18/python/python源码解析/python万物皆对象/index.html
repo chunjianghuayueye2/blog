@@ -1,0 +1,757 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>万物皆对象 | 春江花月夜o</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="" />
+    
+    <meta name="description" content="对象分类 Fundamental对象类型对象 1type  Numeric对象数值对象 123integerfloatboolean  Sequence对象容纳其他对象的序列集合对象 1234listtuplestringset  Mapping对象类似 C++中的 map 的关联对象 1dict Internal对象:Python 虚拟机在运行时内部使用的对象 12345functioncode">
+<meta property="og:type" content="article">
+<meta property="og:title" content="万物皆对象">
+<meta property="og:url" content="http://example.com/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/python%E4%B8%87%E7%89%A9%E7%9A%86%E5%AF%B9%E8%B1%A1/index.html">
+<meta property="og:site_name" content="春江花月夜o">
+<meta property="og:description" content="对象分类 Fundamental对象类型对象 1type  Numeric对象数值对象 123integerfloatboolean  Sequence对象容纳其他对象的序列集合对象 1234listtuplestringset  Mapping对象类似 C++中的 map 的关联对象 1dict Internal对象:Python 虚拟机在运行时内部使用的对象 12345functioncode">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/css/images/qinglu.jfif">
+<meta property="article:published_time" content="2021-06-18T01:03:51.510Z">
+<meta property="article:modified_time" content="2021-06-16T14:45:54.238Z">
+<meta property="article:author" content="durian">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/css/images/qinglu.jfif">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/gouzi.ico" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="春江花月夜o" type="application/atom+xml">
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">关于</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">python</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">cpp</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">webframe</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                                <a class="main-nav-list-link" href="/null">flask</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">django</a>
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">algorithm</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">bigdata</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">nosql</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                                <a class="main-nav-list-link" href="/null"> redis</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">mysql</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null"> redis高级篇</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">mysql高级篇</a>
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/python/">python</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/python/cpython%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">cpython源码解析</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-python/python源码解析/python万物皆对象" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        万物皆对象
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/python%E4%B8%87%E7%89%A9%E7%9A%86%E5%AF%B9%E8%B1%A1/" class="article-date">
+       <time datetime="2021-06-18T01:03:51.510Z" itemprop="datePublished">2021-06-18</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/python%E4%B8%87%E7%89%A9%E7%9A%86%E5%AF%B9%E8%B1%A1/" class="article-date">
+     <time datetime="2021-06-16T14:45:54.238Z" itemprop="dateModified">2021-06-16</time>
+  </a>
+</div>
+
+
+                
+
+                
+                
+   <div class="article-counter">
+      <i class="fa fa-file-word-o"></i>
+      <span class="post-count-item-text">本文字数: </span>
+      <span class="post-count">1.3k</span>
+      <i class="fa fa-clock-o"></i>
+      <span class="post-time-item-text">阅读时长: </span>
+      <span class="post-count">5 分钟 </span>
+   </div>
+
+
+                <span id="busuanzi_container_page_pv">
+                阅读次数<span id="busuanzi_value_page_pv"></span>次
+                </span>
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <h2 id="对象分类"><a href="#对象分类" class="headerlink" title="对象分类"></a>对象分类</h2><ul>
+<li><p>Fundamental对象<br>类型对象</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">type</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Numeric对象<br>数值对象</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">integer</span><br><span class="line">float</span><br><span class="line">boolean</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Sequence对象<br>容纳其他对象的序列集合对象</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">list</span><br><span class="line">tuple</span><br><span class="line">string</span><br><span class="line">set</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Mapping对象<br>类似 C++中的 map 的关联对象</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dict</span><br></pre></td></tr></table></figure></li>
+<li><p>Internal对象:<br>Python 虚拟机在运行时内部使用的对象</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function</span><br><span class="line">code</span><br><span class="line">frame</span><br><span class="line">module</span><br><span class="line">method</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="对象三要素"><a href="#对象三要素" class="headerlink" title="对象三要素"></a>对象三要素</h2><p>对象三要素:</p>
+<ul>
+<li>双向链表</li>
+<li>引用计数</li>
+<li>类型对象指针</li>
+</ul>
+<p>PyObject定义如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; Include&#x2F;object.h</span><br><span class="line">#define _PyObject_HEAD_EXTRA            \</span><br><span class="line">    struct _object *_ob_next;           \</span><br><span class="line">    struct _object *_ob_prev;</span><br><span class="line"></span><br><span class="line">typedef struct _object &#123;</span><br><span class="line">    _PyObject_HEAD_EXTRA    &#x2F;&#x2F; 双向链表 垃圾回收 需要用到</span><br><span class="line">    Py_ssize_t ob_refcnt;   &#x2F;&#x2F; 引用计数</span><br><span class="line">    struct _typeobject *ob_type;    &#x2F;&#x2F; 指向类型对象的指针，决定了对象的类型</span><br><span class="line">&#125; PyObject;</span><br></pre></td></tr></table></figure>
+
+<h3 id="定长与变长对象"><a href="#定长与变长对象" class="headerlink" title="定长与变长对象"></a>定长与变长对象</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; Include&#x2F;object.h</span><br><span class="line">typedef struct _object &#123;</span><br><span class="line">    _PyObject_HEAD_EXTRA</span><br><span class="line">    Py_ssize_t ob_refcnt;</span><br><span class="line">    struct _typeobject *ob_type;</span><br><span class="line">&#125; PyObject;</span><br><span class="line"></span><br><span class="line">typedef struct &#123;</span><br><span class="line">    PyObject ob_base;</span><br><span class="line">    Py_ssize_t ob_size; &#x2F;* Number of items in variable part *&#x2F;</span><br><span class="line">&#125; PyVarObject;</span><br><span class="line">&#x2F;* PyVarObject比PyObject多出了一个用于存储元素个数的变量ob_size *&#x2F;</span><br></pre></td></tr></table></figure>
+
+<h3 id="类型对象"><a href="#类型对象" class="headerlink" title="类型对象"></a>类型对象</h3><p>PyObject 的 对象类型指针struct _typeobject *ob_type，<br>它指向的类型对象就决定了一个对象是什么类型的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">typedef struct _typeobject &#123;</span><br><span class="line">    PyObject_VAR_HEAD</span><br><span class="line">    const char *tp_name; &#x2F;* For printing, in format &quot;&lt;module&gt;.&lt;name&gt;&quot; *&#x2F; &#x2F;&#x2F; 类型名</span><br><span class="line">    Py_ssize_t tp_basicsize, tp_itemsize; &#x2F;* For allocation *&#x2F;</span><br><span class="line">    &#x2F;&#x2F; 创建该类型对象分配的内存空间大小</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 一堆方法定义，函数和指针</span><br><span class="line">    &#x2F;* Methods to implement standard operations *&#x2F;</span><br><span class="line">    destructor tp_dealloc;</span><br><span class="line">    printfunc tp_print;</span><br><span class="line">    getattrfunc tp_getattr;</span><br><span class="line">    setattrfunc tp_setattr;</span><br><span class="line">    PyAsyncMethods *tp_as_async; &#x2F;* formerly known as tp_compare (Python 2)</span><br><span class="line">                                    or tp_reserved (Python 3) *&#x2F;</span><br><span class="line">    reprfunc tp_repr;</span><br><span class="line"></span><br><span class="line">    &#x2F;* Method suites for standard classes *&#x2F;</span><br><span class="line">    &#x2F;&#x2F; 标准类方法集</span><br><span class="line">    PyNumberMethods *tp_as_number;  &#x2F;&#x2F; 数值对象操作</span><br><span class="line">    PySequenceMethods *tp_as_sequence;  &#x2F;&#x2F; 序列对象操作</span><br><span class="line">    PyMappingMethods *tp_as_mapping;  &#x2F;&#x2F; 字典对象操作</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 更多标准操作</span><br><span class="line">    &#x2F;* More standard operations (here for binary compatibility) *&#x2F;</span><br><span class="line">    hashfunc tp_hash;</span><br><span class="line">    ternaryfunc tp_call;</span><br><span class="line">    reprfunc tp_str;</span><br><span class="line">    getattrofunc tp_getattro;</span><br><span class="line">    setattrofunc tp_setattro;</span><br><span class="line">    ......</span><br><span class="line">&#125; PyTypeObject;</span><br></pre></td></tr></table></figure>
+<p>Python 中的所有对象都拥有一些相同的内容，而这些内容就定义在PyObject中。</p>
+<h4 id="类型对象创建"><a href="#类型对象创建" class="headerlink" title="类型对象创建"></a>类型对象创建</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; Include&#x2F;object.h</span><br><span class="line">#ifdef Py_TRACE_REFS</span><br><span class="line">    #define _PyObject_EXTRA_INIT 0, 0,</span><br><span class="line">#else</span><br><span class="line">    #define _PyObject_EXTRA_INIT</span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">#define PyObject_HEAD_INIT(type)        \</span><br><span class="line">    &#123; _PyObject_EXTRA_INIT              \</span><br><span class="line">    1, type &#125;,</span><br><span class="line">    </span><br><span class="line">&#x2F;&#x2F; Objects&#x2F;longobject.c</span><br><span class="line">static PyNumberMethods long_as_number &#x3D; &#123;</span><br><span class="line">    (binaryfunc)long_add,       &#x2F;*nb_add*&#x2F;</span><br><span class="line">    (binaryfunc)long_sub,       &#x2F;*nb_subtract*&#x2F;</span><br><span class="line">    (binaryfunc)long_mul,       &#x2F;*nb_multiply*&#x2F;</span><br><span class="line"></span><br><span class="line">    ......</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">PyTypeObject PyLong_Type &#x3D; &#123;</span><br><span class="line">    PyVarObject_HEAD_INIT(&amp;PyType_Type, 0)</span><br><span class="line">    &quot;int&quot;,                                      &#x2F;* tp_name *&#x2F;</span><br><span class="line">    offsetof(PyLongObject, ob_digit),           &#x2F;* tp_basicsize *&#x2F;</span><br><span class="line">    sizeof(digit),                              &#x2F;* tp_itemsize *&#x2F;</span><br><span class="line">    long_dealloc,                               &#x2F;* tp_dealloc *&#x2F;</span><br><span class="line">    0,                                          &#x2F;* tp_print *&#x2F;</span><br><span class="line">    0,                                          &#x2F;* tp_getattr *&#x2F;</span><br><span class="line">    0,                                          &#x2F;* tp_setattr *&#x2F;</span><br><span class="line">    0,                                          &#x2F;* tp_reserved *&#x2F;</span><br><span class="line">    long_to_decimal_string,                     &#x2F;* tp_repr *&#x2F;</span><br><span class="line">    &amp;long_as_number,                            &#x2F;* tp_as_number *&#x2F;</span><br><span class="line">    0,                                          &#x2F;* tp_as_sequence *&#x2F;</span><br><span class="line">    0,                                          &#x2F;* tp_as_mapping *&#x2F;</span><br><span class="line"></span><br><span class="line">    ......</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="对象创建"><a href="#对象创建" class="headerlink" title="对象创建"></a>对象创建</h3><ul>
+<li>1.这类 API 通常形如PyObject_XXX这样的形式。可以应用在任何 Python 对象上，<br>如PyObject_New。创建一个整数对象的方式<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PyObject* longobj &#x3D; PyObject_New(Pyobject, &amp;PyLong_Type);</span><br></pre></td></tr></table></figure></li>
+<li>2.与类型相关的 API 或称为 COL (Concrete Object Layer)<br>这类 API 通常只能作用于某一种类型的对象上，对于每一种内建对象<br>Python 都提供了这样一组 API。例如整数对象，我们可以利用如下的 API 创建<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PyObject *longObj &#x3D; PyLong_FromLong(10);</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<h3 id="对象的多态性"><a href="#对象的多态性" class="headerlink" title="对象的多态性"></a>对象的多态性</h3><p>Python 创建一个对象比如 PyLongObject 时，会分配内存进行初始化，<br>然后 Python 内部会用 PyObject* 变量来维护这个对象，其他对象也与此类似<br>所以在 Python 内部各个函数之间传递的都是一种范型指针 PyObject* 我们不<br>知道这个指针所指的对象是什么类型，只能通过所指对象的 ob_type 域 动态进<br>行判断，而 Python 正是通过 ob_type 实现了多态机制<br>考虑以下的 calc_hash 函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Py_hash_t</span><br><span class="line">calc_hash(PyObject* object)</span><br><span class="line">&#123;</span><br><span class="line">    Py_hash_t hash &#x3D; object-&gt;ob_type-&gt;tp_hash(object);</span><br><span class="line">    return hash;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果传递给 calc_hash 函数的指针是一个 PyLongObject*，那么它会调用 PyLongObject 对象对应的类型对象中定义的 hash 操作tp_hash，tp_hash可以在PyTypeObject中找到， 而具体赋值绑定我们可以在 PyLong_Type 初始化代码中看到绑定的是long_hash函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; Objects&#x2F;longobject.c</span><br><span class="line">PyTypeObject PyLong_Type &#x3D; &#123;</span><br><span class="line">    PyVarObject_HEAD_INIT(&amp;PyType_Type, 0)</span><br><span class="line">    &quot;int&quot;,                                      &#x2F;* tp_name *&#x2F;</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    (hashfunc)long_hash,                        &#x2F;* tp_hash *&#x2F;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>如果指针是一个 PyUnicodeObject*，那么就会调用 PyUnicodeObject 对象对应的类型对象中定义的 hash 操作，查看源码可以看到 实际绑定的是 unicode_hash函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; Objects&#x2F;unicodeobject.c</span><br><span class="line">PyTypeObject PyUnicode_Type &#x3D; &#123;</span><br><span class="line">    PyVarObject_HEAD_INIT(&amp;PyType_Type, 0)</span><br><span class="line">    &quot;str&quot;,              &#x2F;* tp_name *&#x2F;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    (hashfunc) unicode_hash,        &#x2F;* tp_hash*&#x2F;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="引用计数"><a href="#引用计数" class="headerlink" title="引用计数"></a>引用计数</h3><p>Python 通过引用计数来管理维护对象在内存中的存在与否<br>Python 中的每个东西都是一个对象， 都有ob_refcnt 变量，<br>这个变量维护对象的引用计数，从而最终决定该对象的创建与销毁<br>在 Python 中，主要通过 Py_INCREF(op)与Py_DECREF(op) 这两个宏<br>来增加和减少对一个对象的引用计数。当一个对象的引用计数减少到 0 之后，<br>Py_DECREF将调用该对象的tp_dealloc来释放对象所占用的内存和系统资源；<br>但这并不意味着最终一定会调用 free 释放内存空间。因为频繁的申请、释放<br>内存会大大降低 Python 的执行效率。因此 Python 中大量采用了内存对象<br>池的技术，使得对象释放的空间归还给内存池而不是直接free，后续使用可先<br>从对象池中获取</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; Include&#x2F;object.h</span><br><span class="line">#define _Py_NewReference(op) (                          \</span><br><span class="line">    _Py_INC_TPALLOCS(op) _Py_COUNT_ALLOCS_COMMA         \</span><br><span class="line">    _Py_INC_REFTOTAL  _Py_REF_DEBUG_COMMA               \</span><br><span class="line">    Py_REFCNT(op) &#x3D; 1)</span><br><span class="line"></span><br><span class="line">#define Py_INCREF(op) (                         \</span><br><span class="line">    _Py_INC_REFTOTAL  _Py_REF_DEBUG_COMMA       \</span><br><span class="line">    ((PyObject *)(op))-&gt;ob_refcnt++)</span><br><span class="line"></span><br><span class="line">#define Py_DECREF(op)                                   \</span><br><span class="line">    do &#123;                                                \</span><br><span class="line">        PyObject *_py_decref_tmp &#x3D; (PyObject *)(op);    \</span><br><span class="line">        if (_Py_DEC_REFTOTAL  _Py_REF_DEBUG_COMMA       \</span><br><span class="line">        --(_py_decref_tmp)-&gt;ob_refcnt !&#x3D; 0)             \</span><br><span class="line">            _Py_CHECK_REFCNT(_py_decref_tmp)            \</span><br><span class="line">        else                                            \</span><br><span class="line">            _Py_Dealloc(_py_decref_tmp);                \</span><br><span class="line">    &#125; while (0)</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://example.com/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/python%E4%B8%87%E7%89%A9%E7%9A%86%E5%AF%B9%E8%B1%A1/" data-id="ckpyrj7ej000a4wmzdft7a9hv" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "durian"
+        },
+        "headline": "万物皆对象",
+        "image": "http://example.com/css/images/qinglu.jfif",
+        "keywords": "",
+        "genre": "python cpython源码解析",
+        "datePublished": "2021-06-18",
+        "dateCreated": "2021-06-18",
+        "dateModified": "2021-06-16",
+        "url": "http://example.com/2021/06/18/python/python源码解析/python万物皆对象/",
+        "description": "对象分类
+Fundamental对象类型对象
+1type
+
+Numeric对象数值对象
+123integerfloatboolean
+
+Sequence对象容纳其他对象的序列集合对象
+1234listtuplestringset
+
+Mapping对象类似 C++中的 map 的关联对象
+1dict
+Internal对象:Python 虚拟机在运行时内部使用的对象
+12345functioncode",
+        "wordCount": 1928
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <!-- Valine -->
+    <div class="vcomments"></div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/chunjianghuayueye2" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/str%E8%A7%A3%E6%9E%90/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            str部分源码解析(Cpython python3)
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2021/06/18/python/pysider2/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title"></p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+<div class="widget-wrap widget-list">
+    <h3 class="widget-title">目录</h3>
+    <div class="widget">
+        <div id="toc" class="toc-article">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1%E5%88%86%E7%B1%BB"><span class="toc-number">1.</span> <span class="toc-text">对象分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1%E4%B8%89%E8%A6%81%E7%B4%A0"><span class="toc-number">2.</span> <span class="toc-text">对象三要素</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E9%95%BF%E4%B8%8E%E5%8F%98%E9%95%BF%E5%AF%B9%E8%B1%A1"><span class="toc-number">2.1.</span> <span class="toc-text">定长与变长对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E5%AF%B9%E8%B1%A1"><span class="toc-number">2.2.</span> <span class="toc-text">类型对象</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA"><span class="toc-number">2.2.1.</span> <span class="toc-text">类型对象创建</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA"><span class="toc-number">2.3.</span> <span class="toc-text">对象创建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%A4%9A%E6%80%81%E6%80%A7"><span class="toc-number">2.4.</span> <span class="toc-text">对象的多态性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E8%AE%A1%E6%95%B0"><span class="toc-number">2.5.</span> <span class="toc-text">引用计数</span></a></li></ol></li></ol>
+        </div>
+    </div>
+</div>
+
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/22/rabbitmq/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/chu4.jpg)" alt="安装配置" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/bigdata/">bigdata</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/bigdata/rabbitmq/">rabbitmq</a></p>
+                            <p class="item-title"><a href="/2021/06/22/rabbitmq/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" class="title">安装配置</a></p>
+                            <p class="item-date"><time datetime="2021-06-22T06:48:05.782Z" itemprop="datePublished">2021-06-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/18/python/socket/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/dangao.jpg)" alt="socket" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/python/">python</a></p>
+                            <p class="item-title"><a href="/2021/06/18/python/socket/" class="title">socket</a></p>
+                            <p class="item-date"><time datetime="2021-06-18T01:03:51.525Z" itemprop="datePublished">2021-06-18</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/18/python/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/saibo1.jpg)" alt="函数式编程" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/python/">python</a></p>
+                            <p class="item-title"><a href="/2021/06/18/python/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="title">函数式编程</a></p>
+                            <p class="item-date"><time datetime="2021-06-18T01:03:51.525Z" itemprop="datePublished">2021-06-18</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/bei.jpg)" alt="tuple部分源码解析(cpython)" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">python源码解析</a></p>
+                            <p class="item-title"><a href="/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" class="title">tuple部分源码解析(cpython)</a></p>
+                            <p class="item-date"><time datetime="2021-06-18T01:03:51.525Z" itemprop="datePublished">2021-06-18</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/18/python/%E9%A1%B9%E7%9B%AE%E8%A7%A3%E6%9E%90/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/chu1.jpg)" alt="项目解析" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/webframe/">webframe</a></p>
+                            <p class="item-title"><a href="/2021/06/18/python/%E9%A1%B9%E7%9B%AE%E8%A7%A3%E6%9E%90/" class="title">项目解析</a></p>
+                            <p class="item-date"><time datetime="2021-06-18T01:03:51.525Z" itemprop="datePublished">2021-06-18</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/">bigdata</a><span class="category-list-count">23</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker/">docker</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker-compose/">docker-compose</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/hadoop/">hadoop</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/rabbitmq/">rabbitmq</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/zookeeper/">zookeeper</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/">nosql</a><span class="category-list-count">27</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis/">redis</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a><span class="category-list-count">9</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/python/cpython%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">cpython源码解析</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">python源码解析</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/">webframe</a><span class="category-list-count">22</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/django/">django</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/flask/">flask</a><span class="category-list-count">5</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">86</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+
+            
+                
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2021 durian</p>
+                
+                <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
+                
+		<p><span id="busuanzi_container_site_pv">本站总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>&nbsp;次</span></p>
+                <p><span id="busuanzi_container_site_uv"> 
+                     本站访客数&nbsp;<span id="busuanzi_value_site_uv"></span>&nbsp;人次
+               </span></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+    <script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
+</footer>
+
+    </div>
+    
+    
+    <script src="//unpkg.com/valine"></script>
+    <script>
+        var GUEST = ['nick','mail','link'];
+        var meta = '';
+        meta = meta.split(',').filter(function (item) {
+            return GUEST.indexOf(item)>-1;
+        });
+        var avatarcdn = 'gravatar.cat.net' == true;
+        new Valine({
+            el: '.vcomments',
+            notify: "false",
+            verify: "false",
+            appId: "795P9DunI2Jv3Jho36dlueIS-gzGzoHsz",
+            appKey: "pM151YCVhYBYTB9Pt1SRuiKs",
+            placeholder: "Just Do It",
+            avatar:"mm",
+            recordIP:"false",
+            visitor: "true"
+        });
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

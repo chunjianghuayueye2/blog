@@ -218,6 +218,467 @@
         <article class="article article-summary">
     <div class="article-summary-inner">
         
+        <a href="/2021/06/15/redis%E9%AB%98%E7%BA%A7%E7%AF%87/redis%E6%A5%B7%E7%A5%A8%E9%9A%86%E5%A0%90/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/xiaohuangren.jpg)" alt="redis发布订阅" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span><a href="http://example.com/2021/06/15/redis%E9%AB%98%E7%BA%A7%E7%AF%87/redis%E6%A5%B7%E7%A5%A8%E9%9A%86%E5%A0%90/#isso-thread"></a></span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a>
+            </div>
+            <div class="date"><time datetime="2021-06-15T01:28:37.705Z" itemprop="datePublished">2021-06-15</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2021/06/15/redis%E9%AB%98%E7%BA%A7%E7%AF%87/redis%E6%A5%B7%E7%A5%A8%E9%9A%86%E5%A0%90/">redis发布订阅</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            5.1 简介进程间的一种消息通信模式：发送者（pub）发送消息，订阅者（sub）接收消息。
+5.2 基本命令12345671.subscribe c1 c2 c3一次订阅三个2.publish c2 hello-world这时订阅的用户就能收到消息3.psubscribe new* 订阅多个new1 2 3….一般不会用redis做消息中间键
+
+5.3 应用场景
+网站综合消息通知
+网站更新消息通知
+        </p>
+    </div>
+</article>
+    
+
+    
+    
+    
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2021/06/15/redis%E9%AB%98%E7%BA%A7%E7%AF%87/redis%E5%B2%88%E6%98%A2/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/yu.jpg)" alt="redis事务" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span><a href="http://example.com/2021/06/15/redis%E9%AB%98%E7%BA%A7%E7%AF%87/redis%E5%B2%88%E6%98%A2/#isso-thread"></a></span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a>
+            </div>
+            <div class="date"><time datetime="2021-06-15T01:28:37.705Z" itemprop="datePublished">2021-06-15</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2021/06/15/redis%E9%AB%98%E7%BA%A7%E7%AF%87/redis%E5%B2%88%E6%98%A2/">redis事务</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            4.1 简介和sql的事务一样,本质是一组命令的集合,一个事务中所有命令都会序列化,按顺序地串行执行而不会被其他命令插入加塞.(要么一起成功,要么一起失败)一个队列中一次性、顺序性、排他性的执行一系列的命令
+4.2 应用场景
+秒杀系统网络上经常谈到的微信抢红包项目为例：1234567891011121.设计数据库字段红包id、发红包人、金额、数量、剩余金额、剩余数量、抢到人的名单、过期时间、添加时
+        </p>
+    </div>
+</article>
+    
+        </div>
+    
+
+    
+    
+    
+    
+        <div class="article-row">
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2021/06/15/redis%E9%AB%98%E7%BA%A7%E7%AF%87/redis%20epoll/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/xueshan.jpg)" alt="epoll多路复用" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span><a href="http://example.com/2021/06/15/redis%E9%AB%98%E7%BA%A7%E7%AF%87/redis%20epoll/#isso-thread"></a></span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a>
+            </div>
+            <div class="date"><time datetime="2021-06-15T01:28:37.704Z" itemprop="datePublished">2021-06-15</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2021/06/15/redis%E9%AB%98%E7%BA%A7%E7%AF%87/redis%20epoll/">epoll多路复用</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            select概述通过轮询检查在文件描述符上设置的标识位来进行判断，select的轮询相当于在数据库中查找一条记录没有建立索引，对所有的socket 进行全部遍历，这对 CPU 是浪费的。另外 select 还有一个限制，对于单个进程所能打开的文件描述符最大只能是 1024，那么基于 select 的轮询技术最多也只能很好的处理 1000 并发的吞吐量，可以查看 上一个10年，著名的C10K并发连接
+        </p>
+    </div>
+</article>
+    
+
+    
+    
+    
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2021/06/15/redis/RDB&AOF/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/shi.jpg)" alt="RDB&amp;AOF" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span><a href="http://example.com/2021/06/15/redis/RDB&amp;AOF/#isso-thread"></a></span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a>
+            </div>
+            <div class="date"><time datetime="2021-06-15T01:28:37.702Z" itemprop="datePublished">2021-06-15</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2021/06/15/redis/RDB&AOF/">RDB&amp;AOF</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            2 RDB持久化2.1 是什么？在指定的时间间隔内将内存中的数据集快照写入磁盘，也就是行话讲的Snapshot快照，它恢复时是将快照文件直接读到内存里（内存的东西不保存关机就没了，为什么redis开机还有数据？因为内存中的数据集快照被写进了磁盘，开机从磁盘加载回内存。）
+2.2 相关配置12345678redis.conf的SNAPSHOTTINGafter 900 seconds if at l
+        </p>
+    </div>
+</article>
+    
+        </div>
+    
+
+    
+    
+    
+    
+        <div class="article-row">
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2021/06/15/redis/redis%E6%9D%85%E6%93%82%E6%BF%AC%E5%80%B0/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/cheng.jpg)" alt="五大数据类型" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span><a href="http://example.com/2021/06/15/redis/redis%E6%9D%85%E6%93%82%E6%BF%AC%E5%80%B0/#isso-thread"></a></span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/redis/">redis</a>
+            </div>
+            <div class="date"><time datetime="2021-06-15T01:28:37.702Z" itemprop="datePublished">2021-06-15</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2021/06/15/redis/redis%E6%9D%85%E6%93%82%E6%BF%AC%E5%80%B0/">五大数据类型</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            string一个key对应一个value（和Memcached一样），字符串是一种最基本的Redis值类型。Redis字符串是二进制安全的，这意味着一个Redis字符串能包含任意类型的数据，例如： 一张JPEG格式的图片或者一个序列化的Ruby对象，一个字符串类型的值最多能存储512M字节的内容。
+基础命令1234567891011121314151617181920212223242526272
+        </p>
+    </div>
+</article>
+    
+
+    
+    
+    
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2021/06/15/redis/download/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/ma.jpg)" alt="redis下载安装" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span><a href="http://example.com/2021/06/15/redis/download/#isso-thread"></a></span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/redis/">redis</a>
+            </div>
+            <div class="date"><time datetime="2021-06-15T01:28:37.700Z" itemprop="datePublished">2021-06-15</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2021/06/15/redis/download/">redis下载安装</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            3.1 是什么Remote Dictionary Server（远程字典服务器）是完全开源的用C语言编写的，遵守BSD协议，是一个高性能、单线程的KEY/value分布式内存数据库，基于内存运行并支持持久化的NoSQL数据库，也被人们称为数据结构服务器
+3.1.1 为什么redis取代memcache？
+1.支持数据的持久化，可以将内存中的数据保持在磁盘中，重启的时候可以再次加载进行使用。
+2.不
+        </p>
+    </div>
+</article>
+    
+        </div>
+    
+
+    
+    
+    
+    
+        <div class="article-row">
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2021/06/15/pyqt/pysider2%E5%AE%9E%E7%8E%B0qq/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/hai.png)" alt="pysider2实现qq" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span><a href="http://example.com/2021/06/15/pyqt/pysider2%E5%AE%9E%E7%8E%B0qq/#isso-thread"></a></span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/bigdata/">bigdata</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/bigdata/zookeeper/">zookeeper</a>
+            </div>
+            <div class="date"><time datetime="2021-06-15T01:28:37.699Z" itemprop="datePublished">2021-06-15</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2021/06/15/pyqt/pysider2%E5%AE%9E%E7%8E%B0qq/">pysider2实现qq</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            login.py123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100
+        </p>
+    </div>
+</article>
+    
+
+    
+    
+    
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E9%80%BB%E8%BE%91%E6%9E%B6%E6%9E%84/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/pu.jpg)" alt="mysql逻辑架构" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span><a href="http://example.com/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E9%80%BB%E8%BE%91%E6%9E%B6%E6%9E%84/#isso-thread"></a></span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a>
+            </div>
+            <div class="date"><time datetime="2021-06-15T01:28:37.698Z" itemprop="datePublished">2021-06-15</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E9%80%BB%E8%BE%91%E6%9E%B6%E6%9E%84/">mysql逻辑架构</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            连接层 connection poolC/S程序都需要的：连接处理，身份验证，安全性
+服务层（业务逻辑处理层）sql layer权限判断，sql解析，行计划优化， query cache 的处理以及所有内置的函数(如日期,时间,数学运算,加密)等等。各个存储引擎提供的功能都集中在这一层，如存储过程，触发器，视图等
+
+架构
+
+connectors不同语言中与sql的交互
+
+Management Se
+        </p>
+    </div>
+</article>
+    
+        </div>
+    
+
+    
+    
+    
+    
+        <div class="article-row">
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/xiaohuanren3.jpg)" alt="mysql索引失效" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span><a href="http://example.com/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88/#isso-thread"></a></span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a>
+            </div>
+            <div class="date"><time datetime="2021-06-15T01:28:37.697Z" itemprop="datePublished">2021-06-15</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88/">mysql索引失效</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            口诀orz
+1.全值匹配我最爱
+2.最佳左前缀法则
+3.带头大哥不能死
+4.中间兄弟不能断
+5.索引列上不计算
+6.范围之后全失效
+7.百分like加右边
+8.字符串里有引号
+
+索引失效的情况
+1.不在索引列上做任何操作（计算，函数，（自动or手动）类型转换），会导致索引失效而转向全表扫描
+12explain select * from staffs where name&#x3D;’july’;
+        </p>
+    </div>
+</article>
+    
+
+    
+    
+    
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
         <a href="/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/" class="thumbnail">
     
     
@@ -258,504 +719,6 @@
     </div>
 </article>
     
-
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/css/images/zihua.jpg)" alt="mysql索引优化" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span><a href="http://example.com/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96/#isso-thread"></a></span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a>
-            </div>
-            <div class="date"><time datetime="2021-06-15T01:28:37.695Z" itemprop="datePublished">2021-06-15</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96/">mysql索引优化</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            索引优化分析性能下降sql慢：（执行时间长，等待时间长）
-
-1.select语句写的烂，各种连接加子查询
-
-2.索引失效，建的索引没用，创建单索引和复合索引
-1create index idx_user_name (idx_tablename_indexname) on user(name)
-查询用的多的字段建立联合建立复合索引
-1create index idx_user_nameEmail o
-        </p>
-    </div>
-</article>
-    
-        </div>
-    
-
-    
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/css/images/yuhui.jpg)" alt="mysql索引" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span><a href="http://example.com/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95/#isso-thread"></a></span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a>
-            </div>
-            <div class="date"><time datetime="2021-06-15T01:28:37.695Z" itemprop="datePublished">2021-06-15</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%B4%A2%E5%BC%95/">mysql索引</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            索引是什么？是帮助mysql高效获取数据的数据结构，可以得到索引的本质：索引是数据结构。（btree）
-
-1.排好序的快速查找数据结构
-2.在数据之外，数据库系统还维护着满足特定查找算法的数据结构，这些数据结构以某种方式引用（指向）数据，这样就可以在这些数据结构上实现高级查找算法。
-3.当你删除数据后，某些索引指向就会失效。这个时候需要锁表重构索引。
-4.为什么update、insert慢，因为数
-        </p>
-    </div>
-</article>
-    
-
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E6%96%87%E4%BB%B6%E6%9E%B6%E6%9E%84/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/css/images/yun.jpg)" alt="innodb文件架构体系(mysql8)" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span><a href="http://example.com/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E6%96%87%E4%BB%B6%E6%9E%B6%E6%9E%84/#isso-thread"></a></span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a>
-            </div>
-            <div class="date"><time datetime="2021-06-15T01:28:37.694Z" itemprop="datePublished">2021-06-15</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E6%96%87%E4%BB%B6%E6%9E%B6%E6%9E%84/">innodb文件架构体系(mysql8)</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            文件分类参数文件
-概述告诉MySQL实例启动时在哪里可以找到数据库文件，并且指定某些初始化参数，这些参数定义了某种内存结构的大小等设置，还会介绍各种参数的类型。
-
-
-路径
-1&#x2F;var&#x2F;lib&#x2F;mysql&#x2F; 
-
-相关命令
-
-
-1234show [global] variables like &quot;%xxxxx%&quot;;set key value;s
-        </p>
-    </div>
-</article>
-    
-        </div>
-    
-
-    
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E5%88%86%E8%A1%A8%E5%AE%9E%E8%B7%B5/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/css/images/siyue2.jpg)" alt="mysql分表实践" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span><a href="http://example.com/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E5%88%86%E8%A1%A8%E5%AE%9E%E8%B7%B5/#isso-thread"></a></span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a>
-            </div>
-            <div class="date"><time datetime="2021-06-15T01:28:37.693Z" itemprop="datePublished">2021-06-15</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E5%88%86%E8%A1%A8%E5%AE%9E%E8%B7%B5/">mysql分表实践</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            停机部署1.挂牌停机通告2.通过写的脚本（直接按游标取出数据进行迁移）按照规定逻辑进行分库分表（也可以使用工具）3.重写中间件按照逻辑访问数据库4.上线
-
-优点
-比较容易，不用考虑这时的用户操作，无脑迁移数据
-
-
-缺点
-系统必须停机，客户体验差
-必须在规定时间完成迁移及数据校验
-
-
-
-不停机部署数据双写迁移法1.老库和新库同时insert/update/delete，然后将老数据批量迁移到新库，最
-        </p>
-    </div>
-</article>
-    
-
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2021/06/15/hadoop/hdfs%E6%9E%B6%E6%9E%84/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/css/images/hadoop.jfif)" alt="hadoop介绍" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span><a href="http://example.com/2021/06/15/hadoop/hdfs%E6%9E%B6%E6%9E%84/#isso-thread"></a></span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/bigdata/">bigdata</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/bigdata/hadoop/">hadoop</a>
-            </div>
-            <div class="date"><time datetime="2021-06-15T01:28:37.692Z" itemprop="datePublished">2021-06-15</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2021/06/15/hadoop/hdfs%E6%9E%B6%E6%9E%84/">hadoop介绍</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            hadoop三大版本
-Apache
-Cloudera    公司常用
-Hortonworks
-
-hadoop优势
-高可靠：hadoop底层维护多个数据副本（很少数据丢失）
-高扩展：在集群分配任务数据，可方便的扩展数以千计的节点
-高效性：在mapreduce思想下，hadoop是并行工作的，以加快任务处理速度。
-高容错性：自动将失败任务重新分配
-
-hadoop 1.x构成
-mapReduce计算+资
-        </p>
-    </div>
-</article>
-    
-        </div>
-    
-
-    
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E4%B8%BA%E4%BB%80%E4%B9%88b+%E6%A0%91/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/css/images/motuo.jpg)" alt="innodb索引为什么使用b+树？" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span><a href="http://example.com/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E4%B8%BA%E4%BB%80%E4%B9%88b+%E6%A0%91/#isso-thread"></a></span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a>
-            </div>
-            <div class="date"><time datetime="2021-06-15T01:28:37.692Z" itemprop="datePublished">2021-06-15</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2021/06/15/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/%E4%B8%BA%E4%BB%80%E4%B9%88b+%E6%A0%91/">innodb索引为什么使用b+树？</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            磁盘io与预读考虑到磁盘IO是非常高昂的操作，计算机操作系统做了一些优化，当一次IO时，不光把当前磁盘地址的数据，而是把相邻的数据也都读取到内存缓冲区内，因为局部预读性原理告诉我们，当计算机访问一个地址的数据的时候，与其相邻的数据也会很快被访问到。每一次IO读取的数据我们称之为一页(page)，具体一页有多大数据跟操作系统有关，一般为16k，也就是我们读取一页内的数据时候，实际上才发生了一次IO，
-        </p>
-    </div>
-</article>
-    
-
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2021/06/15/hadoop/hadoop%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/css/images/hadoop.jfif)" alt="hadoop运行环境搭建" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span><a href="http://example.com/2021/06/15/hadoop/hadoop%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/#isso-thread"></a></span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/bigdata/">bigdata</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/bigdata/hadoop/">hadoop</a>
-            </div>
-            <div class="date"><time datetime="2021-06-15T01:28:37.691Z" itemprop="datePublished">2021-06-15</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2021/06/15/hadoop/hadoop%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">hadoop运行环境搭建</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            虚拟机环境准备
-1.克隆虚拟机
-2.修改虚拟机静态ip
-3.修改主机名
-4.关闭防火墙
-5.创建root用户
-6./opt下创建文件夹module和software
-
-详细搭建过程
-1.修改ip
-12vim &#x2F;etc&#x2F;udev&#x2F;rules.d&#x2F;70-persistent-net.rulesvim &#x2F;etc&#x2F;sysconfig&#x2F;n
-        </p>
-    </div>
-</article>
-    
-        </div>
-    
-
-    
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2021/06/15/hadoop/hadoop%E8%BF%90%E8%A1%8C%E6%A8%A1%E5%BC%8F/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/css/images/hadoop.jfif)" alt="hadoop运行模式" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span><a href="http://example.com/2021/06/15/hadoop/hadoop%E8%BF%90%E8%A1%8C%E6%A8%A1%E5%BC%8F/#isso-thread"></a></span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/bigdata/">bigdata</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/bigdata/hadoop/">hadoop</a>
-            </div>
-            <div class="date"><time datetime="2021-06-15T01:28:37.690Z" itemprop="datePublished">2021-06-15</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2021/06/15/hadoop/hadoop%E8%BF%90%E8%A1%8C%E6%A8%A1%E5%BC%8F/">hadoop运行模式</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            hadoop运行模式
-本地模式  
-伪分布式模式  
-完全分布式模式阿里云定制2.7.2版本
-
-本地模式https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleCluster.html
-单机模式案例
-1.案例一
-1234567查找给定文件的正则匹配对象grepBy default, Hadoop i
-        </p>
-    </div>
-</article>
-    
-
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2021/06/15/hadoop/hadoop%E5%AE%8C%E5%85%A8%E5%88%86%E5%B8%83%E5%BC%8F/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/css/images/hadoop.jfif)" alt="hadoop完全分布式" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span><a href="http://example.com/2021/06/15/hadoop/hadoop%E5%AE%8C%E5%85%A8%E5%88%86%E5%B8%83%E5%BC%8F/#isso-thread"></a></span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/bigdata/">bigdata</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/bigdata/hadoop/">hadoop</a>
-            </div>
-            <div class="date"><time datetime="2021-06-15T01:28:37.689Z" itemprop="datePublished">2021-06-15</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2021/06/15/hadoop/hadoop%E5%AE%8C%E5%85%A8%E5%88%86%E5%B8%83%E5%BC%8F/">hadoop完全分布式</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            前言1234567891.准备3台服务器2.安装JDK3.配置java环境变量4.安装hadoop5.配置hadoop环境变量6.配置集群7.单点启动8.配置ssh无密码访问9.群起并测试集群
-
-集群分配脚本配置虚拟机/服务器配置ip,hosts,hostname12vim &#x2F;etc&#x2F;hostshostnamectl&#x2F;hostname +name
-
-编写集群分发脚本x
-        </p>
-    </div>
-</article>
-    
         </div>
     
 
@@ -764,8 +727,8 @@ mapReduce计算+资
 
 
     <nav id="page-nav">
-        <span class="pages">第 4 页，共 8 页</span>
-        <a class="extend prev" rel="prev" href="/archives/2021/06/page/3/">&laquo;</a><a class="page-number" href="/archives/2021/06/">1</a><a class="page-number" href="/archives/2021/06/page/2/">2</a><a class="page-number" href="/archives/2021/06/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/archives/2021/06/page/5/">5</a><a class="page-number" href="/archives/2021/06/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/archives/2021/06/page/8/">8</a><a class="extend next" rel="next" href="/archives/2021/06/page/5/">&raquo;</a>
+        <span class="pages">第 4 页，共 9 页</span>
+        <a class="extend prev" rel="prev" href="/archives/2021/06/page/3/">&laquo;</a><a class="page-number" href="/archives/2021/06/">1</a><a class="page-number" href="/archives/2021/06/page/2/">2</a><a class="page-number" href="/archives/2021/06/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/archives/2021/06/page/5/">5</a><a class="page-number" href="/archives/2021/06/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/archives/2021/06/page/9/">9</a><a class="extend next" rel="next" href="/archives/2021/06/page/5/">&raquo;</a>
     </nav>
 
 
@@ -803,10 +766,10 @@ mapReduce计算+资
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2021/06/15/redis%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%BC%93%E5%AD%98%E9%97%AE%E9%A2%98/" class="thumbnail">
+                            <a href="/2021/06/22/rabbitmq/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" class="thumbnail">
     
     
-        <span style="background-image:url(/css/images/qinglu.jfif)" alt="缓存问题" class="thumbnail-image"></span>
+        <span style="background-image:url(/css/images/chu4.jpg)" alt="安装配置" class="thumbnail-image"></span>
     
     
 </a>
@@ -814,19 +777,19 @@ mapReduce计算+资
                         </div>
                         
                         <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/nosql/">nosql</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a></p>
-                            <p class="item-title"><a href="/2021/06/15/redis%E9%AB%98%E7%BA%A7%E7%AF%87/%E7%BC%93%E5%AD%98%E9%97%AE%E9%A2%98/" class="title">缓存问题</a></p>
-                            <p class="item-date"><time datetime="2021-06-15T08:57:18.147Z" itemprop="datePublished">2021-06-15</time></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/bigdata/">bigdata</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/bigdata/rabbitmq/">rabbitmq</a></p>
+                            <p class="item-title"><a href="/2021/06/22/rabbitmq/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" class="title">安装配置</a></p>
+                            <p class="item-date"><time datetime="2021-06-22T06:48:05.782Z" itemprop="datePublished">2021-06-22</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/dict%E8%A7%A3%E6%9E%90/" class="thumbnail">
+                            <a href="/2021/06/18/python/socket/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(/css/images/dangao.jpg)" alt="socket" class="thumbnail-image"></span>
     
     
 </a>
@@ -834,19 +797,19 @@ mapReduce计算+资
                         </div>
                         
                         <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/dict%E8%A7%A3%E6%9E%90/" class="title"></a></p>
-                            <p class="item-date"><time datetime="2021-06-15T08:52:31.827Z" itemprop="datePublished">2021-06-15</time></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/python/">python</a></p>
+                            <p class="item-title"><a href="/2021/06/18/python/socket/" class="title">socket</a></p>
+                            <p class="item-date"><time datetime="2021-06-18T01:03:51.525Z" itemprop="datePublished">2021-06-18</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/int%E8%A7%A3%E6%9E%90/" class="thumbnail">
+                            <a href="/2021/06/18/python/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(/css/images/saibo1.jpg)" alt="函数式编程" class="thumbnail-image"></span>
     
     
 </a>
@@ -854,19 +817,19 @@ mapReduce计算+资
                         </div>
                         
                         <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/int%E8%A7%A3%E6%9E%90/" class="title"></a></p>
-                            <p class="item-date"><time datetime="2021-06-15T08:52:31.827Z" itemprop="datePublished">2021-06-15</time></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/python/">python</a></p>
+                            <p class="item-title"><a href="/2021/06/18/python/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="title">函数式编程</a></p>
+                            <p class="item-date"><time datetime="2021-06-18T01:03:51.525Z" itemprop="datePublished">2021-06-18</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" class="thumbnail">
+                            <a href="/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(/css/images/bei.jpg)" alt="tuple部分源码解析(cpython)" class="thumbnail-image"></span>
     
     
 </a>
@@ -874,19 +837,19 @@ mapReduce计算+资
                         </div>
                         
                         <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" class="title"></a></p>
-                            <p class="item-date"><time datetime="2021-06-15T08:52:31.827Z" itemprop="datePublished">2021-06-15</time></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">python源码解析</a></p>
+                            <p class="item-title"><a href="/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" class="title">tuple部分源码解析(cpython)</a></p>
+                            <p class="item-date"><time datetime="2021-06-18T01:03:51.525Z" itemprop="datePublished">2021-06-18</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/list%E8%A7%A3%E6%9E%90/" class="thumbnail">
+                            <a href="/2021/06/18/python/%E9%A1%B9%E7%9B%AE%E8%A7%A3%E6%9E%90/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(/css/images/chu1.jpg)" alt="项目解析" class="thumbnail-image"></span>
     
     
 </a>
@@ -894,9 +857,9 @@ mapReduce计算+资
                         </div>
                         
                         <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2021/06/15/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/list%E8%A7%A3%E6%9E%90/" class="title"></a></p>
-                            <p class="item-date"><time datetime="2021-06-15T08:52:17.313Z" itemprop="datePublished">2021-06-15</time></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/webframe/">webframe</a></p>
+                            <p class="item-title"><a href="/2021/06/18/python/%E9%A1%B9%E7%9B%AE%E8%A7%A3%E6%9E%90/" class="title">项目解析</a></p>
+                            <p class="item-date"><time datetime="2021-06-18T01:03:51.525Z" itemprop="datePublished">2021-06-18</time></p>
                         </div>
                     </li>
                 
@@ -909,7 +872,7 @@ mapReduce计算+资
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/">bigdata</a><span class="category-list-count">22</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker/">docker</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker-compose/">docker-compose</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/hadoop/">hadoop</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/zookeeper/">zookeeper</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/">nosql</a><span class="category-list-count">27</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis/">redis</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a><span class="category-list-count">9</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/">webframe</a><span class="category-list-count">21</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/django/">django</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/flask/">flask</a><span class="category-list-count">5</span></li></ul></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/">bigdata</a><span class="category-list-count">23</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker/">docker</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker-compose/">docker-compose</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/hadoop/">hadoop</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/rabbitmq/">rabbitmq</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/zookeeper/">zookeeper</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/">nosql</a><span class="category-list-count">27</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis/">redis</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a><span class="category-list-count">9</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/python/cpython%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">cpython源码解析</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">python源码解析</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/">webframe</a><span class="category-list-count">22</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/django/">django</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/flask/">flask</a><span class="category-list-count">5</span></li></ul></li></ul>
         </div>
     </div>
 
@@ -919,7 +882,7 @@ mapReduce计算+资
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">77</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">86</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -967,11 +930,11 @@ mapReduce计算+资
                 
                 <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
                 
-            </div>
-                <p><span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span></p>
+		<p><span id="busuanzi_container_site_pv">本站总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>&nbsp;次</span></p>
                 <p><span id="busuanzi_container_site_uv"> 
-                     本站访客数<span id="busuanzi_value_site_uv"></span>人次
+                     本站访客数&nbsp;<span id="busuanzi_value_site_uv"></span>&nbsp;人次
                </span></p>
+            </div>
             <div class="footer-plugins">
               
     

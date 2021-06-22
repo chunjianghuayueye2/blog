@@ -1,0 +1,801 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>celery | 春江花月夜o</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="" />
+    
+    <meta name="description" content="概念celery是一个简单，灵活且可靠的处理大量消息的分布式系统。专注于实时处理的异步任务队列，同时也支持任务调度。 相关信息 分布式系统一个系统应用有很多系统组件：web服务器，数据库，消息中间键，缓存等，把这些组件架构在不同的服务器上，然后这些不同服务器上的不同组件之间通过消息中间键通信的方式来实现这种协调工作。（当用户访问时，要做到和访问一台服务器的用户感知是一样的）  分布式系统优点负载均">
+<meta property="og:type" content="article">
+<meta property="og:title" content="celery">
+<meta property="og:url" content="http://example.com/2021/06/18/python/celery/index.html">
+<meta property="og:site_name" content="春江花月夜o">
+<meta property="og:description" content="概念celery是一个简单，灵活且可靠的处理大量消息的分布式系统。专注于实时处理的异步任务队列，同时也支持任务调度。 相关信息 分布式系统一个系统应用有很多系统组件：web服务器，数据库，消息中间键，缓存等，把这些组件架构在不同的服务器上，然后这些不同服务器上的不同组件之间通过消息中间键通信的方式来实现这种协调工作。（当用户访问时，要做到和访问一台服务器的用户感知是一样的）  分布式系统优点负载均">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/css/images/gouzi.jpg">
+<meta property="article:published_time" content="2021-06-18T01:03:51.510Z">
+<meta property="article:modified_time" content="2021-06-16T03:46:53.404Z">
+<meta property="article:author" content="durian">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/css/images/gouzi.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/gouzi.ico" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="春江花月夜o" type="application/atom+xml">
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">关于</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">python</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">cpp</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">webframe</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                                <a class="main-nav-list-link" href="/null">flask</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">django</a>
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">algorithm</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">bigdata</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">nosql</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                                <a class="main-nav-list-link" href="/null"> redis</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">mysql</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null"> redis高级篇</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">mysql高级篇</a>
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/python/">python</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-python/celery" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        celery
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2021/06/18/python/celery/" class="article-date">
+       <time datetime="2021-06-18T01:03:51.510Z" itemprop="datePublished">2021-06-18</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/2021/06/18/python/celery/" class="article-date">
+     <time datetime="2021-06-16T03:46:53.404Z" itemprop="dateModified">2021-06-16</time>
+  </a>
+</div>
+
+
+                
+
+                
+                
+   <div class="article-counter">
+      <i class="fa fa-file-word-o"></i>
+      <span class="post-count-item-text">本文字数: </span>
+      <span class="post-count">2.9k</span>
+      <i class="fa fa-clock-o"></i>
+      <span class="post-time-item-text">阅读时长: </span>
+      <span class="post-count">12 分钟 </span>
+   </div>
+
+
+                <span id="busuanzi_container_page_pv">
+                阅读次数<span id="busuanzi_value_page_pv"></span>次
+                </span>
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>celery是一个简单，灵活且可靠的处理大量消息的分布式系统<br>。专注于实时处理的异步任务队列，同时也支持任务调度。</p>
+<h3 id="相关信息"><a href="#相关信息" class="headerlink" title="相关信息"></a>相关信息</h3><ul>
+<li><p>分布式系统<br>一个系统应用有很多系统组件：web服务器，数据库，消息中间键，缓存等，<br>把这些组件架构在不同的服务器上，然后这些不同服务器上的不同组件之间<br>通过消息中间键通信的方式来实现这种协调工作。（当用户访问时，要做到<br>和访问一台服务器的用户感知是一样的）</p>
+</li>
+<li><p>分布式系统优点<br>负载均衡，避免单点故障</p>
+</li>
+<li><p>异步任务<br>asynic协程执行，利用io操作等待时间执行别的任务。（当前任务await时）</p>
+</li>
+</ul>
+<h3 id="组成架构"><a href="#组成架构" class="headerlink" title="组成架构"></a>组成架构</h3><p>celery的架构由三部分组成，本质就是使用进程、协程（asyncio）封装处理异步任务，<br>一个worker就是一个进程，一个进程里面开多个协程。</p>
+<ul>
+<li><p>1.消息中间件<br>celery本身不提供消息服务，但直接可以集成rabbitMQ、redis等</p>
+</li>
+<li><p>2.任务执行单元<br>worker是celery提供的任务执行单元，worker并发的运行在分布式的系统节点中。</p>
+</li>
+<li><p>3.任务执行结果存储<br>task result store用来存储执行任务的结果，celery<br>支持以不同的方式储存任务的结果，包括AMQP、redis、mysql等</p>
+</li>
+<li><p>4.另外celery还支持不同的并发和序列化手段</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1.并发</span><br><span class="line">prefork、eventlet、gevent、threads</span><br><span class="line">2.序列化</span><br><span class="line">pickle、json、yaml、zlib等</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="celery的异步任务场景"><a href="#celery的异步任务场景" class="headerlink" title="celery的异步任务场景"></a>celery的异步任务场景</h2><p>生产者连接消息中间件，创建队列，向指定队列插入数据<br>消费者连接消息中间件，监听队列，内部实现callback，<br>如果有异步操作需要在callback里面使用并发技术处理。<br>（以上这些流程celery已经帮我们做好声明，无需自己定义）<br>celery的定时任务场景（每天几点执行）。</p>
+<ul>
+<li>1.比如（django，简单python项目）作为生产消息的生产者;</li>
+<li>2.rabbitMQ、redis作为消息中间件消息队列存放生产者生产出来的消息;</li>
+<li>3.celery消费者，作为真正的异步任务执行单元，异步从消息队列中取出消息执行;</li>
+<li>4.redis、sql等作为结果存储单元。</li>
+</ul>
+<h2 id="基础异步模型"><a href="#基础异步模型" class="headerlink" title="基础异步模型"></a>基础异步模型</h2><h3 id="消费者模块"><a href="#消费者模块" class="headerlink" title="消费者模块"></a>消费者模块</h3><ul>
+<li><p>1.celery如何确定任务及监听对应任务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">新建c1.py(consumer)</span><br><span class="line">import celery</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line">backend &#x3D; &#39;redis:&#x2F;&#x2F;10.167.219.250:8001&#x2F;1&#39;</span><br><span class="line">broker &#x3D; &#39;redis:&#x2F;&#x2F;10.167.219.250:8001&#x2F;2&#39;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 名字，数据库存储，消息中间件</span><br><span class="line">cel &#x3D; celery.Celery(&#39;test&#39;, backend&#x3D;backend, broker&#x3D;broker)</span><br><span class="line">@cel.task(name&#x3D;&#39;utils.myCelery.send_email&#39;)</span><br><span class="line"></span><br><span class="line">@cel.task</span><br><span class="line">def send_email(name):</span><br><span class="line">    print(&quot;向%s发送邮件...&quot;%name)</span><br><span class="line">    time.sleep(5)</span><br><span class="line">    print(&quot;向%s发送邮件完成...&quot;%name)</span><br><span class="line">    return &quot;ok&quot;</span><br><span class="line"></span><br><span class="line">@cel.task</span><br><span class="line">def send_msg(name):</span><br><span class="line">    print(&quot;向%s发送短信...&quot;%name)</span><br><span class="line">    time.sleep(5)</span><br><span class="line">    print(&quot;向%s发送短信完成...&quot;%name)</span><br><span class="line">    return &quot;ok&quot;</span><br><span class="line">注意名字的一致性</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>2.启动消费者</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">执行celery –A c1(python文件名) worker –l INFO</span><br><span class="line">E:\春江花月夜\笔记\celery&gt;celery -A c1 worker -l INFO</span><br><span class="line"></span><br><span class="line"> -------------- celery@xxxxxxx v5.0.0 (singularity)</span><br><span class="line">--- ***** -----</span><br><span class="line">-- ******* ---- Windows-10-10.0.17763-SP0 2020-10-09 15:40:49</span><br><span class="line">- *** --- * ---</span><br><span class="line">- ** ---------- [config]</span><br><span class="line">- ** ---------- .&gt; app:         test:0x2844f1f8400</span><br><span class="line">- ** ---------- .&gt; transport:   redis:&#x2F;&#x2F;10.167.219.250:8001&#x2F;2</span><br><span class="line">- ** ---------- .&gt; results:     redis:&#x2F;&#x2F;10.167.219.250:8001&#x2F;1</span><br><span class="line">- *** --- * --- .&gt; concurrency: 4 (prefork)</span><br><span class="line">-- ******* ---- .&gt; task events: OFF (enable -E to monitor tasks in this worker)</span><br><span class="line">--- ***** -----</span><br><span class="line"> -------------- [queues]</span><br><span class="line">                .&gt; celery           exchange&#x3D;celery(direct) key&#x3D;celery</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[tasks]</span><br><span class="line">  . c1.send_email</span><br><span class="line">  . c1.send_msg</span><br><span class="line"></span><br><span class="line">[2020-10-09 15:40:49,912: INFO&#x2F;MainProcess] Connected to redis:&#x2F;&#x2F;10.167.219.250:8001&#x2F;2</span><br><span class="line">[2020-10-09 15:40:49,931: INFO&#x2F;MainProcess] mingle: searching for neighbors</span><br><span class="line">[2020-10-09 15:40:50,900: INFO&#x2F;SpawnPoolWorker-1] child process 2076 calling self.run()</span><br><span class="line">[2020-10-09 15:40:50,915: INFO&#x2F;SpawnPoolWorker-2] child process 7964 calling self.run()</span><br><span class="line">[2020-10-09 15:40:50,985: INFO&#x2F;MainProcess] mingle: all alone</span><br><span class="line">[2020-10-09 15:40:51,047: INFO&#x2F;MainProcess] celery@xxxxxxx ready.</span><br><span class="line">[2020-10-09 15:40:51,069: INFO&#x2F;SpawnPoolWorker-3] child process 8856 calling self.run()</span><br><span class="line">[2020-10-09 15:40:51,192: INFO&#x2F;SpawnPoolWorker-4] child process 17216 calling self.run()</span><br><span class="line">监听成功</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="生产者模块"><a href="#生产者模块" class="headerlink" title="生产者模块"></a>生产者模块</h3><ul>
+<li>新建product.py<br>导入我们在celery task注册好的方法并delay调用，比如<br>在views中，存储数据后想发送邮件信息。可以使用celery</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from c1 import send_email, send_msg</span><br><span class="line"># delay(是cel.task中的方法）放入消息中間件，并傳入必要參數</span><br><span class="line">result &#x3D; send_email.delay(&#39;yuan&#39;)</span><br><span class="line"># 这时候的结果已经存入了数据库redis，我们需要通过这个id去访问结果</span><br><span class="line">print(result.id)</span><br><span class="line"></span><br><span class="line">result &#x3D; send_msg.delay(&#39;zhang&#39;)</span><br><span class="line">print(result.id)</span><br></pre></td></tr></table></figure>
+
+<h3 id="结果储存模块"><a href="#结果储存模块" class="headerlink" title="结果储存模块"></a>结果储存模块</h3><p>通过执行的id进行查询，判断执行结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">from celery.result import AsyncResult</span><br><span class="line">from c1 import cel</span><br><span class="line">async_result &#x3D; AsyncResult(id&#x3D;&quot;e78e6274-46a7-4fb1-9ae6-2084fcdad58d&quot;, app&#x3D;cel)</span><br><span class="line">if async_result.successful():</span><br><span class="line">    result &#x3D; async_result.get()</span><br><span class="line">    print(result)</span><br><span class="line">elif async_result.failed():</span><br><span class="line">    print(&#39;执行失败&#39;)</span><br><span class="line">elif async_result.status &#x3D;&#x3D; &#39;PENDING&#39;:</span><br><span class="line">    print(&#39;任务等待中被执行&#39;)</span><br><span class="line">elif async_result.status &#x3D;&#x3D; &#39;RETRY&#39;:</span><br><span class="line">    print(&#39;任务异常后重试&#39;)</span><br><span class="line">elif async_result.status &#x3D;&#x3D; &#39;STARTED&#39;:</span><br><span class="line">    print(&#39;任务已经开始被执行&#39;)</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="多任务异步模型"><a href="#多任务异步模型" class="headerlink" title="多任务异步模型"></a>多任务异步模型</h2><h3 id="消费者"><a href="#消费者" class="headerlink" title="消费者"></a>消费者</h3><ul>
+<li><p>1.新建consumer消费者模块</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">python packages</span><br><span class="line">celery_tasks</span><br><span class="line">	__init__.py</span><br><span class="line">	celery.py</span><br><span class="line">	task01.py</span><br><span class="line">	task02.py</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>2.setting配置celery.py<br>这里的改变主要是需要include所有的需要的任务包，每<br>个任务会开启一个进程，在进程中会开启协程运行此进程中的每个任务。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">import celery</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line">backend &#x3D; &#39;redis:&#x2F;&#x2F;10.167.219.250:8001&#x2F;1&#39;</span><br><span class="line">broker &#x3D; &#39;redis:&#x2F;&#x2F;10.167.219.250:8001&#x2F;2&#39;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 名字，数据库存储，消息中间件， 多了一个include放置你需要的所有task</span><br><span class="line">cel &#x3D; celery.Celery(&#39;test&#39;, backend&#x3D;backend, broker&#x3D;broker, include&#x3D;[&#39;celery_tasks.task01&#39;, &#39;celery_tasks.task02&#39;])</span><br><span class="line"></span><br><span class="line"># 基本配置</span><br><span class="line"># 时区</span><br><span class="line">cel.conf.timezone &#x3D; &#39;Asia&#x2F;Shanghai&#39;</span><br><span class="line"># 是否使用utc</span><br><span class="line">cel.conf.enable_utc &#x3D; False</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>3.任务模块</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">task01</span><br><span class="line">import time</span><br><span class="line">from .celery import cel</span><br><span class="line"></span><br><span class="line">@cel.task</span><br><span class="line">def send_email(name):</span><br><span class="line">    print(&quot;向%s发送邮件...&quot;%name)</span><br><span class="line">    time.sleep(5)</span><br><span class="line">    print(&quot;向%s发送邮件完成...&quot;%name)</span><br><span class="line">    return &quot;邮件完成！&quot;</span><br><span class="line">    </span><br><span class="line">task02</span><br><span class="line">import time</span><br><span class="line">from .celery import cel</span><br><span class="line"></span><br><span class="line">@cel.task</span><br><span class="line">def send_msg(name):</span><br><span class="line">    xxx</span><br><span class="line">    print(&quot;向%s发送短信...&quot;%name)</span><br><span class="line">    time.sleep(5)</span><br><span class="line">    print(&quot;向%s发送短信完成...&quot;%name)</span><br><span class="line">    return &quot;短信完成&quot;</span><br><span class="line"></span><br><span class="line">运行celery -A celery_tasks worker -l INFO –P eventlet</span><br><span class="line">这里-P指定开启协程的方式</span><br><span class="line">通过-C控制并发数</span><br><span class="line">celery -A celery_tasks worker –l INFO –C 5</span><br><span class="line">(当存在celery遗留可以删掉celery)这里-C指定5个并发执行。</span><br><span class="line">https:&#x2F;&#x2F;blog.csdn.net&#x2F;weixin_44235861&#x2F;article&#x2F;details&#x2F;108842685</span><br></pre></td></tr></table></figure>
+<p>生产者和结果基本与基础模型相似</p>
+</li>
+</ul>
+<h2 id="Celery简单定时任务"><a href="#Celery简单定时任务" class="headerlink" title="Celery简单定时任务"></a>Celery简单定时任务</h2><h3 id="消费者-1"><a href="#消费者-1" class="headerlink" title="消费者"></a>消费者</h3><p>消费者都是一样的监听消息中间件，cel的装饰器包装相关任务方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"># 定时任务</span><br><span class="line">import time</span><br><span class="line">import celery</span><br><span class="line"># 名字，数据库存储，消息中间件， 多了一个include放置你需要的所有task</span><br><span class="line">backend &#x3D; &#39;redis:&#x2F;&#x2F;10.167.219.250:8001&#x2F;1&#39;</span><br><span class="line">broker &#x3D; &#39;redis:&#x2F;&#x2F;10.167.219.250:8001&#x2F;2&#39;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">cel &#x3D; celery.Celery(&#39;test&#39;, backend&#x3D;backend,</span><br><span class="line">broker&#x3D;broker)</span><br><span class="line"></span><br><span class="line"># 基本配置</span><br><span class="line"># 时区</span><br><span class="line">cel.conf.timezone &#x3D; &#39;Asia&#x2F;Shanghai&#39;</span><br><span class="line"># 是否使用utc</span><br><span class="line">cel.conf.enable_utc &#x3D; False</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@cel.task</span><br><span class="line">def send_email(name):</span><br><span class="line">    print(&#39;正在发送邮件给%s&#39;%name)</span><br><span class="line">    time.sleep(2)</span><br><span class="line">    print(&#39;发送邮件给%s完成&#39;%name)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>开启消费者<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">celery -A python文件名 worker -l INFO</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="生产者"><a href="#生产者" class="headerlink" title="生产者"></a>生产者</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"># 定时任务</span><br><span class="line">from c1 import send_email</span><br><span class="line">from datetime import datetime</span><br><span class="line"></span><br><span class="line"># 方式一</span><br><span class="line">v1 &#x3D; datetime(2019, 10, 9, 17, 18, 00)</span><br><span class="line">print(v1)</span><br><span class="line"># 需要使用国标时间</span><br><span class="line">v2 &#x3D; datetime.utcfromtimestamp(v1.timestamp())</span><br><span class="line">print(v2)</span><br><span class="line"># 用apply_async执行定时任务， 用delay执行异步任务</span><br><span class="line">result &#x3D; send_email.apply_async(args&#x3D;[&quot;egon&quot;,], eta&#x3D;v2)</span><br><span class="line">print(result.id)</span><br><span class="line"></span><br><span class="line"># 方式二</span><br><span class="line">ctime &#x3D; datetime.now()</span><br><span class="line">print(ctime)</span><br><span class="line"># 需要使用国标时间</span><br><span class="line">utc_ctime &#x3D; datetime.utcfromtimestamp(ctime.timestamp())</span><br><span class="line">from datetime import timedelta</span><br><span class="line"># 用apply_async执行定时任务， 用delay执行异步任务</span><br><span class="line">result &#x3D; send_email.apply_async(args&#x3D;[&quot;egon&quot;,], </span><br><span class="line">eta&#x3D;utc_ctime + timedelta(seconds&#x3D;10))</span><br><span class="line">print(result.id)</span><br></pre></td></tr></table></figure>
+
+<h2 id="celery执行复杂定时任务"><a href="#celery执行复杂定时任务" class="headerlink" title="celery执行复杂定时任务"></a>celery执行复杂定时任务</h2><p>这种定时执行的任务和生产者无关，因为是真正的定时执行的任务，每隔多久就会执行一次。</p>
+<h3 id="消费者-amp-生产者"><a href="#消费者-amp-生产者" class="headerlink" title="消费者&amp;生产者"></a>消费者&amp;生产者</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">import celery</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line">backend &#x3D; &#39;redis:&#x2F;&#x2F;10.167.219.250:8001&#x2F;1&#39;</span><br><span class="line">broker &#x3D; &#39;redis:&#x2F;&#x2F;10.167.219.250:8001&#x2F;2&#39;</span><br><span class="line"></span><br><span class="line"># 名字，数据库存储，消息中间件， 多了一个include放置你需要的所有task</span><br><span class="line">cel &#x3D; celery.Celery(&#39;test&#39;, backend&#x3D;backend, broker&#x3D;broker, </span><br><span class="line">include&#x3D;[&#39;celery_tasks.task01&#39;, &#39;celery_tasks.task02&#39;])</span><br><span class="line"></span><br><span class="line"># 基本配置</span><br><span class="line"># 时区</span><br><span class="line">cel.conf.timezone &#x3D; &#39;Asia&#x2F;Shanghai&#39;</span><br><span class="line"># 是否使用utc</span><br><span class="line">cel.conf.enable_utc &#x3D; False</span><br><span class="line"></span><br><span class="line">from datetime import timedelta</span><br><span class="line"># 构建定时任务调度器</span><br><span class="line">cel.conf.beat_schedule &#x3D; &#123;</span><br><span class="line">    # 名称每个定时任务的名称，自己起</span><br><span class="line">    &#39;add-every-6-seconds&#39;: &#123;</span><br><span class="line">        &#39;task&#39;: &#39;celery_tasks.task01.send_email&#39;,</span><br><span class="line">        # 每隔六秒执行一次</span><br><span class="line">        # &#39;schedule&#39;: 6.0,</span><br><span class="line">        # &#39;schedule&#39;: crontab(minutes&#x3D;&quot;*&#x2F;6&quot;),</span><br><span class="line">        &#39;schedule&#39;: timedelta(seconds&#x3D;6),</span><br><span class="line">        # 传递参数</span><br><span class="line">        &#39;args&#39;: (&#39;张三&#39;, )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="需要开启服务生产者执行定时任务"><a href="#需要开启服务生产者执行定时任务" class="headerlink" title="需要开启服务生产者执行定时任务"></a>需要开启服务生产者执行定时任务</h3><p>这个会读取配置文件中的定时任务调度器，通过里面配置的schedule时间定时向redis<br>（消息中间件）中插入任务（这个时候已经不是自定义的生产者执行插入任务，而是我们<br>单独开启的一个进程定时插入）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">celery -A +配置文件路径 beat -l INFO </span><br></pre></td></tr></table></figure>
+
+
+<h3 id="还需要另一个新的进程（消费者）去处理队列"><a href="#还需要另一个新的进程（消费者）去处理队列" class="headerlink" title="还需要另一个新的进程（消费者）去处理队列"></a>还需要另一个新的进程（消费者）去处理队列</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">celery -A +配置文件路径 woker -l INFO</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="django配置celery使用"><a href="#django配置celery使用" class="headerlink" title="django配置celery使用"></a>django配置celery使用</h2><p>django利用celery完成一些定时和异步操作。</p>
+<h3 id="异步任务调度"><a href="#异步任务调度" class="headerlink" title="异步任务调度"></a>异步任务调度</h3><ul>
+<li><p>1.消费者+task（打包到django根目录）</p>
+</li>
+<li><p>2.在django项目下的配置文件夹同级目录，创建pakages，打包成项目文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">新建config.py</span><br><span class="line"># _*_ coding: utf-8 _*_</span><br><span class="line">__author__ &#x3D; &#39;春江花月夜oo&#39;</span><br><span class="line">CELERY_RESULT_BACKEND &#x3D; &#39;redis:&#x2F;&#x2F;10.167.218.136:6380&#x2F;14&#39;</span><br><span class="line">BROKER_URL &#x3D; &#39;redis:&#x2F;&#x2F;10.167.218.136:6380&#x2F;15&#39;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>3.把配置和主调用函数分开，实现解耦</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">新建main.py</span><br><span class="line"># _*_ coding: utf-8 _*_</span><br><span class="line">__author__ &#x3D; &#39;春江花月夜oo&#39;</span><br><span class="line"></span><br><span class="line">import os</span><br><span class="line">import sys</span><br><span class="line">import django</span><br><span class="line">from celery import Celery</span><br><span class="line"></span><br><span class="line">app &#x3D; Celery(&quot;myCelery&quot;)</span><br><span class="line"></span><br><span class="line">pwd &#x3D; os.path.dirname(os.path.realpath(__file__))</span><br><span class="line">sys.path.append(pwd+&quot;..&#x2F;&quot;)</span><br><span class="line">os.environ.setdefault(&quot;DJANGO_SETTINGS_MODULE&quot;, &quot;myproject.settings&quot;)</span><br><span class="line">django.setup()</span><br><span class="line">app.config_from_object(&#39;mycelery.config&#39;)</span><br><span class="line"></span><br><span class="line">app.autodiscover_tasks([&quot;mycelery.sms&quot;, &quot;mycelery.email&quot;])</span><br><span class="line">这里需要</span><br><span class="line">1.加载django环境变量</span><br><span class="line">2.将配置文件的消息中间件、数据库加载到app</span><br><span class="line">3.监控tasks.py（需要监控的文件夹（目录））</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>4.新建python packages任务包email和sms</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">在包里面新建tasks.py</span><br><span class="line">from ..main import app</span><br><span class="line">import time</span><br><span class="line">import logging</span><br><span class="line"></span><br><span class="line">log &#x3D; logging.getLogger(&#39;django&#39;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@app.task</span><br><span class="line">def send_sms(mobile):</span><br><span class="line">    print(&quot;向手机%s发送短信&quot; % mobile)</span><br><span class="line">    time.sleep(5)</span><br><span class="line">    print(&quot;向手机%s发送短信成功&quot; % mobile)</span><br><span class="line">    return &quot;send_sms ok&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@app.task</span><br><span class="line">def send_sms2(mobile):</span><br><span class="line">    print(&quot;向手机%s发送短信2&quot; % mobile)</span><br><span class="line">    time.sleep(5)</span><br><span class="line">    print(&quot;向手机%s发送短信2成功&quot; % mobile)</span><br><span class="line">    return &quot;send_sms2 ok&quot;</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+<ul>
+<li><p>5.异步任务调度就可把tasks中的方法放在view中调用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">view.py</span><br><span class="line">def test(request):</span><br><span class="line">    # 异步任务调度</span><br><span class="line">    send_sms.delay(&#39;110&#39;)</span><br><span class="line">    send_sms2.delay(&#39;119&#39;)</span><br><span class="line"></span><br><span class="line">    # 定时任务调度</span><br><span class="line">    ctime &#x3D; datetime.now()</span><br><span class="line">    utc_ctime &#x3D; datetime.utcfromtimestamp(ctime.timestamp())</span><br><span class="line">    time_delay &#x3D; timedelta(seconds&#x3D;10)</span><br><span class="line">    task_time &#x3D; utc_ctime + time_delay</span><br><span class="line">    result &#x3D; send_sms.apply_async([&quot;911&quot;, ], eta&#x3D;task_time)</span><br><span class="line">    print(result.id)</span><br><span class="line">    return HttpResponse(&quot;Ok&quot;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>6.记得配置url<br>这个时候我们调用url的view.test，在我们的view中除了执行主业务，<br>现在还在异步的执行发送信息的业务，他不会影响主业务执行效率。<br>但这里只是把任务发送到了消息队列中还需要开启worker才能处理业务。</p>
+</li>
+</ul>
+<p>如果我们需要什么定时任务，其实就是python脚本，<br>借用一下django的model存储数据，和django没啥关系。</p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://example.com/2021/06/18/python/celery/" data-id="ckpyrj7e800014wmz9t277rx4" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "durian"
+        },
+        "headline": "celery",
+        "image": "http://example.com/css/images/gouzi.jpg",
+        "keywords": "",
+        "genre": "python",
+        "datePublished": "2021-06-18",
+        "dateCreated": "2021-06-18",
+        "dateModified": "2021-06-16",
+        "url": "http://example.com/2021/06/18/python/celery/",
+        "description": "概念celery是一个简单，灵活且可靠的处理大量消息的分布式系统。专注于实时处理的异步任务队列，同时也支持任务调度。
+相关信息
+分布式系统一个系统应用有很多系统组件：web服务器，数据库，消息中间键，缓存等，把这些组件架构在不同的服务器上，然后这些不同服务器上的不同组件之间通过消息中间键通信的方式来实现这种协调工作。（当用户访问时，要做到和访问一台服务器的用户感知是一样的）
+
+分布式系统优点负载均",
+        "wordCount": 1399
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <!-- Valine -->
+    <div class="vcomments"></div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/chunjianghuayueye2" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2021/06/18/python/PEP8%E8%A7%84%E8%8C%83/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            部分PEP8规范
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2021/06/18/python/python%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E5%92%8C%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">垃圾回收和内存管理</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+<div class="widget-wrap widget-list">
+    <h3 class="widget-title">目录</h3>
+    <div class="widget">
+        <div id="toc" class="toc-article">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5"><span class="toc-number">1.</span> <span class="toc-text">概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF"><span class="toc-number">1.1.</span> <span class="toc-text">相关信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%84%E6%88%90%E6%9E%B6%E6%9E%84"><span class="toc-number">1.2.</span> <span class="toc-text">组成架构</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#celery%E7%9A%84%E5%BC%82%E6%AD%A5%E4%BB%BB%E5%8A%A1%E5%9C%BA%E6%99%AF"><span class="toc-number">2.</span> <span class="toc-text">celery的异步任务场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E5%BC%82%E6%AD%A5%E6%A8%A1%E5%9E%8B"><span class="toc-number">3.</span> <span class="toc-text">基础异步模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%9D%97"><span class="toc-number">3.1.</span> <span class="toc-text">消费者模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E4%BA%A7%E8%80%85%E6%A8%A1%E5%9D%97"><span class="toc-number">3.2.</span> <span class="toc-text">生产者模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E6%9E%9C%E5%82%A8%E5%AD%98%E6%A8%A1%E5%9D%97"><span class="toc-number">3.3.</span> <span class="toc-text">结果储存模块</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E4%BB%BB%E5%8A%A1%E5%BC%82%E6%AD%A5%E6%A8%A1%E5%9E%8B"><span class="toc-number">4.</span> <span class="toc-text">多任务异步模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B6%88%E8%B4%B9%E8%80%85"><span class="toc-number">4.1.</span> <span class="toc-text">消费者</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Celery%E7%AE%80%E5%8D%95%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1"><span class="toc-number">5.</span> <span class="toc-text">Celery简单定时任务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B6%88%E8%B4%B9%E8%80%85-1"><span class="toc-number">5.1.</span> <span class="toc-text">消费者</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E4%BA%A7%E8%80%85"><span class="toc-number">5.2.</span> <span class="toc-text">生产者</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#celery%E6%89%A7%E8%A1%8C%E5%A4%8D%E6%9D%82%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1"><span class="toc-number">6.</span> <span class="toc-text">celery执行复杂定时任务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B6%88%E8%B4%B9%E8%80%85-amp-%E7%94%9F%E4%BA%A7%E8%80%85"><span class="toc-number">6.1.</span> <span class="toc-text">消费者&amp;生产者</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9C%80%E8%A6%81%E5%BC%80%E5%90%AF%E6%9C%8D%E5%8A%A1%E7%94%9F%E4%BA%A7%E8%80%85%E6%89%A7%E8%A1%8C%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1"><span class="toc-number">6.2.</span> <span class="toc-text">需要开启服务生产者执行定时任务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%98%E9%9C%80%E8%A6%81%E5%8F%A6%E4%B8%80%E4%B8%AA%E6%96%B0%E7%9A%84%E8%BF%9B%E7%A8%8B%EF%BC%88%E6%B6%88%E8%B4%B9%E8%80%85%EF%BC%89%E5%8E%BB%E5%A4%84%E7%90%86%E9%98%9F%E5%88%97"><span class="toc-number">6.3.</span> <span class="toc-text">还需要另一个新的进程（消费者）去处理队列</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#django%E9%85%8D%E7%BD%AEcelery%E4%BD%BF%E7%94%A8"><span class="toc-number">7.</span> <span class="toc-text">django配置celery使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%82%E6%AD%A5%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6"><span class="toc-number">7.1.</span> <span class="toc-text">异步任务调度</span></a></li></ol></li></ol>
+        </div>
+    </div>
+</div>
+
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/22/rabbitmq/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/chu4.jpg)" alt="安装配置" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/bigdata/">bigdata</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/bigdata/rabbitmq/">rabbitmq</a></p>
+                            <p class="item-title"><a href="/2021/06/22/rabbitmq/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" class="title">安装配置</a></p>
+                            <p class="item-date"><time datetime="2021-06-22T06:48:05.782Z" itemprop="datePublished">2021-06-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/18/python/socket/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/dangao.jpg)" alt="socket" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/python/">python</a></p>
+                            <p class="item-title"><a href="/2021/06/18/python/socket/" class="title">socket</a></p>
+                            <p class="item-date"><time datetime="2021-06-18T01:03:51.525Z" itemprop="datePublished">2021-06-18</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/18/python/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/saibo1.jpg)" alt="函数式编程" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/python/">python</a></p>
+                            <p class="item-title"><a href="/2021/06/18/python/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="title">函数式编程</a></p>
+                            <p class="item-date"><time datetime="2021-06-18T01:03:51.525Z" itemprop="datePublished">2021-06-18</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/bei.jpg)" alt="tuple部分源码解析(cpython)" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">python源码解析</a></p>
+                            <p class="item-title"><a href="/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" class="title">tuple部分源码解析(cpython)</a></p>
+                            <p class="item-date"><time datetime="2021-06-18T01:03:51.525Z" itemprop="datePublished">2021-06-18</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/18/python/%E9%A1%B9%E7%9B%AE%E8%A7%A3%E6%9E%90/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/chu1.jpg)" alt="项目解析" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/webframe/">webframe</a></p>
+                            <p class="item-title"><a href="/2021/06/18/python/%E9%A1%B9%E7%9B%AE%E8%A7%A3%E6%9E%90/" class="title">项目解析</a></p>
+                            <p class="item-date"><time datetime="2021-06-18T01:03:51.525Z" itemprop="datePublished">2021-06-18</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/">bigdata</a><span class="category-list-count">23</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker/">docker</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker-compose/">docker-compose</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/hadoop/">hadoop</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/rabbitmq/">rabbitmq</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/zookeeper/">zookeeper</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/">nosql</a><span class="category-list-count">27</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis/">redis</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a><span class="category-list-count">9</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/python/cpython%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">cpython源码解析</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">python源码解析</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/">webframe</a><span class="category-list-count">22</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/django/">django</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/flask/">flask</a><span class="category-list-count">5</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">86</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+
+            
+                
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2021 durian</p>
+                
+                <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
+                
+		<p><span id="busuanzi_container_site_pv">本站总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>&nbsp;次</span></p>
+                <p><span id="busuanzi_container_site_uv"> 
+                     本站访客数&nbsp;<span id="busuanzi_value_site_uv"></span>&nbsp;人次
+               </span></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+    <script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
+</footer>
+
+    </div>
+    
+    
+    <script src="//unpkg.com/valine"></script>
+    <script>
+        var GUEST = ['nick','mail','link'];
+        var meta = '';
+        meta = meta.split(',').filter(function (item) {
+            return GUEST.indexOf(item)>-1;
+        });
+        var avatarcdn = 'gravatar.cat.net' == true;
+        new Valine({
+            el: '.vcomments',
+            notify: "false",
+            verify: "false",
+            appId: "795P9DunI2Jv3Jho36dlueIS-gzGzoHsz",
+            appKey: "pM151YCVhYBYTB9Pt1SRuiKs",
+            placeholder: "Just Do It",
+            avatar:"mm",
+            recordIP:"false",
+            visitor: "true"
+        });
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

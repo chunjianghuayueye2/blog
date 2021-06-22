@@ -1,0 +1,815 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>dict部分源码解析(cpython) | 春江花月夜o</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="" />
+    
+    <meta name="description" content="python中大部分的运行机制当中都采用了dict来进行数据的管理，所以为了最高效的查询性能，dict底层选择了基于哈希表实现。其中在python3.6之前，dict的实现里将数据存在了hash表里，所以之前的dict是无序且十分消耗内存的，而在python3.6以后，官方对dict进行了很大地改进（主要是将数据和hash部分分离），包括从无序变为有序，在一定程度上减少了内存的消耗，以及部分操作性">
+<meta property="og:type" content="article">
+<meta property="og:title" content="dict部分源码解析(cpython)">
+<meta property="og:url" content="http://example.com/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/dict%E8%A7%A3%E6%9E%90/index.html">
+<meta property="og:site_name" content="春江花月夜o">
+<meta property="og:description" content="python中大部分的运行机制当中都采用了dict来进行数据的管理，所以为了最高效的查询性能，dict底层选择了基于哈希表实现。其中在python3.6之前，dict的实现里将数据存在了hash表里，所以之前的dict是无序且十分消耗内存的，而在python3.6以后，官方对dict进行了很大地改进（主要是将数据和hash部分分离），包括从无序变为有序，在一定程度上减少了内存的消耗，以及部分操作性">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/css/images/bei.jpg">
+<meta property="article:published_time" content="2021-06-18T01:03:51.510Z">
+<meta property="article:modified_time" content="2021-06-17T09:19:09.554Z">
+<meta property="article:author" content="durian">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/css/images/bei.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/gouzi.ico" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="春江花月夜o" type="application/atom+xml">
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">关于</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">python</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">cpp</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">webframe</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                                <a class="main-nav-list-link" href="/null">flask</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">django</a>
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">algorithm</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">bigdata</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">nosql</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                                <a class="main-nav-list-link" href="/null"> redis</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">mysql</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null"> redis高级篇</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">mysql高级篇</a>
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">python源码解析</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-python/python源码解析/dict解析" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        dict部分源码解析(cpython)
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/dict%E8%A7%A3%E6%9E%90/" class="article-date">
+       <time datetime="2021-06-18T01:03:51.510Z" itemprop="datePublished">2021-06-18</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/dict%E8%A7%A3%E6%9E%90/" class="article-date">
+     <time datetime="2021-06-17T09:19:09.554Z" itemprop="dateModified">2021-06-17</time>
+  </a>
+</div>
+
+
+                
+
+                
+                
+   <div class="article-counter">
+      <i class="fa fa-file-word-o"></i>
+      <span class="post-count-item-text">本文字数: </span>
+      <span class="post-count">2.4k</span>
+      <i class="fa fa-clock-o"></i>
+      <span class="post-time-item-text">阅读时长: </span>
+      <span class="post-count">10 分钟 </span>
+   </div>
+
+
+                <span id="busuanzi_container_page_pv">
+                阅读次数<span id="busuanzi_value_page_pv"></span>次
+                </span>
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <p>python中大部分的运行机制当中都采用了dict来进行数据的管理，所以为了最高效的查询性能，<br>dict底层选择了基于哈希表实现。其中在python3.6之前，dict的实现里将数据存在了hash表里，<br>所以之前的dict是无序且十分消耗内存的，而在python3.6以后，官方对dict进行了很大地改进<br>（主要是将数据和hash部分分离），包括从无序变为有序，在一定程度上减少了内存的消耗，以及<br>部分操作性能的提升。<br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/73426505">链接1</a><br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/fcd1ce2faa0b">链接2</a></p>
+<h2 id="3-6版本前和3-6后对比"><a href="#3-6版本前和3-6后对比" class="headerlink" title="3.6版本前和3.6后对比"></a>3.6版本前和3.6后对比</h2><h3 id="3-6前"><a href="#3-6前" class="headerlink" title="3.6前"></a>3.6前</h3><p>用一个数组存储combined</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">\[(hash, key, value), (hash, key, value), (hash, key, value)]</span><br><span class="line">通过计算hash把数据放到数组某个位置</span><br></pre></td></tr></table></figure>
+<h4 id="dict状态"><a href="#dict状态" class="headerlink" title="dict状态"></a>dict状态</h4><ul>
+<li>1.Unused：此时key为null，即还未使用当前位置，此时索引值被设为-1</li>
+<li>2.Active：如果当前位置设置了键值对，那么就会进入该状态，表示正在使用中，此时索引值就是所在位置的索引</li>
+<li>3.Dummy：当被使用的key删除时，将会进入该状态，用于避免探测链断开而导致索引出错的问题</li>
+</ul>
+<h3 id="3-6后"><a href="#3-6后" class="headerlink" title="3.6后"></a>3.6后</h3><p>用两个数组存储，一个为entries存储数据的顺序，另一个为原来的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># entries</span><br><span class="line">[3, 5, 1, 4, 2]</span><br><span class="line"></span><br><span class="line">[(hash, key, value), (hash, key, value), (hash, key, value), (hash, key, value), (hash, key, value)]</span><br></pre></td></tr></table></figure>
+<h4 id="dict状态-1"><a href="#dict状态-1" class="headerlink" title="dict状态"></a>dict状态</h4><ul>
+<li>1.Unused：此时key为null，即还未使用当前位置，此时索引值被设为-1</li>
+<li>2.Active：如果当前位置设置了键值对，那么就会进入该状态，表示正在使用中，此时索引值就是所在位置的索引</li>
+<li>3.Pending：同样是删除键值对以后进入的状态，此时索引不变，但是对应索引存储的value将会被删除，从而等待新的对应索引的key插入</li>
+</ul>
+<h2 id="3-6后源码"><a href="#3-6后源码" class="headerlink" title="3.6后源码"></a>3.6后源码</h2><h3 id="PyDictObject"><a href="#PyDictObject" class="headerlink" title="PyDictObject"></a>PyDictObject</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">typedef struct &#123;</span><br><span class="line">    &#x2F;&#x2F; 通用对象头</span><br><span class="line">    PyObject_HEAD</span><br><span class="line">    &#x2F;&#x2F; 键值对的数量</span><br><span class="line">    Py_ssize_t ma_used;</span><br><span class="line">    &#x2F;&#x2F; 版本标记</span><br><span class="line">    uint64_t ma_version_tag;</span><br><span class="line">    &#x2F;&#x2F; key集合，哈希表就存在这里面</span><br><span class="line">    PyDictKeysObject *ma_keys;</span><br><span class="line">    &#x2F;&#x2F; entries集合，split中，所有的键值对都存在ma_values里，而combined型的ma_values将会是null</span><br><span class="line">    PyObject **ma_values;</span><br><span class="line">&#125; PyDictObject;</span><br></pre></td></tr></table></figure>
+
+<h4 id="key集合"><a href="#key集合" class="headerlink" title="key集合"></a>key集合</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">typedef struct _dictkeysobject PyDictKeysObject;</span><br><span class="line">struct _dictkeysobject &#123;</span><br><span class="line">    &#x2F;&#x2F; key集合的引用数</span><br><span class="line">    Py_ssize_t dk_refcnt;</span><br><span class="line">    &#x2F;&#x2F; 哈希表索引数组的大小</span><br><span class="line">    Py_ssize_t dk_size;</span><br><span class="line">    &#x2F;&#x2F; 字典查询方法</span><br><span class="line">    dict_lookup_func dk_lookup;</span><br><span class="line">    &#x2F;&#x2F; 字典中key集合可用大小</span><br><span class="line">    Py_ssize_t dk_usable;</span><br><span class="line">    &#x2F;&#x2F; entries中键值对的数量</span><br><span class="line">    Py_ssize_t dk_nentries;</span><br><span class="line">    &#x2F;&#x2F; 每个键对应存放数据位置的索引</span><br><span class="line">    char dk_indices[];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="entries集合"><a href="#entries集合" class="headerlink" title="entries集合"></a>entries集合</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">typedef struct &#123;</span><br><span class="line">    Py_hash_t me_hash;</span><br><span class="line">    PyObject *me_key;</span><br><span class="line">    &#x2F;&#x2F; 在split型中，value存放在ma_values中，所以只有combined型的时候，me_value才存放value</span><br><span class="line">    PyObject *me_value;</span><br><span class="line">&#125; PyDictKeyEntry;</span><br></pre></td></tr></table></figure>
+
+<h3 id="dict基本配置和缓冲池"><a href="#dict基本配置和缓冲池" class="headerlink" title="dict基本配置和缓冲池"></a>dict基本配置和缓冲池</h3><ul>
+<li><p>基本配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 哈希表的起始尺寸为8</span><br><span class="line">#define PyDict_MINSIZE 8</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 哈希表相对于索引数量的尺寸</span><br><span class="line">#define ESTIMATE_SIZE(n)  (((n)*3+1) &gt;&gt; 1)</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 当需要更新dict尺寸时，尺寸大小为索引数*3</span><br><span class="line">#define GROWTH_RATE(d) ((d)-&gt;ma_used*3)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>缓冲池</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; dict缓冲池大小，尺寸和list缓冲池一样是80</span><br><span class="line">#ifndef PyDict_MAXFREELIST</span><br><span class="line">#define PyDict_MAXFREELIST 80</span><br><span class="line">#endif</span><br><span class="line">&#x2F;&#x2F; dict对象和dict中的key集合对象都有进行缓冲池操作</span><br><span class="line">static PyDictObject *free_list[PyDict_MAXFREELIST];</span><br><span class="line">static int numfree &#x3D; 0;</span><br><span class="line">static PyDictKeysObject *keys_free_list[PyDict_MAXFREELIST];</span><br><span class="line">static int numfreekeys &#x3D; 0;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="创建dict"><a href="#创建dict" class="headerlink" title="创建dict"></a>创建dict</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">PyObject *</span><br><span class="line">PyDict_New(void)</span><br><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F; 引用+1</span><br><span class="line">    dictkeys_incref(Py_EMPTY_KEYS);</span><br><span class="line">    &#x2F;&#x2F; 通过空集合和空entries创建一个空字典</span><br><span class="line">    return new_dict(Py_EMPTY_KEYS, empty_values);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 创建一个dict对象</span><br><span class="line">static PyObject *</span><br><span class="line">new_dict(PyDictKeysObject *keys, PyObject **values)</span><br><span class="line">&#123;</span><br><span class="line">    PyDictObject *mp;</span><br><span class="line">    assert(keys !&#x3D; NULL);</span><br><span class="line">    &#x2F;&#x2F; 缓存池</span><br><span class="line">    if (numfree) &#123;</span><br><span class="line">        mp &#x3D; free_list[--numfree];</span><br><span class="line">        assert (mp !&#x3D; NULL);</span><br><span class="line">        assert (Py_TYPE(mp) &#x3D;&#x3D; &amp;PyDict_Type);</span><br><span class="line">        _Py_NewReference((PyObject *)mp);</span><br><span class="line">    &#125;</span><br><span class="line">    else &#123;</span><br><span class="line">        mp &#x3D; PyObject_GC_New(PyDictObject, &amp;PyDict_Type);</span><br><span class="line">        if (mp &#x3D;&#x3D; NULL) &#123;</span><br><span class="line">            dictkeys_decref(keys);</span><br><span class="line">            if (values !&#x3D; empty_values) &#123;</span><br><span class="line">                free_values(values);</span><br><span class="line">            &#125;</span><br><span class="line">            return NULL;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; 初始化操作，注意这里的keys和values的内容还都是空的</span><br><span class="line">    mp-&gt;ma_keys &#x3D; keys;</span><br><span class="line">    mp-&gt;ma_values &#x3D; values;</span><br><span class="line">    mp-&gt;ma_used &#x3D; 0;</span><br><span class="line">    mp-&gt;ma_version_tag &#x3D; DICT_NEXT_VERSION();</span><br><span class="line">    ASSERT_CONSISTENT(mp);</span><br><span class="line">    return (PyObject *)mp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="添加元素"><a href="#添加元素" class="headerlink" title="添加元素"></a>添加元素</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">int</span><br><span class="line">PyDict_SetItem(PyObject *op, PyObject *key, PyObject *value)</span><br><span class="line">&#123;</span><br><span class="line">    PyDictObject *mp;</span><br><span class="line">    Py_hash_t hash;</span><br><span class="line">    if (!PyDict_Check(op)) &#123;</span><br><span class="line">        PyErr_BadInternalCall();</span><br><span class="line">        return -1;</span><br><span class="line">    &#125;</span><br><span class="line">    assert(key);</span><br><span class="line">    assert(value);</span><br><span class="line">    mp &#x3D; (PyDictObject *)op;</span><br><span class="line">    &#x2F;&#x2F; 获取对象的哈希值，如果不是可哈希的，则无法执行setitem操作</span><br><span class="line">    if (!PyUnicode_CheckExact(key) ||</span><br><span class="line">        (hash &#x3D; ((PyASCIIObject *) key)-&gt;hash) &#x3D;&#x3D; -1)</span><br><span class="line">    &#123;</span><br><span class="line">        hash &#x3D; PyObject_Hash(key);</span><br><span class="line">        if (hash &#x3D;&#x3D; -1)</span><br><span class="line">            return -1;</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; 如果哈希表是一个空表，则直接往空字典插入数据</span><br><span class="line">    if (mp-&gt;ma_keys &#x3D;&#x3D; Py_EMPTY_KEYS) &#123;</span><br><span class="line">        return insert_to_emptydict(mp, key, hash, value);</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; 添加或修改操作函数</span><br><span class="line">    return insertdict(mp, key, hash, value);</span><br><span class="line">&#125;</span><br><span class="line">&#96;&#96;&#96; </span><br><span class="line"></span><br><span class="line">#### insertdict修改逻辑</span><br></pre></td></tr></table></figure>
+<p>static int<br>insertdict(PyDictObject *mp, PyObject *key, Py_hash_t hash, PyObject *value)<br>{<br>    PyObject *old_value;<br>    PyDictKeyEntry *ep;</p>
+<pre><code>Py_INCREF(key);
+Py_INCREF(value);
+if (mp-&gt;ma_values != NULL &amp;&amp; !PyUnicode_CheckExact(key)) &#123;
+    if (insertion_resize(mp) &lt; 0)
+        goto Fail;
+&#125;
+// 寻找对应key的索引
+Py_ssize_t ix = mp-&gt;ma_keys-&gt;dk_lookup(mp, key, hash, &amp;old_value);
+// 异常情况处理
+if (ix == DKIX_ERROR)
+    goto Fail;
+
+assert(PyUnicode_CheckExact(key) || mp-&gt;ma_keys-&gt;dk_lookup == lookdict);
+MAINTAIN_TRACKING(mp, key, value);
+
+if (_PyDict_HasSplitTable(mp) &amp;&amp;
+    ((ix &gt;= 0 &amp;&amp; old_value == NULL &amp;&amp; mp-&gt;ma_used != ix) ||
+     (ix == DKIX_EMPTY &amp;&amp; mp-&gt;ma_used != mp-&gt;ma_keys-&gt;dk_nentries))) &#123;
+    if (insertion_resize(mp) &lt; 0)
+        goto Fail;
+    ix = DKIX_EMPTY;
+&#125;
+// 如果对应的key的映射为空，则代表添加数据
+if (ix == DKIX_EMPTY) &#123;
+    assert(old_value == NULL);
+    if (mp-&gt;ma_keys-&gt;dk_usable &lt;= 0) &#123;
+        if (insertion_resize(mp) &lt; 0)
+            goto Fail;
+    &#125;
+    // 寻找哈希表中当前key的插入位置
+    Py_ssize_t hashpos = find_empty_slot(mp-&gt;ma_keys, hash);
+    // ep指向entries的最后一位（索引为dk_nentries处）
+    ep = &amp;DK_ENTRIES(mp-&gt;ma_keys)[mp-&gt;ma_keys-&gt;dk_nentries];
+    // 设置indices中对应entries的索引，可以看到设置的entries索引就是entries的数量，因为键值对每次都是往entries的最后一位添加的
+    dictkeys_set_index(mp-&gt;ma_keys, hashpos, mp-&gt;ma_keys-&gt;dk_nentries);
+    // 设置新加入entries的键值对数据
+    ep-&gt;me_key = key;
+    ep-&gt;me_hash = hash;
+    if (mp-&gt;ma_values) &#123;
+        assert (mp-&gt;ma_values[mp-&gt;ma_keys-&gt;dk_nentries] == NULL);
+        mp-&gt;ma_values[mp-&gt;ma_keys-&gt;dk_nentries] = value;
+    &#125;
+    else &#123;
+        ep-&gt;me_value = value;
+    &#125;
+    // 添加成功操作
+    mp-&gt;ma_used++;
+    mp-&gt;ma_version_tag = DICT_NEXT_VERSION();
+    mp-&gt;ma_keys-&gt;dk_usable--;
+    mp-&gt;ma_keys-&gt;dk_nentries++;
+    assert(mp-&gt;ma_keys-&gt;dk_usable &gt;= 0);
+    ASSERT_CONSISTENT(mp);
+    return 0;
+&#125;
+// 如果不是添加操作，并且指定entries的value和当前传入的value不同，则需要更新value
+if (old_value != value) &#123;
+    // split型表的操作
+    if (_PyDict_HasSplitTable(mp)) &#123;
+        // 直接更新entries中对应索引的value
+        mp-&gt;ma_values[ix] = value;
+        // 当前位置属于pending状态（已删除状态），则说明之前没有使用，现在使用了，所以使用数+1
+        if (old_value == NULL) &#123;
+            assert(ix == mp-&gt;ma_used);
+            mp-&gt;ma_used++;
+        &#125;
+    &#125;
+    // combined型表的操作
+    else &#123;
+        assert(old_value != NULL);
+        // 由于key、value都是存在哈希表中，直接修改哈希表对应位置的value
+        DK_ENTRIES(mp-&gt;ma_keys)[ix].me_value = value;
+    &#125;
+    mp-&gt;ma_version_tag = DICT_NEXT_VERSION();
+&#125;
+Py_XDECREF(old_value);
+ASSERT_CONSISTENT(mp);
+Py_DECREF(key);
+return 0;</code></pre>
+<p>Fail:<br>    Py_DECREF(value);<br>    Py_DECREF(key);<br>    return -1;<br>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">## hash冲突与dict hash冲突处理</span><br><span class="line">哈希算法被计算的数据是无限的，而计算后的结果范围有限，</span><br><span class="line">因此总会存在不同的数据经过计算后得到的值相同，这就是哈希冲突</span><br><span class="line">这个时候就需要一种方法解决这种冲突</span><br><span class="line"></span><br><span class="line">### hash冲突解决方法</span><br><span class="line"></span><br><span class="line">#### 开放寻址法</span><br><span class="line">从发生冲突的那个单元起，按照一定的次序，从哈希表中找到一个空闲的单元。</span><br><span class="line">后把发生冲突的元素存入到该单元的一种方法。开放定址法需要的表长度要大于</span><br><span class="line">等于所需要存放的元素。</span><br><span class="line"></span><br><span class="line">- 线行探查法</span><br><span class="line">依次判断下一个单元是否为空，当达到最后一个单元时，再从表首依次判断。</span><br><span class="line">直到碰到空闲的单元或者探查完全部单元为止。</span><br><span class="line"></span><br><span class="line">- 平方探查法</span><br><span class="line">发生冲突的单元d\[i], 加上 1²、 2²等。即d\[i] + 1²，d\[i] + 2², d\[i] + 3²...直到找到空闲单元。</span><br><span class="line"></span><br><span class="line">- 双散列函数探查法</span><br><span class="line">这种方法使用两个散列函数hl和h2。其中hl和前面的h一样，以关键字为自变量，</span><br><span class="line">产生一个0至m—l之间的数作为散列地址；h2也以关键字为自变量，产生一个l至m—1</span><br><span class="line">之间的、并和m互素的数(即m不能被该数整除)作为探查序列的地址增量(即步长)，</span><br><span class="line">探查序列的步长值是固定值l</span><br><span class="line"></span><br><span class="line">- 二次探测法</span><br></pre></td></tr></table></figure>
+<p>f(key) = (f(key)+di) MOD m (di = 1^2, -1^2, 2^2, -2^2,……, q^2, -q^2, q &lt;= m/2)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- 注：1^2 表示是 1的平方</span><br></pre></td></tr></table></figure>
+<p>设哈希表长m＝14，哈希函数H（key）＝key％11。<br>表中已有4个结点：addr(15)=4，addr(38)=5，addr(61)=6，addr(84)=7，<br>其余地址为空。如果用二次探测再散列处理冲突，关键字为49的结点的地址是？<br>因为 f(49) = 5 与 f(38) 冲突<br>所以需要采用二次探测再散列来处理冲突<br>(f(49) + di) MOD 14(哈希表长m＝14)<br>第一次 di = 1^2<br>（5 + 1）MOD 14 = 6  与addr(61)=6冲突<br>第二次 di = -1^2<br>（5 - 1）MOD 14 = 4  与addr(15)=4 冲突<br>第三次 di = 2^2<br> （5 + 4）MOD 14 = 9 没有冲突<br>所以 addr(49)=9</p>
+<p>```</p>
+<h4 id="链地址法"><a href="#链地址法" class="headerlink" title="链地址法"></a>链地址法</h4><p>冲突生成链表，链表一直往下。java使用此方法作为首要解决hash冲突的方法，<br>jdk1.7完全采用单链表来存储同义词，jdk1.8则采用了一种混合模式，对于链表<br>长度大于8的，会转换为红黑树存储。</p>
+<h3 id="再hash"><a href="#再hash" class="headerlink" title="再hash"></a>再hash</h3><p>同时构造多个不同的哈希函数<br>Hi = RHi(key) i= 1,2,3 … k;<br>当H1 = RH1(key) 发生冲突时，再用H2 = RH2(key) 进行计算，<br>直到冲突不再产生，这种方法不易产生聚集，但是增加了计算时间</p>
+<p>###dict的hash冲突解决<br>使用开放寻址的二次探查，如果使用的容量超过数组大小的2/3，<br>就申请更大的容量。数组大小较小的时候resize为*4，<br>较大的时候resize*2</p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://example.com/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/dict%E8%A7%A3%E6%9E%90/" data-id="ckpyrj7ec00054wmz63443fcw" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "durian"
+        },
+        "headline": "dict部分源码解析(cpython)",
+        "image": "http://example.com/css/images/bei.jpg",
+        "keywords": "",
+        "genre": "python源码解析",
+        "datePublished": "2021-06-18",
+        "dateCreated": "2021-06-18",
+        "dateModified": "2021-06-17",
+        "url": "http://example.com/2021/06/18/python/python源码解析/dict解析/",
+        "description": "python中大部分的运行机制当中都采用了dict来进行数据的管理，所以为了最高效的查询性能，dict底层选择了基于哈希表实现。其中在python3.6之前，dict的实现里将数据存在了hash表里，所以之前的dict是无序且十分消耗内存的，而在python3.6以后，官方对dict进行了很大地改进（主要是将数据和hash部分分离），包括从无序变为有序，在一定程度上减少了内存的消耗，以及部分操作性",
+        "wordCount": 1566
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <!-- Valine -->
+    <div class="vcomments"></div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/chunjianghuayueye2" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2021/06/18/python/python%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E5%92%8C%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            垃圾回收和内存管理
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/int%E8%A7%A3%E6%9E%90/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">int部分源码解析(cpython)</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+<div class="widget-wrap widget-list">
+    <h3 class="widget-title">目录</h3>
+    <div class="widget">
+        <div id="toc" class="toc-article">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-6%E7%89%88%E6%9C%AC%E5%89%8D%E5%92%8C3-6%E5%90%8E%E5%AF%B9%E6%AF%94"><span class="toc-number">1.</span> <span class="toc-text">3.6版本前和3.6后对比</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-6%E5%89%8D"><span class="toc-number">1.1.</span> <span class="toc-text">3.6前</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#dict%E7%8A%B6%E6%80%81"><span class="toc-number">1.1.1.</span> <span class="toc-text">dict状态</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-6%E5%90%8E"><span class="toc-number">1.2.</span> <span class="toc-text">3.6后</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#dict%E7%8A%B6%E6%80%81-1"><span class="toc-number">1.2.1.</span> <span class="toc-text">dict状态</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-6%E5%90%8E%E6%BA%90%E7%A0%81"><span class="toc-number">2.</span> <span class="toc-text">3.6后源码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#PyDictObject"><span class="toc-number">2.1.</span> <span class="toc-text">PyDictObject</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#key%E9%9B%86%E5%90%88"><span class="toc-number">2.1.1.</span> <span class="toc-text">key集合</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#entries%E9%9B%86%E5%90%88"><span class="toc-number">2.1.2.</span> <span class="toc-text">entries集合</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dict%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE%E5%92%8C%E7%BC%93%E5%86%B2%E6%B1%A0"><span class="toc-number">2.2.</span> <span class="toc-text">dict基本配置和缓冲池</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BAdict"><span class="toc-number">2.3.</span> <span class="toc-text">创建dict</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E5%85%83%E7%B4%A0"><span class="toc-number">2.4.</span> <span class="toc-text">添加元素</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%93%BE%E5%9C%B0%E5%9D%80%E6%B3%95"><span class="toc-number">2.4.1.</span> <span class="toc-text">链地址法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%8Dhash"><span class="toc-number">2.5.</span> <span class="toc-text">再hash</span></a></li></ol></li></ol>
+        </div>
+    </div>
+</div>
+
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/22/rabbitmq/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/chu4.jpg)" alt="安装配置" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/bigdata/">bigdata</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/bigdata/rabbitmq/">rabbitmq</a></p>
+                            <p class="item-title"><a href="/2021/06/22/rabbitmq/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" class="title">安装配置</a></p>
+                            <p class="item-date"><time datetime="2021-06-22T06:48:05.782Z" itemprop="datePublished">2021-06-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/18/python/socket/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/dangao.jpg)" alt="socket" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/python/">python</a></p>
+                            <p class="item-title"><a href="/2021/06/18/python/socket/" class="title">socket</a></p>
+                            <p class="item-date"><time datetime="2021-06-18T01:03:51.525Z" itemprop="datePublished">2021-06-18</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/18/python/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/saibo1.jpg)" alt="函数式编程" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/python/">python</a></p>
+                            <p class="item-title"><a href="/2021/06/18/python/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="title">函数式编程</a></p>
+                            <p class="item-date"><time datetime="2021-06-18T01:03:51.525Z" itemprop="datePublished">2021-06-18</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/bei.jpg)" alt="tuple部分源码解析(cpython)" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">python源码解析</a></p>
+                            <p class="item-title"><a href="/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" class="title">tuple部分源码解析(cpython)</a></p>
+                            <p class="item-date"><time datetime="2021-06-18T01:03:51.525Z" itemprop="datePublished">2021-06-18</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/18/python/%E9%A1%B9%E7%9B%AE%E8%A7%A3%E6%9E%90/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/chu1.jpg)" alt="项目解析" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/webframe/">webframe</a></p>
+                            <p class="item-title"><a href="/2021/06/18/python/%E9%A1%B9%E7%9B%AE%E8%A7%A3%E6%9E%90/" class="title">项目解析</a></p>
+                            <p class="item-date"><time datetime="2021-06-18T01:03:51.525Z" itemprop="datePublished">2021-06-18</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/">bigdata</a><span class="category-list-count">23</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker/">docker</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker-compose/">docker-compose</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/hadoop/">hadoop</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/rabbitmq/">rabbitmq</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/zookeeper/">zookeeper</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/">nosql</a><span class="category-list-count">27</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis/">redis</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a><span class="category-list-count">9</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/python/cpython%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">cpython源码解析</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">python源码解析</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/">webframe</a><span class="category-list-count">22</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/django/">django</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/flask/">flask</a><span class="category-list-count">5</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">86</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+
+            
+                
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2021 durian</p>
+                
+                <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
+                
+		<p><span id="busuanzi_container_site_pv">本站总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>&nbsp;次</span></p>
+                <p><span id="busuanzi_container_site_uv"> 
+                     本站访客数&nbsp;<span id="busuanzi_value_site_uv"></span>&nbsp;人次
+               </span></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+    <script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
+</footer>
+
+    </div>
+    
+    
+    <script src="//unpkg.com/valine"></script>
+    <script>
+        var GUEST = ['nick','mail','link'];
+        var meta = '';
+        meta = meta.split(',').filter(function (item) {
+            return GUEST.indexOf(item)>-1;
+        });
+        var avatarcdn = 'gravatar.cat.net' == true;
+        new Valine({
+            el: '.vcomments',
+            notify: "false",
+            verify: "false",
+            appId: "795P9DunI2Jv3Jho36dlueIS-gzGzoHsz",
+            appKey: "pM151YCVhYBYTB9Pt1SRuiKs",
+            placeholder: "Just Do It",
+            avatar:"mm",
+            recordIP:"false",
+            visitor: "true"
+        });
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

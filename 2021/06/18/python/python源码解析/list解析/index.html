@@ -1,0 +1,811 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>list源码解析(Cpython) | 春江花月夜o</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="" />
+    
+    <meta name="description" content="源码文件https:&#x2F;&#x2F;github.com&#x2F;python&#x2F;cpython&#x2F;blob&#x2F;main&#x2F;Objects&#x2F;listobject.c PyListObject的定义在列表对象接口listobject.h中，PyListObject的定义是： 123456789101112131415161718typedef struct &amp;#123;    PyObject_VAR_HEAD    &amp;#x2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="list源码解析(Cpython)">
+<meta property="og:url" content="http://example.com/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/list%E8%A7%A3%E6%9E%90/index.html">
+<meta property="og:site_name" content="春江花月夜o">
+<meta property="og:description" content="源码文件https:&#x2F;&#x2F;github.com&#x2F;python&#x2F;cpython&#x2F;blob&#x2F;main&#x2F;Objects&#x2F;listobject.c PyListObject的定义在列表对象接口listobject.h中，PyListObject的定义是： 123456789101112131415161718typedef struct &amp;#123;    PyObject_VAR_HEAD    &amp;#x2">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/css/images/dangao1.jpg">
+<meta property="article:published_time" content="2021-06-18T01:03:51.510Z">
+<meta property="article:modified_time" content="2021-06-17T08:16:59.895Z">
+<meta property="article:author" content="durian">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/css/images/dangao1.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/gouzi.ico" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="春江花月夜o" type="application/atom+xml">
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">关于</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">python</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">cpp</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">webframe</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                                <a class="main-nav-list-link" href="/null">flask</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">django</a>
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">algorithm</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">bigdata</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/%5Bobject%20Object%5D">nosql</a>
+                                    <ul class="main-nav-list-child">
+                                        <li class="main-nav-list-item">
+                                            
+                                                <a class="main-nav-list-link" href="/null"> redis</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">mysql</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null"> redis高级篇</a>
+                                            
+                                                <a class="main-nav-list-link" href="/null">mysql高级篇</a>
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">python源码解析</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-python/python源码解析/list解析" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        list源码解析(Cpython)
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/list%E8%A7%A3%E6%9E%90/" class="article-date">
+       <time datetime="2021-06-18T01:03:51.510Z" itemprop="datePublished">2021-06-18</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/list%E8%A7%A3%E6%9E%90/" class="article-date">
+     <time datetime="2021-06-17T08:16:59.895Z" itemprop="dateModified">2021-06-17</time>
+  </a>
+</div>
+
+
+                
+
+                
+                
+   <div class="article-counter">
+      <i class="fa fa-file-word-o"></i>
+      <span class="post-count-item-text">本文字数: </span>
+      <span class="post-count">2.4k</span>
+      <i class="fa fa-clock-o"></i>
+      <span class="post-time-item-text">阅读时长: </span>
+      <span class="post-count">11 分钟 </span>
+   </div>
+
+
+                <span id="busuanzi_container_page_pv">
+                阅读次数<span id="busuanzi_value_page_pv"></span>次
+                </span>
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <h2 id="源码文件"><a href="#源码文件" class="headerlink" title="源码文件"></a>源码文件</h2><p><a target="_blank" rel="noopener" href="https://github.com/python/cpython/blob/main/Objects/listobject.c">https://github.com/python/cpython/blob/main/Objects/listobject.c</a></p>
+<h2 id="PyListObject的定义"><a href="#PyListObject的定义" class="headerlink" title="PyListObject的定义"></a>PyListObject的定义</h2><p>在列表对象接口listobject.h中，PyListObject的定义是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">typedef struct &#123;</span><br><span class="line">    PyObject_VAR_HEAD</span><br><span class="line">    &#x2F;* Vector of pointers to list elements.  list[0] is ob_item[0], etc. *&#x2F;</span><br><span class="line">    PyObject **ob_item;</span><br><span class="line"></span><br><span class="line">    &#x2F;* ob_item contains space for &#39;allocated&#39; elements.  The number</span><br><span class="line">     * currently in use is ob_size.</span><br><span class="line">     * Invariants:</span><br><span class="line">     *     0 &lt;&#x3D; ob_size &lt;&#x3D; allocated</span><br><span class="line">     *     len(list) &#x3D;&#x3D; ob_size</span><br><span class="line">     *     ob_item &#x3D;&#x3D; NULL implies ob_size &#x3D;&#x3D; allocated &#x3D;&#x3D; 0</span><br><span class="line">     * list.sort() temporarily sets allocated to -1 to detect mutations.</span><br><span class="line">     *</span><br><span class="line">     * Items must normally not be NULL, except during construction when</span><br><span class="line">     * the list is not yet visible outside the function that builds it.</span><br><span class="line">     *&#x2F;</span><br><span class="line">    Py_ssize_t allocated;</span><br><span class="line">&#125; PyListObject;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>1.ob_item是指向了元素列表所在的内存块的首地址</li>
+<li>2.allocated维护了当前列表中的可容纳的元素的总数<br>我们知道，用户选用list正是为了可以频繁的执行插入或删除等操作，如果是需要存多少就申请多大的内存，<br>这种内存管理显然是低效的。那么Python内部是怎么实现的呢？这就与刚才所提到的allocated有关了，我们知道，<br>在PyObject_VAR_HEAD中有一个ob_size，在PyListObject中，每一次需要申请内存时，总会申请一大块内存存，<br>这时申请的总内存的大小记录记录在allocated中，而其中实际被使用了的内存的数量则记录在ob_size中。</li>
+</ul>
+<h2 id="PyListObject对象的创建与维护"><a href="#PyListObject对象的创建与维护" class="headerlink" title="PyListObject对象的创建与维护"></a>PyListObject对象的创建与维护</h2><h3 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h3><h4 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h4><ul>
+<li><p>1.首先，进行溢出检查</p>
+</li>
+<li><p>2.List对象的创建Python中的list对象实际上是分为两部分</p>
+<ul>
+<li>1.PyListObject对象本身</li>
+<li>2.PyListObject对象维护的元素列表，而这两块内存是通过ob_item建立联系的</li>
+</ul>
+</li>
+<li><p>3.在创建PyListObject对象时，检查缓冲池中free_list是否有可用的对象，如果有，则直接使用，</p>
+</li>
+<li><p>4.若没有可用对象，则通过PyObject_GC_New在系统堆中申请内存</p>
+</li>
+<li><p>5.当创建了新的PyListObject对象之后，会根据调用PyList_New是传递的<br>size参数创建ListObject对象所维护的元素列表。</p>
+</li>
+</ul>
+<h4 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h4><p>Python对于创建一个列表，提供了唯一的一条途径，就是PyList_New()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">PyObject *</span><br><span class="line">PyList_New(Py_ssize_t size)</span><br><span class="line">&#123;</span><br><span class="line">PyListObject *op;</span><br><span class="line">size_t nbytes;</span><br><span class="line">#ifdef SHOW_ALLOC_COUNT</span><br><span class="line">static int initialized &#x3D; 0;</span><br><span class="line">if (!initialized) &#123;</span><br><span class="line">Py_AtExit(show_alloc);</span><br><span class="line">initialized &#x3D; 1;</span><br><span class="line">&#125;</span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">if (size &lt; 0) &#123;</span><br><span class="line">PyErr_BadInternalCall();</span><br><span class="line">return NULL;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;进行溢出检查</span><br><span class="line">if ((size_t)size &gt; PY_SIZE_MAX &#x2F; sizeof(PyObject *))</span><br><span class="line">return PyErr_NoMemory();</span><br><span class="line">nbytes &#x3D; size * sizeof(PyObject *);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;为PyListObject对象申请空间，使用到缓冲池技术</span><br><span class="line">if (numfree) &#123;</span><br><span class="line">numfree--;</span><br><span class="line">op &#x3D; free_list[numfree];</span><br><span class="line">_Py_NewReference((PyObject *)op);</span><br><span class="line">#ifdef SHOW_ALLOC_COUNT</span><br><span class="line">count_reuse++;</span><br><span class="line">#endif</span><br><span class="line">&#125; else &#123;</span><br><span class="line">op &#x3D; PyObject_GC_New(PyListObject, &amp;PyList_Type);</span><br><span class="line">if (op &#x3D;&#x3D; NULL)</span><br><span class="line">return NULL;</span><br><span class="line">#ifdef SHOW_ALLOC_COUNT</span><br><span class="line">count_alloc++;</span><br><span class="line">#endif</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;为PyListObject对象中维护的元素列表申请空间</span><br><span class="line">if (size &lt;&#x3D; 0)</span><br><span class="line">op-&gt;ob_item &#x3D; NULL;</span><br><span class="line">else &#123;</span><br><span class="line">op-&gt;ob_item &#x3D; (PyObject **) PyMem_MALLOC(nbytes);</span><br><span class="line">if (op-&gt;ob_item &#x3D;&#x3D; NULL) &#123;</span><br><span class="line">Py_DECREF(op);</span><br><span class="line">return PyErr_NoMemory();</span><br><span class="line">&#125;</span><br><span class="line">memset(op-&gt;ob_item, 0, nbytes);</span><br><span class="line">&#125;</span><br><span class="line">Py_SIZE(op) &#x3D; size;</span><br><span class="line">op-&gt;allocated &#x3D; size;</span><br><span class="line">_PyObject_GC_TRACK(op);</span><br><span class="line">return (PyObject *) op;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="设置元素"><a href="#设置元素" class="headerlink" title="设置元素"></a>设置元素</h3><p>元素创建好了，下一步就是向元素中添加元素了,通过PyList_SetItem()实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">list[5] &#x3D; 1</span><br></pre></td></tr></table></figure>
+<h4 id="步骤-1"><a href="#步骤-1" class="headerlink" title="步骤"></a>步骤</h4><ul>
+<li>1.进行类型检查</li>
+<li>2.然后进行索引的有效性检查</li>
+<li>3.当类型检查和索引检查均通过的时候，就可以将待加入的Pyobject*指针放在指定的位置。</li>
+</ul>
+<h3 id="源码-1"><a href="#源码-1" class="headerlink" title="源码"></a>源码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">PyList_SetItem(register PyObject *op, register Py_ssize_t i,</span><br><span class="line">register PyObject *newitem)</span><br><span class="line">&#123;</span><br><span class="line">register PyObject *olditem;</span><br><span class="line">register PyObject **p;</span><br><span class="line">if (!PyList_Check(op)) &#123;</span><br><span class="line">Py_XDECREF(newitem);</span><br><span class="line">PyErr_BadInternalCall();</span><br><span class="line">return -1;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;索引检查</span><br><span class="line">if (i &lt; 0 || i &gt;&#x3D; Py_SIZE(op)) &#123;</span><br><span class="line">Py_XDECREF(newitem);</span><br><span class="line">PyErr_SetString(PyExc_IndexError,</span><br><span class="line">&quot;list assignment index out of range&quot;);</span><br><span class="line">return -1;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;存放元素</span><br><span class="line">p &#x3D; ((PyListObject *)op) -&gt; ob_item + i;</span><br><span class="line">olditem &#x3D; *p;</span><br><span class="line">*p &#x3D; newitem;</span><br><span class="line">Py_XDECREF(olditem);</span><br><span class="line">return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="插入元素"><a href="#插入元素" class="headerlink" title="插入元素"></a>插入元素</h3><p>插入元素和设置元素的不同在于:设置元素不会将ob_item指向的内存<br>发生变化，而插入内存可能会导致ob_item指向的内存发生变化。</p>
+<ul>
+<li>比如：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">a &#x3D; [0, 0, 0, 0]</span><br><span class="line">a[2] &#x3D; 3</span><br><span class="line">print(a)</span><br><span class="line">[0, 0, 3, 0]</span><br><span class="line">a.insert(2,3)</span><br><span class="line">[0, 0, 2, 3, 0]</span><br></pre></td></tr></table></figure>
+这个插入动作确实导致了元素列表的内存发生变化。关于插入，在列表中有两种操作：insert()和append()。</li>
+</ul>
+<h4 id="insert插入步骤"><a href="#insert插入步骤" class="headerlink" title="insert插入步骤"></a>insert插入步骤</h4><ul>
+<li>1.参数检查</li>
+<li>2.从新调整列表容量通过 list_resize 方法确定是否需要申请内存</li>
+<li>3.确定插入点</li>
+<li>4.插入元素</li>
+</ul>
+<h4 id="insert源码"><a href="#insert源码" class="headerlink" title="insert源码"></a>insert源码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">static int</span><br><span class="line">ins1(PyListObject *self, Py_ssize_t where, PyObject *v)</span><br><span class="line">&#123;</span><br><span class="line">    Py_ssize_t i, n &#x3D; Py_SIZE(self);</span><br><span class="line">    PyObject **items;</span><br><span class="line">    if (v &#x3D;&#x3D; NULL) &#123;</span><br><span class="line">        PyErr_BadInternalCall();</span><br><span class="line">        return -1;</span><br><span class="line">    &#125;</span><br><span class="line">    if (n &#x3D;&#x3D; PY_SSIZE_T_MAX) &#123;</span><br><span class="line">        PyErr_SetString(PyExc_OverflowError,</span><br><span class="line">            &quot;cannot add more objects to list&quot;);</span><br><span class="line">        return -1;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (list_resize(self, n+1) &lt; 0)</span><br><span class="line">        return -1;</span><br><span class="line"></span><br><span class="line">    if (where &lt; 0) &#123;</span><br><span class="line">        where +&#x3D; n;</span><br><span class="line">        if (where &lt; 0)</span><br><span class="line">            where &#x3D; 0;</span><br><span class="line">    &#125;</span><br><span class="line">    if (where &gt; n)</span><br><span class="line">        where &#x3D; n;</span><br><span class="line">    items &#x3D; self-&gt;ob_item;</span><br><span class="line">    for (i &#x3D; n; --i &gt;&#x3D; where; )</span><br><span class="line">        items[i+1] &#x3D; items[i];</span><br><span class="line">    Py_INCREF(v);</span><br><span class="line">    items[where] &#x3D; v;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="append步骤"><a href="#append步骤" class="headerlink" title="append步骤"></a>append步骤</h4><ul>
+<li>1.参数检查</li>
+<li>2.容量检查</li>
+<li>3.调用 list_resize 方法检查是否需要申请内存</li>
+<li>4.添加元素</li>
+</ul>
+<h4 id="append源码"><a href="#append源码" class="headerlink" title="append源码"></a>append源码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">int</span><br><span class="line">PyList_Append(PyObject *op, PyObject *newitem)</span><br><span class="line">&#123;</span><br><span class="line">    if (PyList_Check(op) &amp;&amp; (newitem !&#x3D; NULL))</span><br><span class="line">        return app1((PyListObject *)op, newitem);</span><br><span class="line">    PyErr_BadInternalCall();</span><br><span class="line">    return -1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="列表转元组"><a href="#列表转元组" class="headerlink" title="列表转元组"></a>列表转元组</h3><p>其实就是新建一个大小和列表一样大小的数组，并将该列表内的元素添加到元组中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">PyObject *</span><br><span class="line">PyList_AsTuple(PyObject *v)</span><br><span class="line">&#123;</span><br><span class="line">    PyObject *w;</span><br><span class="line">    PyObject **p, **q;</span><br><span class="line">    Py_ssize_t n;</span><br><span class="line">    if (v &#x3D;&#x3D; NULL || !PyList_Check(v)) &#123;</span><br><span class="line">        PyErr_BadInternalCall();</span><br><span class="line">        return NULL;</span><br><span class="line">    &#125;</span><br><span class="line">    n &#x3D; Py_SIZE(v);</span><br><span class="line">    w &#x3D; PyTuple_New(n);</span><br><span class="line">    if (w &#x3D;&#x3D; NULL)</span><br><span class="line">        return NULL;</span><br><span class="line">    p &#x3D; ((PyTupleObject *)w)-&gt;ob_item;</span><br><span class="line">    q &#x3D; ((PyListObject *)v)-&gt;ob_item;</span><br><span class="line">    while (--n &gt;&#x3D; 0) &#123;</span><br><span class="line">        Py_INCREF(*q);</span><br><span class="line">        *p &#x3D; *q;</span><br><span class="line">        p++;</span><br><span class="line">        q++;</span><br><span class="line">    &#125;</span><br><span class="line">    return w;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="列表反转"><a href="#列表反转" class="headerlink" title="列表反转"></a>列表反转</h3><p>双向指针反转</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">static void</span><br><span class="line">reverse_slice(PyObject **lo, PyObject **hi)</span><br><span class="line">&#123;</span><br><span class="line">    assert(lo &amp;&amp; hi);</span><br><span class="line"></span><br><span class="line">    --hi;</span><br><span class="line">    while (lo &lt; hi) &#123;</span><br><span class="line">        PyObject *t &#x3D; *lo;</span><br><span class="line">        *lo &#x3D; *hi;</span><br><span class="line">        *hi &#x3D; t;</span><br><span class="line">        ++lo;</span><br><span class="line">        --hi;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="列表extend"><a href="#列表extend" class="headerlink" title="列表extend"></a>列表extend</h3><p>extend传说中的鸭子类型（动态类型），不在乎对象的确切形态，只要是可迭代对象就可以操作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">if (PyList_CheckExact(iterable) || PyTuple_CheckExact(iterable) ||</span><br><span class="line">                (PyObject *)self &#x3D;&#x3D; iterable) &#123;</span><br><span class="line">        PyObject **src, **dest;</span><br><span class="line">        iterable &#x3D; PySequence_Fast(iterable, &quot;argument must be iterable&quot;);</span><br><span class="line">        if (!iterable)</span><br><span class="line">            return NULL;</span><br></pre></td></tr></table></figure>
+
+<h3 id="删除元素"><a href="#删除元素" class="headerlink" title="删除元素"></a>删除元素</h3><p>对于一个容器而言，除了创建，插入这些操作，肯定是还得有删除操作的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">remove()</span><br><span class="line">a &#x3D; [1, 2, 3, 4]</span><br><span class="line">print a.remove(3)</span><br><span class="line">[1, 2, 4]</span><br></pre></td></tr></table></figure>
+<h4 id="步骤-2"><a href="#步骤-2" class="headerlink" title="步骤"></a>步骤</h4><ul>
+<li>1.遍历ob_item对比remove的对象</li>
+<li>2.返回cmp大于0调用list_ass_slice删除后判断是否还有元素</li>
+<li>3.如果本来就没有这个元素直接跳到最后报错<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ValueError: list.remove(x): x not in list</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="源码-2"><a href="#源码-2" class="headerlink" title="源码"></a>源码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">static PyObject *</span><br><span class="line">list_remove(PyListObject *self, PyObject *value)</span><br><span class="line">&#x2F;*[clinic end generated code: output&#x3D;f087e1951a5e30d1 input&#x3D;2dc2ba5bb2fb1f82]*&#x2F;</span><br><span class="line">&#123;</span><br><span class="line">    Py_ssize_t i;</span><br><span class="line"></span><br><span class="line">    for (i &#x3D; 0; i &lt; Py_SIZE(self); i++) &#123;</span><br><span class="line">        PyObject *obj &#x3D; self-&gt;ob_item[i];</span><br><span class="line">        Py_INCREF(obj);</span><br><span class="line">        int cmp &#x3D; PyObject_RichCompareBool(obj, value, Py_EQ);</span><br><span class="line">        Py_DECREF(obj);</span><br><span class="line">        if (cmp &gt; 0) &#123;</span><br><span class="line">            if (list_ass_slice(self, i, i+1,</span><br><span class="line">                               (PyObject *)NULL) &#x3D;&#x3D; 0)</span><br><span class="line">                Py_RETURN_NONE;</span><br><span class="line">            return NULL;</span><br><span class="line">        &#125;</span><br><span class="line">        else if (cmp &lt; 0)</span><br><span class="line">            return NULL;</span><br><span class="line">    &#125;</span><br><span class="line">    PyErr_SetString(PyExc_ValueError, &quot;list.remove(x): x not in list&quot;);</span><br><span class="line">    return NULL;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="PyListObject对象缓冲池"><a href="#PyListObject对象缓冲池" class="headerlink" title="PyListObject对象缓冲池"></a>PyListObject对象缓冲池</h2><ul>
+<li><p>1.在创建PyListObject对象时，会首先检查缓冲区中的free_lists中是否有可用的对象，如果没有。</p>
+<ul>
+<li>1.创建PyListObject对象</li>
+<li>2.然后创建PyListObject对象所维护的元素列表，与之对应</li>
+</ul>
+</li>
+<li><p>2.在销毁一个list时销毁的过程也是分离的。</p>
+<ul>
+<li>1.销毁PyListObject所维护的元素列表</li>
+<li>2.然后释放PyListObject对象自身</li>
+</ul>
+</li>
+<li><p>3.在删除PylsitObject对象（较小的）自身时</p>
+<ul>
+<li>1.Python会先检查我们开始提到的那个缓冲池free_list，查看其中缓存的PyListObject的数量是否已经满了</li>
+<li>2.如果没有，就将待删除的PyListObject对象放到缓冲池中，以备后用</li>
+</ul>
+</li>
+</ul>
+<p>因此，那个在Python启动时空荡荡的缓冲池原来都是被本应该死去的PyListObject对象给填充了，在以后需要创建新的PyListObject的时候，<br>Python会首先唤醒这些对象，重新分配Pyobject*元素列表占用的内存，重新拥抱新的对象。</p>
+<h2 id="list-resize补充"><a href="#list-resize补充" class="headerlink" title="list_resize补充"></a>list_resize补充</h2><p>list作为一个可变对象，自然离不开内存的增加和减少(append、extend、insert、remove、pop等等都涉及到)，所以这方面对性能的影响也是有的。</p>
+<h3 id="步骤-3"><a href="#步骤-3" class="headerlink" title="步骤"></a>步骤</h3><ul>
+<li>1.如果allocated/2 &lt;= newsize &lt;= allocated则allocated不变直接把ob_size设置成Py_SET_SIZE(self, newsize)</li>
+<li><ol start="2">
+<li>否则<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">allocated &#x3D; newsize + ((newsize &gt;&gt; 3) + (newsize &lt; 9 ? 3 : 6))</span><br><span class="line">ob_size &#x3D; newsize</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="源码-3"><a href="#源码-3" class="headerlink" title="源码"></a>源码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">static int</span><br><span class="line">list_resize(PyListObject *self, Py_ssize_t newsize)</span><br><span class="line">&#123;</span><br><span class="line">    PyObject **items;</span><br><span class="line">    size_t new_allocated, num_allocated_bytes;</span><br><span class="line">    Py_ssize_t allocated &#x3D; self-&gt;allocated;</span><br><span class="line"></span><br><span class="line">    &#x2F;* Bypass realloc() when a previous overallocation is large enough</span><br><span class="line">       to accommodate the newsize.  If the newsize falls lower than half</span><br><span class="line">       the allocated size, then proceed with the realloc() to shrink the list.</span><br><span class="line">    *&#x2F;</span><br><span class="line">    if (allocated &gt;&#x3D; newsize &amp;&amp; newsize &gt;&#x3D; (allocated &gt;&gt; 1)) &#123;</span><br><span class="line">        assert(self-&gt;ob_item !&#x3D; NULL || newsize &#x3D;&#x3D; 0);</span><br><span class="line">        Py_SET_SIZE(self, newsize);</span><br><span class="line">        return 0;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;* This over-allocates proportional to the list size, making room</span><br><span class="line">     * for additional growth.  The over-allocation is mild, but is</span><br><span class="line">     * enough to give linear-time amortized behavior over a long</span><br><span class="line">     * sequence of appends() in the presence of a poorly-performing</span><br><span class="line">     * system realloc().</span><br><span class="line">     * Add padding to make the allocated size multiple of 4.</span><br><span class="line">     * The growth pattern is:  0, 4, 8, 16, 24, 32, 40, 52, 64, 76, ...</span><br><span class="line">     * Note: new_allocated won&#39;t overflow because the largest possible value</span><br><span class="line">     *       is PY_SSIZE_T_MAX * (9 &#x2F; 8) + 6 which always fits in a size_t.</span><br><span class="line">     *&#x2F;</span><br><span class="line">    new_allocated &#x3D; ((size_t)newsize + (newsize &gt;&gt; 3) + 6) &amp; ~(size_t)3;</span><br><span class="line">    &#x2F;* Do not overallocate if the new size is closer to overallocated size</span><br><span class="line">     * than to the old size.</span><br><span class="line">     *&#x2F;</span><br><span class="line">    if (newsize - Py_SIZE(self) &gt; (Py_ssize_t)(new_allocated - newsize))</span><br><span class="line">        new_allocated &#x3D; ((size_t)newsize + 3) &amp; ~(size_t)3;</span><br><span class="line"></span><br><span class="line">    if (newsize &#x3D;&#x3D; 0)</span><br><span class="line">        new_allocated &#x3D; 0;</span><br><span class="line">    num_allocated_bytes &#x3D; new_allocated * sizeof(PyObject *);</span><br><span class="line">    items &#x3D; (PyObject **)PyMem_Realloc(self-&gt;ob_item, num_allocated_bytes);</span><br><span class="line">    if (items &#x3D;&#x3D; NULL) &#123;</span><br><span class="line">        PyErr_NoMemory();</span><br><span class="line">        return -1;</span><br><span class="line">    &#125;</span><br><span class="line">    self-&gt;ob_item &#x3D; items;</span><br><span class="line">    Py_SET_SIZE(self, newsize);</span><br><span class="line">    self-&gt;allocated &#x3D; new_allocated;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="python分析"><a href="#python分析" class="headerlink" title="python分析"></a>python分析</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">import sys</span><br><span class="line">for i in range(100):</span><br><span class="line">	if sys.getsizeof(a) not in b:</span><br><span class="line">		print(i, sys.getsizeof(a))</span><br><span class="line">		b.add(sys.getsizeof(a))</span><br><span class="line">	a.append(i)</span><br><span class="line"></span><br><span class="line">	</span><br><span class="line">0 56</span><br><span class="line">1 88</span><br><span class="line">5 120</span><br><span class="line">9 184</span><br><span class="line">17 256</span><br><span class="line">26 336</span><br><span class="line">36 424</span><br><span class="line">47 520</span><br><span class="line">59 632</span><br><span class="line">73 760</span><br><span class="line">89 904</span><br></pre></td></tr></table></figure>
+
+<h2 id="append-amp-insert-amp-extend性能分析"><a href="#append-amp-insert-amp-extend性能分析" class="headerlink" title="append&amp;insert&amp;extend性能分析"></a>append&amp;insert&amp;extend性能分析</h2><p>insert的逻辑中，需要对插入部分后面的数据进行后移操作，<br>以及对插入位置进行一些范围处理，所以效率上会比append差一些z，<br>在append里每添加一条数据都需要进行尺寸判断，不够则重新申请，<br>而extend则是一口气算出最终需要的尺寸，只需要申请一次即可，<br>所以效率上append会比extend差一些。</p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://example.com/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/list%E8%A7%A3%E6%9E%90/" data-id="ckpyrj7ed00074wmz33fp3e5l" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "durian"
+        },
+        "headline": "list源码解析(Cpython)",
+        "image": "http://example.com/css/images/dangao1.jpg",
+        "keywords": "",
+        "genre": "python源码解析",
+        "datePublished": "2021-06-18",
+        "dateCreated": "2021-06-18",
+        "dateModified": "2021-06-17",
+        "url": "http://example.com/2021/06/18/python/python源码解析/list解析/",
+        "description": "源码文件https://github.com/python/cpython/blob/main/Objects/listobject.c
+PyListObject的定义在列表对象接口listobject.h中，PyListObject的定义是：
+123456789101112131415161718typedef struct &#123;    PyObject_VAR_HEAD    &#x2",
+        "wordCount": 2252
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <!-- Valine -->
+    <div class="vcomments"></div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/chunjianghuayueye2" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/int%E8%A7%A3%E6%9E%90/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            int部分源码解析(cpython)
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/str%E8%A7%A3%E6%9E%90/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">str部分源码解析(Cpython python3)</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+<div class="widget-wrap widget-list">
+    <h3 class="widget-title">目录</h3>
+    <div class="widget">
+        <div id="toc" class="toc-article">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BA%90%E7%A0%81%E6%96%87%E4%BB%B6"><span class="toc-number">1.</span> <span class="toc-text">源码文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PyListObject%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-number">2.</span> <span class="toc-text">PyListObject的定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PyListObject%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%9B%E5%BB%BA%E4%B8%8E%E7%BB%B4%E6%8A%A4"><span class="toc-number">3.</span> <span class="toc-text">PyListObject对象的创建与维护</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA"><span class="toc-number">3.1.</span> <span class="toc-text">创建</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A4"><span class="toc-number">3.1.1.</span> <span class="toc-text">步骤</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BA%90%E7%A0%81"><span class="toc-number">3.1.2.</span> <span class="toc-text">源码</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E5%85%83%E7%B4%A0"><span class="toc-number">3.2.</span> <span class="toc-text">设置元素</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A4-1"><span class="toc-number">3.2.1.</span> <span class="toc-text">步骤</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BA%90%E7%A0%81-1"><span class="toc-number">3.3.</span> <span class="toc-text">源码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%92%E5%85%A5%E5%85%83%E7%B4%A0"><span class="toc-number">3.4.</span> <span class="toc-text">插入元素</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#insert%E6%8F%92%E5%85%A5%E6%AD%A5%E9%AA%A4"><span class="toc-number">3.4.1.</span> <span class="toc-text">insert插入步骤</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#insert%E6%BA%90%E7%A0%81"><span class="toc-number">3.4.2.</span> <span class="toc-text">insert源码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#append%E6%AD%A5%E9%AA%A4"><span class="toc-number">3.4.3.</span> <span class="toc-text">append步骤</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#append%E6%BA%90%E7%A0%81"><span class="toc-number">3.4.4.</span> <span class="toc-text">append源码</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%97%E8%A1%A8%E8%BD%AC%E5%85%83%E7%BB%84"><span class="toc-number">3.5.</span> <span class="toc-text">列表转元组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%97%E8%A1%A8%E5%8F%8D%E8%BD%AC"><span class="toc-number">3.6.</span> <span class="toc-text">列表反转</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%97%E8%A1%A8extend"><span class="toc-number">3.7.</span> <span class="toc-text">列表extend</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0"><span class="toc-number">3.8.</span> <span class="toc-text">删除元素</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A4-2"><span class="toc-number">3.8.1.</span> <span class="toc-text">步骤</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BA%90%E7%A0%81-2"><span class="toc-number">3.8.2.</span> <span class="toc-text">源码</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PyListObject%E5%AF%B9%E8%B1%A1%E7%BC%93%E5%86%B2%E6%B1%A0"><span class="toc-number">4.</span> <span class="toc-text">PyListObject对象缓冲池</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#list-resize%E8%A1%A5%E5%85%85"><span class="toc-number">5.</span> <span class="toc-text">list_resize补充</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A4-3"><span class="toc-number">5.1.</span> <span class="toc-text">步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BA%90%E7%A0%81-3"><span class="toc-number">5.2.</span> <span class="toc-text">源码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#python%E5%88%86%E6%9E%90"><span class="toc-number">5.3.</span> <span class="toc-text">python分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#append-amp-insert-amp-extend%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90"><span class="toc-number">6.</span> <span class="toc-text">append&amp;insert&amp;extend性能分析</span></a></li></ol>
+        </div>
+    </div>
+</div>
+
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/22/rabbitmq/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/chu4.jpg)" alt="安装配置" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/bigdata/">bigdata</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/bigdata/rabbitmq/">rabbitmq</a></p>
+                            <p class="item-title"><a href="/2021/06/22/rabbitmq/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" class="title">安装配置</a></p>
+                            <p class="item-date"><time datetime="2021-06-22T06:48:05.782Z" itemprop="datePublished">2021-06-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/18/python/socket/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/dangao.jpg)" alt="socket" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/python/">python</a></p>
+                            <p class="item-title"><a href="/2021/06/18/python/socket/" class="title">socket</a></p>
+                            <p class="item-date"><time datetime="2021-06-18T01:03:51.525Z" itemprop="datePublished">2021-06-18</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/18/python/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/saibo1.jpg)" alt="函数式编程" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/python/">python</a></p>
+                            <p class="item-title"><a href="/2021/06/18/python/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="title">函数式编程</a></p>
+                            <p class="item-date"><time datetime="2021-06-18T01:03:51.525Z" itemprop="datePublished">2021-06-18</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/bei.jpg)" alt="tuple部分源码解析(cpython)" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">python源码解析</a></p>
+                            <p class="item-title"><a href="/2021/06/18/python/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/tuple%E8%A7%A3%E6%9E%90/" class="title">tuple部分源码解析(cpython)</a></p>
+                            <p class="item-date"><time datetime="2021-06-18T01:03:51.525Z" itemprop="datePublished">2021-06-18</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/18/python/%E9%A1%B9%E7%9B%AE%E8%A7%A3%E6%9E%90/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/chu1.jpg)" alt="项目解析" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/webframe/">webframe</a></p>
+                            <p class="item-title"><a href="/2021/06/18/python/%E9%A1%B9%E7%9B%AE%E8%A7%A3%E6%9E%90/" class="title">项目解析</a></p>
+                            <p class="item-date"><time datetime="2021-06-18T01:03:51.525Z" itemprop="datePublished">2021-06-18</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/">bigdata</a><span class="category-list-count">23</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker/">docker</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/docker-compose/">docker-compose</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/hadoop/">hadoop</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/rabbitmq/">rabbitmq</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/zookeeper/">zookeeper</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/">nosql</a><span class="category-list-count">27</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/mysql%E9%AB%98%E7%BA%A7%E7%AF%87/">mysql高级篇</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis/">redis</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/redis%E9%AB%98%E7%BA%A7%E7%AF%87/">redis高级篇</a><span class="category-list-count">9</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/python/cpython%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">cpython源码解析</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/python%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">python源码解析</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/">webframe</a><span class="category-list-count">22</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/django/">django</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webframe/flask/">flask</a><span class="category-list-count">5</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">86</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+
+            
+                
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2021 durian</p>
+                
+                <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
+                
+		<p><span id="busuanzi_container_site_pv">本站总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>&nbsp;次</span></p>
+                <p><span id="busuanzi_container_site_uv"> 
+                     本站访客数&nbsp;<span id="busuanzi_value_site_uv"></span>&nbsp;人次
+               </span></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+    <script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
+</footer>
+
+    </div>
+    
+    
+    <script src="//unpkg.com/valine"></script>
+    <script>
+        var GUEST = ['nick','mail','link'];
+        var meta = '';
+        meta = meta.split(',').filter(function (item) {
+            return GUEST.indexOf(item)>-1;
+        });
+        var avatarcdn = 'gravatar.cat.net' == true;
+        new Valine({
+            el: '.vcomments',
+            notify: "false",
+            verify: "false",
+            appId: "795P9DunI2Jv3Jho36dlueIS-gzGzoHsz",
+            appKey: "pM151YCVhYBYTB9Pt1SRuiKs",
+            placeholder: "Just Do It",
+            avatar:"mm",
+            recordIP:"false",
+            visitor: "true"
+        });
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>
